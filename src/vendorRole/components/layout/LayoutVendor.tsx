@@ -1,10 +1,10 @@
-import scss from './LayoutVender.module.scss';
+import scss from './LayoutVendor.module.scss';
 import { Routes, Route } from 'react-router-dom';
 import Header from './header/Header';
 import Footer from './footer/Footer';
 import HomePage from '../pages/HomePage';
 
-const LayoutVender = () => {
+const LayoutVendor = () => {
 	return (
 		<>
 			<div className={scss.layout}>
@@ -19,4 +19,4 @@ const LayoutVender = () => {
 		</>
 	);
 };
-export default LayoutVender;
+export default LayoutVendor;

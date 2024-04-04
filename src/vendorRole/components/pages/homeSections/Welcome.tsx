@@ -7,7 +7,7 @@ const Welcome: FC = () => {
 			<section className={scss.Welcome}>
 				<div className="container">
 					<div className={scss.content}>
-						<h1>Welcome, Vender!</h1>
+						<h1>Welcome, Vendor!</h1>
 					</div>
 				</div>
 			</section>
