@@ -1,8 +1,9 @@
 import { Route, Routes } from 'react-router-dom';
-import LayoutVendor from './vendorRole/components/layout/LayoutVendor';
-import LayoutUser from './userRole/components/layout/LayoutUser';
-import LayoutAdmin from './adminRole/components/layout/LayoutAdmin';
-import LayoutAuth from './authRole/components/layout/LayoutAuth';
+import LayoutUser from './pagesUser/components/layout/LayoutUser';
+import LayoutAdmin from './pagesAdmin/components/layout/LayoutAdmin';
+import LayoutAuth from './pagesAuth/components/layout/LayoutAuth';
+import LayoutVendor from './pagesVendor/components/layout/LayoutVendor';
+
 
 const App = () => {
 	return (
