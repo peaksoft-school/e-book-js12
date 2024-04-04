@@ -12,7 +12,6 @@
 	},
 	"dependencies": {
 		"@reduxjs/toolkit": "^2.2.3",
-		"e-book-js12": "link:",
 		"react": "^18.2.0",
 		"react-dom": "^18.2.0",
 		"react-redux": "^9.1.0",
@@ -29,6 +28,7 @@
 		"eslint": "^8.57.0",
 		"eslint-plugin-react-hooks": "^4.6.0",
 		"eslint-plugin-react-refresh": "^0.4.6",
+		"prettier": "^3.2.5",
 		"typescript": "^5.2.2",
 		"vite": "^5.2.0"
 	}

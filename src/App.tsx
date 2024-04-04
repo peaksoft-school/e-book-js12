@@ -4,7 +4,6 @@ import LayoutAdmin from './pagesAdmin/components/layout/LayoutAdmin';
 import LayoutAuth from './pagesAuth/components/layout/LayoutAuth';
 import LayoutVendor from './pagesVendor/components/layout/LayoutVendor';
 
-
 const App = () => {
 	return (
 		<>
