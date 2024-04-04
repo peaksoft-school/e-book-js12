@@ -1,4 +1,4 @@
-import { Route, Routes } from 'react-router';
+import { Route, Routes } from 'react-router-dom';
 import LayoutVendor from './vendorRole/components/layout/LayoutVendor';
 import LayoutUser from './userRole/components/layout/LayoutUser';
 import LayoutAdmin from './adminRole/components/layout/LayoutAdmin';
