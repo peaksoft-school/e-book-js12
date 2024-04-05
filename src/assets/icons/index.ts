@@ -1,12 +1,3 @@
-export { default as IconOrder } from './order';
-export { default as IconLogin } from './login';
-export { default as IconHeart } from './heart';
-
-export { default as IconLogout } from './logout';
-export { default as IconUser } from './user';
-
-export { default as IconLogo } from './logo';
-
 export { default as IconBlackBell } from './BlackBellIcon';
 export { default as IconWhiteBell } from './WhiteBellIcon';
 export { default as IconBlackProfile } from './BlackProfileIcon';
