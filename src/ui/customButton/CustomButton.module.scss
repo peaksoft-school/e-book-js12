@@ -1,0 +1,66 @@
+.customButtonAuth {
+	background: #1c1c1c !important;
+	padding: 10px 24px !important;
+	border: none;
+	color: #fff;
+	font-weight: 600;
+	font-size: 16px;
+	&:hover {
+		background: #484848 !important;
+	}
+	&:active {
+		background: #f34901 !important;
+	}
+}
+
+.customButtonBasket {
+	background: #f34901 !important;
+	padding: 10px 24px !important;
+	border: none;
+	color: #fff;
+	font-weight: 600;
+	font-size: 14px;
+
+	&:hover {
+		background: #fe6f33 !important;
+	}
+	&:active {
+		background: #f34901 !important;
+	}
+}
+
+.customButtonPersonal {
+	background: #fff !important;
+	padding: 10px 24px !important;
+	border: none;
+	color: #c4c4c4;
+	font-weight: 600;
+	font-size: 14px;
+
+	&:hover {
+		background: #fe6f33 !important;
+	}
+	&:active {
+		background: #e54400 !important;
+	}
+}
+
+.customButtonSeeMore {
+	background: white !important;
+	padding: 10px 577px !important;
+	border: none !important;
+	color: black !important;
+	font-weight: 400 !important;
+	font-size: 14px !important;
+
+	&:active {
+		background: #e54400 !important;
+	}
+}
+
+.customButtonAddBook {
+	background: #f34901 !important;
+	padding: 10px 24px !important;
+	border: none !important;
+	color: #fff !important;
+}
