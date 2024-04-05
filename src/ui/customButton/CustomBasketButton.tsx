@@ -3,21 +3,12 @@ import scss from './CustomButton.module.scss';
 
 interface CustomBasketProps {
 	children: ReactNode;
-	width?: string;
 	onClick: () => void;
 }
 
-const CustomBasketButton: FC<CustomBasketProps> = ({
-	children,
-	onClick,
-	width
-}) => {
+const CustomBasketButton: FC<CustomBasketProps> = ({ children, onClick }) => {
 	return (
-		<button
-			style={{ width: width }}
-			className={`${scss.customButtonBasket}`}
-			onClick={onClick}
-		>
+		<button className={`${scss.customButtonBasket}`} onClick={onClick}>
 			{children}
 		</button>
 	);

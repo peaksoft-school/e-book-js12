@@ -3,21 +3,15 @@ import scss from './CustomButton.module.scss';
 
 interface CustomPersonalAreaProps {
 	children: ReactNode;
-	width?: string;
 	onClick: () => void;
 }
 
 const CustomPersonalAreaButton: FC<CustomPersonalAreaProps> = ({
 	children,
-	onClick,
-	width
+	onClick
 }) => {
 	return (
-		<button
-			style={{ width: width }}
-			className={`${scss.customButtonPersonal} `}
-			onClick={onClick}
-		>
+		<button className={`${scss.customButtonPersonal} `} onClick={onClick}>
 			{children}
 		</button>
 	);

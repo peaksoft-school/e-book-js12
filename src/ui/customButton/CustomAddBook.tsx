@@ -3,18 +3,12 @@ import scss from './CustomButton.module.scss';
 
 interface CustomAddBookProps {
 	children: ReactNode;
-	width?: string;
 	onClick: () => void;
 }
 
-const CustomAddBookButton: FC<CustomAddBookProps> = ({
-	children,
-	onClick,
-	width
-}) => {
+const CustomAddBookButton: FC<CustomAddBookProps> = ({ children, onClick }) => {
 	return (
 		<button
-			style={{ width: width }}
 			className={`${scss.customButtonAddBook}  ${children}`}
 			onClick={onClick}
 		>

@@ -3,21 +3,12 @@ import scss from './CustomButton.module.scss';
 
 interface CustomAuthProps {
 	children: ReactNode;
-	width?: string;
 	onClick: () => void;
 }
 
-const CustomAuthButton: FC<CustomAuthProps> = ({
-	children,
-	onClick,
-	width
-}) => {
+const CustomAuthButton: FC<CustomAuthProps> = ({ children, onClick }) => {
 	return (
-		<button
-			style={{ width: width }}
-			className={`${scss.customButtonAuth}`}
-			onClick={onClick}
-		>
+		<button className={`${scss.customButtonAuth}`} onClick={onClick}>
 			{children}
 		</button>
 	);

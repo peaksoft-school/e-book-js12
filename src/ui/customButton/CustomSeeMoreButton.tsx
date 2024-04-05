@@ -3,21 +3,12 @@ import scss from './CustomButton.module.scss';
 
 interface CustomSeeMoreProps {
 	children: ReactNode;
-	width?: string;
 	onClick: () => void;
 }
 
-const CustomSeeMoreButton: FC<CustomSeeMoreProps> = ({
-	children,
-	onClick,
-	width
-}) => {
+const CustomSeeMoreButton: FC<CustomSeeMoreProps> = ({ children, onClick }) => {
 	return (
-		<button
-			style={{ width: width }}
-			className={`${scss.customButtonSeeMore} `}
-			onClick={onClick}
-		>
+		<button className={`${scss.customButtonSeeMore} `} onClick={onClick}>
 			{children}
 		</button>
 	);
