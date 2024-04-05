@@ -1,6 +1,19 @@
-export { default as IconOrder } from './order';
-export { default as IconLogin } from './login';
-export { default as IconHeart } from './heart';
-export { default as IconLogout } from './logout';
-export { default as IconUser } from './user';
-export { default as IconLogo } from './logo';
+export { default as blackLeftArrow} from './blackLeftArrow'
+export { default as blackRightArrow } from './blackRightArrow'
+export { default as downIcon } from './downIcon'
+export { default as minusIcon } from './minusIcon'
+export { default as newIcon } from './newIcon'
+export { default as orangeApplicationsIcon } from './orangeApplicationsIcon'
+export { default as orangeBooksIcon } from './orangeBooksIcon'
+export { default as orangeLeftArrow } from './orangeLeftArrow'
+export { default as orangeRightArrow } from './orangeRightArrow'
+export { default as orangeSellersIcon } from './orangeSellersIcon'
+export { default as orangeUsersIcon } from './orangeUsersIcon'
+export { default as playIcon } from './playIcon'
+export { default as plusIcon } from './plusIcon'
+export { default as stopIcon } from './stopIcon'
+export { default as upIcon } from './upIcon'
+export { default as whiteApplicationsIcon } from './whiteApplicationsIcon'
+export { default as whiteBooksIcon } from './whiteBooksIcon'
+export { default as whiteSellersIcon } from './whiteSellersIcon'
+export { default as whiteUsersIcon } from './whiteUsersIcon'
