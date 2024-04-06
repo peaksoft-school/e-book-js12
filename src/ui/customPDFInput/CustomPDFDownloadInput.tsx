@@ -2,12 +2,12 @@ import { FC, ChangeEvent, useRef, useState } from 'react';
 import scss from './CustomPDFDownload.module.scss';
 import { Download, DownloadedIcon } from '../../assets/icons';
 
-interface CustomAudioDownloadInputProps {
+interface CustomPDFDownloadInputProps {
 	accept: string;
 	onChange: (file: File) => void;
 }
 
-const CustomPDFDownloadInput: FC<CustomAudioDownloadInputProps> = ({
+const CustomPDFDownloadInput: FC<CustomPDFDownloadInputProps> = ({
 	accept,
 	onChange
 }) => {
