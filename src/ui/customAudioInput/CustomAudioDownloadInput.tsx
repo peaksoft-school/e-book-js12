@@ -1,6 +1,6 @@
 import { FC, ChangeEvent, useRef, useState } from 'react';
 import scss from './CustomAudioDownloadInput.module.scss';
-import { Download, DownloadedIcon } from '../../assets/icons';
+import { Download, DownloadedIcon } from '../../assets/icons/';
 
 interface CustomAudioDownloadInputProps {
 	accept: string;
