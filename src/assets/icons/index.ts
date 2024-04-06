@@ -16,7 +16,7 @@ export { default as IconEyeClose } from './icon-eyeClose';
 export { default as IconEye } from './icon-eyeSee';
 export { default as IconHeadphone } from './icon-headphones';
 export { default as IconHeadphoneOrange } from './icon-headphonesOrange';
-export { default as IconPlus } from './Icon-plusDowland';
+export { default as IconPlus } from './icon-plusDowland';
 export { default as IconSearch } from './icon-search';
 export { default as IconLoading } from './icon-loading';
 export { default as IconPencil } from './icon-pencil';
