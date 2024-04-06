@@ -22,12 +22,25 @@ export { default as IconLoading } from './Loading';
 export { default as IconPencil } from './PencilIcon';
 export { default as IconThreeDot } from './ThreeDotIcon';
 export { default as IconX } from './XIcon';
+<<<<<<< HEAD
 export { default as blackLeftArrow } from './blackLeftArrow';
 export { default as blackRightArrow } from './blackRightArrow';
 export { default as downIcon } from './downIcon';
 export { default as minusIcon } from './minusIcon';
 export { default as newIcon } from './newIcon';
 export { default as AddPhotoIcon } from './add-photo-icon';
+=======
+<<<<<<< HEAD
+export { default as BlackLeftArrow } from './blackLeftArrow';
+export { default as BlackRightArrow } from './blackRightArrow';
+=======
+export { default as blackLeftArrow } from './blackLeftArrow';
+export { default as blackRightArrow } from './blackRightArrow';
+>>>>>>> dev
+export { default as downIcon } from './downIcon';
+export { default as minusIcon } from './minusIcon';
+export { default as newIcon } from './newIcon';
+>>>>>>> dev
 export { default as orangeApplicationsIcon } from './orangeApplicationsIcon';
 export { default as orangeBooksIcon } from './orangeBooksIcon';
 export { default as orangeLeftArrow } from './orangeLeftArrow';
@@ -42,3 +55,12 @@ export { default as whiteApplicationsIcon } from './whiteApplicationsIcon';
 export { default as whiteBooksIcon } from './whiteBooksIcon';
 export { default as whiteSellersIcon } from './whiteSellersIcon';
 export { default as whiteUsersIcon } from './whiteUsersIcon';
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+export { default as Download } from './downloadIcon';
+export { default as DownloadedIcon } from './dowloadedIcon';
+export { default as DownloadingIcon } from './downloadingIcon';
+>>>>>>> dev
+>>>>>>> dev

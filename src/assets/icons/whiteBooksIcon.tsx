@@ -1,4 +1,3 @@
-
 const whiteBooksIcon = () => {
 	return (
 		<svg
