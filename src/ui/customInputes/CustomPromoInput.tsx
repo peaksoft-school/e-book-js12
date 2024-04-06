@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import scss from './CustomInput.module.scss';
+import scss from './Style.module.scss';
 import { BlackRightArrow } from '@/src/assets/icons';
 
 interface TypeProps {

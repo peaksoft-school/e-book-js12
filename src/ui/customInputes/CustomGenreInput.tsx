@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import scss from './CustomInput.module.scss';
+import scss from './Style.module.scss';
 import { IconSearch } from '@/src/assets/icons';
 
 interface TypeProps {
@@ -10,7 +10,6 @@ const CustomGenreInput: FC<TypeProps> = ({ placeholder }) => {
 	return (
 		<div className={scss.searchContainer}>
 			<input placeholder={placeholder} className={scss.GenreInput} />
-			
 			<IconSearch />
 		</div>
 	);

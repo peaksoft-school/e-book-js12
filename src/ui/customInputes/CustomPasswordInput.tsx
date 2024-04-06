@@ -1,11 +1,12 @@
 import { FC } from 'react';
-import scss from './CustomInput.module.scss';
+import scss from './Style.module.scss';
 import EyeSeeIcon from '@/src/assets/icons/EyeSeeIcon';
 
 interface TypeProps {
 	placeholder: string;
 	type: string;
 }
+
 const CustomPasswordInput: FC<TypeProps> = ({ placeholder, type }) => {
 	return (
 		<div className={scss.passwordContainer}>
