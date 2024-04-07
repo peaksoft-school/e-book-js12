@@ -1,6 +1,6 @@
 import { FC, ChangeEvent, useRef, useState } from 'react';
 import scss from './CustomPDFDownload.module.scss';
-import { Download, DownloadedIcon } from '../../assets/icons';
+import { IconDownload, IconDownloaded } from '@/src/assets/icons';
 
 interface CustomPDFDownloadInputProps {
 	accept: string;
@@ -46,7 +46,7 @@ const CustomPDFDownloadInput: FC<CustomPDFDownloadInputProps> = ({
 					disabled={isFileUploaded}
 					style={{ display: 'none' }}
 				/>
-				{isFileUploaded ? <DownloadedIcon /> : <Download />}
+				{isFileUploaded ? <IconDownloaded /> : <IconDownload />}
 				<p className={isFileUploaded ? scss.uploadedText : scss.unUploadedText}>
 					{isFileUploaded ? 'PDF загружена' : 'Загрузите PDF'}
 				</p>
