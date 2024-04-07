@@ -1,4 +1,4 @@
-const orangeRightArrow = () => {
+const OrangeRightArrow = () => {
 	return (
 		<svg
 			width="40"
@@ -15,4 +15,4 @@ const orangeRightArrow = () => {
 	);
 };
 
-export default orangeRightArrow;
+export default OrangeRightArrow;

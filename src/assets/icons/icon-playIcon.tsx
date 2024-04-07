@@ -1,4 +1,4 @@
-const playIcon = () => {
+const PlayIcon = () => {
 	return (
 		<svg
 			width="30"
@@ -14,7 +14,7 @@ const playIcon = () => {
 				x2="12.5"
 				y2="18.5"
 				stroke="#969696"
-				stroke-linecap="round"
+				strokeLinecap="round"
 			/>
 			<line
 				x1="17.5"
@@ -22,10 +22,10 @@ const playIcon = () => {
 				x2="17.5"
 				y2="18.5"
 				stroke="#969696"
-				stroke-linecap="round"
+				strokeLinecap="round"
 			/>
 		</svg>
 	);
 };
 
-export default playIcon;
+export default PlayIcon;

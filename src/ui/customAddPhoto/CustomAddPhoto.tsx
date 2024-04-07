@@ -1,6 +1,6 @@
 import React, { ChangeEvent, useRef, useState } from 'react';
 import scss from './CustomAddPhoto.module.scss';
-import { AddPhotoIcon } from '@/src/assets/icons';
+import { IconAddPhoto } from '@/src/assets/icons';
 
 const CustomAddPhoto: React.FC = () => {
 	const [image, setImage] = useState<string>('');
@@ -38,7 +38,7 @@ const CustomAddPhoto: React.FC = () => {
 			{image ? null : (
 				<>
 					<div className={scss.imgContainer} onClick={handleButtonClick}>
-						<AddPhotoIcon />
+						<IconAddPhoto />
 					</div>
 				</>
 			)}

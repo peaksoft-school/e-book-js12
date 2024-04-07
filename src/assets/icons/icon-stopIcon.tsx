@@ -1,4 +1,4 @@
-const stopIcon = () => {
+const StopIcon = () => {
 	return (
 		<svg
 			width="30"
@@ -13,4 +13,4 @@ const stopIcon = () => {
 	);
 };
 
-export default stopIcon;
+export default StopIcon;
