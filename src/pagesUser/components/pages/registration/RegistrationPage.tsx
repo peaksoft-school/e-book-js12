@@ -52,10 +52,20 @@ const RegistrationPage = () => {
 								type={'password'}
 							/>
 						</label>
+						<div className={scss.checkBox}>
+							<input type="checkbox" id="newsletterCheckbox" />
+							<label htmlFor="newsletterCheckbox">
+								Подпишитесь на рассылку, чтобы получать новости от eBook
+							</label>
+						</div>
+
 						<CustomAuthButton
 							children={'Создать аккаунт'}
 							onClick={function (): void {}}
 						/>
+						<button className={scss.VendorButton}>
+							Стать продавцом на eBook
+						</button>
 					</div>
 				</div>
 			</div>

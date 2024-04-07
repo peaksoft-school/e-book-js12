@@ -9,43 +9,48 @@ const LoginPage = () => {
 	const location = useLocation();
 
 	return (
-		<div className={scss.LoginPage}>
-			<div className="container">
-				<div className={scss.content}>
-					<div className={scss.links}>
-						<Link
-							className={`${scss.loginLink} ${location.pathname === '/login' ? scss.loginLinkActive : ''}`}
-							to="/login"
-						>
-							Войти
-						</Link>
-						<Link
-							className={`${scss.registrationLink} ${location.pathname === '/registration' ? scss.registrationLinkActive : ''}`}
-							to="/registration"
-						>
-							Регистрация
-						</Link>
-					</div>
-					<div className={scss.AuthLoginInputs}>
-						<label>
-							напишите email*
-							<CustomLoginInput placeholder={'напишите email'} type={'email'} />
-						</label>
-						<label>
-							напиште пароль*
-							<CustomPasswordInput
-								placeholder={'напиште пароль'}
-								type={'password'}
+		<>
+			<div className={scss.LoginPage}>
+				<div className="container">
+					<div className={scss.content}>
+						<div className={scss.links}>
+							<Link
+								className={`${scss.loginLink} ${location.pathname === '/login' ? scss.loginLinkActive : ''}`}
+								to="/login"
+							>
+								Войти
+							</Link>
+							<Link
+								className={`${scss.registrationLink} ${location.pathname === '/registration' ? scss.registrationLinkActive : ''}`}
+								to="/registration"
+							>
+								Регистрация
+							</Link>
+						</div>
+						<div className={scss.AuthLoginInputs}>
+							<label>
+								напишите email*
+								<CustomLoginInput
+									placeholder={'напишите email'}
+									type={'email'}
+								/>
+							</label>
+							<label>
+								напиште пароль*
+								<CustomPasswordInput
+									placeholder={'напиште пароль'}
+									type={'password'}
+								/>
+							</label>
+							<CustomAuthButton
+								children={'войти'}
+								onClick={function (): void {}}
 							/>
-						</label>
-						<CustomAuthButton
-							children={'войти'}
-							onClick={function (): void {}}
-						/>
+						</div>
 					</div>
 				</div>
 			</div>
-		</div>
+		</>
 	);
 };
 

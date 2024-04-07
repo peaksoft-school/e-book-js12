@@ -9,6 +9,15 @@ import LoginPage from '../pages/login/LoginPage';
 const LayoutUser = () => {
 	return (
 		<>
+			<div className={scss.videoContainer}>
+				<video autoPlay muted loop className={scss.bg_video}>
+					<source
+						src="https://cdn.pixabay.com/video/2021/01/29/63328-506377472_large.mp4"
+						type="video/webm"
+					/>
+					Your browser does not support the video tag.
+				</video>
+			</div>
 			<div className={scss.layout}>
 				<Header />
 				<main>
@@ -23,4 +32,5 @@ const LayoutUser = () => {
 		</>
 	);
 };
+
 export default LayoutUser;
