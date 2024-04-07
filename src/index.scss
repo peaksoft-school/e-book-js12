@@ -1,5 +1,5 @@
-@import url("@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap')");
-::-webkit-scrollbar {
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap');
+:-webkit-scrollbar {
 	width: 4px;
 	height: 4px;
 }
@@ -28,7 +28,7 @@ html {
 	color-scheme: dark;
 }
 body {
-	font-family: 'Open Sans';
+	font-family: 'Inter', sans-serif;
 	background: #f8f8f8 !important;
 	color: #222222 !important;
 }

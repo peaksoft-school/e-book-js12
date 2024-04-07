@@ -12,26 +12,49 @@
 		max-width: 92px;
 		color: white;
 		letter-spacing: 2px;
-		font-size: clamp(20px, 8vw, 28px);
+		font-size: clamp(18px, 5vw, 25px);
 		font-weight: 700;
 	}
-}
-@media (max-width: 320px) {
-	.LogoContainer {
-		display: flex;
-		flex-direction: column;
-		justify-content: center;
-		align-items: center;
+
+	@media (max-width: 1200px) {
+		max-width: 140px;
+		width: 100%;
+		padding: 30px 25px 29px 25px;
+		transition: 0.3s;
+	}
+
+	@media (max-width: 800px) {
+		max-width: 130px;
+		width: 100%;
+		padding: 26px 24px 27px 24px;
+		transition: 0.3s;
+	}
+
+	@media (max-width: 600px) {
 		max-width: 120px;
 		width: 100%;
-		background: rgb(34, 34, 34);
-		padding: 27px 24px 26px 24px;
-		p {
-			max-width: 92px;
-			color: white;
-			letter-spacing: 2px;
-			font-size: clamp(20px, 8vw, 28px);
-			font-weight: 700;
-		}
+		padding: 24px 22px 25px 22px;
+		transition: 0.3s;
+	}
+
+	@media (max-width: 400px) {
+		max-width: 110px;
+		width: 100%;
+		padding: 22px 20px 23px 20px;
+		transition: 0.3s;
+	}
+
+	@media (max-width: 380px) {
+		max-width: 100px;
+		width: 100%;
+		padding: 20px 18px 21px 18px;
+		transition: 0.3s;
+	}
+
+	@media (max-width: 320px) {
+		max-width: 90px;
+		width: 100%;
+		padding: 18px 16px 19px 16px;
+		transition: 0.3s;
 	}
 }
