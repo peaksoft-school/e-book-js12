@@ -7,12 +7,31 @@
 	width: 100%;
 	background: rgb(34, 34, 34);
 	padding: 33px 27px 31px 27px;
+
 	p {
 		max-width: 92px;
 		color: white;
 		letter-spacing: 2px;
-		font-size: 28px;
-		font-family: Open Sans;
+		font-size: clamp(20px, 8vw, 28px);
 		font-weight: 700;
+	}
+}
+@media (max-width: 320px) {
+	.LogoContainer {
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		max-width: 120px;
+		width: 100%;
+		background: rgb(34, 34, 34);
+		padding: 27px 24px 26px 24px;
+		p {
+			max-width: 92px;
+			color: white;
+			letter-spacing: 2px;
+			font-size: clamp(20px, 8vw, 28px);
+			font-weight: 700;
+		}
 	}
 }
