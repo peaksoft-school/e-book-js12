@@ -1,0 +1,18 @@
+.LogoContainer {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	max-width: 147px;
+	width: 100%;
+	background: rgb(34, 34, 34);
+	padding: 33px 27px 31px 27px;
+	p {
+		max-width: 92px;
+		color: white;
+		letter-spacing: 2px;
+		font-size: 28px;
+		font-family: Open Sans;
+		font-weight: 700;
+	}
+}
