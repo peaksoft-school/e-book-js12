@@ -3,7 +3,6 @@ import CustomPasswordInput from '@/src/ui/customInpute/CustomPasswordInput';
 import CustomAuthButton from '@/src/ui/customButton/CustomAuthButton';
 import scss from './RegistrationPage.module.scss';
 import { Link, useLocation } from 'react-router-dom';
-import CustomUserNameInput from '@/src/ui/customInpute/CustomUserNameInput';
 
 const RegistrationPage = () => {
 	const location = useLocation();
@@ -29,7 +28,7 @@ const RegistrationPage = () => {
 					<div className={scss.AuthRegistrationInputs}>
 						<label>
 							Напишите ваше имя*
-							<CustomUserNameInput placeholder={'Напишите ваше имя'} />
+							<CustomLoginInput placeholder={'Напишите ваше имя'} type="text" />
 						</label>
 
 						<label>
