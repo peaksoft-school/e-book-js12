@@ -1,4 +1,4 @@
-const dowloadedIcon = () => {
+const downloadedIcon = () => {
 	return (
 		<svg
 			width="16.000000"
@@ -25,4 +25,4 @@ const dowloadedIcon = () => {
 	);
 };
 
-export default dowloadedIcon;
+export default downloadedIcon;

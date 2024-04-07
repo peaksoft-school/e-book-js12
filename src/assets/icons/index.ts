@@ -41,6 +41,6 @@ export { default as IconWhiteApplicationsIcon } from './icon-whiteApplicationsIc
 export { default as IconWhiteBooksIcon } from './icon-whiteBooksIcon';
 export { default as IconWhiteSellersIcon } from './icon-whiteSellersIcon';
 export { default as IconWhiteUsersIcon } from './icon-whiteUsersIcon';
-export { default as IconDowloaded } from './icon-dowloaded';
-export { default as IconDowload } from './icon-download';
-export { default as IconDowloading } from './icon-downloading';
+export { default as IconDownloaded } from './icon-downloaded';
+export { default as IconDownload } from './icon-download';
+export { default as IconDownloading } from './icon-downloading';
