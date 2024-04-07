@@ -4,6 +4,7 @@ const HomePage = () => {
 	return (
 		<>
 			<Welcome />
+			
 		</>
 	);
 };
