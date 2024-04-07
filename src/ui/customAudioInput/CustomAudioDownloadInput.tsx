@@ -1,6 +1,6 @@
 import { FC, ChangeEvent, useRef, useState } from 'react';
 import scss from './CustomAudioDownloadInput.module.scss';
-import { Download, DownloadedIcon } from '../../assets/icons/';
+import { IconDownload, IconDownloaded } from '@/src/assets/icons';
 
 interface CustomAudioDownloadInputProps {
 	accept: string;
@@ -46,7 +46,7 @@ const CustomAudioDownloadInput: FC<CustomAudioDownloadInputProps> = ({
 					disabled={isFileUploaded}
 					style={{ display: 'none' }}
 				/>
-				{isFileUploaded ? <DownloadedIcon /> : <Download />}
+				{isFileUploaded ? <IconDownloaded /> : <IconDownload />}
 				<p className={isFileUploaded ? scss.uploadedText : scss.unUploadedText}>
 					{isFileUploaded ? 'Аудиозапись загружена' : 'Загрузите аудиозапись'}
 				</p>
