@@ -85,7 +85,112 @@
 	opacity: 0;
 }
 
+// .passwordContainer {
+// 	display: flex;
+// 	align-items: center;
+// 	border: 1px solid rgb(196, 196, 196);
+// 	max-width: 514px;
+// 	width: 100%;
+// 	height: 41px;
+// 	padding-right: 18px;
+// 	background-color: #e5e5e5;
+// 	.EyeSeeIcon {
+// 		color: rgb(196, 196, 196);
+// 	}
+
+// 	&:hover {
+// 		background: rgb(250, 250, 250);
+// 	}
+
+// 	&:focus-within {
+// 		border: 1px solid rgb(196, 196, 196);
+// 		background: rgb(250, 250, 250);
+// 		color: #222222;
+// 		.EyeSeeIcon {
+// 			color: #222222;
+// 		}
+// 	}
+
+// 	.passwordInput {
+// 		max-width: 514px;
+// 		width: 100%;
+// 		height: 41px;
+// 		color: rgb(34, 34, 34);
+// 		font-size: 14px;
+// 		font-weight: 400;
+// 		line-height: 130%;
+// 		letter-spacing: 0px;
+// 		padding: 8px 18px;
+// 		text-align: left;
+// 		background: transparent;
+// 		box-sizing: border-box;
+// 		outline: none;
+// 		border: transparent;
+// 		font-size: 16px;
+// 		font-weight: 400;
+// 		line-height: 130%;
+// 		letter-spacing: 0px;
+// 		text-align: left;
+// 		border-right: transparent;
+// 	}
+// 	.passwordInput:hover {
+// 		border: 1px solid rgb(196, 196, 196);
+// 		background: rgb(250, 250, 250);
+// 		border-right: transparent;
+// 	}
+// 	.passwordInput:focus {
+// 		background: rgb(250, 250, 250);
+// 		outline: none;
+// 		color: #222222;
+// 		border-right: transparent;
+// 	}
+// 	.passwordInput:focus::placeholder {
+// 		opacity: 0;
+// 	}
+// }
+// //////////////!
+// .passwordContainer {
+// 	border-color: red;
+// 	background-color: #ffd6d6;
+// 	color: #ff0000;
+// 	.EyeSeeIcon {
+// 		border-color: red;
+// 		background-color: #ffd6d6;
+// 		color: #ff0000;
+// 	}
+// }
+// .passwordContainer:hover {
+// 	border-color: red;
+// 	background-color: #ffd6d6;
+// 	color: #ff0000;
+// 	.passwordInput:hover {
+// 		border-color: red;
+// 		background-color: #ffd6d6;
+// 		color: #ff0000;
+// 	}
+// }
+
+// .container_error .passwordInput {
+// 	border-color: red;
+// 	background-color: #ffd6d6;
+// 	color: #ff0000;
+// }
+// .container_error .passwordInput:not(:focus) {
+// 	border-color: red;
+// 	background-color: #ffd6d6;
+// 	color: #ff0000;
+// }
+// .container_error .passwordInput:hover:not(:focus) {
+// 	border-color: red;
+// 	background-color: #ffd6d6;
+// 	color: #ff0000;
+// }
+//////////////!
 .passwordContainer {
+	/* Ваши текущие стили */
+	border-color: red;
+	background-color: #ffd6d6;
+	color: #ff0000;
 	display: flex;
 	align-items: center;
 	border: 1px solid rgb(196, 196, 196);
@@ -93,63 +198,73 @@
 	width: 100%;
 	height: 41px;
 	padding-right: 18px;
-	background-color: #e5e5e5;
+}
 
+/* Добавлено для сохранения стилей при фокусировке на дочерних элементах */
+.passwordContainer:focus-within {
+	border-color: red;
+	background-color: #ffd6d6;
+	border: 1px solid rgb(196, 196, 196);
+	color: #ff0000;
 	.EyeSeeIcon {
-		color: rgb(196, 196, 196);
-	}
-
-	&:hover {
-		background: rgb(250, 250, 250);
-	}
-
-	&:focus-within {
-		border: 1px solid rgb(196, 196, 196);
-		background: rgb(250, 250, 250);
-		color: #222222;
-		.EyeSeeIcon {
-			color: #222222;
-		}
-	}
-
-	.passwordInput {
-		max-width: 514px;
-		width: 100%;
-		height: 41px;
-		color: rgb(34, 34, 34);
-		font-size: 14px;
-		font-weight: 400;
-		line-height: 130%;
-		letter-spacing: 0px;
-		padding: 8px 18px;
-		text-align: left;
-		background: transparent;
-		box-sizing: border-box;
-		outline: none;
-		border: 1px solid rgb(196, 196, 196);
-		font-size: 16px;
-		font-weight: 400;
-		line-height: 130%;
-		letter-spacing: 0px;
-		text-align: left;
-		border-right: transparent;
-	}
-	.passwordInput:hover {
-		border: 1px solid rgb(196, 196, 196);
-		background: rgb(250, 250, 250);
-		border-right: transparent;
-	}
-	.passwordInput:focus {
-		background: rgb(250, 250, 250);
-		outline: none;
-		color: #222222;
-		border-right: transparent;
-	}
-	.passwordInput:focus::placeholder {
-		opacity: 0;
+		color: #ff0000;
 	}
 }
 
+.passwordInput {
+	/* Ваши текущие стили */
+	border-color: red;
+	background-color: #ffd6d6;
+	color: #ff0000;
+	max-width: 514px;
+	width: 100%;
+	height: 41px;
+	font-size: 14px;
+	font-weight: 400;
+	line-height: 130%;
+	letter-spacing: 0px;
+	padding: 8px 18px;
+	text-align: left;
+	box-sizing: border-box;
+	outline: none;
+	font-size: 16px;
+	font-weight: 400;
+	line-height: 130%;
+	letter-spacing: 0px;
+	text-align: left;
+	border-right: transparent;
+}
+
+.passwordInput:hover {
+	/* Ваши текущие стили */
+	border-color: red;
+	background-color: #ffd6d6;
+	color: #ff0000;
+}
+
+.passwordInput:focus {
+	/* Ваши текущие стили */
+	border-color: red;
+	background-color: #ffd6d6;
+	color: #ff0000;
+}
+
+.passwordInput:focus::placeholder {
+	/* Ваши текущие стили */
+	opacity: 0;
+}
+
+/* Стили для контейнера в состоянии ошибки */
+.container_error {
+	border-color: red;
+	background-color: #ffd6d6;
+	color: #ff0000;
+	.EyeSeeIcon {
+		color: #ff0000; /* Кнопка "Password" красная */
+	}
+}
+
+//////////////!
 .promoContainer {
 	display: flex;
 	align-items: center;

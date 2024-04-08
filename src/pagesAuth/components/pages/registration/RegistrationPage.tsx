@@ -26,32 +26,32 @@ const RegistrationPage = () => {
 						</Link>
 					</div>
 					<div className={scss.AuthRegistrationInputs}>
-						<label>
-							Напишите ваше имя*
+						<div className={scss.labelInput}>
+							<label>Напишите ваше имя*</label>
 							<CustomLoginInput placeholder={'Напишите ваше имя'} type="text" />
-						</label>
+						</div>
 
-						<label>
-							Email*
+						<div className={scss.labelInput}>
+							<label>Email*</label>
 							<CustomLoginInput
 								placeholder={'Напишите ваш email'}
 								type={'email'}
 							/>
-						</label>
-						<label>
-							Пароль*
+						</div>
+						<div className={scss.labelInput}>
+							<label>Пароль*</label>
 							<CustomPasswordInput
 								placeholder={'Напишите пароль'}
 								type={'password'}
 							/>
-						</label>
-						<label>
-							Подтвердите пароль*
+						</div>
+						<div className={scss.labelInput}>
+							<label>Подтвердите пароль*</label>
 							<CustomPasswordInput
 								placeholder={'Подтвердите пароль'}
 								type={'password'}
 							/>
-						</label>
+						</div>
 						<div className={scss.checkBox}>
 							<input type="checkbox" />
 							<p> Подпишитесь на рассылку, чтобы получать новости от eBook</p>
