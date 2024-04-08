@@ -25,4 +25,34 @@
 			box-shadow: 0px 0px 5px #3f3f3f;
 		}
 	}
+	.content {
+		.header_Content {
+			display: flex;
+			justify-content: space-between;
+			.logo_Content {
+			}
+			.input_Content {
+				max-width: 896px;
+				width: 100%;
+			}
+			.right_Content {
+				display: flex;
+				.favorite_icon {
+				}
+				.basket {
+				}
+			}
+		}
+		.nav_bar {
+			.left_nav_Content{
+
+			}
+			.center_nav_Content{
+
+			}
+			.right_nav_Content{
+
+			}
+		}
+	}
 }

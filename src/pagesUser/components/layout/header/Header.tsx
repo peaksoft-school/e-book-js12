@@ -1,5 +1,8 @@
+import CustomGenreInput from '@/src/ui/customInpute/CustomGenreInput';
 import scss from './Header.module.scss';
 import { useEffect, useState } from 'react';
+import WhiteLikeIcon from '@/src/assets/icons/icon-whiteLike';
+import { IconRedDot } from '@/src/assets/icons';
 
 const Header = () => {
 	const [headerScroll, setHeaderScroll] = useState<boolean>(false);
@@ -31,7 +34,26 @@ const Header = () => {
 				>
 					<div className="container">
 						<div className={scss.content}>
-							<h3>Header</h3>
+							<div className={scss.header_Content}>
+								<div className={scss.logo_Content}></div>
+								<div className={scss.input_Content}>
+									<CustomGenreInput placeholder="Искать жанр, книги, авторов, издательства... " />
+								</div>
+								<div className={scss.right_Content}>
+									<div className={scss.favorite_icon}>
+										<WhiteLikeIcon />
+										<IconRedDot />
+									</div>
+									<div className={scss.basket}>
+										<p>Корзина (3)</p>
+									</div>
+								</div>
+							</div>
+							<nav className={scss.nav_bar}>
+								<div className={scss.left_nav_Content}></div>
+								<div className={scss.center_nav_Content}></div>
+								<div className={scss.right_nav_Content}></div>
+							</nav>
 						</div>
 					</div>
 				</div>
