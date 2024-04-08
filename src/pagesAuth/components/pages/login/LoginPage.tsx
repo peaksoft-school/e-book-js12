@@ -15,14 +15,14 @@ const LoginPage = () => {
 					<div className={scss.content}>
 						<div className={scss.links}>
 							<Link
-								className={`${scss.loginLink} ${location.pathname === '/login' ? scss.loginLinkActive : ''}`}
-								to="/login"
+								className={`${scss.loginLink} ${location.pathname === '/auth/login' ? scss.loginLinkActive : ''}`}
+								to="/auth/login"
 							>
 								Войти
 							</Link>
 							<Link
-								className={`${scss.registrationLink} ${location.pathname === '/registration' ? scss.registrationLinkActive : ''}`}
-								to="/registration"
+								className={`${scss.registrationLink} ${location.pathname === '/auth/registration' ? scss.registrationLinkActive : ''}`}
+								to="/auth/registration"
 							>
 								Регистрация
 							</Link>
