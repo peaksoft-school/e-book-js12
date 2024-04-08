@@ -3,6 +3,7 @@ import scss from './Header.module.scss';
 import { useEffect, useState } from 'react';
 import WhiteLikeIcon from '@/src/assets/icons/icon-whiteLike';
 import { IconRedDot } from '@/src/assets/icons';
+import LogoeBook from '@/src/ui/logoeBook/LogoeBook';
 
 const Header = () => {
 	const [headerScroll, setHeaderScroll] = useState<boolean>(false);
@@ -35,7 +36,9 @@ const Header = () => {
 					<div className="container">
 						<div className={scss.content}>
 							<div className={scss.header_Content}>
-								<div className={scss.logo_Content}></div>
+								<div className={scss.logo_Content}>
+									<LogoeBook />
+								</div>
 								<div className={scss.input_Content}>
 									<CustomGenreInput placeholder="Искать жанр, книги, авторов, издательства... " />
 								</div>

@@ -28,7 +28,8 @@
 	.content {
 		.header_Content {
 			display: flex;
-			justify-content: space-between;
+			justify-content: center;
+			gap: 44.5px;
 			.logo_Content {
 			}
 			.input_Content {
@@ -45,13 +46,10 @@
 		}
 		.nav_bar {
 			.left_nav_Content{
-
 			}
 			.center_nav_Content{
-
 			}
 			.right_nav_Content{
-
 			}
 		}
 	}
