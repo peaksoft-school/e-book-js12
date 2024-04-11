@@ -8,7 +8,7 @@ const Footer: FC = () => {
 				<div className="container">
 					<div className={scss.content}>
 						<div className={scss.footerBox}>
-							<div className={scss.firstContent} >
+							<div className={scss.firstContent}>
 								<div className={scss.logoeBook}>eBook</div>
 								<a href="#">Политика конфиденциальности</a>
 							</div>
