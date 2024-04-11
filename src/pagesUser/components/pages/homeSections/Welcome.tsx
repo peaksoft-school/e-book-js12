@@ -1,6 +1,7 @@
 import { FC } from 'react';
 import scss from './Welcome.module.scss';
 import AudioBooks from '../audioBooks/AudioBooks';
+import SubscribePage from '../subscribePage/SubscribePage';
 
 const Welcome: FC = () => {
 	return (
@@ -10,6 +11,7 @@ const Welcome: FC = () => {
 					<div className={scss.content}>
 						<h1>Welcome, User!</h1>
 						<AudioBooks />
+						<SubscribePage />
 					</div>
 				</div>
 			</section>
