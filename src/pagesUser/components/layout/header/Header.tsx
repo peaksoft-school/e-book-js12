@@ -1,6 +1,6 @@
 import CustomGenreInput from '@/src/ui/customInpute/CustomGenreInput';
 import scss from './Header.module.scss';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import WhiteLikeIcon from '@/src/assets/icons/icon-whiteLike';
 import { IconBurgerMenu, IconRedDot } from '@/src/assets/icons';
 import LogoeBook from '@/src/ui/logoeBook/LogoeBook';
@@ -49,6 +49,7 @@ const Header = () => {
 	const [headerScroll, setHeaderScroll] = useState<boolean>(false);
 	const [isGenre, setIsGenre] = useState<boolean>(false);
 	const [isNavBar, setIsNavBar] = useState<boolean>(false);
+	const menuRef = useRef(null);
 
 	useEffect(() => {
 		const changeHeader = () => {
@@ -112,24 +113,23 @@ const Header = () => {
 									>
 										<IconBurgerMenu />
 									</div>
-									{isNavBar ? (
-										<div className={scss.navbar_menu}>
-											<ul>
-												<li
-													onClick={() => {
-														setIsGenre(!isGenre);
-													}}
-												>
-													Жанры
-												</li>
-												<li>Электронные книги</li>
-												<li>Audio books</li>
-												<li>Промокоды</li>
-												<li>Начать продавать на eBook</li>
-											</ul>
-										</div>
-									) : null}
-									<p>Жанры</p>
+									<div
+										className={`${scss.navbar_menu} ${isNavBar ? scss.navbar_block : scss.navbar_none}`}
+									>
+										<ul>
+											<li>Электронные книги</li>
+											<li>Audio books</li>
+											<li>Промокоды</li>
+											<li>Начать продавать на eBook</li>
+										</ul>
+									</div>
+									<p
+										onClick={() => {
+											setIsGenre(!isGenre);
+										}}
+									>
+										Жанры
+									</p>
 								</div>
 								<div className={scss.center_nav_Content}>
 									<ul>
@@ -148,9 +148,12 @@ const Header = () => {
 									</button>
 								</div>
 							</nav>
-							{isGenre ? (
-								<>
-									<div className={scss.genre_container}>
+							<div className={scss.search_input}>
+								<CustomGenreInput placeholder="Искать жанр, книги, авторов, издательства... " />
+							</div>
+							<div className={scss.position_container}>
+								{isGenre && (
+									<div className={scss.genre_container} ref={menuRef}>
 										<div className={scss.lefts_genre}>
 											{dataGenre.map((item, index) => (
 												<div className={scss.name_genre} key={index}>
@@ -159,7 +162,7 @@ const Header = () => {
 												</div>
 											))}
 										</div>
-										<div className={scss.centers_genre}>
+										<div className={scss.center_genre}>
 											{dataGenre.map((item, index) => (
 												<div className={scss.name_genre} key={index}>
 													<p>{item.category}</p>
@@ -176,8 +179,8 @@ const Header = () => {
 											))}
 										</div>
 									</div>
-								</>
-							) : null}
+								)}
+							</div>
 						</div>
 					</div>
 				</div>
