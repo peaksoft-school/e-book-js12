@@ -1,4 +1,55 @@
 .Footer {
+	background-color: rgb(34, 34, 34);
+	padding-block: 50px;
 	.content {
+		max-width: 1133px;
+		width: 100%;
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		flex-wrap: wrap;
+		gap: 40px;
+
+		.firstContent {
+			display: flex;
+			flex-direction: column;
+			gap: 50px;
+			@media (max-width: 527px) {
+				gap: 10px;
+			}
+		}
+		.footerBox {
+			display: flex;
+			flex-direction: column;
+			justify-content: space-between;
+			align-items: flex-start;
+			gap: 18px;
+			@media (max-width: 527px) {
+				gap: 5px;
+			}
+
+			.logoeBook {
+				font-size: 28px;
+				font-weight: 500;
+				line-height: 34.13px;
+				text-align: left;
+				color: #ffffff;
+			}
+
+			h3 {
+				color: #ffffff;
+				font-size: clamp(10px, 8vw, 20px);
+				font-weight: 600;
+				line-height: 26px;
+				text-align: left;
+			}
+			a {
+				color: #ffffff;
+				font-weight: 400;
+				line-height: 21.79px;
+				text-align: left;
+				font-size: clamp(8px, 8vw, 16px);
+			}
+		}
 	}
 }

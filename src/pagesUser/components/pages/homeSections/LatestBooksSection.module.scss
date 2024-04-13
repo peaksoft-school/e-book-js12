@@ -22,25 +22,18 @@
 		margin: 4rem auto;
 		height: 470px;
 
-.textBookContent{
-	
-	color: white;
-	.textBookTwo{
-		color:  #8C8C8C;
-		font-size: 50%
-		;
-	}
+		.textBookContent {
+			color: white;
+			.textBookTwo {
+				color: #8c8c8c;
+				font-size: 50%;
+			}
 
-		.textBook{
-			font-size: 50%;
-			color: #D6D6D6;
-			
-
+			.textBook {
+				font-size: 50%;
+				color: #d6d6d6;
+			}
 		}
-
-	}
-
-
 
 		@media (max-width: 1000px) {
 			top: 14%;

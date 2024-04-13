@@ -91,8 +91,10 @@ const LatestBooksSection: FC = () => {
 									>
 										<img className={scss.imagesSlide} src={img} alt="#" />
 										<div className={scss.textBookContent}>
-										<p className={scss.textBook}>Гарри Поттер и Тайная ко...</p>
-										<p className={scss.textBookTwo}>Роулинг Джоан Кэтлин</p>
+											<p className={scss.textBook}>
+												Гарри Поттер и Тайная ко...
+											</p>
+											<p className={scss.textBookTwo}>Роулинг Джоан Кэтлин</p>
 										</div>
 									</div>
 								))}

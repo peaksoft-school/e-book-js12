@@ -4,8 +4,6 @@
 // import LayoutAuth from './pagesAuth/components/layout/LayoutAuth';
 // import LayoutVendor from './pagesVendor/components/layout/LayoutVendor';
 
-
-
 import LatesBooksSection from './pagesUser/components/pages/homeSections/LatesBooksSection';
 
 const App = () => {
