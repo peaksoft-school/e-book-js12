@@ -1,0 +1,179 @@
+.Welcome {
+	background-color: #1c1c1c;
+}
+
+.latest_books_section {
+	max-width: 1900px;
+	width: 100%;
+	position: relative;
+	padding: 1px;
+
+	.backLine svg {
+		position: absolute;
+		width: 100%;
+		z-index: 1;
+	}
+
+	.slider_container {
+		position: absolute;
+		top: 18%;
+		right: 20%;
+		width: 60%;
+		margin: 4rem auto;
+		height: 470px;
+
+.textBookContent{
+	
+	color: white;
+	.textBookTwo{
+		color:  #8C8C8C;
+		font-size: 50%
+		;
+	}
+
+		.textBook{
+			font-size: 50%;
+			color: #D6D6D6;
+			
+
+		}
+
+	}
+
+
+
+		@media (max-width: 1000px) {
+			top: 14%;
+		}
+		@media (max-width: 720px) {
+			top: 6%;
+		}
+		@media (max-width: 575px) {
+			margin: 0;
+		}
+		@media (max-width: 510px) {
+			right: 5%;
+		}
+		@media (max-width: 470px) {
+			top: -40%;
+			right: 50px;
+		}
+		@media (max-width: 340px) {
+			top: -60%;
+			right: 50px;
+		}
+
+		.slide img {
+			width: 10rem;
+			margin: auto;
+
+			@media (max-width: 650px) {
+				.slide img {
+					width: 100%;
+					margin: auto;
+				}
+			}
+			@media (max-width: 500px) {
+			}
+		}
+
+		.slide {
+			transform: scale(0.7);
+			transition:
+				transform 300ms ease-in-out 0.2s,
+				opacity 300ms;
+			opacity: 0.4;
+		}
+		@media (max-width: 470px) {
+			transform: scale(0.9);
+			transition:
+				transform 300ms ease-in-out 0.2s,
+				opacity 300ms;
+			opacity: 2;
+		}
+		@media (max-width: 400px) {
+			transform: scale(0.4);
+			transition:
+				transform 300ms ease-in-out 0.2s,
+				opacity 400ms;
+			opacity: 1;
+		}
+
+		.activeSlide {
+			transform: scale(1);
+			opacity: 1;
+		}
+
+		.arrow_next,
+		.arrow_prev {
+			position: absolute;
+			cursor: pointer;
+			z-index: 10;
+		}
+
+		.arrow_prev h1 {
+			margin: 0;
+		}
+
+		.arrow_next {
+			right: 0;
+			top: 50%;
+			transform: translateY(-50%);
+		}
+
+		.arrow_prev,
+		.arrow_prev {
+			left: 0;
+			top: 50%;
+			transform: translateY(-50%);
+		}
+
+		@media (max-width: 600px) {
+			.arrow_next {
+				right: 50px;
+				top: 60%;
+				transform: translateY(-50%);
+			}
+
+			.arrow_prev {
+				left: 50px;
+				top: 60%;
+				transform: translateY(-50%);
+			}
+		}
+
+		@media (max-width: 510px) {
+			.arrow_next {
+				right: 50px;
+				top: 44%;
+				transform: translate(-50%);
+			}
+			.arrow_prev {
+				right: 0px;
+				top: 45%;
+				transform: translate(-50%);
+			}
+		}
+
+		@media (max-width: 470px) {
+			.arrow_next {
+				right: -30px;
+				top: 44%;
+				transform: translate(-50%);
+			}
+			.arrow_prev {
+				right: -60px;
+				top: 45%;
+				transform: translate(-50%);
+			}
+		}
+
+		.arrow_prev:hover {
+			color: aqua;
+		}
+
+		.arrow_next:hover {
+			color: aqua;
+		}
+	}
+}
