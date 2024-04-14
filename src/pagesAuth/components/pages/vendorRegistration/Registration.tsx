@@ -1,10 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import EyeSeeIcon from '@/src/assets/icons/icon-eyeSee';
-import scss from './Registration.module.scss';
-import EyeClose from '@/src/assets/icons/icon-eyeClose';
 import { Link } from 'react-router-dom';
+import scss from './Registration.module.scss';
 import { useState } from 'react';
+import EyeSeeIcon from '@/src/assets/icons/icon-eyeSee';
+import EyeClose from '@/src/assets/icons/icon-eyeClose';
 import { useForm } from 'react-hook-form';
+
 const Registration = () => {
 	const [isPassword, setIsPassword] = useState(false);
 	const [isLogPassword, setLogPassword] = useState(false);
@@ -20,6 +21,7 @@ const Registration = () => {
 	const onSubmit = (data: any) => {
 		console.log(data);
 	};
+
 	return (
 		<div onSubmit={handleSubmit(onSubmit)} className={scss.Registration}>
 			<div className="container">
@@ -29,55 +31,43 @@ const Registration = () => {
 						<Link to="/vendor/registration">Регистрация</Link>
 					</div>
 					<form className={scss.form_container}>
-						<div className={scss.input_container}>
-							<label htmlFor="name">
-								<div className={scss.label}>
-									Ваше имя<span>*</span>
-								</div>
-							</label>
+						<label>
+							<div className={scss.label}>
+								Ваше имя<span>*</span>
+							</div>
 							<input
-								id="name"
 								className={
 									errors.name ? `${scss.input_error}` : `${scss.input}`
 								}
-								{...register('vendorname', { minLength: 4, required: true })}
+								{...register('name', { minLength: 4, required: true })}
 								type="text"
 								placeholder="Напишите ваше имя"
 							/>
-						</div>
-						<div className={scss.input_container}>
-							<label htmlFor="email">
-								<div className={scss.label}>
-									Email<span>*</span>
-								</div>
-							</label>
+						</label>
+						<label>
+							<div className={scss.label}>
+								Email<span>*</span>
+							</div>
 							<input
-								id="email"
 								className={
 									errors.email ? `${scss.input_error}` : `${scss.input}`
 								}
 								type="text"
 								placeholder="Напишите ваш email"
-								{...register('vendoremail', { minLength: 4, required: true })}
+								{...register('email', { minLength: 4, required: true })}
 							/>
-						</div>
-						<div className={scss.input_container}>
-							<label htmlFor="password">
-								<div className={scss.label}>
-									Пароль<span>*</span>
-								</div>
-							</label>
+						</label>
+						<label>
+							<div className={scss.label}>
+								Пароль<span>*</span>
+							</div>
 							<input
-								id="password"
 								className={
 									errors.password ? `${scss.input_error}` : `${scss.input}`
 								}
 								type={isPassword ? 'text' : 'password'}
 								placeholder="Напишите пароль"
-								{...register('vendorpassword', {
-									minLength: 4,
-									required: true
-								})}
+								{...register('password', { minLength: 4, required: true })}
 							/>
 							{isPassword ? (
 								<div
@@ -98,15 +88,12 @@ const Registration = () => {
 									<EyeClose />
 								</div>
 							)}
-						</div>
-						<div className={scss.input_container}>
-							<label htmlFor="confirmPassword">
-								<div className={scss.label}>
-									Подтвердите пароль<span>*</span>
-								</div>
-							</label>
+						</label>
+						<label>
+							<div className={scss.label}>
+								Подтвердите пароль<span>*</span>
+							</div>
 							<input
-								id="confirmPassword"
 								className={
 									errors.confirmPassword
 										? `${scss.input_error}`
@@ -114,7 +101,7 @@ const Registration = () => {
 								}
 								type={isLogPassword ? 'text' : 'password'}
 								placeholder="Подтвердите пароль"
-								{...register('vendorconfirmPassword', {
+								{...register('confirmPassword', {
 									minLength: 4,
 									required: true
 								})}
@@ -138,7 +125,7 @@ const Registration = () => {
 									<EyeClose />
 								</div>
 							)}
-						</div>
+						</label>
 						<div className={scss.follow_checkbox}>
 							<label>
 								<div className={scss.checkbox_content}>
