@@ -1,0 +1,302 @@
+.Ebooks {
+	.content {
+		.title {
+			display: flex;
+			justify-content: space-between;
+			margin-bottom: 50px;
+			@media (max-width: 767px) {
+				display: flex;
+				flex-direction: column;
+				gap: 15px;
+				align-items: center;
+				justify-content: center;
+			}
+
+			h2 {
+				color: rgb(28, 28, 28);
+				font-size: 24px;
+				font-size: clamp(12px, 8vw, 24px);
+				font-weight: 600;
+				line-height: 130%;
+				letter-spacing: 0px;
+				text-align: left;
+			}
+
+			p {
+				color: rgb(255, 76, 0);
+				font-family: Open Sans;
+				font-size: clamp(10px, 8vw, 14px);
+				font-weight: 400;
+				line-height: 120%;
+				letter-spacing: 0px;
+				text-align: left;
+				text-decoration-line: underline;
+			}
+		}
+
+		.allAboutBooks {
+			width: 100%;
+			display: flex;
+			align-items: center;
+			height: 600px;
+			gap: 200px;
+
+			@media (max-width: 1000px) {
+				display: flex;
+				flex-direction: column;
+				height: auto;
+				gap: 50px;
+			}
+			@media (max-width: 320px) {
+				display: flex;
+				flex-direction: column;
+				height: auto;
+				gap: 50px;
+			}
+
+			.books {
+				max-width: 491px;
+				width: 100%;
+				max-height: 50vh;
+				height: 100%;
+
+				.aboutBooks {
+					height: 20vh;
+
+					h3 {
+						max-width: 447px;
+						width: 100%;
+						color: rgb(34, 34, 34);
+						font-size: clamp(30px, 8vw, 56px);
+						font-weight: 600;
+						line-height: 130%;
+						letter-spacing: 0px;
+						text-align: left;
+						margin-bottom: 50px;
+					}
+
+					.descriptionBooks {
+						color: rgb(34, 34, 34);
+						font-size: clamp(8px, 8vw, 16px);
+						font-weight: 400;
+						line-height: 130%;
+						letter-spacing: 0px;
+						text-align: left;
+						margin-bottom: 40px;
+
+						.paragraph {
+							p {
+								color: rgb(255, 76, 0);
+								font-size: 16px;
+								font-weight: 600;
+								line-height: 130%;
+								letter-spacing: 0px;
+								text-align: left;
+								text-decoration: none;
+								list-style: none;
+							}
+						}
+					}
+
+					.paragraph {
+						display: flex;
+						justify-content: space-between;
+
+						p {
+							color: rgb(255, 76, 0);
+							font-size: clamp(7px, 8vw, 14px);
+							font-weight: 400;
+							line-height: 130%;
+							letter-spacing: 0px;
+							text-align: left;
+							text-decoration-line: underline;
+						}
+					}
+				}
+			}
+			.test {
+				display: flex;
+				justify-content: center;
+				.slider_container {
+					width: 100%;
+					height: 1000px;
+					display: flex;
+					align-items: center;
+					justify-content: center;
+					gap: 10px;
+
+					.slideItem {
+						max-width: 150px;
+						width: 100%;
+						height: max-content;
+						display: flex;
+						flex-direction: column;
+						align-items: center;
+						justify-content: space-between;
+						gap: 10px;
+
+						img {
+							width: 100%;
+							object-fit: cover;
+							object-position: center;
+						}
+					}
+				}
+			}
+		}
+	}
+}
+
+.swiper {
+	max-width: 500px;
+	max-height: 600px;
+	height: 100%;
+	width: 100%;
+	margin: 0px;
+}
+
+.swiper_controller {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	@media (max-width: 767px) {
+		display: none;
+	}
+}
+
+.swiper_slider {
+	text-align: center;
+	font-size: 18px;
+	background: #fff;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.book.image {
+	display: block;
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+
+.swiper-slide {
+	flex-shrink: 0;
+	width: 100%;
+	max-height: 0px;
+	height: 100%;
+	position: relative;
+	transition-property: transform;
+	display: block;
+}
+
+@media (max-width: 1200px) {
+	.Ebooks {
+		.content {
+			.allAboutBooks {
+				gap: 30px;
+			}
+		}
+	}
+}
+
+@media (max-width: 1000px) {
+	.Ebooks {
+		.content {
+			.allAboutBooks {
+				.books {
+					max-width: none;
+					width: 100%;
+				}
+				.aboutBooks {
+					h3 {
+						font-size: clamp(24px, 6vw, 40px);
+					}
+					.descriptionBooks {
+						font-size: clamp(14px, 4vw, 20px);
+					}
+				}
+			}
+		}
+	}
+}
+
+@media (max-width: 767px) {
+	.Ebooks {
+		.content {
+			.allAboutBooks {
+				gap: 20px;
+			}
+		}
+	}
+}
+
+@media (max-width: 600px) {
+	.Ebooks {
+		.content {
+			.allAboutBooks {
+				gap: 15px;
+				.books {
+					.aboutBooks {
+						h3 {
+							font-size: clamp(20px, 6vw, 32px);
+						}
+						.descriptionBooks {
+							font-size: clamp(12px, 4vw, 18px);
+							.paragraph {
+								p {
+									font-size: clamp(10px, 3vw, 16px);
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+}
+
+@media (max-width: 400px) {
+	.Ebooks {
+		.content {
+			.allAboutBooks {
+				gap: 10px;
+			}
+		}
+	}
+}
+
+@media (max-width: 380px) {
+	.Ebooks {
+		.content {
+			.allAboutBooks {
+				gap: 8px;
+			}
+		}
+	}
+}
+
+@media (max-width: 320px) {
+	.Ebooks {
+		.content {
+			.allAboutBooks {
+				gap: 5px;
+				.books {
+					.aboutBooks {
+						h3 {
+							font-size: clamp(16px, 4vw, 24px);
+						}
+						.descriptionBooks {
+							font-size: clamp(10px, 3vw, 16px);
+							.paragraph {
+								p {
+									font-size: clamp(8px, 2.5vw, 14px);
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+}
