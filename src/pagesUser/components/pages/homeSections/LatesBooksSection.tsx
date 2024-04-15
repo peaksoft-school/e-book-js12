@@ -7,10 +7,10 @@ import 'slick-carousel/slick/slick-theme.scss';
 import { IconOrangeLeftArrow, IconOrangeRightArrow } from '@/src/assets/icons';
 import scss from './LatestBooksSection.module.scss';
 import LinaBackground from '../../../../assets/icons/icon-background-Line';
-import remark2 from '../../../../assets/img/546aaa27045a3b5a112dcbc03cb742010 2.png';
-import remark from '../../../../assets/img/56aaa27045a3b5a112dcbc03cb742010 2.png';
-import historyBook from '../../../../assets/img/1015486658 2.png';
-import historyBook2 from '../../../../assets/img/1015486658 3.png';
+import remark2 from '../../../../assets/booksImg/546aaa27045a3b5a112dcbc03cb742010 2.png';
+import remark from '../../../../assets/booksImg/56aaa27045a3b5a112dcbc03cb742010 2.png';
+import historyBook from '../../../../assets/booksImg/1015486658 2.png';
+import historyBook2 from '../../../../assets/booksImg/1015486658 3.png';
 
 const images = [historyBook2, remark2, remark, historyBook];
 interface Settings {

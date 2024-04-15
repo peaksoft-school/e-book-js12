@@ -21,6 +21,28 @@
 		width: 50%;
 		margin: 4rem auto;
 		height: 470px;
+		@media (max-width: 768px) {
+			display: flex;
+			flex-direction: column;
+			margin: 0px;
+			top: 0px;
+			right: 0px;
+			width: 100%;
+		}
+
+		@media (max-width: 640px) {
+			width: 70%;
+			right: 100px;
+		}
+		@media (max-width: 520px) {
+			width: 35%;
+			right: 100px;
+		}
+		@media (max-width: 401px) {
+			width: 100%;
+
+			right: 100px;
+		}
 
 		.textBookContent {
 			color: white;
@@ -39,26 +61,30 @@
 			top: 14%;
 		}
 		@media (max-width: 720px) {
-			top: 6%;
+			top: 14%;
 		}
 		@media (max-width: 575px) {
 			margin: 0;
 		}
-		@media (max-width: 510px) {
-			right: 5%;
+		@media (max-width: 402px) {
+			top: -32%;
+			left: 80px;
 		}
-		@media (max-width: 470px) {
-			top: -40%;
-			right: 50px;
+		@media (max-width: 388px) {
+			top: -32%;
 		}
-		@media (max-width: 340px) {
-			top: -60%;
-			right: 50px;
+		@media (max-width: 400px) {
+			top: -63%;
+			left: 40px;
+		}
+		@media (max-width: 338px) {
+			top: -73%;
+			left: 20px;
 		}
 
 		.slide img {
 			width: 10rem;
-margin: -10px;
+			margin: -10px;
 			@media (max-width: 650px) {
 				.slide img {
 					width: 100%;
@@ -75,6 +101,9 @@ margin: -10px;
 				transform 300ms ease-in-out 0.2s,
 				opacity 300ms;
 			opacity: 0.4;
+			.imagesSlide {
+				width: 70%;
+			}
 		}
 		@media (max-width: 470px) {
 			transform: scale(0.9);
@@ -94,6 +123,9 @@ margin: -10px;
 		.activeSlide {
 			transform: scale(1);
 			opacity: 1;
+			.imagesSlide {
+				width: 70%;
+			}
 		}
 
 		.arrow_next,
@@ -101,6 +133,9 @@ margin: -10px;
 			position: absolute;
 			cursor: pointer;
 			z-index: 10;
+			@media (max-width: 768px) {
+				display: none;
+			}
 		}
 
 		.arrow_prev h1 {

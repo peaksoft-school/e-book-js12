@@ -1,9 +1,10 @@
-import Welcome from './homeSections/LatesBooksSection';
+import LatestBooksSection from './homeSections/LatesBooksSection';
+
 
 const HomePage = () => {
 	return (
 		<>
-			<Welcome />
+			<LatestBooksSection />
 		</>
 	);
 };
