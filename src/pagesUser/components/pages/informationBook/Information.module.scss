@@ -1,0 +1,135 @@
+.content {
+	display: flex;
+	gap: 160px;
+
+	@media (max-width: 880px) {
+		flex-wrap: wrap;
+		justify-content: center;
+	}
+
+	.sectionAboutBook {
+		display: flex;
+		gap: 30px;
+		position: relative;
+
+		.icon_Orang {
+			position: absolute;
+			top: 333px;
+			left: 43%;
+		}
+
+		@media (max-width: 1270px) {
+			.icon_Orang {
+				top: 320px;
+				left: 60%;
+				transform: translateX(-50%);
+			}
+		}
+
+		@media (max-width: 1024px) {
+			.icon_Orang {
+				top: 190px;
+			}
+		}
+		@media (max-width: 914px) {
+			.icon_Orang {
+				top: 200px;
+			}
+		}
+		@media (max-width: 854px) {
+			.icon_Orang {
+				top: 330px;
+			}
+		}
+		@media (max-width: 434px) {
+			.icon_Orang {
+				top: 200px;
+			}
+		}
+		@media (max-width: 424px) {
+			.icon_Orang {
+				top: 100px;
+			}
+		}
+		@media (max-width: 412px) {
+			.icon_Orang {
+				top: 180px;
+			}
+		}
+
+		img {
+			max-width: 100%;
+			height: auto;
+		}
+	}
+
+	.section_Content_Text {
+		margin-top: 65px;
+
+		.section_mony {
+			margin-top: 40px; /* отступ сверху */
+
+			h5 {
+				color: #f34901;
+			}
+		}
+
+		.section_info {
+			margin-top: 40px;
+			display: flex;
+			gap: 159px;
+
+			.section_info_name h5 {
+				margin-bottom: 23px;
+			}
+
+			.section_info_two p {
+				margin-bottom: 10px;
+			}
+		}
+
+		.section_boot {
+			margin-top: 80px;
+			display: flex;
+			gap: 120px;
+		}
+	}
+}
+
+.section_text_books {
+	display: flex;
+	gap: 109px;
+
+	@media (max-width: 780px) {
+		flex-wrap: wrap;
+		justify-content: center;
+	}
+
+	.section_show_info {
+		margin-top: 200px;
+		margin-bottom: 20px;
+
+		.show_info_book {
+			cursor: pointer;
+			display: flex;
+			gap: 100px;
+		}
+		.book_info {
+			margin-top: 100px;
+			max-width: 700px;
+			width: 100%;
+		}
+		.info_img {
+			margin-left: 100%;
+			width: 100%;
+			right: 400px;
+
+			@media (max-width: 390px) {
+				.info_img img {
+					width: 100%;
+					height: auto;
+				}
+			}
+		}
+	}
+}

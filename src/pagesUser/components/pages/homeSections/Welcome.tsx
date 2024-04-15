@@ -1,6 +1,7 @@
 import { FC } from 'react';
 import scss from './Welcome.module.scss';
-import AudioBooks from '../audioBooks/AudioBooks';
+import InformationBook from '../informationBook/InformationBook';
+// import AudioBooks from '../audioBooks/AudioBooks';
 
 const Welcome: FC = () => {
 	return (
@@ -9,7 +10,8 @@ const Welcome: FC = () => {
 				<div className="container">
 					<div className={scss.content}>
 						<h1>Welcome, User!</h1>
-						<AudioBooks />
+						{/* <AudioBooks /> */}
+						<InformationBook />
 					</div>
 				</div>
 			</section>
