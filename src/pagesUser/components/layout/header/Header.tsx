@@ -1,8 +1,55 @@
+import CustomGenreInput from '@/src/ui/customInpute/CustomGenreInput';
 import scss from './Header.module.scss';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import WhiteLikeIcon from '@/src/assets/icons/icon-whiteLike';
+import { IconBurgerMenu, IconRedDot } from '@/src/assets/icons';
+import LogoeBook from '@/src/ui/logoeBook/LogoeBook';
+import WhiteProfileIcon from '@/src/assets/icons/icon-whiteProfile';
+
+const dataGenre = [
+	{
+		category: 'Образование',
+		quantity: 1234
+	},
+	{
+		category: 'Художественная лит...',
+		quantity: 3453
+	},
+	{
+		category: 'Книги для детей',
+		quantity: 3453
+	},
+	{
+		category: 'Наука и техника',
+		quantity: 3453
+	},
+	{
+		category: 'Общество',
+		quantity: 435
+	},
+	{
+		category: 'Деловая литература',
+		quantity: 435
+	},
+	{
+		category: 'Красота. Здоровье. Спорт',
+		quantity: 435
+	},
+	{
+		category: 'Увлечения',
+		quantity: 435
+	},
+	{
+		category: 'Психология',
+		quantity: 435
+	}
+];
 
 const Header = () => {
 	const [headerScroll, setHeaderScroll] = useState<boolean>(false);
+	const [isGenre, setIsGenre] = useState<boolean>(false);
+	const [isNavBar, setIsNavBar] = useState<boolean>(false);
+	const menuRef = useRef(null);
 
 	useEffect(() => {
 		const changeHeader = () => {
@@ -31,7 +78,109 @@ const Header = () => {
 				>
 					<div className="container">
 						<div className={scss.content}>
-							<h3>Header</h3>
+							<div className={scss.header_Content}>
+								<div className={scss.logo_Content}>
+									<LogoeBook />
+								</div>
+								<div className={scss.input_Content}>
+									<CustomGenreInput placeholder="Искать жанр, книги, авторов, издательства... " />
+								</div>
+								<div className={scss.right_Content}>
+									<div className={scss.favorite_icon}>
+										<WhiteLikeIcon />
+										<IconRedDot />
+									</div>
+									<div className={scss.basket}>
+										<p>Корзина (3)</p>
+									</div>
+								</div>
+							</div>
+							<nav className={scss.nav_bar}>
+								<div className={scss.left_nav_Content}>
+									<div
+										onClick={() => {
+											setIsGenre(!isGenre);
+										}}
+										className={scss.click_genre_container}
+									>
+										<IconBurgerMenu />
+									</div>
+									<div
+										onClick={() => {
+											setIsNavBar(!isNavBar);
+										}}
+										className={scss.burger_menu}
+									>
+										<IconBurgerMenu />
+									</div>
+									<div
+										className={`${scss.navbar_menu} ${isNavBar ? scss.navbar_block : scss.navbar_none}`}
+									>
+										<ul>
+											<li>Электронные книги</li>
+											<li>Audio books</li>
+											<li>Промокоды</li>
+											<li>Начать продавать на eBook</li>
+										</ul>
+									</div>
+									<p
+										onClick={() => {
+											setIsGenre(!isGenre);
+										}}
+									>
+										Жанры
+									</p>
+								</div>
+								<div className={scss.center_nav_Content}>
+									<ul>
+										<li>Электронные книги</li>
+										<li>Audio books</li>
+										<li>Промокоды</li>
+										<li>Начать продавать на eBook</li>
+									</ul>
+								</div>
+								<div className={scss.right_nav_Content}>
+									<button>
+										<p>
+											<WhiteProfileIcon />
+										</p>
+										Ибра
+									</button>
+								</div>
+							</nav>
+							<div className={scss.search_input}>
+								<CustomGenreInput placeholder="Искать жанр, книги, авторов, издательства... " />
+							</div>
+							<div className={scss.position_container}>
+								{isGenre && (
+									<div className={scss.genre_container} ref={menuRef}>
+										<div className={scss.lefts_genre}>
+											{dataGenre.map((item, index) => (
+												<div className={scss.name_genre} key={index}>
+													<p>{item.category}</p>
+													<span>{item.quantity}</span>
+												</div>
+											))}
+										</div>
+										<div className={scss.center_genre}>
+											{dataGenre.map((item, index) => (
+												<div className={scss.name_genre} key={index}>
+													<p>{item.category}</p>
+													<span>{item.quantity}</span>
+												</div>
+											))}
+										</div>
+										<div className={scss.rights_genre}>
+											{dataGenre.map((item, index) => (
+												<div className={scss.name_genre} key={index}>
+													<p>{item.category}</p>
+													<span>{item.quantity}</span>
+												</div>
+											))}
+										</div>
+									</div>
+								)}
+							</div>
 						</div>
 					</div>
 				</div>
