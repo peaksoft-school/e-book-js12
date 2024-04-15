@@ -55,7 +55,9 @@ const InformationBook = () => {
 								<CustomPersonalAreaButton onClick={() => {}}>
 									<p>В избранное</p>
 								</CustomPersonalAreaButton>
-								<CustomBasketButton onClick={()=>{}}>Добавить в корзину</CustomBasketButton>
+								<CustomBasketButton onClick={() => {}}>
+									Добавить в корзину
+								</CustomBasketButton>
 							</div>
 						</div>
 					</div>
