@@ -20,6 +20,7 @@
 			justify-content: space-between;
 			align-items: center;
 			margin-bottom: 33px;
+
 			.left_content {
 				p {
 					color: rgb(150, 150, 150);
@@ -28,6 +29,9 @@
 					line-height: 130%;
 					letter-spacing: 0px;
 					text-align: center;
+					@media (max-width: 768px) {
+						font-size: 12px;
+					}
 				}
 			}
 			.center_content {
@@ -42,6 +46,9 @@
 					padding: 11px 24px;
 					border: 1px solid rgb(196, 196, 196);
 					cursor: pointer;
+					@media (max-width: 768px) {
+						padding: 11px 18px;
+					}
 					p {
 						color: rgb(34, 34, 34);
 						font-size: 14px;
@@ -70,6 +77,9 @@
 					line-height: 130%;
 					letter-spacing: 0px;
 					text-align: left;
+					@media (max-width: 768px) {
+						font-size: 14px;
+					}
 				}
 			}
 		}
@@ -77,9 +87,20 @@
 			display: flex;
 			gap: 58px;
 			margin-bottom: 25px;
+			position: relative;
+			@media (max-width: 768px) {
+				justify-content: end;
+			}
 			.filtred_container {
 				max-width: 266px;
 				width: 100%;
+				position: relative;
+				transition: 0.3s;
+				@media (max-width: 768px) {
+					// position: absolute;
+					// top: 0px;
+					// left: 0px;
+				}
 				hr {
 					max-width: 266px;
 					width: 100%;
@@ -89,6 +110,7 @@
 					display: flex;
 					justify-content: space-between;
 					width: 100%;
+					margin-bottom: 9.5px;
 					cursor: pointer;
 					p {
 						width: 100%;
@@ -101,6 +123,23 @@
 					justify-content: space-between;
 					cursor: pointer;
 					user-select: none;
+					margin-bottom: 9.5px;
+				}
+				.price_fillter {
+					display: flex;
+					align-items: center;
+					justify-content: space-between;
+					cursor: pointer;
+					user-select: none;
+					margin-bottom: 9.5px;
+				}
+				.language_fillter {
+					display: flex;
+					align-items: center;
+					justify-content: space-between;
+					cursor: pointer;
+					user-select: none;
+					margin-bottom: 9.5px;
 				}
 
 				.fillters {
@@ -111,6 +150,9 @@
 					margin-bottom: 38px;
 					overflow: auto;
 					max-height: 377px;
+					height: max-content;
+					opacity: 100%;
+					transition: 0.3s;
 					.checkbox {
 						display: flex;
 						align-items: center;
@@ -118,6 +160,70 @@
 						gap: 20px;
 						cursor: pointer;
 						user-select: none;
+						max-width: 266px;
+						width: 100%;
+						.price_value_content {
+							max-width: 266px;
+							width: 100%;
+							.value_price {
+								display: flex;
+								justify-content: center;
+								max-width: 266px;
+								width: 100%;
+								gap: 20px;
+								p {
+									max-width: 123px;
+									width: 100%;
+									border: 1px solid #c4c4c4;
+									padding: 8px 0px;
+									color: rgb(34, 34, 34);
+									font-family: Open Sans;
+									font-size: 16px;
+									font-weight: 400;
+									line-height: 130%;
+									letter-spacing: 0px;
+									text-align: center;
+								}
+							}
+							.price_range {
+								width: 266px !important;
+								padding: 30px 0px;
+								overflow: hidden;
+								span {
+									width: 100%;
+									background-color: #f34901;
+									border: none;
+									&:first-child {
+										background-color: #c4c4c4;
+									}
+									&:nth-child(3n) {
+										width: 25px;
+										height: 25px;
+										background-color: rgb(255, 255, 255);
+									}
+									&:nth-child(4n) {
+										width: 25px;
+										height: 25px;
+										background-color: rgb(255, 255, 255);
+									}
+								}
+							}
+						}
+					}
+				}
+				.none {
+					position: relative;
+					opacity: 0;
+					height: 0px;
+					z-index: -100;
+					user-select: none;
+					transition: 0.4s;
+					.checkbox {
+						display: flex;
+						align-items: center;
+						justify-content: start;
+						gap: 20px;
+						cursor: pointer;
 					}
 				}
 			}
@@ -126,13 +232,19 @@
 				flex-wrap: wrap;
 				gap: 0px 20px;
 				width: 100%;
+				@media (max-width: 850px) {
+					max-width: 404px;
+					width: 100%;
+					display: grid;
+					grid-template-columns: 48% 48%;
+					padding: 0px 5px;
+				}
 				.card_book {
 					max-width: 224px;
 					width: 100%;
 					color: #f34901;
 					margin-bottom: 25px;
 					position: relative;
-
 					.favorite_icon {
 						position: absolute;
 						top: -10px;
@@ -223,6 +335,11 @@
 			.btn_morebook {
 				margin-bottom: 25px;
 				width: 100%;
+				@media (max-width: 850px) {
+					display: grid;
+					grid-column-start: 1;
+					grid-column-end: 3;
+				}
 				button {
 					color: rgb(150, 150, 150);
 					font-family: Open Sans;

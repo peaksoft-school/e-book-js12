@@ -13,6 +13,8 @@ import {
 	IconWhiteLike
 } from '@/src/assets/icons';
 import CustomBasketButton from '@/src/ui/customButton/CustomBasketButton';
+import Box from '@mui/material/Box';
+import Slider from '@mui/material/Slider';
 
 const SearchSection = () => {
 	const [isGenre, setIsGenre] = useState(false);
@@ -21,7 +23,18 @@ const SearchSection = () => {
 	const [filterType, setFilterType] = useState(false);
 	const [clickRadio, setClickRadio] = useState(false);
 
+	const [priceGenre, setPriceGenre] = useState(false);
+
 	const [favoriteBook, setFavoriteBook] = useState(false);
+	const [value, setValue] = useState<number[]>([500, 10000]);
+
+	const [language, setLanguage] = useState(false);
+
+	// const [menufilters, setMenuFilters] = useState(false);
+
+	const handleChange = (event: Event, newValue: number | number[]) => {
+		setValue(newValue as number[]);
+	};
 
 	const data = [
 		{
@@ -46,7 +59,7 @@ const SearchSection = () => {
 			price: '549 с'
 		},
 		{
-			id: 3,
+			id: 4,
 			image: history_img,
 			title: 'История Книги',
 			aftor: 'Э. Эггер, А. Бахтияров',
@@ -84,7 +97,7 @@ const SearchSection = () => {
 						</div>
 					</div>
 					<div className={scss.container}>
-						<div className={scss.filtred_container}>
+						<div className={`${scss.filtred_container}`}>
 							{/* GANRE */}
 							<div
 								onClick={() => {
@@ -96,28 +109,26 @@ const SearchSection = () => {
 								<IconArrowBottom />
 							</div>
 							<hr />
-							{isGenre ? (
-								<>
-									<div className={scss.fillters}>
-										<CustomGenreInput placeholder="Я ищу..." />
-										<div
-											onClick={() => setCheckGenre(!checkGenre)}
-											className={scss.checkbox}
-										>
-											{checkGenre ? (
-												<>
-													<BlackSquareIcon />
-												</>
-											) : (
-												<>
-													<WhiteSquareIcon />
-												</>
-											)}
-											<p>Зарубежная литература</p>
-										</div>
+							<>
+								<div className={`${isGenre ? scss.fillters : scss.none}`}>
+									<CustomGenreInput placeholder="Я ищу..." />
+									<div
+										onClick={() => setCheckGenre(!checkGenre)}
+										className={scss.checkbox}
+									>
+										{checkGenre ? (
+											<>
+												<BlackSquareIcon />
+											</>
+										) : (
+											<>
+												<WhiteSquareIcon />
+											</>
+										)}
+										<p>Зарубежная литература</p>
 									</div>
-								</>
-							) : null}
+								</div>
+							</>
 							{/* TYPE */}
 							<div
 								onClick={() => {
@@ -129,27 +140,119 @@ const SearchSection = () => {
 								<IconArrowBottom />
 							</div>
 							<hr />
-							{filterType ? (
-								<div
-									onClick={() => setClickRadio(!clickRadio)}
-									className={scss.fillters}
-								>
-									<div className={scss.checkbox}>
-										{clickRadio ? (
+							<div
+								onClick={() => setClickRadio(!clickRadio)}
+								className={`${filterType ? scss.fillters : scss.none}`}
+							>
+								<div className={scss.checkbox}>
+									{clickRadio ? (
+										<>
+											<IconBlackCircle />
+										</>
+									) : (
+										<>
+											<IconWhiteCircle />
+										</>
+									)}
+									<p>audio</p>
+								</div>
+							</div>
+							{/* PERICE  */}
+							<div
+								onClick={() => {
+									setPriceGenre(!priceGenre);
+								}}
+								className={scss.price_fillter}
+							>
+								<p>Стоимость</p>
+								<IconArrowBottom />
+							</div>
+							<hr />
+							<div className={`${priceGenre ? scss.fillters : scss.none}`}>
+								<div className={scss.checkbox}>
+									<div className={scss.price_value_content}>
+										<div className={scss.value_price}>
+											<p>
+												от <span>{value[0]}</span>
+											</p>
+											<p>
+												до <span>{value[1]}</span>
+											</p>
+										</div>
+										<Box sx={{ width: 266 }}>
+											<Slider
+												getAriaLabel={() => 'ragne range'}
+												value={value}
+												onChange={handleChange}
+												className={scss.price_range}
+												max={10000}
+												min={100}
+											/>
+										</Box>
+									</div>
+								</div>
+							</div>
+							{/* LANGUAGE */}
+							<div
+								onClick={() => {
+									setLanguage(!language);
+								}}
+								className={scss.language_fillter}
+							>
+								<p>Язык издания</p>
+								<IconArrowBottom />
+							</div>
+							<hr />
+							<>
+								<div className={`${language ? scss.fillters : scss.none}`}>
+									<div
+										onClick={() => setCheckGenre(!checkGenre)}
+										className={scss.checkbox}
+									>
+										{checkGenre ? (
 											<>
-												<IconBlackCircle />
+												<BlackSquareIcon />
 											</>
 										) : (
 											<>
-												<IconWhiteCircle />
+												<WhiteSquareIcon />
 											</>
 										)}
-										<p>audio</p>
+										<p>Кыргызский язык</p>
+									</div>
+									<div
+										onClick={() => setCheckGenre(!checkGenre)}
+										className={scss.checkbox}
+									>
+										{checkGenre ? (
+											<>
+												<BlackSquareIcon />
+											</>
+										) : (
+											<>
+												<WhiteSquareIcon />
+											</>
+										)}
+										<p>Русский язык</p>
+									</div>
+									<div
+										onClick={() => setCheckGenre(!checkGenre)}
+										className={scss.checkbox}
+									>
+										{checkGenre ? (
+											<>
+												<BlackSquareIcon />
+											</>
+										) : (
+											<>
+												<WhiteSquareIcon />
+											</>
+										)}
+										<p>Английский язык</p>
 									</div>
 								</div>
-							) : null}
+							</>
 						</div>
-
 						<div className={scss.container_books}>
 							{data.map((item) => (
 								<div className={scss.card_book} key={item.id}>
