@@ -1,13 +1,20 @@
 .content_one {
-	.content_text{
+	.content_text {
 		font-size: 12px;
-display: flex;
-margin-top: 49px;
-margin-bottom: 100px;
+		display: flex;
+		margin-top: 49px;
+		margin-bottom: 100px;
 
-p{
-	color: rgb(156, 156, 156);
-}
+		@media (max-width: 500px) {
+			font-size: 9px;
+		}
+		@media (max-width: 350px) {
+			font-size: 7px;
+		}
+
+		p {
+			color: rgb(156, 156, 156);
+		}
 	}
 	.content {
 		display: flex;
@@ -62,9 +69,14 @@ p{
 					top: 100px;
 				}
 			}
-			@media (max-width: 412px) {
+			@media (max-width: 462px) {
 				.icon_Orang {
-					top: 180px;
+					top: 140px;
+				}
+			}
+			@media (max-width: 382px) {
+				.icon_Orang {
+					top: 150px;
 				}
 			}
 
@@ -141,13 +153,13 @@ p{
 		display: flex;
 
 		margin-top: 100px;
-gap: 300px;
+		gap: 300px;
 
 		@media (max-width: 980px) {
-	gap: 200px;
+			gap: 200px;
 		}
 		@media (max-width: 990px) {
-	gap: 100px;
+			gap: 100px;
 		}
 		@media (max-width: 780px) {
 			flex-wrap: wrap;
