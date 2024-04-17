@@ -156,7 +156,6 @@ const BasketPage: React.FC = () => {
 							))}
 						</div>
 					</div>
-					{/* PART 2 */}
 					<div className={scss.right_content}>
 						<div className={scss.content}>
 							<p className={scss.title}>Общая стоимость</p>
