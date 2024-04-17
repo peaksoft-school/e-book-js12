@@ -44,8 +44,6 @@ export { default as IconWhiteUsersIcon } from './icon-whiteUsersIcon';
 export { default as IconDownloaded } from './icon-downloaded';
 export { default as IconDownload } from './icon-download';
 export { default as IconDownloading } from './icon-downloading';
-export {default as IconAddPhoto} from './add-photo-icon';
+export { default as IconAddPhoto } from './add-photo-icon';
 export { default as IconRedDot } from './icon-redDot';
-export {default as IconBurgerMenu} from './icon-burger-menu';
-
-
+export { default as IconBurgerMenu } from './icon-burger-menu';
