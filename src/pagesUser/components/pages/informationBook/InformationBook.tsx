@@ -16,12 +16,8 @@ const InformationBook = () => {
 				<div className="container">
 					<div className={scss.content_one}>
 						<div className={scss.content_text}>
-							<p>
-								Главная / Психология{' '}
-							</p>
-								<h4 >
-									/ Гарри Потер. Дары смерти
-								</h4>
+							<p>Главная / Психология </p>
+							<h4>/ Гарри Потер. Дары смерти</h4>
 						</div>
 						<div className={scss.content}>
 							<div className={scss.sectionAboutBook}>
@@ -99,7 +95,7 @@ const InformationBook = () => {
 								)}
 							</div>
 							<div className={scss.info_img}>
-								<img className={scss.info_img_i} src={bookList} alt="#" />
+								<img src={bookList} alt="#" />
 							</div>
 						</div>
 					</div>
