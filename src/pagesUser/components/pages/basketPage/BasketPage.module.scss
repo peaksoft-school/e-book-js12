@@ -403,6 +403,10 @@
 				flex-direction: column;
 				margin-bottom: 20px;
 
+				@media (max-width: 1240px) {
+					width: 100%;
+					max-width: 1000px;
+				}
 				@media (max-width: 760px) {
 					width: 100%;
 				}
