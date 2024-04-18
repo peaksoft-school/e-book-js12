@@ -8,13 +8,13 @@ import {
 	IconArrowBottom,
 	IconBlackCircle,
 	IconBlackLike,
+	IconBurgerMenu,
 	IconDeleteX,
 	IconWhiteCircle,
 	IconWhiteLike
 } from '@/src/assets/icons';
 import CustomBasketButton from '@/src/ui/customButton/CustomBasketButton';
-import Box from '@mui/material/Box';
-import Slider from '@mui/material/Slider';
+import { Slider, ConfigProvider } from 'antd';
 
 const SearchSection = () => {
 	const [isGenre, setIsGenre] = useState(false);
@@ -30,11 +30,7 @@ const SearchSection = () => {
 
 	const [language, setLanguage] = useState(false);
 
-	// const [menufilters, setMenuFilters] = useState(false);
-
-	const handleChange = (event: Event, newValue: number | number[]) => {
-		setValue(newValue as number[]);
-	};
+	const [menufilters, setMenuFilters] = useState(false);
 
 	const data = [
 		{
@@ -97,8 +93,15 @@ const SearchSection = () => {
 						</div>
 					</div>
 					<div className={scss.container}>
-						<div className={`${scss.filtred_container}`}>
-							{/* GANRE */}
+						<div
+							onClick={() => setMenuFilters(!menufilters)}
+							className={scss.burgermenu_filters}
+						>
+							<IconBurgerMenu />
+						</div>
+						<div
+							className={`${menufilters ? scss.filtred_container : `${scss.none_style} ${scss.filtred_container}`}`}
+						>
 							<div
 								onClick={() => {
 									setIsGenre(!isGenre);
@@ -129,7 +132,6 @@ const SearchSection = () => {
 									</div>
 								</div>
 							</>
-							{/* TYPE */}
 							<div
 								onClick={() => {
 									setFilterType(!filterType);
@@ -157,7 +159,6 @@ const SearchSection = () => {
 									<p>audio</p>
 								</div>
 							</div>
-							{/* PERICE  */}
 							<div
 								onClick={() => {
 									setPriceGenre(!priceGenre);
@@ -179,20 +180,29 @@ const SearchSection = () => {
 												до <span>{value[1]}</span>
 											</p>
 										</div>
-										<Box sx={{ width: 266 }}>
+										<ConfigProvider
+											theme={{
+												token: {
+													borderRadius: 2
+												}
+											}}
+										>
 											<Slider
-												getAriaLabel={() => 'ragne range'}
-												value={value}
-												onChange={handleChange}
-												className={scss.price_range}
+												range
 												max={10000}
 												min={100}
+												onChange={(event) => {
+													setValue(event);
+												}}
+												tooltipVisible={false}
+												value={value}
+												defaultValue={value}
+												className={scss.price_range}
 											/>
-										</Box>
+										</ConfigProvider>
 									</div>
 								</div>
 							</div>
-							{/* LANGUAGE */}
 							<div
 								onClick={() => {
 									setLanguage(!language);
