@@ -110,7 +110,7 @@
 		.nav_bar {
 			display: flex;
 			align-items: center;
-			justify-content: center;
+			justify-content: space-between;
 			@media (max-width: 950px) {
 				justify-content: space-between;
 				max-width: 910px;
