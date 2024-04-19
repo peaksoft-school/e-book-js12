@@ -2,7 +2,7 @@ import { useState } from 'react';
 import Modal from './Modal';
 import XIcon from '@/src/assets/icons/icon-x';
 import GreenCheckmark from '@/src/assets/icons/icon-greenCheckmark';
-import scss from '../../ui/customModals/Style.module.scss'
+import scss from '../../ui/customModals/Style.module.scss';
 
 const SuccessfulOrder = () => {
 	const [isOpen, setIsOpen] = useState(false);

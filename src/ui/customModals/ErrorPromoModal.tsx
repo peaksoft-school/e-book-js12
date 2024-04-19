@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import XIcon from '@/src/assets/icons/icon-x';
 import Modal from './Modal';
-import scss from '../../ui/customModals/Style.module.scss'
+import scss from '../../ui/customModals/Style.module.scss';
 
 const ErrorPromoModal = () => {
 	const [isOpen, setIsOpen] = useState(false);

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import Modal from './Modal';
-import scss from '../../ui/customModals/Style.module.scss'
+import scss from '../../ui/customModals/Style.module.scss';
 
 const ExitModal = () => {
 	const [isOpen, setIsOpen] = useState(false);

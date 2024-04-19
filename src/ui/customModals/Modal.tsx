@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { ReactNode } from 'react';
-import scss from '../../ui/customModals/Style.module.scss'
+import scss from '../../ui/customModals/Style.module.scss';
 
 interface ModalProps {
 	isOpen: boolean;
@@ -14,9 +14,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, children }) => {
 
 	return ReactDOM.createPortal(
 		<div className={scss.modalOverlay}>
-			<div className={scss.modal}>
-				{children}
-			</div>
+			<div className={scss.modal}>{children}</div>
 		</div>,
 		document.getElementById('modal-root')!
 	);
