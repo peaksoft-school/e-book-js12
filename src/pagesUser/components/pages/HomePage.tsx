@@ -1,13 +1,9 @@
-import AudioBooks from './audioBooks/AudioBooks';
-import Ebooks from './eBooks/Ebooks';
-import Welcome from './homeSections/Welcome';
+import LatestBooksSection from './homeSections/LatesBooksSection';
 
 const HomePage = () => {
 	return (
 		<>
-			<Welcome />
-			<AudioBooks />
-			<Ebooks />
+			<LatestBooksSection />
 		</>
 	);
 };
