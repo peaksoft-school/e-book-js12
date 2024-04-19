@@ -20,9 +20,11 @@ interface Vendor {
 
 namespace FAVORITE {
 	type GetProductsResponse = {
-		success: boolean;
-		results: Results[];
-	};
+		image: string;
+		title: string;
+		author: string;
+		description: string;
+	}[];
 	type GetProductsRequest = void;
 
 	type PatchProductResponse = {

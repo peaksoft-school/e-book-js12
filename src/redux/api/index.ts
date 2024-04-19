@@ -5,7 +5,7 @@ import {
 } from '@reduxjs/toolkit/query/react';
 
 const baseQuery = fetchBaseQuery({
-	baseUrl: `${import.meta.env.VITE_PUBLIC_API_URL}/api/v1`,
+	baseUrl: `https://api.elchocrud.pro/api/v1/86162171e5f689755dc22ef1fec32e39/newFavoriteapi`,
 	prepareHeaders: (headers) => {
 		return headers;
 	},
