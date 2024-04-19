@@ -4,8 +4,6 @@ import LayoutAdmin from './pagesAdmin/components/layout/LayoutAdmin';
 import LayoutAuth from './pagesAuth/components/layout/LayoutAuth';
 import LayoutVendor from './pagesVendor/components/layout/LayoutVendor';
 
-
-
 const App = () => {
 	return (
 		<>
@@ -15,7 +13,6 @@ const App = () => {
 				<Route path="/auth/*" element={<LayoutAuth />} />
 				<Route path="/vendor/*" element={<LayoutVendor />} />
 			</Routes>
-			
 		</>
 	);
 };

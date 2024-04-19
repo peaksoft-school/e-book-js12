@@ -5,16 +5,17 @@ import { api as index } from '..';
 
 const api = index.injectEndpoints({
 	endpoints: (build) => ({
-		getProductsFavorite: build.query
+		getProductsFavorite: build.query(
 			// FAVORITE.GetProductsResponse,
 			// FAVORITE.GetProductsRequest
-		({
-			query: () => ({
-				url: '',
-				method: 'GET'
-			}),
-			providesTags: ['favorite']
-		}),
+			{
+				query: () => ({
+					url: '',
+					method: 'GET'
+				}),
+				providesTags: ['favorite']
+			}
+		),
 
 		addProductFavorite: build.mutation<
 			FAVORITE.PatchProductResponse,

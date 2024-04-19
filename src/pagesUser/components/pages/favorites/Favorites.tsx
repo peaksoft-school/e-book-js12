@@ -126,7 +126,6 @@ const Favorites: FC = () => {
 									<hr />
 								</div>
 							))}
-	
 						</div>
 					</div>
 				</div>
