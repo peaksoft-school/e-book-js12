@@ -1,8 +1,8 @@
 import scss from './SubscribePage.module.scss';
 
-const SubscribePage = () => {
+const SubscribeSection = () => {
 	return (
-		<div className={scss.SubscribePage}>
+		<section className={scss.SubscribePage}>
 			<div className="container">
 				<div className={scss.content}>
 					<div className={scss.title}>
@@ -19,8 +19,8 @@ const SubscribePage = () => {
 					</div>
 				</div>
 			</div>
-		</div>
+		</section>
 	);
 };
 
-export default SubscribePage;
+export default SubscribeSection;

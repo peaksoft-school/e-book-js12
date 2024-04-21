@@ -1,9 +1,11 @@
 .Bestsellers {
 	.content {
+		padding-bottom: 104px;
 		.title {
 			display: flex;
 			justify-content: space-between;
 			margin-bottom: 50px;
+			margin-top: 126.5px;
 			@media (max-width: 767px) {
 				display: flex;
 				flex-direction: column;

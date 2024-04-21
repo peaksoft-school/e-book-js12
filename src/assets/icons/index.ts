@@ -49,3 +49,5 @@ export { default as IconRedDot } from './icon-redDot';
 export { default as IconBurgerMenu } from './icon-burger-menu';
 export { default as IconArrowBottom } from './icon-arrowBottom';
 export { default as IconDeleteX } from './icon-x';
+export { default as IconLongLine } from './icon-long-line';
+export { default as IconShortLine } from './icon-short-line';

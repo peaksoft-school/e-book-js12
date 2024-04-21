@@ -63,7 +63,7 @@ const booksData = [
 	}
 ];
 
-const Bestsellers = () => {
+const BestsellerSection = () => {
 	const [bookId, setBookId] = useState(1);
 
 	const handleSlideChange = (swiper: SwiperClass) => {
@@ -72,7 +72,7 @@ const Bestsellers = () => {
 	};
 
 	return (
-		<div className={scss.Bestsellers}>
+		<section className={scss.Bestsellers}>
 			<div className="container">
 				<div className={scss.content}>
 					<div className={scss.title}>
@@ -171,8 +171,8 @@ const Bestsellers = () => {
 					</div>
 				</div>
 			</div>
-		</div>
+		</section>
 	);
 };
 
-export default Bestsellers;
+export default BestsellerSection;

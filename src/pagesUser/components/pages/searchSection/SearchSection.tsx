@@ -64,7 +64,7 @@ const SearchSection = () => {
 	];
 
 	return (
-		<div className={scss.SearchSection}>
+		<section className={scss.SearchSection}>
 			<div className="container">
 				<div className={scss.content}>
 					<div className={scss.title_navigate}>
@@ -300,7 +300,7 @@ const SearchSection = () => {
 					</div>
 				</div>
 			</div>
-		</div>
+		</section>
 	);
 };
 

@@ -16,7 +16,7 @@ interface Book {
 	quantity: number;
 }
 
-const BasketPage: React.FC = () => {
+const BasketSection: React.FC = () => {
 	const [booksData, setBooksData] = useState<Book[]>([
 		{
 			id: 1,
@@ -84,7 +84,7 @@ const BasketPage: React.FC = () => {
 	const overallTotal = totalSum - discount;
 
 	return (
-		<div className={scss.basket_page}>
+		<section className={scss.basket_page}>
 			<div className="container">
 				<div className={scss.links}>
 					<Link
@@ -183,8 +183,8 @@ const BasketPage: React.FC = () => {
 					</div>
 				</div>
 			</div>
-		</div>
+		</section>
 	);
 };
 
-export default BasketPage;
+export default BasketSection;

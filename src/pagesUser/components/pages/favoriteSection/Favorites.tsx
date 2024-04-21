@@ -3,7 +3,7 @@ import scss from './Favorites.module.scss';
 import { IconX } from '@/src/assets/icons';
 import { NavLink } from 'react-router-dom';
 
-const Favorites: FC = () => {
+const FavoritSection: FC = () => {
 	const infoDates = [
 		{
 			_id: 1,
@@ -134,4 +134,4 @@ const Favorites: FC = () => {
 	);
 };
 
-export default Favorites;
+export default FavoritSection;

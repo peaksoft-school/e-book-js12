@@ -12,7 +12,32 @@ import remark from '../../../../assets/booksImg/56aaa27045a3b5a112dcbc03cb742010
 import historyBook from '../../../../assets/booksImg/1015486658 2.png';
 import historyBook2 from '../../../../assets/booksImg/1015486658 3.png';
 
-const images = [historyBook2, remark2, remark, historyBook];
+const images = [
+	{
+		img: historyBook2,
+		name: 'history',
+		auth: 'Э.Эггер , А.Бахтаров',
+		price: 430
+	},
+	{
+		img: remark2,
+		name: 'Земля обетованная',
+		auth: 'Эрих Мария Ремарк',
+		price: 420
+	},
+	{
+		img: remark,
+		name: 'Земля обетованная',
+		auth: 'Эрих Мария Ремарк',
+		price: 410
+	},
+	{
+		img: historyBook,
+		name: 'history book',
+		auth: 'Э.Эггер , А.Бахтаров',
+		price: 400
+	}
+];
 interface Settings {
 	className?: string;
 	infinite: boolean;
@@ -32,7 +57,7 @@ interface Settings {
 	}[];
 }
 
-const LatestBooksSection: FC = () => {
+const LatestBookSection: FC = () => {
 	const NexArrow: FC<{ onClick: () => void }> = ({ onClick }) => (
 		<div className={`${scss.arrow_next}`} onClick={onClick}>
 			<IconOrangeRightArrow />
@@ -82,19 +107,20 @@ const LatestBooksSection: FC = () => {
 						<LinaBackground />
 						<div className={`${scss.slider_container}`}>
 							<Slider {...settings}>
-								{images.map((img, idx) => (
+								{images.map((item, idx) => (
 									<div
 										key={idx}
 										className={
 											imageIndex === idx ? scss.activeSlide : scss.slide
 										}
 									>
-										<img className={scss.imagesSlide} src={img} alt="#" />
+										<img className={scss.imagesSlide} src={item.img} alt="#" />
 										<div className={scss.textBookContent}>
-											<p className={scss.textBook}>
-												Гарри Поттер и Тайная ко...
-											</p>
-											<p className={scss.textBookTwo}>Роулинг Джоан Кэтлин</p>
+											<p>{item.name}</p>
+											<div className={scss.description}>
+												<p>{item.auth}</p>
+												<p>{item.price}</p>
+											</div>
 										</div>
 									</div>
 								))}
@@ -107,4 +133,4 @@ const LatestBooksSection: FC = () => {
 	);
 };
 
-export default LatestBooksSection;
+export default LatestBookSection;

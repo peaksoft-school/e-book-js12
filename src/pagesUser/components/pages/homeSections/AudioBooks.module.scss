@@ -1,6 +1,8 @@
 .AudioBooks {
 	width: 100%;
 	.content {
+		padding-top: 220px;
+		padding-bottom: 150px;
 		width: 100%;
 
 		.title_audio_books {
@@ -12,9 +14,8 @@
 
 			@media (max-width: 767px) {
 				display: flex;
-				flex-direction: column;
 				align-items: center;
-				justify-content: center;
+				justify-content: space-between;
 				gap: 15px;
 			}
 			@media (max-width: 320px) {
@@ -59,8 +60,12 @@
 				width: 100%;
 				max-width: 767px;
 				display: flex;
-				flex-direction: column;
 				gap: 0px 33px;
+			}
+			@media (max-width: 500px) {
+				flex-direction: column;
+				align-items: center;
+				gap: 30px 0px;
 			}
 			@media (max-width: 320px) {
 				width: 100%;
@@ -92,12 +97,17 @@
 				}
 
 				@media (max-width: 767px) {
+					max-width: 160px;
 					width: 100%;
 					display: flex;
 					align-items: start;
 					flex-direction: column;
 					justify-content: end;
 					gap: 17px;
+				}
+				@media (max-width: 500px) {
+					max-width: 220px;
+					width: 100%;
 				}
 				img {
 					width: 100%;
@@ -129,19 +139,16 @@
 						flex-direction: column;
 						gap: 5px;
 					}
-
-					p {
-						color: rgb(52, 52, 52);
-						font-size: 14px;
-						font-weight: 400;
-						line-height: 130%;
-						letter-spacing: 0px;
-						text-align: left;
-					}
 					h5 {
 						color: rgb(34, 34, 34);
 						font-size: clamp(12px, 8vw, 14px);
 						font-weight: 600;
+						@media (max-width: 767px) {
+							font-size: 14px;
+						}
+						@media (max-width: 600px) {
+							font-size: 12px;
+						}
 					}
 					p {
 						color: rgb(51, 68, 51);
@@ -150,6 +157,9 @@
 						line-height: 130%;
 						letter-spacing: 0px;
 						text-align: left;
+						@media (max-width: 600px) {
+							font-size: 12px;
+						}
 					}
 
 					.description_book {
@@ -170,6 +180,12 @@
 							line-height: 130%;
 							letter-spacing: 0px;
 							text-align: left;
+							@media (max-width: 767px) {
+								font-size: 12px;
+							}
+							@media (max-width: 600px) {
+								font-size: 11px;
+							}
 						}
 
 						h6 {
@@ -179,6 +195,12 @@
 							line-height: 130%;
 							letter-spacing: 0px;
 							text-align: left;
+							@media (max-width: 767px) {
+								font-size: 12px;
+							}
+							@media (max-width: 600px) {
+								font-size: 11px;
+							}
 						}
 					}
 				}
@@ -206,13 +228,18 @@
 				}
 
 				@media (max-width: 767px) {
+					max-width: 220px;
 					width: 100%;
 					display: flex;
 					align-items: start;
 					flex-direction: column;
-					overflow: hidden;
 					justify-content: end;
 					gap: 17px;
+				}
+				@media (max-width:500px) {
+					max-width: 220px;
+					width: 100%;
+					margin: 0px;
 				}
 
 				img {
@@ -271,13 +298,13 @@
 					gap: 5px;
 
 					@media (max-width: 1200px) {
-						min-width: 308px;
 						width: 100%;
 						display: flex;
 						flex-direction: column;
 						gap: 5px;
 					}
 					@media (max-width: 767px) {
+						max-width: 220px;
 						width: 100%;
 						display: flex;
 						gap: 5px;
@@ -286,6 +313,29 @@
 						max-width: 240px;
 						width: 100%;
 					}
+					h5 {
+						color: rgb(34, 34, 34);
+						font-size: clamp(12px, 8vw, 14px);
+						font-weight: 600;
+						line-height: 130%;
+						letter-spacing: 0px;
+						text-align: left;
+						text-transform: uppercase;
+						@media (max-width: 600px) {
+							font-size: 12px;
+						}
+					}
+					p {
+						color: rgb(51, 68, 51);
+						font-size: 14px;
+						font-weight: 400;
+						line-height: 130%;
+						letter-spacing: 0px;
+						text-align: left;
+						@media (max-width: 600px) {
+							font-size: 12px;
+						}
+					}
 
 					.description_book {
 						width: 100%;
@@ -293,6 +343,7 @@
 						justify-content: space-between;
 
 						@media (max-width: 767px) {
+							max-width: 220px;
 							width: 100%;
 							display: flex;
 							justify-content: space-between;
@@ -310,7 +361,11 @@
 							line-height: 130%;
 							letter-spacing: 0px;
 							text-align: left;
-							@media (max-width: 12) {
+							@media (max-width: 767px) {
+								font-size: 12px;
+							}
+							@media (max-width: 600px) {
+								font-size: 11px;
 							}
 						}
 
@@ -321,68 +376,12 @@
 							line-height: 130%;
 							letter-spacing: 0px;
 							text-align: left;
-						}
-					}
-				}
-				@media (max-width: 320px) {
-					max-width: 240px;
-					width: 100%;
-					display: flex;
-					flex-direction: column;
-					gap: 5px;
-
-					h5 {
-						color: rgb(34, 34, 34);
-						font-size: clamp(12px, 8vw, 14px);
-						font-weight: 600;
-						line-height: 130%;
-						letter-spacing: 0px;
-						text-align: left;
-						text-transform: uppercase;
-					}
-
-					p {
-						color: rgb(51, 68, 51);
-						font-size: 14px;
-						font-weight: 400;
-						line-height: 130%;
-						letter-spacing: 0px;
-						text-align: left;
-					}
-
-					.description_book {
-						width: 100%;
-						display: flex;
-						justify-content: space-between;
-
-						@media (max-width: 767px) {
-							width: 100%;
-							display: flex;
-							justify-content: space-between;
-						}
-						@media (max-width: 320px) {
-							max-width: 320px;
-							width: 100%;
-							display: flex;
-							justify-content: space-between;
-						}
-
-						p {
-							color: rgb(140, 140, 140);
-							font-size: 14px;
-							font-weight: 400;
-							line-height: 130%;
-							letter-spacing: 0px;
-							text-align: left;
-						}
-
-						h6 {
-							color: rgb(34, 34, 34);
-							font-size: 16px;
-							font-weight: 600;
-							line-height: 130%;
-							letter-spacing: 0px;
-							text-align: left;
+							@media (max-width: 767px) {
+								font-size: 12px;
+							}
+							@media (max-width: 600px) {
+								font-size: 11px;
+							}
 						}
 					}
 				}
@@ -408,12 +407,17 @@
 				}
 
 				@media (max-width: 767px) {
+					max-width: 170px;
 					width: 100%;
 					display: flex;
 					align-items: start;
 					flex-direction: column;
-					justify-content: end;
+					justify-content: start;
 					gap: 17px;
+				}
+				@media (max-width: 500px) {
+					max-width: 220px;
+					width: 100%;
 				}
 				img {
 					@media (max-width: 1200px) {
@@ -432,7 +436,6 @@
 					gap: 5px;
 
 					@media (max-width: 1200px) {
-						max-width: 208px;
 						width: 100%;
 					}
 					@media (max-width: 767px) {
@@ -446,6 +449,9 @@
 						letter-spacing: 0px;
 						text-align: left;
 						text-transform: uppercase;
+						@media (max-width: 600px) {
+							font-size: 12px;
+						}
 					}
 					p {
 						color: rgb(51, 68, 51);
@@ -454,6 +460,9 @@
 						line-height: 130%;
 						letter-spacing: 0px;
 						text-align: left;
+						@media (max-width: 600px) {
+							font-size: 12px;
+						}
 					}
 
 					.description_book {
@@ -474,6 +483,12 @@
 							line-height: 130%;
 							letter-spacing: 0px;
 							text-align: left;
+							@media (max-width: 767px) {
+								font-size: 12px;
+							}
+							@media (max-width: 600px) {
+								font-size: 11px;
+							}
 						}
 						h6 {
 							color: rgb(34, 34, 34);
@@ -482,6 +497,12 @@
 							line-height: 130%;
 							letter-spacing: 0px;
 							text-align: left;
+							@media (max-width: 767px) {
+								font-size: 12px;
+							}
+							@media (max-width: 600px) {
+								font-size: 11px;
+							}
 						}
 					}
 				}

@@ -87,8 +87,12 @@ const Header = () => {
 								</div>
 								<div className={scss.right_Content}>
 									<div className={scss.favorite_icon}>
+										<span >
 										<WhiteLikeIcon />
+										</span>
+										<span>
 										<IconRedDot />
+										</span>
 									</div>
 									<div className={scss.basket}>
 										<p>Корзина (3)</p>

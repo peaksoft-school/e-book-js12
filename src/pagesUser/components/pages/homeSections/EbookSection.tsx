@@ -63,7 +63,7 @@ const booksData = [
 	}
 ];
 
-const Ebooks = () => {
+const EbookSection = () => {
 	const [bookId, setBookId] = useState(1);
 
 	const handleSlideChange = (swiper: SwiperClass) => {
@@ -72,7 +72,7 @@ const Ebooks = () => {
 	};
 
 	return (
-		<div className={scss.Ebooks}>
+		<section className={scss.Ebooks}>
 			<div className="container">
 				<div className={scss.content}>
 					<div className={scss.title}>
@@ -171,8 +171,8 @@ const Ebooks = () => {
 					</div>
 				</div>
 			</div>
-		</div>
+		</section>
 	);
 };
 
-export default Ebooks;
+export default EbookSection;

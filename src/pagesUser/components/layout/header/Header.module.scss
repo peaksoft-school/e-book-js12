@@ -71,9 +71,22 @@
 				}
 				.favorite_icon {
 					display: flex;
-					color: red;
 					align-items: start;
 					cursor: pointer;
+					position: relative;
+					span {
+						&:first-child {
+							color: rgb(0, 0, 0);
+						}
+						&:last-child {
+							width: 5px;
+							padding-bottom: 5px;
+							color: red;
+							svg {
+								position: absolute;
+							}
+						}
+					}
 				}
 				.basket {
 					cursor: pointer;
@@ -110,7 +123,7 @@
 		.nav_bar {
 			display: flex;
 			align-items: center;
-			justify-content: space-between;
+			justify-content: center;
 			@media (max-width: 950px) {
 				justify-content: space-between;
 				max-width: 910px;
