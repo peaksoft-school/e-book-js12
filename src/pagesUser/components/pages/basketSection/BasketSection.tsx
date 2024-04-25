@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import scss from './BasketPage.module.scss';
-import imgHistory from '../../../../assets/booksImg/img-History-books.png';
+import harryPoter from '../../../../assets/booksImg/harry-potter-chamber.png';
 import CustomPromoInput from '@/src/ui/customInpute/CustomPromoInput';
 import { IconX } from '@/src/assets/icons';
-
+import CustomAuthButton from '@/src/ui/customButton/CustomAuthButton';
+import { Modal } from 'antd';
 interface Book {
 	id: number;
 	bookName: string;
@@ -15,14 +16,21 @@ interface Book {
 	salePrice: number;
 	quantity: number;
 }
+const BasketPage: React.FC = () => {
+	const success = () => {
+		Modal.success({
+			content: 'Ваш заказ успешно оформлен!',
+			okText: 'Продолжить покупки',
+			closable: true
+		});
+	};
 
-const BasketSection: React.FC = () => {
 	const [booksData, setBooksData] = useState<Book[]>([
 		{
 			id: 1,
 			bookName: 'Гарри Поттер и тайная комната',
 			author: 'Роулинг Джоан Кэтлин',
-			image: imgHistory,
+			image: harryPoter,
 			promoCode: 'Промокод 20%',
 			firstPrice: 545,
 			salePrice: 345,
@@ -32,7 +40,7 @@ const BasketSection: React.FC = () => {
 			id: 2,
 			bookName: 'Гарри Поттер и тайная комната',
 			author: 'Роулинг Джоан Кэтлин',
-			image: imgHistory,
+			image: harryPoter,
 			promoCode: 'Промокод 20%',
 			firstPrice: 545,
 			salePrice: 400,
@@ -42,14 +50,13 @@ const BasketSection: React.FC = () => {
 			id: 3,
 			bookName: 'Гарри Поттер и тайная комната',
 			author: 'Роулинг Джоан Кэтлин',
-			image: imgHistory,
+			image: harryPoter,
 			promoCode: 'Промокод 20%',
 			firstPrice: 545,
 			salePrice: 345,
 			quantity: 1
 		}
 	]);
-
 	const incrementQuantity = (id: number) => {
 		setBooksData((prevBooksData) =>
 			prevBooksData.map((book) =>
@@ -57,7 +64,6 @@ const BasketSection: React.FC = () => {
 			)
 		);
 	};
-
 	const decrementQuantity = (id: number) => {
 		setBooksData((prevBooksData) =>
 			prevBooksData.map((book) =>
@@ -67,11 +73,9 @@ const BasketSection: React.FC = () => {
 			)
 		);
 	};
-
 	const calculateTotalPrice = (book: Book) => {
 		return book.salePrice * book.quantity;
 	};
-
 	const totalQuantity = booksData.reduce(
 		(total, book) => total + book.quantity,
 		0
@@ -82,9 +86,8 @@ const BasketSection: React.FC = () => {
 	);
 	const discount = 456;
 	const overallTotal = totalSum - discount;
-
 	return (
-		<section className={scss.basket_page}>
+		<div className={scss.basket_page}>
 			<div className="container">
 				<div className={scss.links}>
 					<Link
@@ -114,14 +117,14 @@ const BasketSection: React.FC = () => {
 								<>
 									<hr />
 									<div className={scss.card_container}>
+										<div className={scss.delete_x}>
+											<IconX />
+										</div>
 										<div className={scss.book} key={book.id}>
 											<div className={scss.book_img}>
 												<img src={book.image} alt={book.bookName} />
 											</div>
 											<div className={scss.more_info_book}>
-												<div className={scss.delete_x}>
-													<IconX />
-												</div>
 												<div className={scss.book_info}>
 													<h3>{book.bookName}</h3>
 													<p>{book.author}</p>
@@ -146,10 +149,10 @@ const BasketSection: React.FC = () => {
 														</button>
 													</div>
 												</div>
-												<div className={scss.add_to_basket}>
-													<p>Добавить в избранное</p>
-												</div>
 											</div>
+										</div>
+										<div className={scss.add_to_basket}>
+											<p>Добавить в избранное</p>
 										</div>
 									</div>
 								</>
@@ -157,19 +160,21 @@ const BasketSection: React.FC = () => {
 						</div>
 					</div>
 					<div className={scss.right_content}>
-						<div className={scss.content}>
+						<div className={scss.total_price_content}>
 							<p className={scss.title}>Общая стоимость</p>
 							<div className={scss.purchases}>
-								<p>Количество книг:</p>
-								<p>{totalQuantity} шт</p>
-							</div>
-							<div className={scss.purchases}>
-								<p>Скидка:</p>
-								<p>{discount} с</p>
-							</div>
-							<div className={scss.purchases}>
-								<p>Сумма:</p>
-								<p>{totalSum} с</p>
+								<div className={scss.purchase}>
+									<p>Количество книг:</p>
+									<p>{totalQuantity} шт</p>
+								</div>
+								<div className={scss.purchase}>
+									<p>Скидка:</p>
+									<p>{discount} с</p>
+								</div>
+								<div className={scss.purchase}>
+									<p>Сумма:</p>
+									<p>{totalSum} с</p>
+								</div>
 							</div>
 							<div className={scss.promo_input}>
 								<CustomPromoInput placeholder={'Введите промокод'} />
@@ -179,12 +184,17 @@ const BasketSection: React.FC = () => {
 								<p>{overallTotal} с</p>
 							</div>
 						</div>
-						<button>Оформить заказ</button>
+						<CustomAuthButton
+							onClick={() => {
+								success();
+							}}
+						>
+							Оформить заказ
+						</CustomAuthButton>
 					</div>
 				</div>
 			</div>
-		</section>
+		</div>
 	);
 };
-
-export default BasketSection;
+export default BasketPage;

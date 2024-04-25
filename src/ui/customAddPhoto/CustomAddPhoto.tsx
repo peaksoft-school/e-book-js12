@@ -26,7 +26,7 @@ const CustomAddPhoto: React.FC = () => {
 	};
 	return (
 		<div
-			className={scss.inputContainer}
+			className={scss.input_container}
 			style={{ backgroundImage: `url(${image})` }}
 		>
 			<input
@@ -37,13 +37,13 @@ const CustomAddPhoto: React.FC = () => {
 			/>
 			{image ? null : (
 				<>
-					<div className={scss.imgContainer} onClick={handleButtonClick}>
+					<div className={scss.img_container} onClick={handleButtonClick}>
 						<IconAddPhoto />
 					</div>
 				</>
 			)}
 			{image ? (
-				<div className={scss.btnContainer}>
+				<div className={scss.btn_container}>
 					<button onClick={handleButtonClick}>Изменить</button>
 					<button
 						onClick={() => {

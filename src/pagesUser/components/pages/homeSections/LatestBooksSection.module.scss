@@ -43,11 +43,8 @@
 
 			right: 100px;
 		}
-		:global{
-		
-		}
 
-		.textBookContent {
+		.text_book_content {
 			display: flex;
 			justify-content: center;
 			flex-direction: column;
@@ -127,7 +124,7 @@
 			.textBookContent {
 				display: none;
 			}
-			.imagesSlide {
+			.images_slide {
 				width: 100%;
 			}
 		}
@@ -146,12 +143,12 @@
 			opacity: 1;
 		}
 
-		.activeSlide {
+		.active_slide {
 			max-width: 293px;
 			width: 100%;
 			transform: scale(1);
 			opacity: 1;
-			.imagesSlide {
+			.images_slide {
 				width: 100%;
 			}
 		}

@@ -111,11 +111,11 @@ const LatestBookSection: FC = () => {
 									<div
 										key={idx}
 										className={
-											imageIndex === idx ? scss.activeSlide : scss.slide
+											imageIndex === idx ? scss.active_slide : scss.slide
 										}
 									>
-										<img className={scss.imagesSlide} src={item.img} alt="#" />
-										<div className={scss.textBookContent}>
+										<img className={scss.images_slide} src={item.img} alt="#" />
+										<div className={scss.text_book_content}>
 											<p>{item.name}</p>
 											<div className={scss.description}>
 												<p>{item.auth}</p>

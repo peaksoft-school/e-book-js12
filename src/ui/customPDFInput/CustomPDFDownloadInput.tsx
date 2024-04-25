@@ -34,7 +34,7 @@ const CustomPDFDownloadInput: FC<CustomPDFDownloadInputProps> = ({
 				{isFileUploaded ? 'PDF загружена' : 'Загрузите PDF'}
 			</p>
 			<div
-				className={`${scss.DownLoadInput} ${isFileUploaded ? scss.uploaded : ''}`}
+				className={`${scss.download_input} ${isFileUploaded ? scss.uploaded : ''}`}
 				onClick={handleDivClick}
 			>
 				<input
@@ -47,7 +47,9 @@ const CustomPDFDownloadInput: FC<CustomPDFDownloadInputProps> = ({
 					style={{ display: 'none' }}
 				/>
 				{isFileUploaded ? <IconDownloaded /> : <IconDownload />}
-				<p className={isFileUploaded ? scss.uploadedText : scss.unUploadedText}>
+				<p
+					className={isFileUploaded ? scss.uploaded_text : scss.unUploadedText}
+				>
 					{isFileUploaded ? 'PDF загружена' : 'Загрузите PDF'}
 				</p>
 			</div>

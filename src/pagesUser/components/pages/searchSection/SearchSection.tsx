@@ -15,10 +15,13 @@ import {
 } from '@/src/assets/icons';
 import CustomBasketButton from '@/src/ui/customButton/CustomBasketButton';
 import { Slider, ConfigProvider } from 'antd';
+import { useNavigate } from 'react-router-dom';
 
 const SearchSection = () => {
 	const [isGenre, setIsGenre] = useState(false);
 	const [checkGenre, setCheckGenre] = useState(false);
+	const [isSort, setIsSort] = useState(false);
+	const navigate = useNavigate();
 
 	const [filterType, setFilterType] = useState(false);
 	const [clickRadio, setClickRadio] = useState(false);
@@ -68,7 +71,11 @@ const SearchSection = () => {
 			<div className="container">
 				<div className={scss.content}>
 					<div className={scss.title_navigate}>
-						<p>
+						<p
+							onClick={() => {
+								navigate('/');
+							}}
+						>
 							Главная/<span>Психология</span>
 						</p>
 					</div>
@@ -87,10 +94,24 @@ const SearchSection = () => {
 							</div>
 						</div>
 						<div className={scss.tool}></div>
-						<div className={scss.right_content}>
+						<div
+							className={scss.right_content}
+							onClick={() => setIsSort(!isSort)}
+						>
 							<p>Сортировать</p>
 							<IconArrowBottom />
 						</div>
+						{
+							<>
+								<div className={`${isSort ? scss.sort_drop : scss.sort_down}`}>
+									<ul>
+										<li>Новинки</li>
+										<hr />
+										<li>Бестселлеры</li>
+									</ul>
+								</div>
+							</>
+						}
 					</div>
 					<div className={scss.container}>
 						<div
@@ -287,7 +308,7 @@ const SearchSection = () => {
 										<p>{item.price}</p>
 									</div>
 									<div className={scss.btn_basket}>
-										<CustomBasketButton onClick={() => {}}>
+										<CustomBasketButton nameClass="" onClick={() => {}}>
 											<p>Добавить в корзину</p>
 										</CustomBasketButton>
 									</div>

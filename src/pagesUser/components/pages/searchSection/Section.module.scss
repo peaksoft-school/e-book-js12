@@ -3,8 +3,11 @@
 		.title_navigate {
 			margin-bottom: 36px;
 			p {
+				max-width: max-content;
 				color: #969696;
 				cursor: pointer;
+				display: flex;
+				align-items: center;
 				span {
 					color: #222222;
 					font-size: 14px;
@@ -22,6 +25,7 @@
 			flex-wrap: wrap;
 			margin-bottom: 33px;
 			gap: 10px;
+			position: relative;
 			.left_content {
 				p {
 					color: rgb(150, 150, 150);
@@ -35,6 +39,7 @@
 					}
 				}
 			}
+
 			.center_content {
 				display: flex;
 				justify-content: center;
@@ -84,6 +89,7 @@
 				gap: 10px;
 				cursor: pointer;
 				p {
+					user-select: none;
 					color: #222222;
 					font-size: 16px;
 					font-weight: 400;
@@ -92,6 +98,58 @@
 					text-align: left;
 					@media (max-width: 768px) {
 						font-size: 14px;
+					}
+				}
+			}
+			.sort_down {
+				display: flex;
+				max-width: 151px;
+				width: 100%;
+				padding: 20px;
+				position: absolute;
+				right: 0px;
+				top: -10px;
+				cursor: default;
+				user-select: none;
+				opacity: 0;
+				z-index: -222;
+				box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+				background-color: #f8f8f8;
+				transition: 0.2s;
+			}
+			.sort_drop {
+				display: flex;
+				max-width: 151px;
+				width: 100%;
+				padding: 20px;
+				position: absolute;
+				right: 0px;
+				top: 40px;
+				z-index: 222;
+				box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+				background-color: #f8f8f8;
+				transition: 0.2s;
+				ul {
+					display: flex;
+					flex-direction: column;
+					justify-content: start;
+					user-select: none;
+					width: 100%;
+					li {
+						color: rgb(34, 34, 34);
+						font-family: Open Sans;
+						font-size: 14px;
+						font-weight: 400;
+						line-height: 130%;
+						letter-spacing: 0px;
+						text-align: left;
+						cursor: pointer;
+					}
+					hr {
+						margin-top: 6.75px;
+						margin-bottom: 8.25px;
+						border: none;
+						border-top: 0.5px solid rgb(196, 196, 196);
 					}
 				}
 			}

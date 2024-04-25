@@ -4,11 +4,19 @@ import scss from './Style.module.scss';
 interface CustomBasketProps {
 	children: ReactNode;
 	onClick: () => void;
+	nameClass: string;
 }
 
-const CustomBasketButton: FC<CustomBasketProps> = ({ children, onClick }) => {
+const CustomBasketButton: FC<CustomBasketProps> = ({
+	children,
+	onClick,
+	nameClass
+}) => {
 	return (
-		<button className={`${scss.customButtonBasket}`} onClick={onClick}>
+		<button
+			className={`${scss.custom_button_basket} ${nameClass} `}
+			onClick={onClick}
+		>
 			{children}
 		</button>
 	);

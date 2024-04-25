@@ -26,7 +26,7 @@
 		}
 	}
 	.content {
-		.header_Content {
+		.header_content {
 			display: flex;
 			justify-content: center;
 			align-items: center;
@@ -39,7 +39,7 @@
 				justify-content: space-between;
 			}
 
-			.input_Content {
+			.input_vontent {
 				display: flex;
 				flex-direction: column;
 				flex-shrink: 3;
@@ -50,8 +50,7 @@
 					display: none;
 				}
 			}
-
-			.right_Content {
+			.right_content {
 				display: flex;
 				align-items: center;
 				flex-shrink: 1;
@@ -124,6 +123,7 @@
 			display: flex;
 			align-items: center;
 			justify-content: center;
+			position: relative;
 			@media (max-width: 950px) {
 				justify-content: space-between;
 				max-width: 910px;
@@ -133,7 +133,7 @@
 			@media (max-width: 470px) {
 				margin-bottom: 20px;
 			}
-			.left_nav_Content {
+			.left_nav_content {
 				display: flex;
 				align-items: center;
 				margin-right: 103px;
@@ -234,7 +234,7 @@
 				}
 			}
 
-			.center_nav_Content {
+			.center_nav_content {
 				display: flex;
 				flex-shrink: 2;
 				margin-right: 339px;
@@ -302,7 +302,7 @@
 					}
 				}
 			}
-			.right_nav_Content {
+			.right_nav_content {
 				display: flex;
 				align-items: center;
 				@media (max-width: 460px) {
@@ -346,6 +346,58 @@
 								width: 18px;
 							}
 						}
+					}
+				}
+			}
+			.user_down {
+				display: flex;
+				max-width: 140px;
+				width: 100%;
+				padding: 20px;
+				position: absolute;
+				top: 0px;
+				right: 0px;
+				z-index: -2;
+				user-select: none;
+				cursor: default;
+				opacity: 0;
+				box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+				background-color: #f8f8f8;
+				transition: 0.2s;
+			}
+			.user_drop {
+				display: flex;
+				max-width: 140px;
+				width: 100%;
+				padding: 20px;
+				position: absolute;
+				right: -80px;
+				top: 55px;
+				z-index: 222;
+				box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+				background-color: #f8f8f8;
+				transition: 0.2s;
+				ul {
+					display: flex;
+					flex-direction: column;
+					justify-content: start;
+					user-select: none;
+					width: 100%;
+					li {
+						color: rgb(34, 34, 34);
+						font-family: Open Sans;
+						font-size: 14px;
+						font-weight: 400;
+						line-height: 130%;
+						letter-spacing: 0px;
+						text-align: left;
+						cursor: pointer;
+					}
+					hr {
+						margin-top: 6.75px;
+						margin-bottom: 8.25px;
+						border: none;
+						border-top: 0.5px solid rgb(196, 196, 196);
 					}
 				}
 			}

@@ -1,23 +1,23 @@
-.searchContainer {
+.search_container {
 	display: flex;
 	align-items: center;
 	border: 1px solid rgb(196, 196, 196);
 	max-width: 859px;
 	padding-right: 18px;
 
-	.SearchIcon {
+	.search_icon {
 		color: rgb(196, 196, 196);
 	}
 
 	&:focus-within {
 		border: 1px solid rgb(243, 73, 1);
 		background: transparent;
-		.FocusedIcon {
+		.focused_icon {
 			color: rgb(243, 73, 1);
 		}
 	}
 
-	.GenreInput {
+	.genre_input {
 		max-width: 859px;
 		width: 100%;
 		height: 40px;
@@ -48,7 +48,7 @@
 	}
 }
 
-.loginInput {
+.login_input {
 	max-width: 514px;
 	width: 100%;
 	height: 41px;
@@ -70,22 +70,22 @@
 	text-align: left;
 }
 
-.loginInput:hover {
+.login_input:hover {
 	border: 1px solid rgb(196, 196, 196);
 	background: rgb(250, 250, 250);
 }
 
-.loginInput:focus {
+.login_input:focus {
 	background: rgb(250, 250, 250);
 	outline: none;
 	color: #222222;
 }
 
-.loginInput:focus::placeholder {
+.login_input:focus::placeholder {
 	opacity: 0;
 }
 
-.passwordContainer {
+.password_container {
 	display: flex;
 	align-items: center;
 	border: 1px solid rgb(196, 196, 196);
@@ -95,7 +95,7 @@
 	padding-right: 18px;
 	background-color: #e5e5e5;
 
-	.EyeSeeIcon {
+	.eye_see_icon {
 		color: rgb(196, 196, 196);
 	}
 
@@ -107,12 +107,12 @@
 		border: 1px solid rgb(196, 196, 196);
 		background: rgb(250, 250, 250);
 		color: #222222;
-		.EyeSeeIcon {
+		.eye_see_icon {
 			color: #222222;
 		}
 	}
 
-	.passwordInput {
+	.password_input {
 		max-width: 514px;
 		width: 100%;
 		height: 41px;
@@ -134,23 +134,23 @@
 		text-align: left;
 		border-right: transparent;
 	}
-	.passwordInput:hover {
+	.password_input:hover {
 		border: 1px solid rgb(196, 196, 196);
 		background: rgb(250, 250, 250);
 		border-right: transparent;
 	}
-	.passwordInput:focus {
+	.password_input:focus {
 		background: rgb(250, 250, 250);
 		outline: none;
 		color: #222222;
 		border-right: transparent;
 	}
-	.passwordInput:focus::placeholder {
+	.password_input:focus::placeholder {
 		opacity: 0;
 	}
 }
 
-.promoContainer {
+.promo_container {
 	display: flex;
 	align-items: center;
 	border: 1px solid rgb(196, 196, 196);
@@ -162,7 +162,7 @@
 		border: 1px solid rgb(243, 73, 1);
 		background: transparent;
 	}
-	.PromoInput {
+	.promo_input {
 		max-width: 252px;
 		width: 100%;
 		height: 35px;
@@ -183,24 +183,24 @@
 		letter-spacing: 0px;
 		text-align: left;
 		border-right: transparent;
-		.PromoInput:hover {
+		.promo_input:hover {
 			border: 1px solid rgb(196, 196, 196);
 			background: rgb(250, 250, 250);
 		}
 
-		.PromoInput:focus {
+		.promo_input:focus {
 			border: 1px solid transparent;
 			background: rgb(250, 250, 250);
 			outline: none;
 			color: #222222;
 		}
 	}
-	.PromoInput:focus::placeholder {
+	.promo_input:focus::placeholder {
 		opacity: 0;
 	}
 }
 
-.userNameInput {
+.user_name_input {
 	max-width: 449px;
 	width: 100%;
 	height: 39px;
@@ -221,6 +221,6 @@
 	letter-spacing: 0px;
 	text-align: left;
 }
-.userNameInput:focus::placeholder {
+.user_name_input:focus::placeholder {
 	opacity: 0;
 }

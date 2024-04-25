@@ -1,11 +1,5 @@
-import Welcome from './homeSections/Welcome';
-
 const HomePage = () => {
-	return (
-		<>
-			<Welcome />
-		</>
-	);
+	return <></>;
 };
 
 export default HomePage;

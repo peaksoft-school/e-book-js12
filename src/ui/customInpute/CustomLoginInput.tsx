@@ -7,7 +7,7 @@ interface TypeProps {
 }
 const CustomLoginInput: FC<TypeProps> = ({ placeholder, type }) => {
 	return (
-		<input placeholder={placeholder} type={type} className={scss.loginInput} />
+		<input placeholder={placeholder} type={type} className={scss.login_input} />
 	);
 };
 

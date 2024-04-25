@@ -18,15 +18,15 @@ const CustomGenreInput: FC<TypeProps> = ({ placeholder }) => {
 	};
 
 	return (
-		<div className={scss.searchContainer}>
+		<div className={scss.search_container}>
 			<input
 				placeholder={placeholder}
-				className={`${scss.GenreInput} ${isFocused ? scss.Focused : ''}`}
+				className={`${scss.genre_input} ${isFocused ? scss.focused : ''}`}
 				onFocus={handleFocus}
 				onBlur={handleBlur}
 			/>
 			<div
-				className={`${scss.SearchIcon} ${isFocused ? scss.FocusedIcon : ''}`}
+				className={`${scss.search_icon} ${isFocused ? scss.focused_icon : ''}`}
 			>
 				<IconSearch />
 			</div>

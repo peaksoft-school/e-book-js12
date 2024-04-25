@@ -5,6 +5,8 @@ import WhiteLikeIcon from '@/src/assets/icons/icon-whiteLike';
 import { IconBurgerMenu, IconRedDot } from '@/src/assets/icons';
 import LogoeBook from '@/src/ui/logoeBook/LogoeBook';
 import WhiteProfileIcon from '@/src/assets/icons/icon-whiteProfile';
+import ExitModal from '@/src/ui/customModals/ExitModal';
+import { useNavigate } from 'react-router-dom';
 
 const dataGenre = [
 	{
@@ -49,7 +51,12 @@ const Header = () => {
 	const [headerScroll, setHeaderScroll] = useState<boolean>(false);
 	const [isGenre, setIsGenre] = useState<boolean>(false);
 	const [isNavBar, setIsNavBar] = useState<boolean>(false);
+	const [isUser, setIsUser] = useState<boolean>(false);
+	const [userExit, setUserExit] = useState<boolean>(false);
+
 	const menuRef = useRef(null);
+
+	const navigate = useNavigate();
 
 	useEffect(() => {
 		const changeHeader = () => {
@@ -78,29 +85,35 @@ const Header = () => {
 				>
 					<div className="container">
 						<div className={scss.content}>
-							<div className={scss.header_Content}>
-								<div className={scss.logo_Content}>
+							<div className={scss.header_content}>
+								<div className={scss.logo_content}>
 									<LogoeBook />
 								</div>
-								<div className={scss.input_Content}>
+								<div className={scss.input_vontent}>
 									<CustomGenreInput placeholder="Искать жанр, книги, авторов, издательства... " />
 								</div>
-								<div className={scss.right_Content}>
-									<div className={scss.favorite_icon}>
-										<span >
-										<WhiteLikeIcon />
+								<div className={scss.right_content}>
+									<div
+										className={scss.favorite_icon}
+										onClick={() => navigate('/favorite')}
+									>
+										<span>
+											<WhiteLikeIcon />
 										</span>
 										<span>
-										<IconRedDot />
+											<IconRedDot />
 										</span>
 									</div>
-									<div className={scss.basket}>
+									<div
+										className={scss.basket}
+										onClick={() => navigate('/basket')}
+									>
 										<p>Корзина (3)</p>
 									</div>
 								</div>
 							</div>
 							<nav className={scss.nav_bar}>
-								<div className={scss.left_nav_Content}>
+								<div className={scss.left_nav_content}>
 									<div
 										onClick={() => {
 											setIsGenre(!isGenre);
@@ -135,7 +148,7 @@ const Header = () => {
 										Жанры
 									</p>
 								</div>
-								<div className={scss.center_nav_Content}>
+								<div className={scss.center_nav_content}>
 									<ul>
 										<li>Электронные книги</li>
 										<li>Audio books</li>
@@ -143,14 +156,35 @@ const Header = () => {
 										<li>Начать продавать на eBook</li>
 									</ul>
 								</div>
-								<div className={scss.right_nav_Content}>
-									<button>
+								<div className={scss.right_nav_content}>
+									<button onClick={() => setIsUser(!isUser)}>
 										<p>
 											<WhiteProfileIcon />
 										</p>
 										Ибра
 									</button>
 								</div>
+								{
+									<>
+										<div
+											className={`${isUser ? scss.user_drop : scss.user_down}`}
+										>
+											<ul>
+												<li>Профиль</li>
+												<hr />
+												<li onClick={() => setUserExit(!userExit)}>Выйти</li>
+											</ul>
+										</div>
+									</>
+								}
+								{userExit ? (
+									<>
+										<ExitModal
+											isOpen={userExit}
+											onClose={() => setUserExit(false)}
+										/>
+									</>
+								) : null}
 							</nav>
 							<div className={scss.search_input}>
 								<CustomGenreInput placeholder="Искать жанр, книги, авторов, издательства... " />

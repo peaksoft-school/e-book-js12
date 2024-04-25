@@ -1,25 +1,24 @@
-import { useState } from 'react';
-import Modal from './Modal';
 import scss from '../../ui/customModals/Style.module.scss';
+import { FC } from 'react';
+import { Modal } from 'antd';
 
-const ExitModal = () => {
-	const [isOpen, setIsOpen] = useState(false);
-
-	const closeModal = () => {
-		setIsOpen(!isOpen);
-	};
-
+interface ExitProps {
+	isOpen: boolean;
+	onClose: () => void;
+}
+const ExitModal: FC<ExitProps> = ({ isOpen, onClose }) => {
 	return (
 		<>
-			<Modal isOpen={isOpen} onClose={closeModal}>
+			<Modal
+				cancelText={'Отменить'}
+				okText={'Выйти'}
+				open={isOpen}
+				onOk={onClose}
+				onCancel={onClose}
+			>
 				<div className={scss.exitContainer}>
 					<p className={scss.text}>Вы уверены, что хотите выйти?</p>
-					<div className={scss.buttonsBox}>
-						<button className={scss.cancel} onClick={closeModal}>
-							Отменить
-						</button>
-						<button className={scss.logout}>Выйти</button>
-					</div>
+					<div className={scss.buttonsBox}></div>
 				</div>
 			</Modal>
 		</>
