@@ -8,6 +8,7 @@ import WhiteProfileIcon from '@/src/assets/icons/icon-whiteProfile';
 import ExitModal from '@/src/ui/customModals/ExitModal';
 import { useNavigate } from 'react-router-dom';
 
+
 const dataGenre = [
 	{
 		category: 'Образование',
@@ -122,12 +123,14 @@ const Header = () => {
 									>
 										<IconBurgerMenu />
 									</div>
+										
 									<div
 										onClick={() => {
 											setIsNavBar(!isNavBar);
 										}}
 										className={scss.burger_menu}
-									>
+										>
+										
 										<IconBurgerMenu />
 									</div>
 									<div

@@ -51,3 +51,6 @@ export { default as IconArrowBottom } from './icon-arrowBottom';
 export { default as IconDeleteX } from './icon-x';
 export { default as IconLongLine } from './icon-long-line';
 export { default as IconShortLine } from './icon-short-line';
+export { default as IconBackgroundLine } from './icon-background-Line';
+export { default as IconGreenCheckmark } from './icon-greenCheckmark';
+export { default as IconGreyLine } from './icon-greyLine';
