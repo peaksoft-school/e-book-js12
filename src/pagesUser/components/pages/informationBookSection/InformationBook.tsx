@@ -3,8 +3,8 @@ import scss from './Information.module.scss';
 import { useState } from 'react';
 import CustomBasketButton from '@/src/ui/customButton/CustomBasketButton';
 import CustomPersonalAreaButton from '@/src/ui/customButton/CustomPersonalArea';
-import bookList from '../../../../assets/img/a6012509593 3.png';
-import harry_pooter from '../../../../assets/img/harrry-potter.png';
+import bookList from '../../../../assets/booksImg/info-book.png';
+import harry_pooter from '../../../../assets/booksImg/harrry-potter.png';
 
 const InformationBook = () => {
 	const [showBookInfo, setShowBookInfo] = useState(false);

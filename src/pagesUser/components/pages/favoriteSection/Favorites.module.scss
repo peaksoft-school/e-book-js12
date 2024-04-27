@@ -80,9 +80,11 @@
 			.btn_delete {
 				display: flex;
 				justify-content: end;
+
 				.close_button {
 					background-color: transparent;
 					border: none;
+					cursor: pointer;
 				}
 			}
 			.favorite_card_content {
