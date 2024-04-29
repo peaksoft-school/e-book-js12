@@ -57,10 +57,22 @@
 			z-index: 222;
 			transition: 0.3s;
 			user-select: none;
+			background-color: #f8f8f8;
+			@media (max-width: 800px) {
+				top: 60px;
+				right: 20px;
+			}
+			@media (max-width: 520px) {
+				top: 60px;
+				right: 50px;
+				max-width: 100px;
+				width: 100%;
+				padding: 10px 10px;
+			}
 			ul {
 				display: flex;
 				flex-direction: column;
-				gap: 10px;
+				gap: 50px;
 				width: 100%;
 				li {
 					color: rgb(34, 34, 34);
