@@ -1,4 +1,4 @@
-import scss from './Ebooks.module.scss';
+import scss from './Bestsellers.module.scss';
 
 import markMeson from '../../../../assets/booksImg/img-Mark-Meson.png';
 import mayMask from '../../../../assets/booksImg/img-May-Mask.png';
@@ -63,7 +63,7 @@ const booksData = [
 	}
 ];
 
-const Ebooks = () => {
+const BestsellerSection = () => {
 	const [bookId, setBookId] = useState(1);
 
 	const handleSlideChange = (swiper: SwiperClass) => {
@@ -72,23 +72,23 @@ const Ebooks = () => {
 	};
 
 	return (
-		<div className={scss.Ebooks}>
+		<section className={scss.Bestsellers}>
 			<div className="container">
 				<div className={scss.content}>
 					<div className={scss.title}>
-						<h2>Электронные книги</h2>
+						<h2>Бесеселлеры</h2>
 						<p>Смотреть все</p>
 					</div>
-					<div className={scss.allAboutBooks}>
+					<div className={scss.all_about_books}>
 						<div className={scss.books}>
 							{booksData.map((book) => (
 								<div
 									key={book.id}
-									className={scss.aboutBooks}
+									className={scss.about_books}
 									style={{ display: bookId === book.id ? 'block' : 'none' }}
 								>
 									<h3>{book.title}</h3>
-									<p className={scss.descriptionBooks}>{book.description}</p>
+									<p className={scss.description_books}>{book.description}</p>
 									<div className={scss.paragraph}>
 										<p>Подробнее</p>
 										<p>{book.pages} c</p>
@@ -119,8 +119,8 @@ const Ebooks = () => {
 										stretch: 0
 									}}
 									modules={[Pagination, Navigation, EffectCoverflow, Keyboard]}
-									className={scss.swiper}
 									onSlideChange={(swiper) => handleSlideChange(swiper)}
+									className={scss.swiper}
 								>
 									{booksData.map((book) => (
 										<SwiperSlide
@@ -128,7 +128,7 @@ const Ebooks = () => {
 											className={scss.swiper_slider}
 											style={{ maxHeight: '0px' }}
 										>
-											<div className={scss.slideItem}>
+											<div className={scss.slide_item}>
 												<img
 													src={book.image}
 													alt=""
@@ -171,8 +171,8 @@ const Ebooks = () => {
 					</div>
 				</div>
 			</div>
-		</div>
+		</section>
 	);
 };
 
-export default Ebooks;
+export default BestsellerSection;

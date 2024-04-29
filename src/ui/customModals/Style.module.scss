@@ -95,12 +95,8 @@
 	.text {
 		color: #000;
 		font-family: Open Sans;
-		font-size: 18px;
+		font-size: clamp(12px, 8vw, 18px);
 		font-weight: 600;
-
-		@media (max-width: 590px) {
-			font-size: 12px;
-		}
 	}
 
 	.buttonsBox {
@@ -211,6 +207,58 @@
 				height: 25px;
 				font-size: 12px;
 			}
+		}
+	}
+}
+
+:global {
+	.ant-btn {
+		padding: 10px 24px !important;
+		max-width: 130px !important;
+		width: 100% !important;
+		height: 42px;
+		border-radius: 0px;
+		&:first-child {
+			border: 1px solid transparent;
+			span {
+				color: #777777;
+				transition: 0.4s;
+			}
+			&:hover {
+				border: 1px solid #ff4c00 !important;
+			}
+			background-color: transparent;
+		}
+		&:hover {
+			span {
+				color: #ff4c00;
+				transition: 0.3s;
+			}
+		}
+		&:last-child {
+			background-color: black;
+			&:hover {
+				background-color: #000 !important;
+			}
+		}
+	}
+	.ant-modal-footer {
+		display: flex !important;
+		justify-content: center;
+		gap: 20px;
+	}
+	.ant-btn .css-dev-only-do-not-override-1qfezbu .ant-btn-default {
+		color: #fff;
+		cursor: pointer;
+		border: none;
+	}
+	.ant-btn span {
+		font-size: 16px !important;
+		font-weight: 600;
+		font-family: Open Sans;
+		&:hover {
+			color: #ff4c00;
+			transition: 0.3s;
 		}
 	}
 }

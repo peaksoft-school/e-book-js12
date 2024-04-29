@@ -1,9 +1,11 @@
 .Bestsellers {
 	.content {
+		padding-bottom: 104px;
 		.title {
 			display: flex;
 			justify-content: space-between;
 			margin-bottom: 50px;
+			margin-top: 126.5px;
 			@media (max-width: 767px) {
 				display: flex;
 				flex-direction: column;
@@ -34,7 +36,7 @@
 			}
 		}
 
-		.allAboutBooks {
+		.all_about_books {
 			width: 100%;
 			display: flex;
 			align-items: center;
@@ -55,7 +57,7 @@
 			@media (max-width: 767px) {
 				.Bestsellers {
 					.content {
-						.allAboutBooks {
+						.all_about_books {
 							gap: 20px;
 						}
 					}
@@ -79,7 +81,7 @@
 					width: 100%;
 				}
 
-				.aboutBooks {
+				.about_books {
 					height: 20vh;
 					@media (max-width: 440px) {
 						height: 10vh;
@@ -103,7 +105,7 @@
 						}
 					}
 
-					.descriptionBooks {
+					.description_books {
 						color: rgb(34, 34, 34);
 						font-size: clamp(8px, 8vw, 16px);
 						font-weight: 400;
@@ -113,7 +115,7 @@
 						margin-bottom: 40px;
 
 						@media (max-width: 1000px) {
-							.descriptionBooks {
+							.description_books {
 								font-size: clamp(14px, 4vw, 20px);
 							}
 						}
@@ -159,7 +161,7 @@
 					justify-content: center;
 					gap: 10px;
 
-					.slideItem {
+					.slide_item {
 						max-width: 150px;
 						width: 100%;
 						height: max-content;
@@ -331,14 +333,14 @@
 @media (max-width: 600px) {
 	.Bestsellers {
 		.content {
-			.allAboutBooks {
+			.all_about_books {
 				gap: 15px;
 				.books {
-					.aboutBooks {
+					.about_books {
 						h3 {
 							font-size: clamp(20px, 6vw, 32px);
 						}
-						.descriptionBooks {
+						.description_books {
 							font-size: clamp(12px, 4vw, 18px);
 							.paragraph {
 								p {

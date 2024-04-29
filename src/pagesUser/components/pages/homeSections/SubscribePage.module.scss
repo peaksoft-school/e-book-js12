@@ -23,7 +23,7 @@
 			line-height: 120%;
 			letter-spacing: 0px;
 			text-align: left !important;
-			margin-bottom: 20px;
+			margin-bottom: 45px;
 		}
 
 		@media (max-width: 1200px) {
@@ -35,7 +35,7 @@
 		@media (max-width: 320px) {
 			font-size: clamp(3px, 2vw, 6px);
 		}
-		.inputButton {
+		.input_button {
 			width: 100%;
 			display: flex;
 			justify-content: center;
@@ -52,7 +52,7 @@
 				color: black;
 			}
 
-			.sendButton {
+			.send_button {
 				background: rgb(28, 28, 28);
 				position: relative;
 				width: 137px;
@@ -63,19 +63,19 @@
 			}
 		}
 
-		.socialMedia {
+		.social_media {
 			max-width: 701px;
 			width: 100%;
 			display: flex;
 			align-items: center;
 			justify-content: space-between;
-			margin-top: 50px;
-
+			margin: 150px 0px;
 			@media (max-width: 767px) {
 				display: flex;
-				flex-direction: column;
-				margin-top: 30px;
 				gap: 15px;
+			}
+			@media (max-width: 450px) {
+				flex-direction: column;
 			}
 			@media (max-width: 320px) {
 				display: flex;

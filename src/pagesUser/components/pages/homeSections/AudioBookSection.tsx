@@ -3,9 +3,9 @@ import first_book from '../../../../assets/booksImg/img-milky-way-empire.png';
 import second_book from '../../../../assets/booksImg/img-green-color.png';
 import third_book from '../../../../assets/booksImg/img-nisa.png';
 import { IconNewIcon } from '@/src/assets/icons';
-const AudioBooks = () => {
+const AudioBookSection = () => {
 	return (
-		<div className={scss.AudioBooks}>
+		<section className={scss.AudioBooks}>
 			<div className="container">
 				<div className={scss.content}>
 					<div className={scss.title_audio_books}>
@@ -53,8 +53,8 @@ const AudioBooks = () => {
 					</div>
 				</div>
 			</div>
-		</div>
+		</section>
 	);
 };
 
-export default AudioBooks;
+export default AudioBookSection;

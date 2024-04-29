@@ -7,8 +7,8 @@ interface TypeProps {
 }
 const CustomPromoInput: FC<TypeProps> = ({ placeholder }) => {
 	return (
-		<div className={scss.promoContainer}>
-			<input placeholder={placeholder} className={scss.PromoInput} />
+		<div className={scss.promo_container}>
+			<input placeholder={placeholder} className={scss.promo_input} />
 			<IconBlackRightArrow />
 		</div>
 	);

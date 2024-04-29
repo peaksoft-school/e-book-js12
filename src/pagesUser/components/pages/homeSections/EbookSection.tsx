@@ -63,7 +63,7 @@ const booksData = [
 	}
 ];
 
-const Bestsellers = () => {
+const EbookSection = () => {
 	const [bookId, setBookId] = useState(1);
 
 	const handleSlideChange = (swiper: SwiperClass) => {
@@ -72,23 +72,23 @@ const Bestsellers = () => {
 	};
 
 	return (
-		<div className={scss.Bestsellers}>
+		<section className={scss.Bestsellers}>
 			<div className="container">
 				<div className={scss.content}>
 					<div className={scss.title}>
-						<h2>Бесеселлеры</h2>
+						<h2>Электронные книги</h2>
 						<p>Смотреть все</p>
 					</div>
-					<div className={scss.allAboutBooks}>
+					<div className={scss.all_about_books}>
 						<div className={scss.books}>
 							{booksData.map((book) => (
 								<div
 									key={book.id}
-									className={scss.aboutBooks}
+									className={scss.about_books}
 									style={{ display: bookId === book.id ? 'block' : 'none' }}
 								>
 									<h3>{book.title}</h3>
-									<p className={scss.descriptionBooks}>{book.description}</p>
+									<p className={scss.description_books}>{book.description}</p>
 									<div className={scss.paragraph}>
 										<p>Подробнее</p>
 										<p>{book.pages} c</p>
@@ -128,7 +128,7 @@ const Bestsellers = () => {
 											className={scss.swiper_slider}
 											style={{ maxHeight: '0px' }}
 										>
-											<div className={scss.slideItem}>
+											<div className={scss.slide_item}>
 												<img
 													src={book.image}
 													alt=""
@@ -171,8 +171,8 @@ const Bestsellers = () => {
 					</div>
 				</div>
 			</div>
-		</div>
+		</section>
 	);
 };
 
-export default Bestsellers;
+export default EbookSection;

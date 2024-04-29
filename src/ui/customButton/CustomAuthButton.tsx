@@ -8,7 +8,7 @@ interface CustomAuthProps {
 
 const CustomAuthButton: FC<CustomAuthProps> = ({ children, onClick }) => {
 	return (
-		<button className={`${scss.customButtonAuth}`} onClick={onClick}>
+		<button className={`${scss.custom_button_auth}`} onClick={onClick}>
 			{children}
 		</button>
 	);

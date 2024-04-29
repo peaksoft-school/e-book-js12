@@ -27,17 +27,17 @@ const CustomPasswordInput: FC<TypeProps> = ({ placeholder, type }) => {
 	};
 
 	return (
-		<div className={scss.passwordContainer}>
+		<div className={scss.password_container}>
 			<input
 				placeholder={placeholder}
 				type={showPassword ? 'text' : type}
-				className={`${scss.passwordInput} ${isFocused ? scss.FocusedIcon : ''}`}
+				className={`${scss.password_input} ${isFocused ? scss.FocusedIcon : ''}`}
 				onFocus={handleFocus}
 				onBlur={handleBlur}
 			/>
 			<div
 				onClick={togglePasswordVisibility}
-				className={`${scss.EyeSeeIcon} ${isFocused ? scss.FocusedIcon : ''}`}
+				className={`${scss.eye_see_icon} ${isFocused ? scss.FocusedIcon : ''}`}
 			>
 				{icon}
 			</div>

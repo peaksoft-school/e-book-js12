@@ -8,7 +8,7 @@ interface TypeProps {
 const CustomUserNameInput: FC<TypeProps> = ({ placeholder }) => {
 	return (
 		<>
-			<input placeholder={placeholder} className={scss.userNameInput} />
+			<input placeholder={placeholder} className={scss.user_name_input} />
 		</>
 	);
 };

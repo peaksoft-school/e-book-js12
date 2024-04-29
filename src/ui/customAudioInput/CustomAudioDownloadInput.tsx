@@ -34,7 +34,7 @@ const CustomAudioDownloadInput: FC<CustomAudioDownloadInputProps> = ({
 				{isFileUploaded ? 'Аудиозапись загружена' : 'Загрузите аудиозапись'}
 			</p>
 			<div
-				className={`${scss.DownLoadInput} ${isFileUploaded ? scss.uploaded : ''}`}
+				className={`${scss.download_input} ${isFileUploaded ? scss.uploaded : ''}`}
 				onClick={handleDivClick}
 			>
 				<input
@@ -47,7 +47,11 @@ const CustomAudioDownloadInput: FC<CustomAudioDownloadInputProps> = ({
 					style={{ display: 'none' }}
 				/>
 				{isFileUploaded ? <IconDownloaded /> : <IconDownload />}
-				<p className={isFileUploaded ? scss.uploadedText : scss.unUploadedText}>
+				<p
+					className={
+						isFileUploaded ? scss.uploaded_text : scss.un_uploaded_text
+					}
+				>
 					{isFileUploaded ? 'Аудиозапись загружена' : 'Загрузите аудиозапись'}
 				</p>
 			</div>

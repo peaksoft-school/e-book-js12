@@ -8,7 +8,7 @@ interface CustomSeeMoreProps {
 
 const CustomSeeMoreButton: FC<CustomSeeMoreProps> = ({ children, onClick }) => {
 	return (
-		<button className={`${scss.customButtonSeeMore} `} onClick={onClick}>
+		<button className={`${scss.custom_button_see_more} `} onClick={onClick}>
 			{children}
 		</button>
 	);

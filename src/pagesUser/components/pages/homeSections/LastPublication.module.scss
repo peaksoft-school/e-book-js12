@@ -1,0 +1,215 @@
+.last_publication {
+	background: #1c1c1c;
+	padding: 150px 0;
+	width: 100%;
+
+	@media (max-width: 940px) {
+		height: 100%;
+		padding-top: 100px;
+		padding-bottom: 100px;
+	}
+	@media (max-width: 600px) {
+		height: 100%;
+		padding-top: 100px;
+		padding-bottom: 100px;
+	}
+	.content {
+		@media (max-width: 600px) {
+			width: 100%;
+		}
+		.section_header {
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			@media (max-width: 600px) {
+				width: 100%;
+			}
+			.section_title {
+				font-size: 24px;
+				font-weight: 600;
+				line-height: 31.2px;
+				text-align: left;
+				color: #f8f8f8;
+			}
+			.nav_to_all {
+				font-size: 14px;
+				font-weight: 400;
+				line-height: 18.2px;
+				text-align: left;
+				color: #ff4c00;
+				text-decoration: underline;
+			}
+		}
+		.section_main {
+			display: flex;
+			justify-content: space-between;
+			flex-wrap: wrap;
+			padding: 0px 10px;
+			margin-top: 45px;
+			.content_book {
+				display: flex;
+				justify-content: space-between;
+				width: 60%;
+				@media (max-width: 940px) {
+					width: 100%;
+				}
+				@media (max-width: 550px) {
+					flex-direction: column;
+					gap: 10px 0px;
+				}
+				.main_nav {
+					li {
+						font-size: 16px;
+						font-weight: 400;
+						line-height: 20.8px;
+						text-align: left;
+						padding: 15px 0;
+						button {
+							color: #969696;
+							background-color: transparent;
+							border: none;
+							&:focus::before {
+								content: '';
+								display: inline-block;
+								width: 50px;
+								height: 1px;
+								background-color: rgb(255, 255, 255);
+								margin-right: 5px;
+								vertical-align: middle;
+							}
+							&:focus {
+								color: white;
+							}
+						}
+					}
+				}
+
+				.main_image {
+					display: flex;
+					justify-content: center;
+					.image_container {
+						position: relative;
+						.book_image {
+							width: 342px;
+							height: 515px;
+							gap: 0px;
+							opacity: 0px;
+							animation: rotate 5s linear infinite alternate;
+							transform: rotate(15deg);
+							@keyframes rotate {
+								0% {
+									transform: rotate(10deg);
+								}
+								50% {
+									transform: rotate(-10deg);
+								}
+								100% {
+									transform: rotate(10deg);
+								}
+							}
+							@media (max-width: 940px) {
+								width: 250px;
+								height: 350px;
+								animation: none;
+								transform: rotate(0deg);
+							}
+							@media (max-width: 600px) {
+								width: 250px;
+								height: 350px;
+								height: auto;
+							}
+						}
+						svg {
+							position: absolute;
+							width: 120%;
+							height: 105%;
+							margin: 0;
+							padding: 0;
+							@media (max-width: 940px) {
+								display: none;
+							}
+							@media (max-width: 600px) {
+								width: 5px;
+								position: absolute;
+							}
+						}
+
+						svg:nth-child(1) {
+							bottom: 245px;
+							right: -35px;
+						}
+
+						svg:nth-child(2) {
+							top: 0;
+							right: 0;
+						}
+
+						svg:nth-child(2),
+						svg:nth-child(3) {
+							top: -32px;
+							right: 135px;
+						}
+
+						svg:nth-child(5) {
+							top: 240px;
+							left: -35px;
+						}
+
+						svg:nth-child(4) {
+							top: 2px;
+							left: 138px;
+							z-index: 1;
+						}
+					}
+				}
+			}
+			.main_about {
+				display: flex;
+				flex-direction: column;
+				justify-content: end;
+				max-width: 365px;
+				width: 100%;
+				@media (max-width: 940px) {
+					max-width: 940px;
+					width: 100%;
+				}
+				.title_book {
+					font-size: 16px;
+					font-weight: 600;
+					line-height: 20.8px;
+					text-align: left;
+					color: #d1d1d1;
+					padding: 20px 0;
+				}
+				.about_book {
+					font-size: 16px;
+					font-weight: 400;
+					line-height: 25.8px;
+					text-align: left;
+					color: #d1d1d1;
+					overflow: auto;
+					padding: 30px 0;
+				}
+				.about_book_footer {
+					display: flex;
+					justify-content: space-between;
+					.nav_to_all {
+						font-size: 14px;
+						font-weight: 400;
+						line-height: 18.2px;
+						text-align: left;
+						color: #ff4c00;
+						text-decoration: underline;
+					}
+					.price {
+						font-size: 16px;
+						font-weight: 600;
+						line-height: 20.8px;
+						text-align: left;
+						color: #d1d1d1;
+					}
+				}
+			}
+		}
+	}
+}
