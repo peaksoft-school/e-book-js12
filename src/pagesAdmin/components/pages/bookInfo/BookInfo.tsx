@@ -81,9 +81,9 @@ const BookInfo = () => {
 										nameClass={scss.basket_btn}
 										onClick={countDown}
 									>
-										{contextHolder}
 										<p className={scss.boot1}>Принять</p>
 									</CustomBasketButton>
+									{contextHolder}
 								</div>
 							</div>
 						</div>
