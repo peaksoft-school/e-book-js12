@@ -20,10 +20,10 @@ const Navbar = () => {
 				<ul>
 					<Link
 						to={'/admin'}
-						className={`${scss.links} ${location.pathname === '/admin' ? scss.links_active : ''}`}
+						className={`${scss.links} ${location.pathname === '/admin' || location.pathname.startsWith('/admin/inner') ? scss.links_active : ''}`}
 					>
 						<li
-							className={`${scss.li} ${location.pathname === '/admin' ? scss.li_active : ''}`}
+							className={`${scss.li} ${location.pathname === '/admin' || location.pathname.startsWith('/admin/inner') ? scss.li_active : ''}`}
 						>
 							<IconWhiteApplicationsIcon />
 							<p> Заявки</p>
@@ -31,10 +31,10 @@ const Navbar = () => {
 					</Link>
 					<Link
 						to={'/admin/vendors'}
-						className={`${scss.links} ${location.pathname === '/admin/vendors' ? scss.links_active : ''}`}
+						className={`${scss.links} ${location.pathname === '/admin/vendors' || location.pathname.startsWith('/admin/vendors') ? scss.links_active : ''}`}
 					>
 						<li
-							className={`${scss.li} ${location.pathname === '/admin/vendors' ? scss.li_active : ''}`}
+							className={`${scss.li} ${location.pathname === '/admin/vendors' || location.pathname.startsWith('/admin/vendors') ? scss.li_active : ''}`}
 						>
 							<IconWhiteSellersIcon />
 							<p>Продавцы</p>
@@ -42,10 +42,10 @@ const Navbar = () => {
 					</Link>
 					<Link
 						to={'/admin/users'}
-						className={`${scss.links} ${location.pathname === '/admin/users' ? scss.links_active : ''}`}
+						className={`${scss.links} ${location.pathname === '/admin/users' || location.pathname.startsWith('/admin/users') ? scss.links_active : ''}`}
 					>
 						<li
-							className={`${scss.li} ${location.pathname === '/admin/users' ? scss.li_active : ''}`}
+							className={`${scss.li} ${location.pathname === '/admin/users' || location.pathname.startsWith('/admin/users') ? scss.li_active : ''}`}
 						>
 							<IconWhiteUsersIcon />
 							<p>Пользователи</p>
@@ -53,10 +53,10 @@ const Navbar = () => {
 					</Link>
 					<Link
 						to={'/admin/books'}
-						className={`${scss.links} ${location.pathname === '/admin/books' ? scss.links_active : ''}`}
+						className={`${scss.links} ${location.pathname === '/admin/books' || location.pathname.startsWith('/admin/books') ? scss.links_active : ''}`}
 					>
 						<li
-							className={`${scss.li} ${location.pathname === '/admin/books' ? scss.li_active : ''}`}
+							className={`${scss.li} ${location.pathname === '/admin/books' || location.pathname.startsWith('/admin/books') ? scss.li_active : ''}`}
 						>
 							<IconWhiteBooksIcon />
 							<p>Книги</p>

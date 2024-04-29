@@ -1,5 +1,5 @@
 import scss from './innerSection.module.scss';
-import bookImage from '../../../../assets/booksImg/img-History-books.png';
+import bookImage from '../../../../assets/booksImg/harrry-potter.png';
 import ThreeDotIcon from '@/src/assets/icons/icon-threeDot';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
@@ -7,7 +7,7 @@ import { IconPencil, IconX } from '@tabler/icons-react';
 
 const InnerSection = () => {
 	const navigate = useNavigate();
-	const [isOpen, setIsOpen] = useState(false); // Изначально закрыто
+	const [isOpen, setIsOpen] = useState(false);
 
 	const books = [
 		{
