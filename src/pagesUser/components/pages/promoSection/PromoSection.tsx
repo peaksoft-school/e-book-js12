@@ -66,7 +66,7 @@ const data_book = [
 		promo: '(-20%)',
 		discount: '345 с',
 		price: '345 с'
-	},
+	}
 ];
 const PromoSection = () => {
 	return (
