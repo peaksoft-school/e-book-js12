@@ -41,7 +41,7 @@ interface ModalProps {
 	onClose: () => void;
 	children: ReactNode;
 }
-const Modal: React.FC<ModalProps> = ({ isOpen, onClose, children }) => {
+const Modalcs: React.FC<ModalProps> = ({ isOpen, onClose, children }) => {
 	if (!isOpen) return null;
 	return ReactDOM.createPortal(
 		<div onClick={onClose} className={scss.modalOverlay}>
@@ -50,4 +50,4 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, children }) => {
 		document.getElementById('modal-root')!
 	);
 };
-export default Modal;
+export default Modalcs;

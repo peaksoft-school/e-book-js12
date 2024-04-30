@@ -1,14 +1,13 @@
-.layout {
-	display: flex;
-	flex-direction: column;
-	justify-content: space-between;
+.LayoutAdmin {
+	width: 100%;
 	min-height: 100vh;
+	display: flex;
+	justify-content: flex-start;
+	align-items: flex-start;
+	position: relative;
+	overflow: hidden;
 
 	main {
-		padding-top: 90px;
-	}
-
-	footer {
-		margin-top: auto;
+		width: 100%;
 	}
 }
