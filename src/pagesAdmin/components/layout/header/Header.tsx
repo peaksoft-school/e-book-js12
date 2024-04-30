@@ -1,8 +1,13 @@
+import CustomGenreInput from '@/src/ui/customInpute/CustomGenreInput';
 import scss from './Header.module.scss';
 import { useEffect, useState } from 'react';
+import { IconUserCircle } from '@tabler/icons-react';
+import ExitModal from '@/src/ui/customModals/ExitModal';
 
 const Header = () => {
-	const [headerScroll, setHeaderScroll] = useState<boolean>(false);
+	const [, setHeaderScroll] = useState<boolean>(false);
+	const [isProfile, setIsProfile] = useState(false);
+	const [userExit, setUserExit] = useState<boolean>(false);
 
 	useEffect(() => {
 		const changeHeader = () => {
@@ -24,15 +29,36 @@ const Header = () => {
 	return (
 		<>
 			<header className={scss.Header}>
-				<div
-					className={
-						headerScroll ? `${scss.scroll} ${scss.active}` : `${scss.scroll}`
-					}
-				>
-					<div className="container">
-						<div className={scss.content}>
-							<h3>Header</h3>
+				<div className={scss.container}>
+					<div className={scss.content}>
+						<div className={scss.search}>
+							<CustomGenreInput
+								placeholder={'Искать жанр, книги, авторов, издательства... '}
+							/>
 						</div>
+						<button
+							className={scss.user}
+							onClick={() => setIsProfile(!isProfile)}
+						>
+							<IconUserCircle />
+							<span>Администратор</span>
+						</button>
+						<div className={`${isProfile ? scss.adminProfile : scss.none}`}>
+							<ul>
+								<li onClick={() => setUserExit(!userExit)}>Выйти</li>
+							</ul>
+						</div>
+						{userExit ? (
+							<>
+								<ExitModal
+									isOpen={userExit}
+									onClose={() => {
+										setUserExit(false);
+										setIsProfile(false);
+									}}
+								/>
+							</>
+						) : null}
 					</div>
 				</div>
 			</header>
