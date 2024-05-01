@@ -211,7 +211,7 @@ const BooksSection: React.FC = () => {
 							</div>
 						</div>
 					</div>
-					<div>
+					<div className={scss.add_book_btn}>
 						<CustomAddBookButton
 							children={'+  Добавить книгу'}
 							onClick={() => {}}
@@ -227,8 +227,8 @@ const BooksSection: React.FC = () => {
 							<div className={scss.extra} onClick={() => setIsOpen(!isOpen)}>
 								<ThreeDotIcon />
 							</div>
-							{isOpen && (
-								<div className={scss.is_open}>
+							{
+								<div className={isOpen ? scss.is_open : scss.on_close}>
 									<ul>
 										<li>
 											<span>
@@ -245,7 +245,7 @@ const BooksSection: React.FC = () => {
 										</li>
 									</ul>
 								</div>
-							)}
+							}
 							<div className={scss.book_content}>
 								<div className={scss.book_img}>
 									<img src={book.img} alt="" />
