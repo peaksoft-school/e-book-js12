@@ -128,7 +128,7 @@ const BooksSection: React.FC = () => {
 			<div className={scss.container}>
 				<div className={scss.books_page_content}>
 					<div className={scss.books_filter}>
-						<div>
+						<div className={scss.click}>
 							<p onClick={toggleTypeList}>
 								<span onClick={() => handleGenreSelect(null)}>
 									{bookTypeText}
@@ -158,7 +158,7 @@ const BooksSection: React.FC = () => {
 						</div>
 
 						<div className={scss.books_genre}>
-							<div>
+							<div className={scss.click}>
 								<p onClick={toggleGenreList}>
 									<span>
 										Жанры {isOpenBooksGenre ? <UpIcon /> : <IconArrowBottom />}
@@ -246,7 +246,7 @@ const BooksSection: React.FC = () => {
 									</ul>
 								</div>
 							)}
-							<div>
+							<div className={scss.book_content}>
 								<div className={scss.book_img}>
 									<img src={book.img} alt="" />
 								</div>

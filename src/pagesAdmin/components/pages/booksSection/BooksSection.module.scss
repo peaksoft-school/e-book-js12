@@ -17,18 +17,34 @@
 				max-width: 200px;
 				width: 100%;
 				gap: 20px;
+				.click {
+					p {
+						cursor: default;
+						span {
+							cursor: default;
+						}
+					}
+				}
 				.type_list {
 					padding: 20px;
 					display: flex;
 					flex-direction: column;
 					gap: 7px;
 					position: absolute;
-					z-index: 1;
-					transition: 0.4s;
-					opacity: 100;
 					top: 40px;
 					background-color: #f8f8f8;
 					box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+					z-index: 100;
+					transition: 0.4s;
+					opacity: 100;
+
+					@media (max-width: 320px) {
+						max-width: 200px;
+						max-height: 200px;
+						top: 40px;
+						left: 100px;
+					}
+
 					p {
 						color: rgb(35, 35, 35);
 						font-family: Open Sans;
@@ -89,6 +105,18 @@
 						max-height: 250px;
 						left: 70px;
 						top: 50px;
+					}
+					@media (max-width: 410px) {
+						max-width: 250px;
+						max-height: 250px;
+						left: 30px;
+						top: 30px;
+					}
+					@media (max-width: 375px) {
+						max-width: 250px;
+						max-height: 250px;
+						left: 20px;
+						top: 30px;
 					}
 
 					.genre_quantity {
@@ -234,6 +262,8 @@
 
 			@media (max-width: 830px) {
 				max-width: 200px;
+				width: 100%;
+				padding: 20px 16px 10px;
 			}
 
 			@media (max-width: 600px) {
@@ -242,6 +272,7 @@
 
 			@media (max-width: 360px) {
 				padding: 15px;
+				width: max-content;
 			}
 
 			.extra {
@@ -249,6 +280,7 @@
 				top: 10px;
 				right: 10px;
 				cursor: pointer;
+				cursor: default;
 
 				@media (max-width: 560px) {
 					top: 2px;
@@ -345,20 +377,37 @@
 			}
 
 			.is_open {
+				padding: 20px;
 				display: flex;
 				flex-direction: column;
+				gap: 7px;
 				position: absolute;
 				top: 30px;
 				right: 30px;
-				max-width: 173px;
-				width: 100%;
-				padding: 15px;
-				box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
-				opacity: 1;
-				z-index: 222;
-				transition: 0.3s;
-				user-select: none;
-				background-color: #fff;
+				background-color: #f8f8f8;
+				box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+				z-index: 100;
+				transition: 0.4s;
+				opacity: 100;
+
+				@media (max-width: 830px) {
+					top: 30px;
+					right: 30px;
+					padding: 10px;
+				}
+				@media (max-width: 360px) {
+					top: 0px;
+					right: 5px;
+					padding: 5px;
+					max-width: 100px;
+					width: 100%;
+					height: 90px;
+				}
+				@media (max-width: 560px) {
+					top: 25px;
+					right: 10px;
+					padding: 10px;
+				}
 				ul {
 					display: flex;
 					flex-direction: column;
@@ -376,6 +425,27 @@
 						line-height: 130%;
 						letter-spacing: 0px;
 						text-align: left;
+
+						@media (max-width: 830px) {
+							font-size: 8px;
+							gap: 5px;
+						}
+
+						span {
+							svg {
+								@media (max-width: 320px) {
+									max-width: 30px;
+									width: 100%;
+								}
+							}
+						}
+
+						@media (max-width: 830px) {
+							font-size: 8px;
+						}
+						@media (max-width: 360px) {
+							font-size: 6px;
+						}
 					}
 				}
 			}
