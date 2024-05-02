@@ -5,7 +5,6 @@ import {
 	IconBlackCircle,
 	IconBlackSquare,
 	IconSuccess,
-	// IconDownIcon,
 	IconWhiteCircle,
 	IconWhiteSquare
 } from '@/src/assets/icons';
