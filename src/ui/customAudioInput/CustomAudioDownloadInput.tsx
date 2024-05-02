@@ -30,9 +30,6 @@ const CustomAudioDownloadInput: FC<CustomAudioDownloadInputProps> = ({
 
 	return (
 		<>
-			<p className={scss.paragraph}>
-				{isFileUploaded ? 'Аудиозапись загружена' : 'Загрузите аудиозапись'}
-			</p>
 			<div
 				className={`${scss.download_input} ${isFileUploaded ? scss.uploaded : ''}`}
 				onClick={handleDivClick}
