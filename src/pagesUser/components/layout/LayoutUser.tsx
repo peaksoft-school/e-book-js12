@@ -16,7 +16,7 @@ const LayoutUser = () => {
 				<main>
 					<Routes>
 						<Route path="/" element={<HomePage />} />
-						<Route path="/profile" element={<ProfilePageContainer />}/>
+						<Route path="/profile" element={<ProfilePageContainer />} />
 						<Route path="/search_book" element={<SearchPage />} />
 						<Route path="/favorite" element={<FavoritePage />} />
 						<Route path="/basket" element={<Basket />} />

@@ -44,7 +44,7 @@ const info = [
 		price: '255c',
 		data: '12.12.21',
 		state: 'Завершен'
-	},
+	}
 ];
 
 const ProfilePageHistory = () => {
@@ -55,7 +55,6 @@ const ProfilePageHistory = () => {
 					<div className={scss.info_text}>
 						<div className={scss.item_one}>
 							<p>Очистить историю</p>
-							
 						</div>
 
 						<div className={scss.info_tes_two}>

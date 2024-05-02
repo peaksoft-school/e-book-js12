@@ -5,7 +5,6 @@
 	margin-top: 10px;
 	padding-bottom: 100px;
 
-
 	.section_new_password {
 		@media (max-width: 700px) {
 			margin-top: 100px;
@@ -182,15 +181,15 @@
 			font-size: 16px;
 			font-weight: 600;
 			line-height: 22px;
-cursor: pointer;
+			cursor: pointer;
 			background: rgb(28, 28, 28);
 		}
 
 		.button_note {
 			margin-right: 30px;
-@media (max-width:400px) {
-	margin-right: 10px;
-}
+			@media (max-width: 400px) {
+				margin-right: 10px;
+			}
 			.custom_white_button {
 				width: 130px;
 				height: 42px;
@@ -208,7 +207,6 @@ cursor: pointer;
 					outline: none;
 				}
 			}
-
 		}
 	}
 }
