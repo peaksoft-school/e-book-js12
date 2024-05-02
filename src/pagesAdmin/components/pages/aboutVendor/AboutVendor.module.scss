@@ -1,0 +1,77 @@
+.AboutVendor {
+	.container {
+		padding-inline: 20px;
+		.content {
+			.links {
+				display: flex;
+				align-items: center;
+				margin-bottom: 72px;
+
+				.link_to_home {
+					color: rgb(150, 150, 150);
+					font-size: 14px;
+					font-weight: 400;
+
+					&.link_to_home_active {
+						color: black;
+					}
+				}
+
+				.link_to_vendor_page {
+					color: rgb(41, 41, 41);
+					font-size: 14px;
+					font-weight: 600;
+					line-height: 130%;
+					letter-spacing: 0px;
+					text-align: center;
+
+					&.link_to_vendor_page_active {
+						color: black;
+					}
+				}
+			}
+
+			.navigates {
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				gap: 75px;
+
+				.navigate_user_profile,
+				.navigate_user_books {
+					color: rgb(34, 34, 34);
+					font-size: 16px;
+					font-weight: 400;
+					line-height: 130%;
+					letter-spacing: 0px;
+					text-align: center;
+					max-width: 152px;
+					width: 100%;
+					padding: 0px 0px 10px 0px;
+
+					&.navigate_user_profile_active,
+					&.navigate_user_books_active {
+						color: rgb(255, 76, 0);
+						font-weight: 600;
+						border-bottom: 2px solid orangered;
+						padding-bottom: 10px;
+						max-width: 152px;
+						width: 100%;
+					}
+				}
+			}
+			.vendor {
+				.delete_profile {
+					color: rgb(241, 0, 0);
+					font-family: Open Sans;
+					font-size: 16px;
+					font-weight: 600;
+					line-height: 22px;
+					letter-spacing: 0px;
+					text-align: right;
+					margin-top: 70px;
+				}
+			}
+		}
+	}
+}
