@@ -7,7 +7,7 @@ import SearchPage from '../pages/SearchPage';
 import FavoritePage from '../pages/FavoritePage';
 import Basket from '../pages/Basket';
 import BookInfoPage from '../pages/BookInfoPage';
-import PromoPage from '../pages/PromoPage';
+import ProfilePageContainer from '../pages/profilePageContainer/ProfilePageContainer';
 const LayoutUser = () => {
 	return (
 		<>
@@ -16,11 +16,11 @@ const LayoutUser = () => {
 				<main>
 					<Routes>
 						<Route path="/" element={<HomePage />} />
+						<Route path="/profile" element={<ProfilePageContainer />} />
 						<Route path="/search_book" element={<SearchPage />} />
 						<Route path="/favorite" element={<FavoritePage />} />
 						<Route path="/basket" element={<Basket />} />
 						<Route path="/book_info" element={<BookInfoPage />} />
-						<Route path="/promo_page" element={<PromoPage />} />
 					</Routes>
 				</main>
 				<Footer />

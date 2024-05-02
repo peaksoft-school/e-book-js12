@@ -1,6 +1,5 @@
-
 const iconSuccess = () => {
-  return (
+	return (
 		<>
 			<svg
 				xmlns="http://www.w3.org/2000/svg"
@@ -37,6 +36,6 @@ const iconSuccess = () => {
 			</svg>
 		</>
 	);
-}
+};
 
-export default iconSuccess
+export default iconSuccess;
