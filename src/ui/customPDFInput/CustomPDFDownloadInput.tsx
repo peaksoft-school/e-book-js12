@@ -30,9 +30,9 @@ const CustomPDFDownloadInput: FC<CustomPDFDownloadInputProps> = ({
 
 	return (
 		<>
-			<p className={scss.paragraph}>
+			{/* <p className={scss.paragraph}>
 				{isFileUploaded ? 'PDF загружена' : 'Загрузите PDF'}
-			</p>
+			</p> */}
 			<div
 				className={`${scss.download_input} ${isFileUploaded ? scss.uploaded : ''}`}
 				onClick={handleDivClick}
