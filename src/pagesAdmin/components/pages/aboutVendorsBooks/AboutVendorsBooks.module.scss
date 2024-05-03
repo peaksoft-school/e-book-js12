@@ -11,7 +11,8 @@
 			display: flex;
 			gap: 22px;
 			width: 100%;
-			margin-bottom: 22px;
+			margin-bottom: 30px;
+			margin-top: 40px;
 			@media (max-width: 360px) {
 				display: flex;
 				align-items: center;
@@ -94,6 +95,7 @@
 					gap: 15px;
 					max-width: 196px;
 					width: 100%;
+					cursor: pointer;
 
 					.book_img {
 						display: flex;
@@ -244,15 +246,26 @@
 				}
 			}
 		}
-		.delete_profile {
-			color: rgb(241, 0, 0);
-			font-family: Open Sans;
-			font-size: 16px;
-			font-weight: 600;
-			line-height: 22px;
-			letter-spacing: 0px;
-			text-align: right;
-			margin-top: 70px;
+		.div_delete {
+			display: flex;
+			align-items: flex-end;
+			justify-content: flex-end;
+			.delete_profile {
+				max-width: 193px;
+				width: 100%;
+				padding: 10px 24px 10px 24px;
+				color: rgb(241, 0, 0);
+				font-family: Open Sans;
+				font-size: 16px;
+				font-weight: 600;
+				line-height: 22px;
+				letter-spacing: 0px;
+				margin-top: 70px;
+				cursor: pointer;
+				cursor: default;
+				background: none;
+				border: none;
+			}
 		}
 	}
 }

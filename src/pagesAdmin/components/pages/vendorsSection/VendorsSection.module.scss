@@ -1,23 +1,41 @@
-.VendorsSection {
-	.container {
-		padding-inline: 20px;
+.container {
+	padding-inline: 20px;
+}
+
+.content {
+	width: 100%;
+
+	h2 {
+		font-size: 24px;
+		font-weight: 700;
+		color: #222;
+		margin-bottom: 20px;
 	}
 
-	.content {
+	.vendors_table {
 		width: 100%;
+		border-collapse: collapse;
 
-		.vendors_section_title {
-			display: flex;
-			justify-content: space-between;
-			padding: 0 59px;
-			margin-bottom: 10.5px;
+		th,
+		td {
+			padding: 12px;
+			text-align: left;
+			border-bottom: 1px solid #ddd;
+		}
 
-			h5 {
-				color: #222;
-				font-size: 14px;
-				font-weight: 700;
-				line-height: 19px;
-				letter-spacing: 0;
+		th {
+			font-weight: 700;
+			background-color: #f5f5f5;
+		}
+
+		.vendors {
+			&:hover {
+				background-color: rgba(255, 68, 0, 0.376);
+				color: black;
+			}
+
+			td {
+				border: none;
 				&:first-child {
 					max-width: 15px;
 				}
@@ -33,65 +51,10 @@
 				&:nth-child(5) {
 					max-width: 118px;
 				}
-			}
-		}
-
-		hr {
-			width: 100%;
-			height: 1px;
-			background-color: black;
-			margin-bottom: 28px;
-		}
-
-		.vendors {
-			width: 100%;
-			padding: 0 28px;
-
-			.vendor {
-				display: flex;
-				justify-content: space-between;
-				align-items: center;
-				padding: 10px 31px;
-				margin-bottom: 30px;
-				max-height: 50px;
-				background-color: #fff;
-				transition: background-color 0.3s;
-				cursor: pointer;
-				cursor: default;
-
-				h5 {
-					color: #222;
-					font-family: 'Open Sans', sans-serif;
-					font-size: 14px;
-					font-weight: 400;
-					line-height: 130%;
-					letter-spacing: 0;
-					width: 100%;
-
-					&:first-child {
-						max-width: 15px;
-					}
-					&:nth-child(2) {
-						max-width: 163px;
-					}
-					&:nth-child(3) {
-						max-width: 124px;
-					}
-					&:nth-child(4) {
-						max-width: 143px;
-					}
-					&:nth-child(5) {
-						max-width: 118px;
-					}
-				}
-
-				&:hover {
-					background-color: rgba(255, 68, 0, 0.376);
+				button {
+					border: none;
+					background: none;
 					cursor: pointer;
-					cursor: default;
-				}
-
-				.delete_vendor {
 					svg {
 						&:hover {
 							background-color: rgba(249, 76, 13, 0.376);
@@ -107,7 +70,6 @@
 		}
 	}
 }
-
 :global {
 	.ant-modal .ant-modal-content {
 		max-width: 461px;
@@ -115,15 +77,17 @@
 		max-height: 190px;
 		padding: 20px 68px;
 	}
+
 	.ant-modal-body {
 		max-width: 323px;
 		display: flex;
 		align-items: center;
 		justify-content: center;
+
 		p {
 			margin-bottom: 36px;
 			color: rgb(0, 0, 0);
-			font-family: Open Sans;
+			font-family: 'Open Sans', sans-serif;
 			font-size: 18px;
 			font-weight: 400;
 			line-height: 130%;
@@ -131,38 +95,9 @@
 			text-align: center;
 
 			span {
-				color: rgb(0, 0, 0);
-				font-family: Open Sans;
 				font-size: 20px;
 				font-weight: 600;
-				line-height: 130%;
-				letter-spacing: 0px;
-				text-align: center;
 			}
 		}
-	}
-
-	.ant-btn:first-child {
-		padding: 10px 24px;
-	}
-
-	.ant-btn:first-child span {
-		color: rgb(163, 163, 163);
-		font-family: Open Sans;
-		font-size: 16px;
-		font-weight: 600;
-		line-height: 22px;
-		letter-spacing: 0px;
-		text-align: left;
-	}
-
-	.ant-btn span {
-		color: rgb(255, 255, 255);
-		font-family: Open Sans;
-		font-size: 16px;
-		font-weight: 600;
-		line-height: 22px;
-		letter-spacing: 0px;
-		text-align: left;
 	}
 }

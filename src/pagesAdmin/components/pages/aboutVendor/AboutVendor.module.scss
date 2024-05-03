@@ -11,6 +11,7 @@
 					color: rgb(150, 150, 150);
 					font-size: 14px;
 					font-weight: 400;
+					cursor: pointer;
 
 					&.link_to_home_active {
 						color: black;
@@ -48,6 +49,7 @@
 					max-width: 152px;
 					width: 100%;
 					padding: 0px 0px 10px 0px;
+					cursor: pointer;
 
 					&.navigate_user_profile_active,
 					&.navigate_user_books_active {
@@ -61,15 +63,63 @@
 				}
 			}
 			.vendor {
-				.delete_profile {
-					color: rgb(241, 0, 0);
-					font-family: Open Sans;
-					font-size: 16px;
-					font-weight: 600;
-					line-height: 22px;
-					letter-spacing: 0px;
-					text-align: right;
-					margin-top: 70px;
+				margin-top: 70px;
+				display: flex;
+				gap: 180px;
+				.test {
+					display: flex;
+					flex-direction: column;
+					gap: 32px;
+				}
+				.name,
+				.surname,
+				.phone,
+				.email,
+				.date {
+					p {
+						display: flex;
+						flex-direction: column;
+						gap: 14px;
+						color: rgb(40, 40, 40);
+						font-family: Open Sans;
+						font-size: 16px;
+						font-weight: 400;
+						line-height: 130%;
+						letter-spacing: 0px;
+						text-align: left;
+						strong {
+							color: rgb(137, 137, 137);
+							font-family: Open Sans;
+							font-size: 16px;
+							font-weight: 400;
+							line-height: 130%;
+							letter-spacing: 0px;
+							text-align: left;
+						}
+					}
+				}
+
+				.div_delete {
+					display: flex;
+					align-items: flex-end;
+					justify-content: flex-end;
+					margin-top: 88px;
+					.delete_profile {
+						max-width: 193px;
+						width: 100%;
+						padding: 10px 24px 10px 24px;
+						color: rgb(241, 0, 0);
+						font-family: Open Sans;
+						font-size: 16px;
+						font-weight: 600;
+						line-height: 22px;
+						letter-spacing: 0px;
+						margin-top: 70px;
+						cursor: pointer;
+						cursor: default;
+						background: none;
+						border: none;
+					}
 				}
 			}
 		}

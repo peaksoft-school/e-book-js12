@@ -14,7 +14,8 @@ interface Vendor {
 
 const VendorsSection = () => {
 	const navigate = useNavigate();
-	const [selectedVendor, setSelectedVendor] = useState<Vendor | null>(null); // Состояние для выбранного поставщика
+	const [selectedVendor, setSelectedVendor] = useState<Vendor | null>(null);
+	const [isModalOpen, setIsModalOpen] = useState(false);
 
 	const vendors: Vendor[] = [
 		{
@@ -47,8 +48,6 @@ const VendorsSection = () => {
 		}
 	];
 
-	const [isModalOpen, setIsModalOpen] = useState(false);
-
 	const showModal = (vendor: Vendor) => {
 		setSelectedVendor(vendor);
 		setIsModalOpen(true);
@@ -68,56 +67,56 @@ const VendorsSection = () => {
 		<section className={scss.VendorsSection}>
 			<div className={scss.container}>
 				<div className={scss.content}>
-					<div className={scss.vendors_section_title}>
-						<h5>№</h5>
-						<h5>Имя</h5>
-						<h5>Номер телефона</h5>
-						<h5>Почта</h5>
-						<h5>Количество книг</h5>
-						<div></div>
-					</div>
-					<hr />
-					<div className={scss.vendors}>
-						{vendors.map((vendor) => (
-							<div key={vendor.id}>
-								<div className={scss.vendor}>
-									<h5>{vendor.id}</h5>
-									<h5 onClick={() => navigate(`/admin/vendors/${vendor.name}`)}>
+					<h2>Список поставщиков</h2>
+					<table className={scss.vendors_table}>
+						<thead>
+							<tr>
+								<th>№</th>
+								<th>Имя</th>
+								<th>Номер телефона</th>
+								<th>Почта</th>
+								<th>Количество книг</th>
+								<th></th>
+							</tr>
+						</thead>
+						<tbody>
+							{vendors.map((vendor) => (
+								<tr key={vendor.id} className={scss.vendors}>
+									<td>{vendor.id}</td>
+									<td onClick={() => navigate(`/admin/vendors/${vendor.name}`)}>
 										{vendor.name}
-									</h5>
-									<h5 onClick={() => navigate(`/admin/vendors/${vendor.name}`)}>
+									</td>
+									<td onClick={() => navigate(`/admin/vendors/${vendor.name}`)}>
 										{vendor.phone}
-									</h5>
-									<h5 onClick={() => navigate(`/admin/vendors/${vendor.name}`)}>
+									</td>
+									<td onClick={() => navigate(`/admin/vendors/${vendor.name}`)}>
 										{vendor.email}
-									</h5>
-									<h5 onClick={() => navigate(`/admin/vendors/${vendor.name}`)}>
+									</td>
+									<td onClick={() => navigate(`/admin/vendors/${vendor.name}`)}>
 										{vendor.quantity_books}
-									</h5>
-									<div
-										className={scss.delete_vendor}
-										onClick={() => showModal(vendor)}
-									>
-										<IconDelete />
-									</div>
-								</div>
-							</div>
-						))}
-					</div>
-					<Modal
-						visible={isModalOpen}
-						onOk={handleOk}
-						onCancel={handleCancel}
-						okText="Удалить"
-						cancelText="Отменить"
-					>
-						<p>
-							Вы уверены, что хотите удалить<span> {selectedVendor?.name}</span>
-							?
-						</p>
-					</Modal>
+									</td>
+									<td>
+										<button onClick={() => showModal(vendor)}>
+											<IconDelete />
+										</button>
+									</td>
+								</tr>
+							))}
+						</tbody>
+					</table>
 				</div>
 			</div>
+			<Modal
+				visible={isModalOpen}
+				onOk={handleOk}
+				onCancel={handleCancel}
+				okText="Удалить"
+				cancelText="Отменить"
+			>
+				<p>
+					Вы уверены, что хотите удалить <span>{selectedVendor?.name}</span>?
+				</p>
+			</Modal>
 		</section>
 	);
 };

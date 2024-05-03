@@ -1,51 +1,56 @@
 import React, { useState } from 'react';
 import { Link, useParams, useLocation } from 'react-router-dom';
-import { Modal } from 'antd'; // Import Modal from antd
+import { Modal } from 'antd';
 import scss from './AboutVendor.module.scss';
 import AboutVendorsBooks from '../aboutVendorsBooks/AboutVendorsBooks';
 
 interface Vendor {
 	id: number;
 	name: string;
+	surname: string;
 	phone: string;
 	email: string;
-	quantity_books: number;
+	date: string;
 }
 
 const AboutVendor: React.FC = () => {
 	const [displayProfile, setDisplayProfile] = useState(true);
-	const [isModalOpen, setIsModalOpen] = useState(false); // State for modal
-	const { name } = useParams();
+	const [isModalOpen, setIsModalOpen] = useState(false);
+	const { name } = useParams<{ name: string }>();
 	const location = useLocation();
 
 	const vendors: Vendor[] = [
 		{
 			id: 1,
 			name: 'Arslana',
+			surname: 'Smith',
 			phone: '+380999999999',
 			email: 'arslana@gmail.com',
-			quantity_books: 134
+			date: '3.04.2024'
 		},
 		{
 			id: 2,
 			name: 'Arsal',
+			surname: 'Johnson',
 			phone: '+380999999999',
 			email: 'arsal@gmail.com',
-			quantity_books: 189
+			date: '3.04.2024'
 		},
 		{
 			id: 3,
 			name: 'John',
+			surname: 'Williams',
 			phone: '+380999999999',
 			email: 'john@gmail.com',
-			quantity_books: 87
+			date: '3.04.2024'
 		},
 		{
 			id: 4,
 			name: 'Doe',
+			surname: 'Davis',
 			phone: '+380999999999',
 			email: 'doe@gmail.com',
-			quantity_books: 55
+			date: '3.04.2024'
 		}
 	];
 
@@ -60,8 +65,9 @@ const AboutVendor: React.FC = () => {
 	};
 
 	const handleOk = () => {
+		// Perform delete logic here (e.g., call API to delete vendor)
+		// After successful deletion, close the modal
 		setIsModalOpen(false);
-		// Perform deletion logic here
 	};
 
 	const handleCancel = () => {
@@ -75,27 +81,32 @@ const AboutVendor: React.FC = () => {
 					<div className={scss.links}>
 						<Link
 							to="/admin/vendors"
-							className={`${scss.link_to_home} ${location.pathname === '/admin/vendors' ? scss.link_to_home_active : ''}`}
+							className={`${scss.link_to_home} ${
+								location.pathname === '/admin/vendors'
+									? scss.link_to_home_active
+									: ''
+							}`}
 						>
-							Пользователи
+							Продавцы
 						</Link>
 						/
-						<Link
-							to={`/admin/vendors/${selectedVendor.name}`}
-							className={`${scss.link_to_vendor_page} ${location.pathname === `/admin/vendors/${selectedVendor.name}` ? scss.link_to_vendor_page_active : ''}`}
-						>
+						<span className={scss.link_to_vendor_page}>
 							{selectedVendor.name}
-						</Link>
+						</span>
 					</div>
 					<div className={scss.navigates}>
 						<h4
-							className={`${scss.navigate_user_profile} ${displayProfile ? scss.navigate_user_profile_active : ''} `}
+							className={`${scss.navigate_user_profile} ${
+								displayProfile ? scss.navigate_user_profile_active : ''
+							} `}
 							onClick={() => setDisplayProfile(true)}
 						>
 							Профиль
 						</h4>
 						<h4
-							className={`${scss.navigate_user_books} ${!displayProfile ? scss.navigate_user_books_active : ''} `}
+							className={`${scss.navigate_user_books} ${
+								!displayProfile ? scss.navigate_user_books_active : ''
+							} `}
 							onClick={() => setDisplayProfile(false)}
 						>
 							Книги
@@ -103,30 +114,40 @@ const AboutVendor: React.FC = () => {
 					</div>
 					{displayProfile ? (
 						<div className={scss.vendor}>
-							<div className={scss.name}>
+							<div className={scss.test}>
+								<div className={scss.name}>
+									<p>
+										<strong>Имя:</strong> {selectedVendor.name}
+									</p>
+								</div>
+								<div className={scss.surname}>
+									<p>
+										<strong>Фамилия:</strong> {selectedVendor.surname}
+									</p>
+								</div>
+							</div>
+							<div className={scss.test}>
+								<div className={scss.phone}>
+									<p>
+										<strong>Номер телефона:</strong> {selectedVendor.phone}
+									</p>
+								</div>
+								<div className={scss.email}>
+									<p>
+										<strong>Почта:</strong> {selectedVendor.email}
+									</p>
+								</div>
+							</div>
+							<div className={scss.date}>
 								<p>
-									<strong>Имя:</strong> {selectedVendor.name}
+									<strong>Дата регистрации:</strong> {selectedVendor.date}
 								</p>
 							</div>
-							<div className={scss.phone}>
-								<p>
-									<strong>Номер телефона:</strong> {selectedVendor.phone}
-								</p>
+							<div className={scss.div_delete}>
+								<button className={scss.delete_profile} onClick={showModal}>
+									Удалить профиль
+								</button>
 							</div>
-							<div className={scss.email}>
-								<p>
-									<strong>Почта:</strong> {selectedVendor.email}
-								</p>
-							</div>
-							<div className={scss.quantity_books}>
-								<p>
-									<strong>Количество книг:</strong>{' '}
-									{selectedVendor.quantity_books}
-								</p>
-							</div>
-							<p className={scss.delete_profile} onClick={showModal}>
-								Удалить профиль
-							</p>
 							<Modal
 								visible={isModalOpen}
 								onOk={handleOk}

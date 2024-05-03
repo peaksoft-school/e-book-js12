@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Modal } from 'antd';
 import scss from './AboutVendorsBooks.module.scss';
 import bookImage from '../../../../assets/booksImg/harrry-potter.png';
@@ -143,12 +143,14 @@ const AboutVendorsBooks = () => {
 						</div>
 					))}
 				</div>
-				<p
-					className={scss.delete_profile}
-					onClick={() => showModal(selectedVendor!)}
-				>
-					Удалить профиль
-				</p>
+				<div className={scss.div_delete}>
+					<button
+						className={scss.delete_profile}
+						onClick={() => showModal(selectedVendor!)}
+					>
+						Удалить профиль
+					</button>
+				</div>
 				<Modal
 					visible={isModalOpen}
 					onOk={handleOk}
