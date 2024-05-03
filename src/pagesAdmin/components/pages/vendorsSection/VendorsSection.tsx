@@ -67,7 +67,6 @@ const VendorsSection = () => {
 		<section className={scss.VendorsSection}>
 			<div className={scss.container}>
 				<div className={scss.content}>
-					<h2>Список поставщиков</h2>
 					<table className={scss.vendors_table}>
 						<thead>
 							<tr>
