@@ -22,7 +22,7 @@ const LayoutAdmin = () => {
 						<Route path="/vendors" element={<VendorsPage />} />
 						<Route path="/users" element={<UserPage />} />
 						<Route path="/books" element={<BooksPage />} />
-						<Route path="/addbook" element={<AddBookPage />} />
+						<Route path="/book_adding" element={<AddBookPage />} />
 					</Routes>
 				</main>
 			</div>

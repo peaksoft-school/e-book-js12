@@ -84,7 +84,12 @@ const Header = () => {
 					<div className="container">
 						<div className={scss.content}>
 							<div className={scss.header_content}>
-								<div className={scss.logo_content}>
+								<div
+									className={scss.logo_content}
+									onClick={() => {
+										navigate('/');
+									}}
+								>
 									<LogoeBook />
 								</div>
 								<div className={scss.input_vontent}>
@@ -171,7 +176,13 @@ const Header = () => {
 											className={`${isUser ? scss.user_drop : scss.user_down}`}
 										>
 											<ul>
-												<li>Профиль</li>
+												<li
+													onClick={() => {
+														navigate('/profile');
+													}}
+												>
+													Профиль
+												</li>
 												<hr />
 												<li onClick={() => setUserExit(!userExit)}>Выйти</li>
 											</ul>
@@ -183,6 +194,9 @@ const Header = () => {
 										<ExitModal
 											isOpen={userExit}
 											onClose={() => setUserExit(false)}
+											btnClose={() => {
+												navigate('/auth/login');
+											}}
 										/>
 									</>
 								) : null}
