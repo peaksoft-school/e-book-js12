@@ -11,6 +11,7 @@
 		}
 		.total_quantity {
 			display: flex;
+			justify-content: space-between;
 			gap: 22px;
 			width: 100%;
 			margin-bottom: 30px;
@@ -34,7 +35,87 @@
 				}
 
 				span {
-					color: rgb(255, 76, 0);
+					color: rgb(34, 34, 34);
+					font-family: Open Sans;
+					font-size: 16px;
+					font-weight: 600;
+					line-height: 120%;
+					letter-spacing: 0px;
+					text-align: left;
+				}
+			}
+			.click {
+				p {
+					cursor: default;
+					span {
+						cursor: default;
+					}
+				}
+
+				.type_list {
+					max-width: 191px;
+					width: 100%;
+					padding: 20px;
+					display: flex;
+					flex-direction: column;
+					gap: 7px;
+					position: absolute;
+					top: 340px;
+					left: 1391px;
+					background-color: #f8f8f8;
+					box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+					z-index: 100;
+					transition: 0.4s;
+					opacity: 100;
+
+					@media (max-width: 768px) {
+						max-width: 180px;
+						width: 100%;
+						top: 320px;
+						left: 547px;
+					}
+
+					@media (max-width: 360px) {
+						max-width: 110px;
+						width: 100%;
+						top: 320px;
+						left: 210px;
+					}
+
+					p {
+						color: rgb(35, 35, 35);
+						font-family: Open Sans;
+						font-size: 14px;
+						font-weight: 400;
+						line-height: 130%;
+						letter-spacing: 0px;
+						text-align: left;
+
+						@media (max-width: 360px) {
+							font-size: 10px;
+						}
+					}
+				}
+			}
+			.none_books_type {
+				padding: 10px;
+				background-color: #f8f8f8;
+				position: absolute;
+				top: -0px;
+				left: 0px;
+				opacity: 0;
+				user-select: none;
+				transition: 0.3s;
+				cursor: default;
+				z-index: -10;
+				p {
+					color: rgb(35, 35, 35);
+					font-family: Open Sans;
+					font-size: 14px;
+					font-weight: 400;
+					line-height: 130%;
+					letter-spacing: 0px;
+					text-align: left;
 				}
 			}
 		}
@@ -52,9 +133,9 @@
 				flex-direction: column;
 				align-items: center;
 				justify-content: center;
-				padding: 35px 36px 20px;
+				padding: 14px 34px;
 				max-width: 268px;
-				width: calc(50% - 15px);
+				width: 100%;
 				background: rgb(237, 237, 237);
 
 				@media (max-width: 830px) {
@@ -76,6 +157,16 @@
 					padding: 15px 16px 10px;
 				}
 
+				.book_header {
+					display: flex;
+					gap: 14px;
+					margin-bottom: 14px;
+					.hearts {
+						display: flex;
+						gap: 7px;
+					}
+				}
+
 				.extra {
 					position: absolute;
 					top: 10px;
@@ -95,7 +186,7 @@
 				.book_content {
 					display: flex;
 					flex-direction: column;
-					gap: 15px;
+					gap: 13px;
 					max-width: 196px;
 					width: 100%;
 					cursor: pointer;
@@ -124,7 +215,7 @@
 					.info_book {
 						display: flex;
 						flex-direction: column;
-						gap: 7px;
+						gap: 2px;
 
 						h3 {
 							color: rgb(34, 34, 34);
@@ -160,7 +251,6 @@
 								font-weight: 400;
 								line-height: 120%;
 								text-align: left;
-
 								@media (max-width: 830px) {
 									font-size: 10px;
 								}

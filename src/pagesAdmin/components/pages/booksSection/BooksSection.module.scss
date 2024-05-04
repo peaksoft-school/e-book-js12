@@ -1,7 +1,8 @@
 .BooksSection {
 	.container {
 		padding-inline: 20px;
-
+		max-width: 1350px;
+		margin: 0px auto;
 		.books_page_content {
 			display: flex;
 			justify-content: space-between;
@@ -247,7 +248,7 @@
 
 	.content {
 		display: flex;
-		justify-content: space-around;
+		justify-content: space-between;
 		flex-wrap: wrap;
 		gap: 20px 10px;
 		width: 100%;

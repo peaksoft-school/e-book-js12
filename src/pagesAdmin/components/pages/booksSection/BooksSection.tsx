@@ -6,6 +6,7 @@ import CustomAddBookButton from '@/src/ui/customButton/CustomAddBook';
 import ThreeDotIcon from '@/src/assets/icons/icon-threeDot';
 import { IconArrowBottom } from '@/src/assets/icons';
 import UpIcon from '@/src/assets/icons/icon-upIcon';
+import { useNavigate } from 'react-router-dom';
 
 type Book = {
 	id: number;
@@ -21,6 +22,7 @@ const BooksSection: React.FC = () => {
 	const [isOpenBooksType, setIsOpenBooksType] = useState<boolean>(false);
 	const [selectedType, setSelectedType] = useState<string | null>(null);
 	const [isOpenBooksGenre, setIsOpenBooksGenre] = useState<boolean>(false);
+	const navigate = useNavigate();
 
 	const books: Book[] = [
 		{
@@ -214,7 +216,9 @@ const BooksSection: React.FC = () => {
 					<div className={scss.add_book_btn}>
 						<CustomAddBookButton
 							children={'+  Добавить книгу'}
-							onClick={() => {}}
+							onClick={() => {
+								navigate('/admin/book_adding');
+							}}
 						/>
 					</div>
 				</div>

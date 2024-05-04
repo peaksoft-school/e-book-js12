@@ -7,6 +7,7 @@ import VendorsPage from '../pages/VendorsPage';
 import UserPage from '../pages/UserPage';
 import BooksPage from '../pages/BooksPage';
 import BookInfo from '../pages/bookInfo/BookInfo';
+import AddBookPage from '../pages/AddBookPage';
 import AboutVendor from '../pages/aboutVendor/AboutVendor';
 
 const LayoutAdmin = () => {
@@ -20,10 +21,11 @@ const LayoutAdmin = () => {
 						<Route path="/" element={<InnerPage />} />
 						<Route path="/inner/:bookInfo" element={<BookInfo />} />
 						<Route path="/vendors" element={<VendorsPage />} />
-						<Route path="/vendors/:name" element={<AboutVendor />} />
-
 						<Route path="/users" element={<UserPage />} />
 						<Route path="/books" element={<BooksPage />} />
+						<Route path="/book_adding" element={<AddBookPage />} />
+
+						<Route path="/vendors/:name" element={<AboutVendor />} />
 					</Routes>
 				</main>
 			</div>

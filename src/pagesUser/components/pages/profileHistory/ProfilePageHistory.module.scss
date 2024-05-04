@@ -52,6 +52,7 @@
 				display: flex;
 				justify-content: space-around;
 				width: 100%;
+				max-width: 1030px;
 
 				.item_two {
 					font-family: Open Sans;
@@ -117,6 +118,7 @@
 			}
 
 			.image_line {
+				padding-left: 55px;
 				@media (max-width: 970px) {
 					display: none;
 				}
@@ -153,7 +155,6 @@
 					justify-content: space-around;
 					align-items: center;
 					padding: 20px;
-
 					@media (max-width: 700px) {
 						display: inline-block;
 						padding: 40px;

@@ -38,6 +38,9 @@
 			@media (max-width: 470px) {
 				justify-content: space-between;
 			}
+			.logo_content {
+				cursor: pointer;
+			}
 
 			.input_vontent {
 				display: flex;
@@ -583,7 +586,7 @@
 				cursor: default;
 				user-select: none;
 				z-index: -100;
-				top: -100px;
+				top: -300px;
 				left: 0px;
 				opacity: 0;
 				transition: 0.3s;
