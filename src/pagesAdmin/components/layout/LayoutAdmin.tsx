@@ -7,6 +7,7 @@ import VendorsPage from '../pages/VendorsPage';
 import UserPage from '../pages/UserPage';
 import BooksPage from '../pages/BooksPage';
 import BookInfo from '../pages/bookInfo/BookInfo';
+import AddBookPage from '../pages/AddBookPage';
 
 const LayoutAdmin = () => {
 	return (
@@ -21,6 +22,7 @@ const LayoutAdmin = () => {
 						<Route path="/vendors" element={<VendorsPage />} />
 						<Route path="/users" element={<UserPage />} />
 						<Route path="/books" element={<BooksPage />} />
+						<Route path="/book_adding" element={<AddBookPage />} />
 					</Routes>
 				</main>
 			</div>

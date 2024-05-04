@@ -1,7 +1,8 @@
 .InnerSection {
 	.container {
 		padding-inline: 20px;
-
+		max-width: 1350px;
+		margin: 0px auto;
 		.total_quantity {
 			display: flex;
 			gap: 22px;
@@ -33,9 +34,8 @@
 	}
 
 	.content {
-		max-width: 1130px;
 		display: flex;
-		justify-content: space-around;
+		justify-content: space-between;
 		flex-wrap: wrap;
 		gap: 20px 10px;
 		width: 100%;
