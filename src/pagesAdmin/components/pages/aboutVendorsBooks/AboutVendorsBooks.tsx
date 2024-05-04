@@ -174,7 +174,7 @@ const AboutVendorsBooks = () => {
 									<IconWhiteLike />
 									<p>{book.hearts}</p>
 								</div>
-								<div>
+								<div className={scss.in_basket}>
 									<p>В карзине ({book.inBasket})</p>
 								</div>
 							</div>

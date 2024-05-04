@@ -68,11 +68,22 @@
 				margin-top: 70px;
 				display: flex;
 				gap: 180px;
+				@media (max-width: 360px) {
+					display: flex;
+					flex-direction: column;
+					gap: 20px;
+				}
 				.test {
 					display: flex;
 					flex-direction: column;
 					gap: 32px;
+					@media (max-width: 360px) {
+						gap: 12px;
+						display: flex;
+						justify-content: space-between;
+					}
 				}
+
 				.name,
 				.surname,
 				.phone,

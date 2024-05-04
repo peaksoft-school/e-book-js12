@@ -65,8 +65,6 @@ const AboutVendor: React.FC = () => {
 	};
 
 	const handleOk = () => {
-		// Perform delete logic here (e.g., call API to delete vendor)
-		// After successful deletion, close the modal
 		setIsModalOpen(false);
 	};
 
