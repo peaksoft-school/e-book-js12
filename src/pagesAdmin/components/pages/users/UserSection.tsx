@@ -20,18 +20,18 @@ const UserSection = () => {
 			number: 3,
 			fullName: 'Мыктыбек Мыктыбеков',
 			gmail: 'myktybek@gmail.com'
-		},
+		}
 	];
 
 	return (
 		<section className={scss.UserSection}>
 			<div className={scss.container}>
 				<div className={scss.content}>
-				<div className={scss.properties_container}>
-					<p className={scss.number_property}>№</p>
-					<p className={scss.full_name_property}>ФИО</p>
-					<p className={scss.gmail_property}>Почта</p>
-				</div>
+					<div className={scss.properties_container}>
+						<p className={scss.number_property}>№</p>
+						<p className={scss.full_name_property}>ФИО</p>
+						<p className={scss.gmail_property}>Почта</p>
+					</div>
 					{usersData.map((item) => (
 						<div key={item.id} className={scss.user_data_container}>
 							<p className={scss.number}>{item.number}</p>

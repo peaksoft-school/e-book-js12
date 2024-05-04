@@ -22,7 +22,7 @@ const BooksSection: React.FC = () => {
 	const [isOpenBooksType, setIsOpenBooksType] = useState<boolean>(false);
 	const [selectedType, setSelectedType] = useState<string | null>(null);
 	const [isOpenBooksGenre, setIsOpenBooksGenre] = useState<boolean>(false);
-	const navigate = useNavigate()
+	const navigate = useNavigate();
 
 	const books: Book[] = [
 		{
