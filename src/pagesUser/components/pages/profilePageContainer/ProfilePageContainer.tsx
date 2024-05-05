@@ -18,6 +18,8 @@ const ProfilePageContainer = () => {
 						<span>Главная</span> / Профиль
 					</p>
 					<div className={scss.profile_text}>
+						<div className={scss.navigate_title}>
+
 						<p
 							className={
 								activeComponent === 'info'
@@ -38,6 +40,7 @@ const ProfilePageContainer = () => {
 						>
 							История операций
 						</p>
+						</div>
 					</div>
 				</div>
 				{activeComponent === 'info' ? <ProfilePage /> : <ProfilePageHistory />}
