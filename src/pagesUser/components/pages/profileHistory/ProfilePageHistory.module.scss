@@ -34,12 +34,13 @@
 		.info_text {
 			font-size: 13px;
 			display: flex;
-
+			border-bottom: 2px solid lightgray;
+			padding-bottom: 15px;
+			justify-content: space-between;
 			@media (max-width: 970px) {
 				display: none;
 			}
 			.item_one {
-				width: 220px;
 				font-family: Open Sans;
 				font-size: 14px;
 				font-weight: 400;
@@ -49,9 +50,9 @@
 			}
 
 			.info_tes_two {
+				width: 78%;
 				display: flex;
-				justify-content: space-around;
-				width: 100%;
+				justify-content: space-between;
 
 				.item_two {
 					font-family: Open Sans;
@@ -100,7 +101,11 @@
 
 		.info_history {
 			display: flex;
-			justify-content: start;
+			justify-content: space-between;
+			.line_ {
+				border-right: 1px solid lightgray;
+				padding: 0 1rem;
+			}
 
 			@media (max-width: 900px) {
 				display: inline-block;
@@ -122,7 +127,10 @@
 				}
 			}
 			.map_section {
-				width: 100%;
+				width: 80%;
+				.line {
+					border-bottom: 1px solid lightgray;
+				}
 				.two_line {
 					width: 900px;
 					margin-left: 90px;
@@ -150,9 +158,9 @@
 				}
 				.book_map_info {
 					display: flex;
-					justify-content: space-around;
+					justify-content: space-between;
 					align-items: center;
-					padding: 20px;
+					padding: 20px 0;
 
 					@media (max-width: 700px) {
 						display: inline-block;
