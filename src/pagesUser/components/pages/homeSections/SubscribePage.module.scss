@@ -73,9 +73,11 @@
 			@media (max-width: 767px) {
 				display: flex;
 				gap: 15px;
+				margin: 120px 0px;
 			}
 			@media (max-width: 450px) {
 				flex-direction: column;
+				margin: 90px 0px;
 			}
 			@media (max-width: 320px) {
 				display: flex;
