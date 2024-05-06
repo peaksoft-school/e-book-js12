@@ -45,6 +45,27 @@ const VendorsSection = () => {
 			phone: '+380999999999',
 			email: 'doe@gmail.com',
 			quantity_books: 55
+		},
+		{
+			id: 5,
+			name: 'Doe',
+			phone: '+380999999999',
+			email: 'doe@gmail.com',
+			quantity_books: 55
+		},
+		{
+			id: 6,
+			name: 'Doe',
+			phone: '+380999999999',
+			email: 'doe@gmail.com',
+			quantity_books: 55
+		},
+		{
+			id: 7,
+			name: 'Doe',
+			phone: '+380999999999',
+			email: 'doe@gmail.com',
+			quantity_books: 55
 		}
 	];
 

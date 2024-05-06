@@ -14,6 +14,12 @@
 					font-size: 14px;
 					font-weight: 400;
 					cursor: pointer;
+					@media (max-width: 360px) {
+						color: rgb(150, 150, 150);
+						font-size: 12px;
+						font-weight: 400;
+						cursor: pointer;
+					}
 
 					&.link_to_home_active {
 						color: black;
@@ -27,6 +33,12 @@
 					line-height: 130%;
 					letter-spacing: 0px;
 					text-align: center;
+					@media (max-width: 360px) {
+						color: black;
+						font-size: 14px;
+						font-weight: 500;
+						cursor: pointer;
+					}
 
 					&.link_to_vendor_page_active {
 						color: black;
@@ -68,17 +80,40 @@
 				margin-top: 70px;
 				display: flex;
 				gap: 180px;
+				@media (max-width: 1260px) {
+					display: flex;
+					gap: 130px;
+				}
+				@media (max-width: 1110px) {
+					display: flex;
+					gap: 90px;
+				}
+				@media (max-width: 985px) {
+					display: flex;
+					gap: 50px;
+				}
+				@media (max-width: 870px) {
+					display: flex;
+					flex-direction: column;
+					gap: 30px;
+				}
+				@media (max-width: 768px) {
+					display: flex;
+					flex-direction: column;
+					gap: 20px;
+				}
 				@media (max-width: 360px) {
 					display: flex;
 					flex-direction: column;
 					gap: 20px;
 				}
+
 				.test {
 					display: flex;
 					flex-direction: column;
 					gap: 32px;
 					@media (max-width: 360px) {
-						gap: 12px;
+						gap: 20px;
 						display: flex;
 						justify-content: space-between;
 					}
@@ -89,6 +124,11 @@
 				.phone,
 				.email,
 				.date {
+					@media (max-width: 360) {
+						display: flex;
+						flex-direction: column;
+						gap: 12px;
+					}
 					p {
 						display: flex;
 						flex-direction: column;
@@ -117,6 +157,48 @@
 					align-items: flex-end;
 					justify-content: flex-end;
 					margin-top: 88px;
+					@media (max-width: 1260px) {
+						margin-top: 20px;
+						display: flex;
+						align-items: center;
+						justify-content: center;
+						margin-top: 30px;
+					}
+					@media (max-width: 1110px) {
+						margin-top: 20px;
+						display: flex;
+						align-items: center;
+						justify-content: center;
+						margin-top: 30px;
+					}
+					@media (max-width: 985px) {
+						margin-top: 20px;
+						display: flex;
+						align-items: center;
+						justify-content: center;
+						margin-top: 30px;
+					}
+					@media (max-width: 870px) {
+						margin-top: 20px;
+						display: flex;
+						align-items: center;
+						justify-content: center;
+						margin-top: 30px;
+					}
+					@media (max-width: 768px) {
+						margin-top: 20px;
+						display: flex;
+						align-items: center;
+						justify-content: center;
+						margin-top: 30px;
+					}
+					@media (max-width: 360px) {
+						margin-top: 20px;
+						display: flex;
+						align-items: center;
+						justify-content: center;
+						margin-top: 30px;
+					}
 					.delete_profile {
 						max-width: 193px;
 						width: 100%;
@@ -132,6 +214,24 @@
 						cursor: default;
 						background: none;
 						border: none;
+						@media (max-width: 768px) {
+							margin-top: 30px;
+							padding: 10px 10px 10px 10px;
+							font-size: 14px;
+							letter-spacing: 0px;
+							cursor: pointer;
+							cursor: default;
+							background: none;
+						}
+						@media (max-width: 360px) {
+							margin-top: 20px;
+							padding: 10px 10px 10px 10px;
+							font-size: 12px;
+							letter-spacing: 0px;
+							cursor: pointer;
+							cursor: default;
+							background: none;
+						}
 					}
 				}
 			}

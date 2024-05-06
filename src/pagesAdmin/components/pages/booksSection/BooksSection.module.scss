@@ -20,7 +20,7 @@
 				justify-content: space-between;
 				max-width: 200px;
 				width: 100%;
-				gap: 20px;
+				gap: 40px;
 				.click {
 					p {
 						cursor: default;
@@ -42,6 +42,12 @@
 					transition: 0.4s;
 					opacity: 100;
 
+					@media (max-width: 440px) {
+						max-width: 200px;
+						max-height: 200px;
+						top: 85px;
+						left: 100px;
+					}
 					@media (max-width: 320px) {
 						max-width: 200px;
 						max-height: 200px;
@@ -94,33 +100,39 @@
 					transition: 0.4s;
 					opacity: 100;
 					top: 40px;
-					left: 150px;
+					left: -20px;
 					background-color: #f8f8f8;
 					box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
 
 					@media (max-width: 768px) {
 						max-width: 300px;
 						max-height: 300px;
-						left: 100px;
+						left: 0px;
 						top: 40px;
 					}
 					@media (max-width: 480px) {
 						max-width: 250px;
 						max-height: 250px;
-						left: 70px;
+						left: 0px;
 						top: 50px;
+					}
+					@media (max-width: 450px) {
+						max-width: 250px;
+						max-height: 250px;
+						left: 0px;
+						top: 85px;
 					}
 					@media (max-width: 410px) {
 						max-width: 250px;
 						max-height: 250px;
-						left: 30px;
-						top: 30px;
+						left: 0px;
+						top: 90px;
 					}
 					@media (max-width: 375px) {
 						max-width: 250px;
 						max-height: 250px;
-						left: 20px;
-						top: 30px;
+						left: 0px;
+						top: 90px;
 					}
 
 					.genre_quantity {
@@ -154,6 +166,11 @@
 						line-height: 130%;
 						letter-spacing: 0px;
 						text-align: left;
+						@media (max-width: 360px) {
+							font-size: 12px;
+							letter-spacing: 0px;
+							font-weight: 300;
+						}
 					}
 				}
 				.none_books_genre {
@@ -252,6 +269,22 @@
 		flex-wrap: wrap;
 		gap: 20px 10px;
 		width: 100%;
+		@media (max-width: 430px) {
+			display: flex;
+			flex-direction: column;
+			gap: 20px 10px;
+			width: 100%;
+			align-items: center;
+			justify-content: center;
+		}
+		@media (max-width: 360px) {
+			display: flex;
+			flex-direction: column;
+			gap: 20px 10px;
+			width: 100%;
+			align-items: center;
+			justify-content: center;
+		}
 
 		.book {
 			position: relative;
@@ -264,8 +297,29 @@
 			width: 100%;
 			background: rgb(237, 237, 237);
 
+			@media (max-width: 1110px) {
+				max-width: 260px;
+				width: 100%;
+				padding: 20px 16px 10px;
+			}
+			@media (max-width: 1090px) {
+				max-width: 240px;
+				width: 100%;
+				padding: 20px 16px 10px;
+			}
+			@media (max-width: 1030px) {
+				max-width: 230px;
+				width: 100%;
+				padding: 20px 16px 10px;
+			}
+
 			@media (max-width: 830px) {
-				max-width: 200px;
+				max-width: 150px;
+				width: 100%;
+				padding: 20px 16px 10px;
+			}
+			@media (max-width: 768px) {
+				max-width: 140px;
 				width: 100%;
 				padding: 20px 16px 10px;
 			}
@@ -286,6 +340,10 @@
 				cursor: pointer;
 				cursor: default;
 
+				@media (max-width: 990px) {
+					top: 1px;
+					right: 1px;
+				}
 				@media (max-width: 560px) {
 					top: 2px;
 					right: -3px;
