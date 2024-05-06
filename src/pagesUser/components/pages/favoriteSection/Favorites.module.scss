@@ -1,0 +1,206 @@
+.FavoritePage {
+	.content {
+		max-width: 799px;
+		width: 100%;
+		margin-bottom: 75px;
+		.favorite_nav_link {
+			padding: 0px 0px 32px 0px;
+			a {
+				font-size: 14px;
+				font-weight: 400;
+				line-height: 16.8px;
+				text-align: left;
+				color: #969696;
+
+				&:hover {
+					color: #333;
+				}
+
+				&.active {
+					color: #000;
+					font-size: 16px;
+					font-weight: bold;
+				}
+			}
+		}
+		.favorite_header {
+			display: flex;
+			flex-direction: column;
+			.favorites_title {
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+				h1 {
+					font-size: 24px;
+					font-weight: 600;
+					line-height: 31.2px;
+					text-align: left;
+					color: #222222;
+				}
+				p {
+					font-size: 16px;
+					font-weight: 400;
+					line-height: 20.8px;
+					text-align: left;
+					color: #969696;
+				}
+			}
+			.clear_favorite_button {
+				max-width: 799px;
+				width: 100%;
+				display: flex;
+				justify-content: end;
+				background: transparent;
+				border: none;
+				font-size: 16px;
+				font-weight: 400;
+				line-height: 20.8px;
+				text-align: left;
+				color: #545454;
+				padding: 20px 0px;
+			}
+		}
+		.favorite_card_container {
+			display: flex;
+			flex-direction: column;
+			gap: 20px;
+			padding-top: 30px;
+			@media (max-width: 616px) {
+				gap: 20px;
+			}
+			@media (max-width: 491px) {
+				padding: 60px 0px;
+			}
+			hr {
+				&:first-child {
+					display: none;
+				}
+				display: block;
+			}
+			.btn_delete {
+				display: flex;
+				justify-content: end;
+
+				.close_button {
+					background-color: transparent;
+					border: none;
+					cursor: pointer;
+				}
+			}
+			.favorite_card_content {
+				max-width: 799px;
+				width: 100%;
+				.favorite_card {
+					display: flex;
+					justify-content: space-between;
+					gap: 30px;
+					max-width: 799px;
+					width: 100%;
+
+					gap: 0px;
+
+					padding-left: 50px;
+					@media (max-width: 810px) {
+						padding-left: 0px;
+					}
+					@media (max-width: 616px) {
+						flex-direction: column;
+					}
+
+					.favorite_image_about {
+						display: flex;
+						gap: 52px;
+						@media (max-width: 680px) {
+						}
+						@media (max-width: 640px) {
+						}
+						@media (max-width: 616px) {
+							justify-content: start;
+							gap: 52px;
+						}
+						@media (max-width: 502px) {
+							flex-direction: column;
+						}
+						.container_img {
+							@media (max-width: 502px) {
+								display: flex;
+								justify-content: center;
+							}
+							.favorite_card_image {
+								width: 110px;
+								height: 176px;
+								@media (max-width: 502px) {
+									max-width: 160px;
+									width: 100%;
+									height: auto;
+								}
+							}
+						}
+
+						.favorite_card_about_book {
+							display: flex;
+							flex-direction: column;
+							gap: 10px;
+							padding: 10px 0px;
+							.favorite_card_title {
+								font-size: 18px;
+								font-weight: 400;
+								line-height: 23.4px;
+								text-align: left;
+								color: #282828;
+							}
+							.favorite_card_author {
+								font-size: 14px;
+								font-weight: 400;
+								line-height: 18.2px;
+								text-align: left;
+								color: #969696;
+							}
+							.favorite_card_description {
+								width: 100%;
+								max-width: 406px;
+								font-size: 14px;
+								font-weight: 400;
+								line-height: 18.2px;
+								text-align: left;
+								color: #000000;
+								@media (max-width: 765px) {
+									max-width: 300px;
+									font-size: 12px;
+								}
+								@media (max-width: 502px) {
+									max-width: 100%;
+								}
+							}
+						}
+					}
+				}
+				.favorite_card_buttons {
+					display: flex;
+					flex-direction: column;
+					justify-content: space-between;
+					align-items: flex-end;
+					@media (max-width: 616px) {
+						flex-direction: row-reverse;
+						padding: 10px 0px;
+						align-items: center;
+					}
+
+					.button_to_busket {
+						background-color: transparent;
+						border: none;
+						font-size: 14px;
+						font-weight: 400;
+						line-height: 19.07px;
+						text-align: left;
+						color: #222222;
+						text-decoration: underline;
+						@media (max-width: 650px) {
+							font-size: 12px;
+						}
+					}
+				}
+			}
+		}
+	}
+}

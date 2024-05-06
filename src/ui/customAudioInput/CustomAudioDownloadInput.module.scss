@@ -1,0 +1,33 @@
+.paragraph {
+	color: rgb(34, 34, 34);
+	font-size: 16px;
+	font-weight: 400;
+}
+
+.download_input {
+	width: 277px;
+	display: flex;
+	padding: 10px 40px;
+	gap: 10px;
+	justify-content: center;
+	align-items: center;
+	box-sizing: border-box;
+	border: 1px solid rgb(196, 196, 196);
+
+	p {
+		color: rgb(150, 150, 150);
+		font-size: 14px;
+		font-weight: 600;
+		line-height: 120%;
+	}
+
+	.uploaded_text {
+		color: white;
+		font-size: 14px;
+		font-weight: 600;
+	}
+}
+.uploaded {
+	background: rgb(0, 171, 27);
+	color: white;
+}

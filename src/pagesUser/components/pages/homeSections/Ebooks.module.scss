@@ -1,0 +1,354 @@
+.Bestsellers {
+	.content {
+		padding-bottom: 104px;
+		.title {
+			display: flex;
+			justify-content: space-between;
+			margin-bottom: 50px;
+			margin-top: 126.5px;
+			@media (max-width: 767px) {
+				display: flex;
+				flex-direction: column;
+				gap: 15px;
+				align-items: center;
+				justify-content: center;
+			}
+
+			h2 {
+				color: rgb(28, 28, 28);
+				font-size: 24px;
+				font-size: clamp(12px, 8vw, 24px);
+				font-weight: 600;
+				line-height: 130%;
+				letter-spacing: 0px;
+				text-align: left;
+			}
+
+			p {
+				color: rgb(255, 76, 0);
+				font-family: Open Sans;
+				font-size: clamp(10px, 8vw, 14px);
+				font-weight: 400;
+				line-height: 120%;
+				letter-spacing: 0px;
+				text-align: left;
+				text-decoration-line: underline;
+			}
+		}
+
+		.all_about_books {
+			width: 100%;
+			display: flex;
+			align-items: center;
+			height: 600px;
+			gap: 200px;
+
+			@media (max-width: 1200px) {
+				gap: 50px;
+			}
+			@media (max-width: 1000px) {
+				display: flex;
+				flex-direction: column;
+				height: auto;
+				gap: 50px;
+			}
+			@media (max-width: 767px) {
+				.Bestsellers {
+					.content {
+						.all_about_books {
+							gap: 20px;
+						}
+					}
+				}
+			}
+			@media (max-width: 320px) {
+				display: flex;
+				flex-direction: column;
+				height: auto;
+				gap: 50px;
+			}
+
+			.books {
+				max-width: 491px;
+				width: 100%;
+				max-height: 50vh;
+				height: 100%;
+
+				@media (max-width: 1000px) {
+					max-width: none;
+					width: 100%;
+				}
+
+				.about_books {
+					height: 20vh;
+					@media (max-width: 440px) {
+						height: 10vh;
+					}
+
+					h3 {
+						max-width: 447px;
+						width: 100%;
+						color: rgb(34, 34, 34);
+						font-size: clamp(30px, 8vw, 56px);
+						font-weight: 600;
+						line-height: 130%;
+						letter-spacing: 0px;
+						text-align: left;
+						margin-bottom: 50px;
+
+						@media (max-width: 1000px) {
+							h3 {
+								font-size: clamp(24px, 6vw, 40px);
+							}
+						}
+					}
+
+					.description_books {
+						color: rgb(34, 34, 34);
+						font-size: clamp(8px, 8vw, 16px);
+						font-weight: 400;
+						line-height: 130%;
+						letter-spacing: 0px;
+						text-align: left;
+						margin-bottom: 40px;
+
+						@media (max-width: 1000px) {
+							.description_books {
+								font-size: clamp(14px, 4vw, 20px);
+							}
+						}
+
+						.paragraph {
+							p {
+								color: rgb(255, 76, 0);
+								font-size: 16px;
+								font-weight: 600;
+								line-height: 130%;
+								letter-spacing: 0px;
+								text-align: left;
+								text-decoration: none;
+								list-style: none;
+							}
+						}
+					}
+
+					.paragraph {
+						display: flex;
+						justify-content: space-between;
+
+						p {
+							color: rgb(255, 76, 0);
+							font-size: clamp(7px, 8vw, 14px);
+							font-weight: 400;
+							line-height: 130%;
+							letter-spacing: 0px;
+							text-align: left;
+							text-decoration-line: underline;
+						}
+					}
+				}
+			}
+			.test {
+				display: flex;
+				justify-content: center;
+				.slider_container {
+					width: 100%;
+					height: 1000px;
+					display: flex;
+					align-items: center;
+					justify-content: center;
+					gap: 10px;
+
+					.slide_item {
+						max-width: 150px;
+						width: 100%;
+						height: max-content;
+						display: flex;
+						flex-direction: column;
+						align-items: center;
+						justify-content: space-between;
+						gap: 10px;
+
+						img {
+							width: 100%;
+							object-fit: cover;
+							object-position: center;
+							@media (max-width: 420px) {
+								max-width: 100px;
+								width: 100%;
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+}
+
+.swiper {
+	max-width: 500px;
+	max-height: 600px;
+	height: 100%;
+	width: 100%;
+	margin: 0px;
+
+	@media (max-width: 1000px) {
+		max-width: 900px;
+		max-height: 500px;
+		height: 100%;
+		width: 100%;
+		margin: 0px;
+	}
+	@media (max-width: 950px) {
+		max-width: 850px;
+		max-height: 500px;
+		height: 100%;
+		width: 100%;
+		margin: 0px;
+	}
+	@media (max-width: 900px) {
+		max-width: 800px;
+		max-height: 500px;
+		height: 100%;
+		width: 100%;
+		margin: 0px;
+	}
+	@media (max-width: 840px) {
+		max-width: 740px;
+		max-height: 500px;
+		height: 100%;
+		width: 100%;
+		margin: 0px;
+	}
+	@media (max-width: 780px) {
+		max-width: 680px;
+		max-height: 500px;
+		height: 100%;
+		width: 100%;
+		margin: 0px;
+	}
+
+	@media (max-width: 720px) {
+		max-width: 620px;
+		max-height: 500px;
+		height: 100%;
+		width: 100%;
+		margin: 0px;
+	}
+	@media (max-width: 660px) {
+		max-width: 560px;
+		max-height: 500px;
+		height: 100%;
+		width: 100%;
+		margin: 0px;
+	}
+	@media (max-width: 610px) {
+		max-width: 510px;
+		max-height: 500px;
+		height: 100%;
+		width: 100%;
+		margin: 0px;
+	}
+	@media (max-width: 585px) {
+		max-width: 480px;
+		max-height: 500px;
+		height: 100%;
+		width: 100%;
+		margin: 0px;
+	}
+	@media (max-width: 520px) {
+		max-width: 420px;
+		max-height: 500px;
+		height: 100%;
+		width: 100%;
+		margin: 0px;
+	}
+	@media (max-width: 480px) {
+		max-width: 380px;
+		max-height: 300px;
+		height: 100%;
+		width: 100%;
+		margin: 0px;
+	}
+	@media (max-width: 440px) {
+		max-width: 340px;
+		max-height: 300px;
+		height: 100%;
+		width: 100%;
+		margin: 0px;
+	}
+	@media (max-width: 370px) {
+		max-width: 320px;
+		max-height: 300px;
+		height: 100%;
+		width: 100%;
+		margin: 0px;
+	}
+	@media (max-width: 320px) {
+		max-width: 220px;
+		max-height: 300px;
+		height: 100%;
+		width: 100%;
+		margin: 0px;
+	}
+}
+
+.swiper_controller {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	@media (max-width: 767px) {
+		display: none;
+	}
+}
+
+.swiper_slider {
+	text-align: center;
+	font-size: 18px;
+	background: #fff;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.book.image {
+	display: block;
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+
+.swiper-slide {
+	flex-shrink: 0;
+	width: 100%;
+	max-height: 0px;
+	height: 100%;
+	position: relative;
+	transition-property: transform;
+	display: block;
+}
+
+@media (max-width: 600px) {
+	.Bestsellers {
+		.content {
+			.all_about_books {
+				gap: 15px;
+				.books {
+					.about_books {
+						h3 {
+							font-size: clamp(20px, 6vw, 32px);
+						}
+						.description_books {
+							font-size: clamp(12px, 4vw, 18px);
+							.paragraph {
+								p {
+									font-size: clamp(10px, 3vw, 16px);
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+}

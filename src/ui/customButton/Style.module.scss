@@ -1,0 +1,84 @@
+.custom_button_auth {
+	background: #1c1c1c !important;
+	padding: 10px 24px !important;
+	border: none !important;
+	color: #fff !important;
+	font-weight: 600 !important;
+	font-size: 16px !important;
+	&:hover {
+		background: #484848 !important;
+		transition: 0.2s;
+	}
+	&:active {
+		background: #f34901 !important;
+		transition: 0.2s;
+	}
+}
+
+.custom_button_basket {
+	background: #f34901 !important;
+	padding: 10px 24px !important;
+	border: none;
+	color: #fff;
+	font-weight: 600;
+	font-size: 14px;
+
+	&:hover {
+		background: #fe6f33 !important;
+		transition: 0.2s;
+	}
+	&:active {
+		background: #f34901 !important;
+		transition: 0.2s;
+	}
+}
+
+.custom_button_personal {
+	background: #fff !important;
+	padding: 10px 24px !important;
+	border: none;
+	color: #c4c4c4;
+	font-weight: 600;
+	font-size: 14px;
+
+	&:hover {
+		background: #fe6f33 !important;
+		transition: 0.2s;
+	}
+	&:active {
+		background: #e54400 !important;
+		transition: 0.2s;
+	}
+}
+
+.custom_button_see_more {
+	background: white !important;
+	padding: 10px 577px !important;
+	border: none !important;
+	color: black !important;
+	font-weight: 400 !important;
+	font-size: 14px !important;
+
+	&:active {
+		background: #e54400 !important;
+		transition: 0.2s;
+	}
+}
+
+.custom_button_add_book {
+	background: #f34901 !important;
+	padding: 10px 24px !important;
+	border: none !important;
+	color: #fff !important;
+}
+
+.custom_white_dowland {
+	cursor: pointer;
+	background-color: white;
+	color: #222222;
+}
+
+.custom_button_dowland {
+	cursor: pointer;
+	background-color: #1c1c1c;
+}

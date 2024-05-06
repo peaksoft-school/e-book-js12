@@ -1,0 +1,264 @@
+.modalOverlay {
+	background-color: rgba(0, 0, 0, 0.5);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 100%;
+	height: 100%;
+	position: fixed;
+	top: 0;
+	left: 0;
+	z-index: 1000;
+
+	.modal {
+		background: #fff;
+	}
+
+	@media (max-width: 590px) {
+		background: none;
+		width: 70%;
+		height: 50%;
+		top: 20%;
+		left: 15%;
+	}
+}
+
+.errorPromoContainer {
+	display: flex;
+	flex-direction: column;
+	max-width: 400px;
+	width: 100%;
+	padding: 15px;
+
+	@media (max-width: 590px) {
+	}
+
+	.exit {
+		display: flex;
+		justify-content: end;
+		cursor: pointer;
+		padding: 15px;
+	}
+
+	.box {
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		gap: 28px;
+
+		.text {
+			color: #000;
+			font-family: Open Sans;
+			font-size: 18px;
+			font-weight: 400;
+			text-align: center;
+
+			@media (max-width: 590px) {
+				font-size: 12px;
+			}
+		}
+
+		.okButton {
+			color: #fff;
+			background: #000;
+			font-family: Open Sans;
+			font-size: 16px;
+			font-weight: 400;
+			max-width: 139px;
+			width: 100%;
+			height: 42px;
+			cursor: pointer;
+			border: none;
+
+			@media (max-width: 590px) {
+				max-width: 100px;
+				width: 100%;
+				height: 30px;
+				font-size: 12px;
+			}
+		}
+	}
+}
+
+.exitContainer {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	justify-content: space-around;
+	align-items: center;
+	max-width: 460px;
+	width: 100%;
+	padding: 15px;
+	gap: 25px;
+
+	.text {
+		color: #000;
+		font-family: Open Sans;
+		font-size: clamp(12px, 8vw, 18px);
+		font-weight: 600;
+	}
+
+	.buttonsBox {
+		display: flex;
+		flex-direction: row;
+		gap: 50px;
+
+		.logout {
+			color: #fff;
+			background: #000;
+			font-family: Open Sans;
+			font-size: 16px;
+			font-weight: 400;
+			max-width: 102px;
+			width: 100%;
+			height: 42px;
+			cursor: pointer;
+			border: none;
+
+			@media (max-width: 590px) {
+				max-width: 100px;
+				width: 100%;
+				height: 30px;
+				font-size: 12px;
+			}
+		}
+
+		.cancel {
+			color: #777777;
+			background: #fff;
+			font-family: Open Sans;
+			font-size: 16px;
+			font-weight: 400;
+			width: 102px;
+			height: 42px;
+			cursor: pointer;
+			border: none;
+
+			@media (max-width: 590px) {
+				max-width: 100px;
+				width: 100%;
+				height: 30px;
+				font-size: 12px;
+			}
+		}
+	}
+}
+
+.successfulOrderContainer {
+	display: flex;
+	flex-direction: column;
+	max-width: 460px;
+	width: 100%;
+	padding: 15px;
+
+	.topBox {
+		display: flex;
+		flex-direction: row;
+		justify-content: end;
+		align-items: center;
+		padding: 15px;
+
+		.checkmark {
+			position: absolute;
+			right: 48%;
+
+			@media (max-width: 600px) {
+				right: 46%;
+			}
+		}
+
+		.exit {
+			justify-content: end;
+			cursor: pointer;
+		}
+	}
+
+	.bottomBox {
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		gap: 40px;
+
+		.text {
+			color: #000;
+			font-family: Open Sans;
+			font-size: 18px;
+			font-weight: 600;
+
+			@media (max-width: 590px) {
+				font-size: 12px;
+			}
+		}
+
+		.continueButton {
+			color: #fff;
+			background: #000;
+			font-family: Open Sans;
+			font-size: 16px;
+			font-weight: 400;
+			width: 223px;
+			height: 42px;
+			cursor: pointer;
+			border: none;
+
+			@media (max-width: 590px) {
+				height: 25px;
+				font-size: 12px;
+			}
+		}
+	}
+}
+
+:global {
+	.ant-btn {
+		padding: 10px 24px !important;
+		max-width: 130px !important;
+		width: 100% !important;
+		height: 42px;
+		border-radius: 0px;
+		&:first-child {
+			border: 1px solid transparent;
+			span {
+				color: #777777;
+				transition: 0.4s;
+			}
+			&:hover {
+				border: 1px solid #ff4c00 !important;
+			}
+			background-color: transparent;
+		}
+		&:hover {
+			span {
+				color: #ff4c00;
+				transition: 0.3s;
+			}
+		}
+		&:last-child {
+			background-color: black;
+			&:hover {
+				background-color: #000 !important;
+			}
+		}
+	}
+	.ant-modal-footer {
+		display: flex !important;
+		justify-content: center;
+		gap: 20px;
+	}
+	.ant-btn .css-dev-only-do-not-override-1qfezbu .ant-btn-default {
+		color: #fff;
+		cursor: pointer;
+		border: none;
+	}
+	.ant-btn span {
+		font-size: 16px !important;
+		font-weight: 600;
+		font-family: Open Sans;
+		&:hover {
+			color: #ff4c00;
+			transition: 0.3s;
+		}
+	}
+}

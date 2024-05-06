@@ -1,0 +1,512 @@
+.AudioBooks {
+	width: 100%;
+	.content {
+		padding-top: 220px;
+		padding-bottom: 150px;
+		width: 100%;
+
+		.title_audio_books {
+			width: 100%;
+			margin-bottom: 40px;
+			width: 100%;
+			display: flex;
+			justify-content: space-between;
+
+			@media (max-width: 767px) {
+				display: flex;
+				align-items: center;
+				justify-content: space-between;
+				gap: 15px;
+			}
+			@media (max-width: 320px) {
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+				justify-content: center;
+				gap: 15px;
+			}
+			h5 {
+				color: rgb(56, 56, 56);
+				font-size: 24px;
+				font-weight: 600;
+				line-height: 130%;
+				letter-spacing: 0px;
+				text-align: left;
+			}
+			p {
+				color: rgb(255, 76, 0);
+				font-size: 14px;
+				font-weight: 400;
+				line-height: 120%;
+				letter-spacing: 0px;
+				text-align: left;
+				text-decoration-line: underline;
+			}
+		}
+		.books_container {
+			width: 100%;
+			display: flex;
+			justify-content: space-between;
+			position: relative;
+			gap: 0px 93px;
+
+			@media (max-width: 1200px) {
+				width: 100%;
+				display: flex;
+				justify-content: space-between;
+				gap: 0px 33px;
+			}
+			@media (max-width: 767px) {
+				width: 100%;
+				max-width: 767px;
+				display: flex;
+				gap: 0px 33px;
+			}
+			@media (max-width: 500px) {
+				flex-direction: column;
+				align-items: center;
+				gap: 30px 0px;
+			}
+			@media (max-width: 320px) {
+				width: 100%;
+				max-width: 320px;
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+				justify-content: center;
+				gap: 15px;
+			}
+
+			.book_first {
+				max-width: 309px;
+				width: 100%;
+				display: flex;
+				align-items: start;
+				flex-direction: column;
+				justify-content: end;
+				gap: 17px;
+
+				@media (max-width: 1200px) {
+					max-width: 260px;
+					width: 100%;
+					display: flex;
+					align-items: start;
+					flex-direction: column;
+					justify-content: end;
+					gap: 17px;
+				}
+
+				@media (max-width: 767px) {
+					max-width: 160px;
+					width: 100%;
+					display: flex;
+					align-items: start;
+					flex-direction: column;
+					justify-content: end;
+					gap: 17px;
+				}
+				@media (max-width: 500px) {
+					max-width: 220px;
+					width: 100%;
+				}
+				img {
+					width: 100%;
+					@media (max-width: 1200px) {
+						width: 100%;
+					}
+				}
+				img {
+					@media (max-width: 767px) {
+						width: 100%;
+					}
+				}
+
+				.about_book {
+					width: 100%;
+					display: flex;
+					flex-direction: column;
+					gap: 5px;
+
+					@media (max-width: 1200px) {
+						width: 100%;
+						display: flex;
+						flex-direction: column;
+						gap: 5px;
+					}
+					@media (max-width: 767px) {
+						width: 100%;
+						display: flex;
+						flex-direction: column;
+						gap: 5px;
+					}
+					h5 {
+						color: rgb(34, 34, 34);
+						font-size: clamp(12px, 8vw, 14px);
+						font-weight: 600;
+						@media (max-width: 767px) {
+							font-size: 14px;
+						}
+						@media (max-width: 600px) {
+							font-size: 12px;
+						}
+					}
+					p {
+						color: rgb(51, 68, 51);
+						font-size: 14px;
+						font-weight: 400;
+						line-height: 130%;
+						letter-spacing: 0px;
+						text-align: left;
+						@media (max-width: 600px) {
+							font-size: 12px;
+						}
+					}
+
+					.description_book {
+						width: 100%;
+						display: flex;
+						justify-content: space-between;
+
+						@media (max-width: 767px) {
+							width: 100%;
+							display: flex;
+							justify-content: space-between;
+						}
+
+						p {
+							color: rgb(140, 140, 140);
+							font-size: 14px;
+							font-weight: 400;
+							line-height: 130%;
+							letter-spacing: 0px;
+							text-align: left;
+							@media (max-width: 767px) {
+								font-size: 12px;
+							}
+							@media (max-width: 600px) {
+								font-size: 11px;
+							}
+						}
+
+						h6 {
+							color: rgb(34, 34, 34);
+							font-size: 16px;
+							font-weight: 600;
+							line-height: 130%;
+							letter-spacing: 0px;
+							text-align: left;
+							@media (max-width: 767px) {
+								font-size: 12px;
+							}
+							@media (max-width: 600px) {
+								font-size: 11px;
+							}
+						}
+					}
+				}
+			}
+
+			.book_second {
+				max-width: 441px;
+				width: 100%;
+				display: flex;
+				flex-direction: column;
+				justify-content: end;
+				gap: 17px;
+				margin-top: 84px;
+				margin-bottom: 136px;
+
+				@media (max-width: 1200px) {
+					display: flex;
+					align-items: center;
+					justify-content: center;
+					max-width: 400px;
+					width: 100%;
+					gap: 17px;
+					margin-top: 84px;
+					margin-bottom: 136px;
+				}
+
+				@media (max-width: 767px) {
+					max-width: 220px;
+					width: 100%;
+					display: flex;
+					align-items: start;
+					flex-direction: column;
+					justify-content: end;
+					gap: 17px;
+				}
+				@media (max-width: 500px) {
+					max-width: 220px;
+					width: 100%;
+					margin: 0px;
+				}
+
+				img {
+					max-width: 441px;
+					width: 100%;
+					@media (max-width: 1200px) {
+						width: 100%;
+					}
+				}
+
+				.new_book_container {
+					max-width: max-content;
+					height: fit-content;
+					position: absolute;
+					top: 14%;
+					left: 57%;
+					display: none;
+					svg {
+						width: 206px;
+						height: 206px;
+					}
+					@media (max-width: 1200px) {
+						top: 10%;
+						left: 57%;
+						svg {
+							max-width: 200px;
+							width: 100%;
+						}
+					}
+					@media (max-width: 767px) {
+						width: 100%;
+						top: -7%;
+						left: 65%;
+
+						svg {
+							max-width: 150px;
+							width: 100%;
+						}
+					}
+					@media (max-width: 320px) {
+						width: 100%;
+						top: -10%;
+						left: 65%;
+
+						svg {
+							max-width: 150px;
+							width: 100%;
+						}
+					}
+				}
+
+				.about_book {
+					width: 100%;
+					display: flex;
+					flex-direction: column;
+					gap: 5px;
+
+					@media (max-width: 1200px) {
+						width: 100%;
+						display: flex;
+						flex-direction: column;
+						gap: 5px;
+					}
+					@media (max-width: 767px) {
+						max-width: 220px;
+						width: 100%;
+						display: flex;
+						gap: 5px;
+					}
+					@media (max-width: 320px) {
+						max-width: 240px;
+						width: 100%;
+					}
+					h5 {
+						color: rgb(34, 34, 34);
+						font-size: clamp(12px, 8vw, 14px);
+						font-weight: 600;
+						line-height: 130%;
+						letter-spacing: 0px;
+						text-align: left;
+						text-transform: uppercase;
+						@media (max-width: 600px) {
+							font-size: 12px;
+						}
+					}
+					p {
+						color: rgb(51, 68, 51);
+						font-size: 14px;
+						font-weight: 400;
+						line-height: 130%;
+						letter-spacing: 0px;
+						text-align: left;
+						@media (max-width: 600px) {
+							font-size: 12px;
+						}
+					}
+
+					.description_book {
+						width: 100%;
+						display: flex;
+						justify-content: space-between;
+
+						@media (max-width: 767px) {
+							max-width: 220px;
+							width: 100%;
+							display: flex;
+							justify-content: space-between;
+						}
+						@media (max-width: 320px) {
+							width: 100%;
+							display: flex;
+							justify-content: space-between;
+						}
+
+						p {
+							color: rgb(140, 140, 140);
+							font-size: 14px;
+							font-weight: 400;
+							line-height: 130%;
+							letter-spacing: 0px;
+							text-align: left;
+							@media (max-width: 767px) {
+								font-size: 12px;
+							}
+							@media (max-width: 600px) {
+								font-size: 11px;
+							}
+						}
+
+						h6 {
+							color: rgb(34, 34, 34);
+							font-size: 16px;
+							font-weight: 600;
+							line-height: 130%;
+							letter-spacing: 0px;
+							text-align: left;
+							@media (max-width: 767px) {
+								font-size: 12px;
+							}
+							@media (max-width: 600px) {
+								font-size: 11px;
+							}
+						}
+					}
+				}
+			}
+
+			.book_third {
+				max-width: 344px;
+				width: 100%;
+				display: flex;
+				align-items: start;
+				flex-direction: column;
+				justify-content: start;
+				gap: 17px;
+
+				@media (max-width: 1200px) {
+					max-width: 300px;
+					width: 100%;
+					display: flex;
+					align-items: start;
+					flex-direction: column;
+					justify-content: start;
+					gap: 17px;
+				}
+
+				@media (max-width: 767px) {
+					max-width: 170px;
+					width: 100%;
+					display: flex;
+					align-items: start;
+					flex-direction: column;
+					justify-content: start;
+					gap: 17px;
+				}
+				@media (max-width: 500px) {
+					max-width: 220px;
+					width: 100%;
+				}
+				img {
+					@media (max-width: 1200px) {
+						width: 100%;
+					}
+				}
+				img {
+					@media (max-width: 767px) {
+						width: 100%;
+					}
+				}
+				.about_book {
+					width: 100%;
+					display: flex;
+					flex-direction: column;
+					gap: 5px;
+
+					@media (max-width: 1200px) {
+						width: 100%;
+					}
+					@media (max-width: 767px) {
+						width: 100%;
+					}
+					h5 {
+						color: rgb(34, 34, 34);
+						font-size: clamp(12px, 8vw, 14px);
+						font-weight: 600;
+						line-height: 130%;
+						letter-spacing: 0px;
+						text-align: left;
+						text-transform: uppercase;
+						@media (max-width: 600px) {
+							font-size: 12px;
+						}
+					}
+					p {
+						color: rgb(51, 68, 51);
+						font-size: 14px;
+						font-weight: 400;
+						line-height: 130%;
+						letter-spacing: 0px;
+						text-align: left;
+						@media (max-width: 600px) {
+							font-size: 12px;
+						}
+					}
+
+					.description_book {
+						width: 100%;
+						max-width: 344px;
+
+						display: flex;
+						justify-content: space-between;
+						@media (max-width: 767px) {
+							width: 100%;
+							display: flex;
+							justify-content: space-between;
+						}
+						p {
+							color: rgb(140, 140, 140);
+							font-size: 14px;
+							font-weight: 400;
+							line-height: 130%;
+							letter-spacing: 0px;
+							text-align: left;
+							@media (max-width: 767px) {
+								font-size: 12px;
+							}
+							@media (max-width: 600px) {
+								font-size: 11px;
+							}
+						}
+						h6 {
+							color: rgb(34, 34, 34);
+							font-size: 16px;
+							font-weight: 600;
+							line-height: 130%;
+							letter-spacing: 0px;
+							text-align: left;
+							@media (max-width: 767px) {
+								font-size: 12px;
+							}
+							@media (max-width: 600px) {
+								font-size: 11px;
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+}
