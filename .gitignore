@@ -3,6 +3,7 @@
 .next/
 /out/
 /node_modules/
+/.vite
 /dist/
 /build/
 /coverage

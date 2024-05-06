@@ -51,6 +51,7 @@ const Header = () => {
 						{userExit ? (
 							<>
 								<ExitModal
+									btnClose={() => {}}
 									isOpen={userExit}
 									onClose={() => {
 										setUserExit(false);
