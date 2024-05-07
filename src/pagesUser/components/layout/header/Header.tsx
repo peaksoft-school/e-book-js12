@@ -6,7 +6,7 @@ import { IconBurgerMenu, IconRedDot } from '@/src/assets/icons';
 import LogoeBook from '@/src/ui/logoeBook/LogoeBook';
 import WhiteProfileIcon from '@/src/assets/icons/icon-whiteProfile';
 import ExitModal from '@/src/ui/customModals/ExitModal';
-import {  useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const dataGenre = [
 	{
