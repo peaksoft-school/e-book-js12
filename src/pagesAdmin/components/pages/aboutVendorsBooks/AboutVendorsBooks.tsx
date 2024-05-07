@@ -5,6 +5,7 @@ import bookImage from '../../../../assets/booksImg/harrry-potter.png';
 import ThreeDotIcon from '@/src/assets/icons/icon-threeDot';
 import UpIcon from '@/src/assets/icons/icon-upIcon';
 import { IconArrowBottom, IconWhiteLike } from '@/src/assets/icons';
+import { IconPencil, IconX } from '@tabler/icons-react';
 
 interface Book {
 	id: number;
@@ -20,6 +21,7 @@ interface Book {
 interface Vendor {}
 
 const AboutVendorsBooks = () => {
+	const [isOpen, setIsOpen] = useState<boolean>(false);
 	const [isOpenBooksType, setIsOpenBooksType] = useState(false);
 	const [selectedType, setSelectedType] = useState<string | null>(null);
 	const [isModalOpen, setIsModalOpen] = useState(false);
@@ -178,9 +180,28 @@ const AboutVendorsBooks = () => {
 									<p>В карзине ({book.inBasket})</p>
 								</div>
 							</div>
-							<div className={scss.extra}>
+							<div className={scss.extra} onClick={() => setIsOpen(!isOpen)}>
 								<ThreeDotIcon />
 							</div>
+							{
+								<div className={isOpen ? scss.is_open : scss.on_close}>
+									<ul>
+										<li>
+											<span>
+												<IconPencil />
+											</span>
+											Редактировать
+										</li>
+										<hr />
+										<li onClick={() => setIsOpen(false)}>
+											<span>
+												<IconX />
+											</span>
+											Отклонить
+										</li>
+									</ul>
+								</div>
+							}
 							<div className={scss.book_content}>
 								<div className={scss.book_img}>
 									<img src={book.img} alt="" />

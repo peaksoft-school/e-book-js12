@@ -51,6 +51,8 @@
 				align-items: center;
 				justify-content: center;
 				gap: 75px;
+				cursor: pointer;
+				cursor: default;
 
 				.navigate_user_profile,
 				.navigate_user_books {
@@ -64,6 +66,7 @@
 					width: 100%;
 					padding: 0px 0px 10px 0px;
 					cursor: pointer;
+					cursor: default;
 
 					&.navigate_user_profile_active,
 					&.navigate_user_books_active {
@@ -73,6 +76,8 @@
 						padding-bottom: 10px;
 						max-width: 152px;
 						width: 100%;
+						cursor: pointer;
+						cursor: default;
 					}
 				}
 			}
