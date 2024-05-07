@@ -8,6 +8,7 @@ import FavoritePage from '../pages/FavoritePage';
 import Basket from '../pages/Basket';
 import BookInfoPage from '../pages/BookInfoPage';
 import ProfilePageContainer from '../pages/profilePageContainer/ProfilePageContainer';
+import PromoPage from '../pages/PromoPage';
 const LayoutUser = () => {
 	return (
 		<>
@@ -21,6 +22,7 @@ const LayoutUser = () => {
 						<Route path="/favorite" element={<FavoritePage />} />
 						<Route path="/basket" element={<Basket />} />
 						<Route path="/book_info" element={<BookInfoPage />} />
+						<Route path="/promo_page" element={<PromoPage />} />
 					</Routes>
 				</main>
 				<Footer />
