@@ -1,0 +1,254 @@
+.profile_history {
+	justify-content: center;
+	align-items: center;
+	width: 100%;
+	margin-top: 0px;
+
+	.head_text {
+		font-size: 12px;
+		padding-bottom: 50px;
+		span {
+			color: #969696;
+		}
+	}
+
+	.content {
+		width: 100%;
+
+		.info_text {
+			font-size: 13px;
+			display: flex;
+			border-bottom: 2px solid lightgray;
+			padding-bottom: 15px;
+			justify-content: space-between;
+
+			@media (max-width: 1100px) {
+				display: none;
+			}
+			.item_one {
+				font-family: Open Sans;
+				font-size: 14px;
+				font-weight: 400;
+				line-height: 18.2px;
+				text-align: left;
+				color: #545454;
+			}
+
+			.info_tes_two {
+				width: 82%;
+				display: flex;
+				justify-content: space-between;
+
+				.item_flex{
+					width: 70%;
+					display: flex;
+					justify-content: space-evenly;
+				}
+				.item_two {
+					font-family: Open Sans;
+					font-size: 14px;
+					font-weight: 400;
+					line-height: 18.2px;
+					text-align: left;
+				}
+				.item_tree {
+					font-family: Open Sans;
+					font-size: 14px;
+					font-weight: 400;
+					line-height: 18.2px;
+					text-align: left;
+				}
+				.item_four {
+					font-family: Open Sans;
+					font-size: 14px;
+					font-weight: 400;
+					line-height: 18.2px;
+					text-align: left;
+				}
+				.item_five {
+					font-family: Open Sans;
+					font-size: 14px;
+					font-weight: 400;
+					line-height: 18.2px;
+					text-align: left;
+				}
+				.item_sics {
+					font-family: Open Sans;
+					font-size: 14px;
+					font-weight: 400;
+					line-height: 18.2px;
+					text-align: left;
+				}
+				.item_seven {
+					font-family: Open Sans;
+					font-size: 14px;
+					font-weight: 400;
+					line-height: 18.2px;
+					text-align: left;
+				}
+			}
+		}
+
+		.info_history {
+			display: flex;
+			justify-content: space-between;
+			.line_ {
+				border-right: 1px solid lightgray;
+				padding: 0 1rem;
+				margin-right: 30px;
+
+				@media (max-width: 1100px) {
+					border-right: none;
+				}
+			}
+
+			@media (max-width: 900px) {
+				display: inline-block;
+				width: 100%;
+			}
+			@media (max-width: 700px) {
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+				justify-content: center;
+			}
+			@media (max-width: 500px) {
+				font-size: 15px;
+			}
+
+			.map_section {
+				width: 100%;
+				.line {
+					border-bottom: 1px solid lightgray;
+				}
+
+				.book_map_info {
+					width: 100%;
+					display: flex;
+					gap: 20px;
+					align-items: center;
+					padding: 20px 0;
+					@media (max-width: 1100px) {
+						display: inline-block;
+						padding: 40px;
+					}
+					.book_image {
+						@media (max-width: 600px) {
+							width: 120px;
+						}
+						@media (max-width: 400px) {
+							width: 90px;
+						}
+					}
+
+					@media (max-width: 900px) {
+						justify-content: space-evenly;
+					}
+
+					.book_flex {
+						
+						width: 84%;
+						display: flex;
+						justify-content: space-around;
+
+						@media (max-width: 1100px) {
+							display: inline-block;
+						}
+
+						.flex_book {
+							width: 79%;
+							display: flex;
+							justify-content: space-between;
+
+							@media (max-width: 1070px) {
+								width: 100%;
+							}
+							@media (max-width: 520px) {
+								display: inline-block;
+							}
+						}
+					}
+					.book_name_end {
+						@media (max-width: 900px) {
+							margin-top: 20px;
+						}
+						.book_name_people {
+							font-family: Open Sans;
+							font-size: 14px;
+							font-weight: 400;
+							line-height: 18.2px;
+							text-align: left;
+
+							color: #969696;
+						}
+					}
+
+					.book_quantity {
+						font-family: Open Sans;
+						font-size: 16px;
+						font-weight: 400;
+						line-height: 20.8px;
+						text-align: left;
+
+						@media (max-width: 900px) {
+							margin-top: 10px;
+						}
+					}
+					.book_price {
+						font-family: Open Sans;
+						font-size: 20px;
+						font-weight: 400;
+						line-height: 26px;
+						text-align: left;
+
+						@media (max-width: 900px) {
+							margin-top: 10px;
+						}
+					}
+					.book_data {
+						font-family: Open Sans;
+						font-size: 16px;
+						font-weight: 400;
+						line-height: 20.8px;
+						text-align: left;
+
+						@media (max-width: 900px) {
+							margin-top: 10px;
+						}
+					}
+					.book_state {
+						font-family: Open Sans;
+						font-size: 16px;
+						font-weight: 400;
+						line-height: 20.8px;
+						text-align: left;
+
+						@media (max-width: 900px) {
+							margin-top: 10px;
+						}
+					}
+				}
+			}
+		}
+
+		.text_book {
+			margin-top: 40px;
+
+			font-family: Open Sans;
+			font-size: 16px;
+			font-weight: 400;
+			line-height: 20.8px;
+
+			color: #f34901;
+			p {
+				padding: 10px;
+			}
+			@media (max-width: 900px) {
+				display: flex;
+			}
+			@media (max-width: 495px) {
+				display: inline-block;
+			}
+		}
+	}
+}
