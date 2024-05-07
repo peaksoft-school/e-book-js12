@@ -230,12 +230,21 @@
 					max-width: 220px;
 					padding: 35px 36px 20px;
 				}
+
 				@media (max-width: 780px) {
-					max-width: 240px;
+					max-width: 210px;
+					padding: 35px 36px 20px;
+				}
+				@media (max-width: 768px) {
+					max-width: 280px;
+					padding: 35px 36px 20px;
+				}
+				@media (max-width: 700px) {
+					max-width: 230px;
 					padding: 35px 36px 20px;
 				}
 				@media (max-width: 600px) {
-					max-width: 180px;
+					max-width: 220px;
 					padding: 30px 16px 10px;
 				}
 
