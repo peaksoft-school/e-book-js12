@@ -17,11 +17,22 @@ interface Book {
 	quantity: number;
 }
 const BasketPage: React.FC = () => {
+	const [isPromo, setIsPromo] = useState(false);
 	const success = () => {
 		Modal.success({
 			content: 'Ваш заказ успешно оформлен!',
 			okText: 'Продолжить покупки',
 			closable: true
+		});
+	};
+
+	const successPromo = () => {
+		Modal.warning({
+			content: 'dddd',
+			okText: 'okk',
+			closable: true,
+			footer: true,
+			cancelText: 'sdsa'
 		});
 	};
 
@@ -152,8 +163,26 @@ const BasketPage: React.FC = () => {
 											</div>
 										</div>
 										<div className={scss.add_to_basket}>
+											<p onClick={() => setIsPromo(!isPromo)}>промокод</p>
 											<p>Добавить в избранное</p>
 										</div>
+										<Modal
+											open={isPromo}
+											onOk={() => {
+												setIsPromo(false);
+												successPromo();
+											}}
+											onCancel={() => {
+												setIsPromo(false);
+											}}
+											cancelText={'отмена'}
+											okText={'Активировать'}
+										>
+											<div className={scss.modal_container}>
+												<p>promocode is 1 book</p>
+												<CustomPromoInput placeholder="Введите промокод" />
+											</div>
+										</Modal>
 									</div>
 								</>
 							))}
@@ -177,7 +206,7 @@ const BasketPage: React.FC = () => {
 								</div>
 							</div>
 							<div className={scss.promo_input}>
-								<CustomPromoInput placeholder={'Введите промокод'} />
+								{/* <CustomPromoInput placeholder={'Введите промокод'} /> */}
 							</div>
 							<div className={scss.total_price}>
 								<p>Итого:</p>
