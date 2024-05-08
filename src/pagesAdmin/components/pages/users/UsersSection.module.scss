@@ -18,6 +18,14 @@
 				border-radius: 3px;
 				padding-top: 15px;
 				padding-bottom: 15px;
+				padding-inline: 30px;
+
+				@media (max-width: 600px) {
+					padding-inline: 15px;
+				}
+				@media (max-width: 340px) {
+					padding-inline: 5px;
+				}
 
 				&:hover {
 					background-color: #ffede5;
@@ -25,65 +33,44 @@
 				.user_data {
 					display: flex;
 					justify-content: space-between;
-					width: 50%;
+					width: 60%;
 					cursor: pointer;
 				}
 				@media (max-width: 600px) {
 					font-size: 10px;
 				}
 
+				.data_user{
+					display: flex;
+					justify-content: space-between;
+					width: 70%;
+				}
+
 				.number {
-					left: 30px;
-
-					@media (max-width: 1030px) {
-						left: 3px;
-					}
+					padding-right: 10px;
 				}
 
-				.full_name {
-					@media (max-width: 1030px) {
-						left: 55px;
-					}
-
-					@media (max-width: 600px) {
-						max-width: 123px;
-						width: 100%;
-					}
-
-					@media (max-width: 480px) {
-						max-width: 100px;
-						width: 100%;
-						left: 20px;
-					}
-				}
 				.delete_button {
 					background: none;
+					padding: 10px 10px 10px 10.5px;
 					border: none;
-
+					width: 38px;
+					height: 38px;
+					border-radius: 50%;
+					background-color: transparent;
+					transition: background-color 0.3s ease;
 					cursor: pointer;
-
-					@media (max-width: 1330px) {
-						left: 550px;
+					svg {
+						width: 16.67px;
+						height: 16.67px;
 					}
 
-					@media (max-width: 1230px) {
-						left: 350px;
-					}
-
-					@media (max-width: 1030px) {
-						left: 170px;
-					}
-
-					@media (max-width: 850px) {
-						left: 130px;
-					}
-
-					@media (max-width: 480px) {
-						left: 80px;
-					}
-
-					@media (max-width: 415px) {
-						left: 30px;
+					&:hover {
+						width: 38px;
+						height: 38px;
+						border-radius: 50%;
+						background-color: #ffceb7;
+						transition: background-color 0.3s ease;
 					}
 				}
 
@@ -116,6 +103,14 @@
 					display: flex;
 					justify-content: space-between;
 					width: 39%;
+					padding-inline: 30px;
+
+					@media (max-width: 600px) {
+						padding-inline: 15px;
+					}
+					@media (max-width: 340px) {
+						padding-inline: 5px;
+					}
 				}
 
 				.user_data_container:active {

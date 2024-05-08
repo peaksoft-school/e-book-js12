@@ -44,8 +44,10 @@ const UserSection = () => {
 								onClick={() => navigate(`/admin/users_page`)}
 							>
 								<p className={scss.number}>{item.number}</p>
-								<p className={scss.full_name}>{item.fullName}</p>
-								<p className={scss.gmail}>{item.gmail}</p>
+								<div className={scss.data_user}>
+									<p className={scss.full_name}>{item.fullName}</p>
+									<p className={scss.gmail}>{item.gmail}</p>
+								</div>
 							</div>
 							<button className={scss.delete_button}>
 								<DeleteIcon />
