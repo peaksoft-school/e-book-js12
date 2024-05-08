@@ -1,7 +1,6 @@
 import scss from './InnerPage.module.scss';
 import { Modal } from 'antd';
 import { useState } from 'react';
-import { useParams } from 'react-router-dom';
 
 interface Vendor {
 	id: number;
@@ -13,35 +12,13 @@ interface Vendor {
 
 const InnerPage: React.FC = () => {
 	const [isModalOpen, setIsModalOpen] = useState(false);
-	const { name } = useParams<{ name: string }>();
 
 	const users: Vendor[] = [
 		{
 			id: 1,
-			name: 'Arslana',
+			name: 'Arslan',
 			surname: 'Smith',
-			email: 'arslana@gmail.com',
-			date: '3.04.2024'
-		},
-		{
-			id: 2,
-			name: 'Arsal',
-			surname: 'Johnson',
-			email: 'arsal@gmail.com',
-			date: '3.04.2024'
-		},
-		{
-			id: 3,
-			name: 'John',
-			surname: 'Williams',
-			email: 'john@gmail.com',
-			date: '3.04.2024'
-		},
-		{
-			id: 4,
-			name: 'Doe',
-			surname: 'Davis',
-			email: 'doe@gmail.com',
+			email: 'arslan@gmail.com',
 			date: '3.04.2024'
 		}
 	];
@@ -59,37 +36,40 @@ const InnerPage: React.FC = () => {
 	};
 
 	return (
-		<div className={scss.AboutVendor}>
+		<div className={scss.inner_about_vendor}>
 			<div className={scss.container}>
 				{users.map((user) => (
-					<div key={user.id} className={scss.content}>
-						<div className={scss.vendor}>
-							<div className={scss.test}>
-								<div className={scss.name}>
+					<div key={user.id} className={scss.inner_content}>
+						<div className={scss.inner_vendor}>
+							<div className={scss.inner_test}>
+								<div className={scss.inner_name}>
 									<p>
-										<strong>Имя:</strong> {name}
+										<strong>Имя:</strong> {user.name}
 									</p>
 								</div>
-								<div className={scss.surname}>
+								<div className={scss.inner_surname}>
 									<p>
 										<strong>Фамилия:</strong> {user.surname}
 									</p>
 								</div>
 							</div>
-							<div className={scss.test}>
-								<div className={scss.email}>
+							<div className={scss.inner_test}>
+								<div className={scss.inner_email}>
 									<p>
 										<strong>Почта:</strong> {user.email}
 									</p>
 								</div>
 							</div>
-							<div className={scss.date}>
+							<div className={scss.inner_date}>
 								<p>
 									<strong>Дата регистрации:</strong> {user.date}
 								</p>
 							</div>
-							<div className={scss.div_delete}>
-								<button className={scss.delete_profile} onClick={showModal}>
+							<div className={scss.inner_div_delete}>
+								<button
+									className={scss.inner_delete_profile}
+									onClick={showModal}
+								>
 									Удалить профиль
 								</button>
 							</div>
@@ -100,7 +80,7 @@ const InnerPage: React.FC = () => {
 								okText="Удалить"
 								cancelText="Отменить"
 							>
-								<p className={scss.delete_profile}>
+								<p className={scss.inner_delete_profile}>
 									Вы уверены, что хотите удалить профиль?
 								</p>
 							</Modal>

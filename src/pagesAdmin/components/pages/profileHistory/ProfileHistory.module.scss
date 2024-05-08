@@ -15,7 +15,7 @@
 	.content {
 		width: 100%;
 
-		.info_text {
+		.prof_info_text {
 			font-size: 13px;
 			display: flex;
 			border-bottom: 2px solid lightgray;
@@ -25,7 +25,7 @@
 			@media (max-width: 1100px) {
 				display: none;
 			}
-			.item_one {
+			.prof_item_one {
 				font-family: Open Sans;
 				font-size: 14px;
 				font-weight: 400;
@@ -39,7 +39,7 @@
 				display: flex;
 				justify-content: space-between;
 
-				.item_flex{
+				.item_flex {
 					width: 70%;
 					display: flex;
 					justify-content: space-evenly;
@@ -89,10 +89,10 @@
 			}
 		}
 
-		.info_history {
+		.prof_info_history {
 			display: flex;
 			justify-content: space-between;
-			.line_ {
+			.prof_line_prof {
 				border-right: 1px solid lightgray;
 				padding: 0 1rem;
 				margin-right: 30px;
@@ -116,7 +116,7 @@
 				font-size: 15px;
 			}
 
-			.map_section {
+			.prof_map_section {
 				width: 100%;
 				.line {
 					border-bottom: 1px solid lightgray;
@@ -146,7 +146,6 @@
 					}
 
 					.book_flex {
-						
 						width: 84%;
 						display: flex;
 						justify-content: space-around;

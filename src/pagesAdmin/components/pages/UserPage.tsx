@@ -1,14 +1,15 @@
-
 // import UserSection from './users/UserSection';
 
-import InnerProfilePage from "./innerProfilePage/InnerProfilePage";
+import UserSection from './users/UserSection';
+
+// import InnerProfilePage from './innerProfilePage/InnerProfilePage';
 
 const UserPage = () => {
 	return (
 		<div>
 			{/* <UserSection /> */}
-			
-			<InnerProfilePage />
+			<UserSection />
+			{/* <InnerProfilePage /> */}
 		</div>
 	);
 };

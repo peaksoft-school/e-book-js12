@@ -1,7 +1,7 @@
 import scss from './ProfileHistory.module.scss';
 import book from '../../../../assets/booksImg/book.png';
 
-const info = [
+const infos = [
 	{
 		id: 1,
 		image: book,
@@ -39,8 +39,8 @@ const ProfileHistory = () => {
 		<div className={scss.profile_history}>
 			<div className="container">
 				<div className={scss.content}>
-					<div className={scss.info_text}>
-						<div className={scss.item_one}>
+					<div className={scss.prof_info_text}>
+						<div className={scss.prof_item_one}>
 							<p>Очистить историю</p>
 						</div>
 
@@ -56,16 +56,16 @@ const ProfileHistory = () => {
 						</div>
 					</div>
 
-					<div className={scss.info_history}>
-						<div className={scss.line_}>
+					<div className={scss.prof_info_history}>
+						<div className={scss.prof_line_prof}>
 							<div className={scss.text_book}>
 								<p>Купленные (123 книг)</p>
 								<p>В избранном (12 книг)</p>
 								<p>В корзине (3 книг)</p>
 							</div>
 						</div>
-						<div className={scss.map_section}>
-							{info.map((item) => (
+						<div className={scss.prof_map_section}>
+							{infos.map((item) => (
 								<div className={scss.line}>
 									<div className={scss.book_map_info}>
 										<img className={scss.book_image} src={item.image} alt="#" />
