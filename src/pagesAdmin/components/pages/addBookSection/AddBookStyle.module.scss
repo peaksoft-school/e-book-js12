@@ -251,8 +251,9 @@
 								letter-spacing: 0px;
 								text-align: start;
 								color: rgb(34, 34, 34);
-								max-height: 264px;
 								max-width: 636px;
+								width: 100%;
+								resize: none;
 								&:focus::placeholder {
 									opacity: 0;
 								}
