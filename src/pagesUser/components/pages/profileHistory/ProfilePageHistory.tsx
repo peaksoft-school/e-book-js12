@@ -1,10 +1,18 @@
-import line from '../../../../assets/booksImg/Line 41.png';
 import book from '../../../../assets/booksImg/book.png';
-import linetwo from '../../../../assets/booksImg/Line 42.png';
-import twoLine from '../../../../assets/booksImg/Line 40.png';
+
 import scss from './ProfilePageHistory.module.scss';
 
 const info = [
+	{
+		id: 1,
+		image: book,
+		nameBook: 'Гарри Поттер и тайна...',
+		name: 'Роулинг Джоан Кэтлин',
+		quantity: '1шт',
+		price: '255c',
+		data: '12.12.21',
+		state: 'Завершен'
+	},
 	{
 		id: 1,
 		image: book,
@@ -66,19 +74,17 @@ const ProfilePageHistory = () => {
 							<p className={scss.item_seven}>Состояние</p>
 						</div>
 					</div>
-					<img className={scss.line_profile} src={line} alt="" />
+
 					<div className={scss.info_history}>
-						<div>
+						<div className={scss.line_}>
 							<div className={scss.text_book}>
 								<p>Купленные (123 книг)</p>
 							</div>
 						</div>
-						<div className={scss.image_line}>
-							<img src={linetwo} alt="" />
-						</div>
+						<div className={scss.image_line}></div>
 						<div className={scss.map_section}>
 							{info.map((item) => (
-								<div>
+								<div className={scss.line}>
 									<div className={scss.book_map_info}>
 										<img className={scss.book_image} src={item.image} alt="#" />
 
@@ -91,7 +97,6 @@ const ProfilePageHistory = () => {
 										<p className={scss.book_data}>{item.data}</p>
 										<p className={scss.book_state}>{item.state}</p>
 									</div>
-									<img className={scss.two_line} src={twoLine} alt="#" />
 								</div>
 							))}
 						</div>
