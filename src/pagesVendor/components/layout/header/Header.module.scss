@@ -1,12 +1,9 @@
 .Header {
-	// position: fixed;
-	// left: 0;
-	// top: 0;
 	width: 100%;
 	z-index: 999;
+	margin-bottom: 40px;
 
 	.scroll {
-		padding-block: 15px;
 		transition:
 			padding 0.5s,
 			background 0.2s;
@@ -28,10 +25,9 @@
 	.content {
 		.header_content {
 			display: flex;
-			justify-content: center;
+			justify-content: space-between;
 			align-items: center;
 			gap: 44.5px;
-			margin-bottom: 20px;
 			@media (max-width: 1350px) {
 				gap: 40px;
 			}
