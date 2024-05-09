@@ -31,7 +31,7 @@ const Header = () => {
 				>
 					<div className="container">
 						<div className={scss.content}>
-							<h3>Header</h3>
+							
 						</div>
 					</div>
 				</div>

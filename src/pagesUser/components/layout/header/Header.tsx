@@ -149,7 +149,13 @@ const Header = () => {
 												>
 													Промокоды
 												</li>
-												<li>Начать продавать на eBook</li>
+												<li
+													onClick={() => {
+														navigate('/vendor/');
+													}}
+												>
+													Начать продавать на eBook
+												</li>
 											</ul>
 										</div>
 										<p
@@ -171,7 +177,13 @@ const Header = () => {
 											>
 												Промокоды
 											</li>
-											<li>Начать продавать на eBook</li>
+											<li
+												onClick={() => {
+													navigate('/vendor/');
+												}}
+											>
+												Начать продавать на eBook
+											</li>
 										</ul>
 									</div>
 								</div>
