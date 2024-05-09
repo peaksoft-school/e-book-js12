@@ -5,7 +5,7 @@ const api = index.injectEndpoints({
 		postSignUp: build.mutation({
 			query: (data) => {
 				console.log('asd0');
-				console.log(data,'checkout');
+				console.log(data, 'checkout');
 				return {
 					url: '/api/auth/signUpForClient',
 					method: 'POST',

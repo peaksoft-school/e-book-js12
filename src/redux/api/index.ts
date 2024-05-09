@@ -5,7 +5,7 @@ import {
 } from '@reduxjs/toolkit/query/react';
 
 const baseQuery = fetchBaseQuery({
-	baseUrl: '10.10.11.245:8080/',
+	baseUrl: 'http://13.60.43.123:8080',
 	prepareHeaders: (headers) => {
 		return headers;
 	},
