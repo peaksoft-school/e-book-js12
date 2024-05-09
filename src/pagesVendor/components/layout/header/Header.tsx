@@ -30,9 +30,7 @@ const Header = () => {
 					}
 				>
 					<div className="container">
-						<div className={scss.content}>
-							
-						</div>
+						<div className={scss.content}></div>
 					</div>
 				</div>
 			</header>
