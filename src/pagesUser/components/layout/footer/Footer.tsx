@@ -20,7 +20,7 @@ const Footer: FC = () => {
 						</div>
 						<div className={scss.footerBoxDivNavi}>
 							<h3>Свяжитесь с нами</h3>
-							<a href="https://wa.me/996551252512">+996 551 25 25 12</a>
+							<a href="https://wa.me/996551252512">+996 551 252 512</a>
 							<a href="https://maps.app.goo.gl/eWcmoKct934Gj6eg7">
 								119 ул. Гражданская, Бишкек
 							</a>

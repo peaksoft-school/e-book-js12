@@ -22,7 +22,7 @@ const BooksSection: React.FC = () => {
 	const [isOpenBooksType, setIsOpenBooksType] = useState<boolean>(false);
 	const [selectedType, setSelectedType] = useState<string | null>(null);
 	const [isOpenBooksGenre, setIsOpenBooksGenre] = useState<boolean>(false);
-	const navigate = useNavigate()
+	const navigate = useNavigate();
 
 	const books: Book[] = [
 		{
@@ -130,35 +130,6 @@ const BooksSection: React.FC = () => {
 			<div className={scss.container}>
 				<div className={scss.books_page_content}>
 					<div className={scss.books_filter}>
-						<div className={scss.click}>
-							<p onClick={toggleTypeList}>
-								<span onClick={() => handleGenreSelect(null)}>
-									{bookTypeText}
-								</span>
-
-								{isOpenBooksType ? <UpIcon /> : <IconArrowBottom />}
-							</p>
-							{
-								<div
-									className={
-										isOpenBooksType ? scss.type_list : scss.none_books_type
-									}
-								>
-									<p onClick={() => handleGenreSelect('Электронные книги')}>
-										Электронные книги
-									</p>
-									<hr />
-									<p onClick={() => handleGenreSelect('Аудиокниги')}>
-										Аудиокниги
-									</p>
-									<hr />
-									<p onClick={() => handleGenreSelect('Бумажные книги')}>
-										Бумажные книги
-									</p>
-								</div>
-							}
-						</div>
-
 						<div className={scss.books_genre}>
 							<div className={scss.click}>
 								<p onClick={toggleGenreList}>
@@ -211,6 +182,34 @@ const BooksSection: React.FC = () => {
 									</div>
 								}
 							</div>
+						</div>
+						<div className={scss.click}>
+							<p onClick={toggleTypeList}>
+								<span onClick={() => handleGenreSelect(null)}>
+									{bookTypeText}
+								</span>
+
+								{isOpenBooksType ? <UpIcon /> : <IconArrowBottom />}
+							</p>
+							{
+								<div
+									className={
+										isOpenBooksType ? scss.type_list : scss.none_books_type
+									}
+								>
+									<p onClick={() => handleGenreSelect('Электронные книги')}>
+										Электронные книги
+									</p>
+									<hr />
+									<p onClick={() => handleGenreSelect('Аудиокниги')}>
+										Аудиокниги
+									</p>
+									<hr />
+									<p onClick={() => handleGenreSelect('Бумажные книги')}>
+										Бумажные книги
+									</p>
+								</div>
+							}
 						</div>
 					</div>
 					<div className={scss.add_book_btn}>

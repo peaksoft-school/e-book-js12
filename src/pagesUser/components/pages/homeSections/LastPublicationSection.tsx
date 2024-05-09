@@ -107,7 +107,7 @@ const LastPublicationSection: FC = () => {
 							</div>
 						</div>
 						<div className={scss.main_about}>
-							<h2 className={scss.title_book}>История книги</h2>
+							<h2 className={scss.title_book}>ИСТОРИЯ КНИГИ</h2>
 							<p className={scss.about_book}>
 								Предлагаемый перевод является первой попыткой обращения к
 								творчеству Павла Орозия — римского христианского историка начала
