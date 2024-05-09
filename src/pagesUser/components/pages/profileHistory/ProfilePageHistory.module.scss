@@ -34,12 +34,16 @@
 		.info_text {
 			font-size: 13px;
 			display: flex;
+			border-bottom: 2px solid lightgray;
+			padding-bottom: 15px;
+			justify-content: space-between;
+
 
 			@media (max-width: 970px) {
 				display: none;
 			}
 			.item_one {
-				width: 220px;
+		
 				font-family: Open Sans;
 				font-size: 14px;
 				font-weight: 400;
@@ -49,10 +53,10 @@
 			}
 
 			.info_tes_two {
+				width: 78%;
 				display: flex;
-				justify-content: space-around;
-				width: 100%;
-				max-width: 1030px;
+				justify-content: space-between;
+
 
 				.item_two {
 					font-family: Open Sans;
@@ -101,7 +105,15 @@
 
 		.info_history {
 			display: flex;
-			justify-content: start;
+			justify-content: space-between;
+			.line_ {
+				border-right: 1px solid lightgray;
+				padding: 0 1rem;
+
+			@media (max-width:970px) {
+				border-right: none;
+			}
+			}
 
 			@media (max-width: 900px) {
 				display: inline-block;
@@ -124,37 +136,16 @@
 				}
 			}
 			.map_section {
-				width: 100%;
-				.two_line {
-					width: 900px;
-					margin-left: 90px;
-
-					@media (max-width: 1200px) {
-						width: 800px;
-					}
-					@media (max-width: 1100px) {
-						width: 700px;
-						margin-left: 60px;
-					}
-					@media (max-width: 1050px) {
-						width: 550px;
-					}
-					@media (max-width: 980px) {
-						width: 580px;
-						display: none;
-					}
-					@media (max-width: 880px) {
-						width: 300px;
-					}
-					@media (max-width: 390px) {
-						width: 200px;
-					}
+				width: 80%;
+				.line {
+					border-bottom: 1px solid lightgray;
 				}
+
 				.book_map_info {
 					display: flex;
-					justify-content: space-around;
+					justify-content: space-between;
 					align-items: center;
-					padding: 20px;
+					padding: 20px 0;
 					@media (max-width: 700px) {
 						display: inline-block;
 						padding: 40px;
