@@ -1,120 +1,174 @@
-.UserSection {
-	.container {
-		padding-inline: 20px;
+.container {
+	padding-inline: 20px;
 
-		.content {
-			display: flex;
-			flex-direction: column;
-			max-width: 1200px;
-			width: 100%;
+	.content {
+		width: 100%;
 
-			.user_data_container {
-				display: flex;
-				justify-content: space-between;
-				color: rgb(34, 34, 34);
-				font-family: Open Sans;
-				font-size: 14px;
-				font-weight: 600;
-				border-radius: 3px;
-				padding-top: 15px;
-				padding-bottom: 15px;
-				padding-inline: 30px;
+		@media (max-width: 768px) {
+			font-size: 12px;
+		}
 
-				@media (max-width: 600px) {
-					padding-inline: 15px;
+		@media (max-width: 480px) {
+			font-size: 10px;
+		}
+
+		th,
+		td {
+			padding: 12px;
+			text-align: left;
+			border-bottom: 1px solid #ddd;
+			&:nth-child(5n) {
+				max-width: 30px;
+			}
+
+			@media (max-width: 1050px) {
+				padding: 10px;
+			}
+
+			@media (max-width: 555px) {
+				padding: 8px;
+			}
+
+			@media (max-width: 400px) {
+				padding: 6px;
+			}
+
+			@media (max-width: 420px) {
+				padding: 4px;
+			}
+
+			@media (max-width: 350px) {
+				padding: 3px;
+			}
+
+			@media (max-width: 320px) {
+				padding: 2px;
+			}
+		}
+
+		h2 {
+			font-size: 24px;
+			font-weight: 700;
+			color: #222;
+			margin-bottom: 20px;
+			@media (max-width: 1050px) {
+				font-size: clamp(24px, 6vw, 40px);
+				margin-bottom: 10px;
+				text-align: center;
+			}
+		}
+		.users {
+			&:hover {
+				background-color: rgba(255, 68, 0, 0.376);
+				color: black;
+			}
+
+			td {
+				cursor: pointer;
+				width: 23%;
+				border: none;
+				white-space: nowrap;
+				overflow: hidden;
+				text-overflow: ellipsis;
+
+				@media (max-width: 555px) {
+					max-width: 100px;
 				}
+
+				@media (max-width: 420px) {
+					max-width: 80px;
+				}
+
+				@media (max-width: 390px) {
+					max-width: 70px;
+				}
+
+				@media (max-width: 370px) {
+					max-width: 60px;
+				}
+
+				@media (max-width: 360px) {
+					max-width: 50px;
+				}
+
+				@media (max-width: 350px) {
+					max-width: 40px;
+				}
+
 				@media (max-width: 340px) {
-					padding-inline: 5px;
+					max-width: 30px;
 				}
 
-				&:hover {
-					background-color: #ffede5;
-				}
-				.user_data {
-					display: flex;
-					justify-content: space-between;
-					width: 60%;
-					cursor: pointer;
-				}
-				@media (max-width: 600px) {
-					font-size: 10px;
+				@media (max-width: 330px) {
+					max-width: 20px;
 				}
 
-				.data_user {
-					display: flex;
-					justify-content: space-between;
-					width: 70%;
-				}
-
-				.number {
-					padding-right: 10px;
-				}
-
-				.delete_button {
-					background: none;
-					padding: 10px 10px 10px 10.5px;
-					border: none;
-					width: 38px;
-					height: 38px;
-					border-radius: 50%;
-					background-color: transparent;
-					transition: background-color 0.3s ease;
-					cursor: pointer;
-					svg {
-						width: 16.67px;
-						height: 16.67px;
-					}
-
-					&:hover {
-						width: 38px;
-						height: 38px;
-						border-radius: 50%;
-						background-color: #ffceb7;
-						transition: background-color 0.3s ease;
-					}
-				}
-
-				.delete_button:active {
-					background: rgb(245, 170, 158);
-					padding-top: 10px;
-					padding-left: 10px;
-					padding-right: 10px;
-					padding-bottom: 5px;
-					border-radius: 30px;
+				@media (max-width: 319px) {
+					max-width: 10px;
 				}
 			}
-			.properties_container {
-				border-bottom: 2px solid lightgray;
+			button {
+				border: none;
+				background: none;
+				cursor: pointer;
 
-				max-width: 1200px;
-				width: 100%;
-				color: rgb(34, 34, 34);
-				font-family: Open Sans;
-				font-size: 14px;
-				font-weight: 600;
-				padding-top: 30px;
-				padding-bottom: 30px;
-
-				@media (max-width: 600px) {
-					font-size: 10px;
-				}
-
-				.properties {
-					display: flex;
-					justify-content: space-between;
-					width: 39%;
-					padding-inline: 30px;
-
-					@media (max-width: 600px) {
-						padding-inline: 15px;
+				svg {
+					@media (max-width: 500px) {
+						width: 12px;
+						height: 12px;
 					}
 					@media (max-width: 340px) {
-						padding-inline: 5px;
+						width: 10px;
+						height: 10px;
+					}
+					&:hover {
+						background-color: rgba(249, 76, 13, 0.376);
+						border-radius: 50%;
+						box-shadow: 0px 0px 5px 10px rgba(249, 76, 13, 0.376);
 					}
 				}
+			}
+		}
 
-				.user_data_container:active {
-					background: rgb(245, 211, 206);
+		.properties_container {
+			width: 100%;
+			overflow-x: auto;
+			font-size: 14px;
+			border-collapse: collapse;
+			thead {
+				th {
+					@media (max-width: 870px) {
+						font-size: 10px;
+						font-weight: 680;
+					}
+					@media (max-width: 800px) {
+						font-size: 8px;
+						font-weight: 680;
+					}
+					@media (max-width: 768px) {
+						font-size: 10px;
+						font-weight: 660;
+					}
+					@media (max-width: 500px) {
+						font-size: 10px;
+						font-weight: 680;
+					}
+					@media (max-width: 430px) {
+						font-size: 8px;
+						font-weight: 680;
+					}
+					@media (max-width: 400px) {
+						font-size: 8px;
+						font-weight: 680;
+					}
+					@media (max-width: 360px) {
+						font-size: 7px;
+						font-weight: 680;
+					}
+					@media (max-width: 320px) {
+						font-size: 7px;
+						font-weight: 680;
+					}
 				}
 			}
 		}
