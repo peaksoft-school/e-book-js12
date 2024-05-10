@@ -7,6 +7,7 @@ import bookImage from '../../../../assets/booksImg/harrry-potter.png';
 import { IconWhiteLike } from '@/src/assets/icons';
 import ThreeDotIcon from '@/src/assets/icons/icon-threeDot';
 import { Modal, Tooltip } from 'antd';
+import CustomSeeMoreButton from '@/src/ui/customButton/CustomSeeMoreButton';
 
 interface Book {
 	id: number;
@@ -170,9 +171,10 @@ const VendorsBooks: FC = () => {
 			<div className="container">
 				<div className={scss.content}>
 					<div className={scss.books_header}>
-						<div className={scss.promocode_button}>
+						<div className={`customVendorsBooksModal ${scss.promocode_button}`}>
 							<button onClick={showModal}>Создать промокод</button>
 							<Modal
+								className={scss.modal}
 								open={isModalOpen}
 								footer={[
 									<button
@@ -207,7 +209,7 @@ const VendorsBooks: FC = () => {
 										<label>Дата завершения</label>
 										<input type="date" />
 									</div>
-									<div className={scss.input_x_label}>
+									<div className={`${scss.input_x_label} ${scss.last_input}`}>
 										<label>Процент скидки</label>
 										<input type="text" placeholder="%" />
 									</div>
@@ -242,7 +244,11 @@ const VendorsBooks: FC = () => {
 					<hr />
 					<div className={scss.books_content}>
 						{books.map((book) => (
-							<div key={book.id} className={scss.book}>
+							<div
+								onClick={() => navigate(`/${book.name}`)}
+								key={book.id}
+								className={scss.book}
+							>
 								<div className={scss.book_header}>
 									<div className={scss.hearts}>
 										<IconWhiteLike />
@@ -288,6 +294,10 @@ const VendorsBooks: FC = () => {
 								</div>
 							</div>
 						))}
+						<CustomSeeMoreButton
+							children="Смотреть больше"
+							onClick={function (): void {}}
+						/>
 					</div>
 				</div>
 			</div>
