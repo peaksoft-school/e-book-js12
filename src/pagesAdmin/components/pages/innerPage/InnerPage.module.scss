@@ -4,6 +4,29 @@
 		max-width: 1350px;
 		margin: 0px auto;
 
+		.link {
+			display: flex;
+			align-items: center;
+			margin-bottom: 72px;
+			.link_home {
+				color: rgb(150, 150, 150);
+				font-size: 14px;
+				font-weight: 400;
+				cursor: pointer;
+				@media (max-width: 360px) {
+					color: rgb(150, 150, 150);
+					font-size: 12px;
+					font-weight: 400;
+					cursor: pointer;
+				}
+				&.link_home_active {
+					color: black;
+				}
+				.link_vendor_page {
+				}
+			}
+		}
+
 		.inner_content {
 			.inner_links {
 				display: flex;

@@ -8,7 +8,7 @@ import UserPage from '../pages/UserPage';
 import BooksPage from '../pages/BooksPage';
 import BookInfo from '../pages/bookInfo/BookInfo';
 import AddBookPage from '../pages/AddBookPage';
-import InnerProfilePage from '../pages/innerProfilePage/InnerProfilePage';
+import UserSection from '../pages/users/UserSection';
 
 const LayoutAdmin = () => {
 	return (
@@ -24,7 +24,7 @@ const LayoutAdmin = () => {
 						<Route path="/users" element={<UserPage />} />
 						<Route path="/books" element={<BooksPage />} />
 						<Route path="/book_adding" element={<AddBookPage />} />
-						<Route path="/users_page" element={<InnerProfilePage />} />
+						<Route path="/users_page" element={<UserSection />} />
 						<Route />
 					</Routes>
 				</main>

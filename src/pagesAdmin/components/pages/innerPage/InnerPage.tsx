@@ -1,8 +1,9 @@
 import scss from './InnerPage.module.scss';
 import { Modal } from 'antd';
 import { useState } from 'react';
+import { Link, useLocation, useParams } from 'react-router-dom';
 
-interface Vendor {
+interface Users {
 	id: number;
 	name: string;
 	surname: string;
@@ -12,8 +13,10 @@ interface Vendor {
 
 const InnerPage: React.FC = () => {
 	const [isModalOpen, setIsModalOpen] = useState(false);
+	const { name } = useParams<{ name: string }>();
+	const location = useLocation();
 
-	const users: Vendor[] = [
+	const users: Users[] = [
 		{
 			id: 1,
 			name: 'Arslan',
@@ -22,7 +25,11 @@ const InnerPage: React.FC = () => {
 			date: '3.04.2024'
 		}
 	];
+	const selectVendor = users.find((vendor) => vendor.name === name);
 
+	if (!selectVendor) {
+		return <p>Вендор с именем {name} не найден</p>;
+	}
 	const showModal = () => {
 		setIsModalOpen(true);
 	};
@@ -38,6 +45,18 @@ const InnerPage: React.FC = () => {
 	return (
 		<div className={scss.inner_about_vendor}>
 			<div className={scss.container}>
+				<div className={scss.link}>
+					<Link
+						to={'/admin/users'}
+						className={`${scss.link_home}  ${
+							location.pathname === '/admin/users' ? scss.link_home_active : ''
+						}`}
+					>
+						Продавцы
+					</Link>
+					/<span className={scss.link_vendor_page}>{selectVendor.name}</span>
+				</div>
+				<div className={scss.navigate}></div>
 				{users.map((user) => (
 					<div key={user.id} className={scss.inner_content}>
 						<div className={scss.inner_vendor}>
