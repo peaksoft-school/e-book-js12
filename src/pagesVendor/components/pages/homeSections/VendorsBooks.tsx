@@ -342,7 +342,7 @@ const VendorsBooks: FC = () => {
 							</div>
 						))}
 					</div>
-					<div>
+					<div className={scss.see_more_button}>
 						<CustomSeeMoreButton
 							children="Смотреть больше"
 							onClick={function (): void {}}

@@ -118,7 +118,6 @@
 					padding: 20px;
 					display: flex;
 					flex-direction: column;
-					gap: 7px;
 					position: absolute;
 					top: 50px;
 					right: 10px;
@@ -458,6 +457,14 @@
 							}
 						}
 					}
+				}
+			}
+		}
+		.see_more_button {
+			button {
+				&:hover {
+					background-color: rgb(255, 76, 0);
+					color: rgb(255, 255, 255);
 				}
 			}
 		}
