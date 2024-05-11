@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import bookImage from '../../../../assets/booksImg/harrry-potter.png';
 import { IconArrowBottom, IconWhiteLike } from '@/src/assets/icons';
 import ThreeDotIcon from '@/src/assets/icons/icon-threeDot';
-import { Modal, Tooltip } from 'antd';
+import { ConfigProvider, Modal, Tooltip } from 'antd';
 import CustomSeeMoreButton from '@/src/ui/customButton/CustomSeeMoreButton';
 import UpIcon from '@/src/assets/icons/icon-upIcon';
 
@@ -188,48 +188,61 @@ const VendorsBooks: FC = () => {
 					<div className={scss.books_header}>
 						<div className={`customVendorsBooksModal ${scss.promocode_button}`}>
 							<button onClick={showModal}>Создать промокод</button>
-							<Modal
-								className={scss.modal}
-								open={isModalOpen}
-								footer={[
-									<button
-										key="submit"
-										onClick={() => {
-											handleOk();
-											setModalSuccess(true);
-											setTimeout(() => {
-												modalSuccess ? openModalSuccess() : null;
-											}, 300);
-										}}
-									>
-										Создать
-									</button>
-								]}
+							<ConfigProvider
+								theme={{
+									components: {
+										Modal: {
+											lineWidth: 20
+										}
+									}
+								}}
 							>
-								<div className={scss.promocode}>
-									<label>Промокод</label>
-									<input
-										className={scss.promocode_input}
-										type="text"
-										placeholder="Напишите промокод"
-									/>
-								</div>
-								<div className={scss.inputs}>
-									<div className={scss.input_x_label}>
-										<label>Дата начала</label>
+								<Modal
+									className={scss.modal}
+									open={isModalOpen}
+									onCancel={() => {
+										setIsModalOpen(false);
+									}}
+									footer={[
+										<button
+											key="submit"
+											onClick={() => {
+												handleOk();
+												setModalSuccess(true);
+												setTimeout(() => {
+													modalSuccess ? openModalSuccess() : null;
+												}, 300);
+											}}
+										>
+											Создать
+										</button>
+									]}
+								>
+									<div className={scss.promocode}>
+										<label>Промокод</label>
+										<input
+											className={scss.promocode_input}
+											type="text"
+											placeholder="Напишите промокод"
+										/>
+									</div>
+									<div className={scss.inputs}>
+										<div className={scss.input_x_label}>
+											<label>Дата начала</label>
 
-										<input type="date" />
+											<input type="date" />
+										</div>
+										<div className={scss.input_x_label}>
+											<label>Дата завершения</label>
+											<input type="date" />
+										</div>
+										<div className={`${scss.input_x_label} ${scss.last_input}`}>
+											<label>Процент скидки</label>
+											<input type="text" placeholder="%" />
+										</div>
 									</div>
-									<div className={scss.input_x_label}>
-										<label>Дата завершения</label>
-										<input type="date" />
-									</div>
-									<div className={`${scss.input_x_label} ${scss.last_input}`}>
-										<label>Процент скидки</label>
-										<input type="text" placeholder="%" />
-									</div>
-								</div>
-							</Modal>
+								</Modal>
+							</ConfigProvider>
 							<Tooltip
 								className={scss.info_hover}
 								title="Промокод применится ко всем вашим книгам"
@@ -245,7 +258,7 @@ const VendorsBooks: FC = () => {
 							<CustomAddBookButton
 								children="+ Добавить книгу"
 								onClick={() => {
-									navigate('/admin/book_adding');
+									navigate('/admin/books/book_adding');
 								}}
 							/>
 						</div>
@@ -260,8 +273,10 @@ const VendorsBooks: FC = () => {
 									</span>
 									{isOpenBooksType ? <UpIcon /> : <IconArrowBottom />}
 								</p>
-								{isOpenBooksType && (
-									<div className={scss.type_list}>
+								{
+									<div
+										className={`${isOpenBooksType ? scss.type_list : scss.none_books_type}`}
+									>
 										<p>В избранном</p>
 										<hr />
 										<p>В корзине</p>
@@ -270,7 +285,7 @@ const VendorsBooks: FC = () => {
 										<hr />
 										<p>Проданы</p>
 									</div>
-								)}
+								}
 							</div>
 						</div>
 					</div>
