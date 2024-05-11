@@ -5,10 +5,14 @@ import { IconRedDot, IconTest } from '@/src/assets/icons';
 import LogoeBook from '@/src/ui/logoeBook/LogoeBook';
 
 import { IconUserCircle } from '@tabler/icons-react';
+import { useNavigate } from 'react-router-dom';
+import ExitModal from '@/src/ui/customModals/ExitModal';
 
 const Header = () => {
 	const [headerScroll, setHeaderScroll] = useState<boolean>(false);
-
+	const [isUser, setIsUser] = useState<boolean>(false);
+	const [userExit, setUserExit] = useState<boolean>(false);
+	const navigate = useNavigate();
 	useEffect(() => {
 		const changeHeader = () => {
 			if (window.scrollY >= 10) {
@@ -52,11 +56,44 @@ const Header = () => {
 											<IconRedDot />
 										</span>
 									</div>
-									<div className={scss.profile}>
+									<div
+										onClick={() => setIsUser(!isUser)}
+										className={scss.profile}
+									>
 										<p>
 											<IconUserCircle />
 										</p>
 									</div>
+									{
+										<>
+											<div
+												className={`${isUser ? scss.user_drop : scss.user_down}`}
+											>
+												<ul>
+													<li
+														onClick={() => {
+															navigate('/profile');
+														}}
+													>
+														Профиль
+													</li>
+													<hr />
+													<li onClick={() => setUserExit(!userExit)}>Выйти</li>
+												</ul>
+											</div>
+										</>
+									}
+									{userExit ? (
+										<>
+											<ExitModal
+												isOpen={userExit}
+												onClose={() => setUserExit(false)}
+												btnClose={() => {
+													navigate('/auth/login');
+												}}
+											/>
+										</>
+									) : null}
 								</div>
 							</div>
 
