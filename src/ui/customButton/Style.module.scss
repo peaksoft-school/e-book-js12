@@ -53,7 +53,7 @@
 
 .custom_button_see_more {
 	background: white;
-	padding: 10px 577px;
+	padding: 10px;
 	box-sizing: border-box;
 	border: 1px solid rgb(196, 196, 196);
 	background: rgb(248, 248, 248);
@@ -65,17 +65,17 @@
 
 	line-height: 130%;
 	letter-spacing: 0px;
-	text-align: left;
+	text-align: center;
 	width: 100%;
 
 	&:active {
-		background: #e54400;
+		background: orangered;
 		transition: 0.2s;
 	}
 }
 
 .custom_button_add_book {
-	background: #f34901;
+	background: orangered;
 	padding: 10px 24px;
 	border: none;
 	color: #fff;

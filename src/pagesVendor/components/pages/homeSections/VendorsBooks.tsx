@@ -4,10 +4,11 @@ import { IconInfoCircle, IconPencil, IconX } from '@tabler/icons-react';
 import CustomAddBookButton from '@/src/ui/customButton/CustomAddBook';
 import { useNavigate } from 'react-router-dom';
 import bookImage from '../../../../assets/booksImg/harrry-potter.png';
-import { IconWhiteLike } from '@/src/assets/icons';
+import { IconArrowBottom, IconWhiteLike } from '@/src/assets/icons';
 import ThreeDotIcon from '@/src/assets/icons/icon-threeDot';
 import { Modal, Tooltip } from 'antd';
 import CustomSeeMoreButton from '@/src/ui/customButton/CustomSeeMoreButton';
+import UpIcon from '@/src/assets/icons/icon-upIcon';
 
 interface Book {
 	id: number;
@@ -146,6 +147,8 @@ const VendorsBooks: FC = () => {
 	];
 	const [isModalOpen, setIsModalOpen] = useState(false);
 	const [modalSuccess, setModalSuccess] = useState(false);
+	const [isOpenBooksType, setIsOpenBooksType] = useState(false);
+	const [selectedType, setSelectedType] = useState<string | null>(null);
 	const showModal = () => {
 		setIsModalOpen(true);
 	};
@@ -165,7 +168,19 @@ const VendorsBooks: FC = () => {
 			}
 		});
 	};
+	const toggleTypeList = (): void => {
+		setIsOpenBooksType(!isOpenBooksType);
+	};
 
+	const handleGenreSelect = (type: string | null): void => {
+		setSelectedType(type);
+		setIsOpenBooksType(false);
+	};
+	const bookTypeText = selectedType ? selectedType : 'Все';
+
+	const filteredBooks: Book[] = selectedType
+		? books.filter((book) => book.type === selectedType)
+		: books;
 	return (
 		<section className={scss.VendorsBooks}>
 			<div className="container">
@@ -218,7 +233,7 @@ const VendorsBooks: FC = () => {
 							<Tooltip
 								className={scss.info_hover}
 								title="Промокод применится ко всем вашим книгам"
-								color={'#f8f8f8'}
+								color={'orangered'}
 								placement="bottomLeft"
 							>
 								<span>
@@ -236,19 +251,33 @@ const VendorsBooks: FC = () => {
 						</div>
 					</div>
 					<div className={scss.books_quantity}>
-						<p>Всего {books.length} книг</p>
+						<p>Всего {filteredBooks.length} книг</p>
 						<div className={scss.all_books}>
-							<p>Все</p>
+							<div className={scss.click}>
+								<p onClick={toggleTypeList}>
+									<span onClick={() => handleGenreSelect(null)}>
+										{bookTypeText}
+									</span>
+									{isOpenBooksType ? <UpIcon /> : <IconArrowBottom />}
+								</p>
+								{isOpenBooksType && (
+									<div className={scss.type_list}>
+										<p>В избранном</p>
+										<hr />
+										<p>В корзине</p>
+										<hr />
+										<p>Со скидками</p>
+										<hr />
+										<p>Проданы</p>
+									</div>
+								)}
+							</div>
 						</div>
 					</div>
-					<hr />
+					<hr className={scss.title_hr} />
 					<div className={scss.books_content}>
 						{books.map((book) => (
-							<div
-								onClick={() => navigate(`/${book.name}`)}
-								key={book.id}
-								className={scss.book}
-							>
+							<div key={book.id} className={scss.book}>
 								<div className={scss.book_header}>
 									<div className={scss.hearts}>
 										<IconWhiteLike />
@@ -280,7 +309,10 @@ const VendorsBooks: FC = () => {
 										</ul>
 									</div>
 								)}
-								<div className={scss.book_content}>
+								<div
+									onClick={() => navigate(`vendor/${book.name}`)}
+									className={scss.book_content}
+								>
 									<div className={scss.book_img}>
 										<img src={book.img} alt={book.name} />
 									</div>
@@ -294,6 +326,8 @@ const VendorsBooks: FC = () => {
 								</div>
 							</div>
 						))}
+					</div>
+					<div>
 						<CustomSeeMoreButton
 							children="Смотреть больше"
 							onClick={function (): void {}}

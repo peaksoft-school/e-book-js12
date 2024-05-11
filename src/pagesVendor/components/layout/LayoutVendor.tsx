@@ -15,7 +15,7 @@ const LayoutVendor = () => {
 				<main>
 					<Routes>
 						<Route path="/" element={<HomePage />} />
-						<Route path="/:id" element={<AboutBook />} />
+						<Route path="vendor/:id" element={<AboutBook />} />
 						<Route path="/login" element={<Login />} />
 						<Route path="/registration" element={<Registration />} />
 					</Routes>
