@@ -276,7 +276,7 @@
 								height: 40px;
 								margin: 10px auto;
 
-								// :global {
+								:global {
 								.ant-slider-rail {
 									max-width: 220px;
 									width: 100%;
@@ -299,7 +299,7 @@
 									max-width: 254px;
 									width: 100%;
 								}
-								// }
+								}
 							}
 						}
 					}
