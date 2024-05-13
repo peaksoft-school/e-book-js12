@@ -18,26 +18,28 @@ const ProfilePageContainer = () => {
 						<span>Главная</span> / Профиль
 					</p>
 					<div className={scss.profile_text}>
-						<p
-							className={
-								activeComponent === 'info'
-									? `${scss.text_one} ${scss.active}`
-									: scss.text_one
-							}
-							onClick={() => handleComponentChange('info')}
-						>
-							Личная информация
-						</p>
-						<p
-							className={
-								activeComponent === 'history'
-									? `${scss.text_two} ${scss.active}`
-									: scss.text_two
-							}
-							onClick={() => handleComponentChange('history')}
-						>
-							История операций
-						</p>
+						<div className={scss.navigate_title}>
+							<p
+								className={
+									activeComponent === 'info'
+										? `${scss.text_one} ${scss.active}`
+										: scss.text_one
+								}
+								onClick={() => handleComponentChange('info')}
+							>
+								Личная информация
+							</p>
+							<p
+								className={
+									activeComponent === 'history'
+										? `${scss.text_two} ${scss.active}`
+										: scss.text_two
+								}
+								onClick={() => handleComponentChange('history')}
+							>
+								История операций
+							</p>
+						</div>
 					</div>
 				</div>
 				{activeComponent === 'info' ? <ProfilePage /> : <ProfilePageHistory />}

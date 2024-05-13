@@ -18,7 +18,9 @@ type Book = {
 };
 
 const BooksSection: React.FC = () => {
-	const [isOpen, setIsOpen] = useState<boolean>(false);
+	// const [isOpen, setIsOpen] = useState<boolean>(false);
+	const [openStates, setOpenStates] = useState<{ [key: number]: boolean }>({});
+
 	const [isOpenBooksType, setIsOpenBooksType] = useState<boolean>(false);
 	const [selectedType, setSelectedType] = useState<string | null>(null);
 	const [isOpenBooksGenre, setIsOpenBooksGenre] = useState<boolean>(false);
@@ -109,9 +111,11 @@ const BooksSection: React.FC = () => {
 
 	const toggleTypeList = (): void => {
 		setIsOpenBooksType(!isOpenBooksType);
+		setIsOpenBooksGenre(false);
 	};
 	const toggleGenreList = (): void => {
 		setIsOpenBooksGenre(!isOpenBooksGenre);
+		setIsOpenBooksType(false);
 	};
 
 	const handleGenreSelect = (type: string | null): void => {
@@ -124,41 +128,18 @@ const BooksSection: React.FC = () => {
 	const filteredBooks: Book[] = selectedType
 		? books.filter((book) => book.type === selectedType)
 		: books;
+	const toggleBookOptions = (id: number) => {
+		setOpenStates((prevStates) => ({
+			...prevStates,
+			[id]: !prevStates[id]
+		}));
+	};
 
 	return (
 		<section className={scss.BooksSection}>
 			<div className={scss.container}>
 				<div className={scss.books_page_content}>
 					<div className={scss.books_filter}>
-						<div className={scss.click}>
-							<p onClick={toggleTypeList}>
-								<span onClick={() => handleGenreSelect(null)}>
-									{bookTypeText}
-								</span>
-
-								{isOpenBooksType ? <UpIcon /> : <IconArrowBottom />}
-							</p>
-							{
-								<div
-									className={
-										isOpenBooksType ? scss.type_list : scss.none_books_type
-									}
-								>
-									<p onClick={() => handleGenreSelect('Электронные книги')}>
-										Электронные книги
-									</p>
-									<hr />
-									<p onClick={() => handleGenreSelect('Аудиокниги')}>
-										Аудиокниги
-									</p>
-									<hr />
-									<p onClick={() => handleGenreSelect('Бумажные книги')}>
-										Бумажные книги
-									</p>
-								</div>
-							}
-						</div>
-
 						<div className={scss.books_genre}>
 							<div className={scss.click}>
 								<p onClick={toggleGenreList}>
@@ -212,12 +193,40 @@ const BooksSection: React.FC = () => {
 								}
 							</div>
 						</div>
+						<div className={scss.click}>
+							<p onClick={toggleTypeList}>
+								<span onClick={() => handleGenreSelect(null)}>
+									{bookTypeText}
+								</span>
+
+								{isOpenBooksType ? <UpIcon /> : <IconArrowBottom />}
+							</p>
+							{
+								<div
+									className={
+										isOpenBooksType ? scss.type_list : scss.none_books_type
+									}
+								>
+									<p onClick={() => handleGenreSelect('Электронные книги')}>
+										Электронные книги
+									</p>
+									<hr />
+									<p onClick={() => handleGenreSelect('Аудиокниги')}>
+										Аудиокниги
+									</p>
+									<hr />
+									<p onClick={() => handleGenreSelect('Бумажные книги')}>
+										Бумажные книги
+									</p>
+								</div>
+							}
+						</div>
 					</div>
 					<div className={scss.add_book_btn}>
 						<CustomAddBookButton
 							children={'+  Добавить книгу'}
 							onClick={() => {
-								navigate('/admin/book_adding');
+								navigate('/admin/books/book_adding');
 							}}
 						/>
 					</div>
@@ -228,28 +237,31 @@ const BooksSection: React.FC = () => {
 				<div className={scss.content}>
 					{filteredBooks.map((book) => (
 						<div key={book.id} className={scss.book}>
-							<div className={scss.extra} onClick={() => setIsOpen(!isOpen)}>
+							<div
+								className={scss.extra}
+								onClick={() => toggleBookOptions(book.id)}
+							>
 								<ThreeDotIcon />
 							</div>
-							{
-								<div className={isOpen ? scss.is_open : scss.on_close}>
-									<ul>
-										<li>
-											<span>
-												<IconPencil />
-											</span>
-											Редактировать
-										</li>
-										<hr />
-										<li onClick={() => setIsOpen(false)}>
-											<span>
-												<IconX />
-											</span>
-											Отклонить
-										</li>
-									</ul>
-								</div>
-							}
+							<div
+								className={openStates[book.id] ? scss.is_open : scss.on_close}
+							>
+								<ul>
+									<li>
+										<span>
+											<IconPencil />
+										</span>
+										Редактировать
+									</li>
+									<hr />
+									<li onClick={() => toggleBookOptions(book.id)}>
+										<span>
+											<IconX />
+										</span>
+										Отклонить
+									</li>
+								</ul>
+							</div>
 							<div className={scss.book_content}>
 								<div className={scss.book_img}>
 									<img src={book.img} alt="" />

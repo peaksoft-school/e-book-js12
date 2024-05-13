@@ -4,7 +4,7 @@ const LogoeBook = () => {
 	return (
 		<>
 			<div className={scss.LogoContainer}>
-				<p>eBook</p>
+				<p>eBooK</p>
 			</div>
 		</>
 	);

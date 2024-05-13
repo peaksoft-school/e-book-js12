@@ -5,12 +5,13 @@ import {
 } from '@reduxjs/toolkit/query/react';
 
 const baseQuery = fetchBaseQuery({
-	baseUrl: `https://api.elchocrud.pro/api/v1/86162171e5f689755dc22ef1fec32e39/newFavoriteapi`,
+	baseUrl: '10.10.11.245:8080/',
 	prepareHeaders: (headers) => {
 		return headers;
 	},
 	credentials: 'include'
 });
+console.log(import.meta.env.VITE_PUBLIC_API_URL, 'sli');
 
 const baseQueryExtended: BaseQueryFn = async (args, api, extraOptions) => {
 	const result = await baseQuery(args, api, extraOptions);

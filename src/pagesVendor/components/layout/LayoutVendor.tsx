@@ -5,6 +5,7 @@ import Footer from './footer/Footer';
 import HomePage from '../pages/HomePage';
 import Login from '@/src/pagesAuth/components/pages/vendorLogin/Login';
 import Registration from '@/src/pagesAuth/components/pages/vendorRegistration/Registration';
+import AboutBook from '../pages/aboutBook/AboutBook';
 
 const LayoutVendor = () => {
 	return (
@@ -14,6 +15,7 @@ const LayoutVendor = () => {
 				<main>
 					<Routes>
 						<Route path="/" element={<HomePage />} />
+						<Route path="vendor/:id" element={<AboutBook />} />
 						<Route path="/login" element={<Login />} />
 						<Route path="/registration" element={<Registration />} />
 					</Routes>

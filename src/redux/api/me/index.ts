@@ -2,13 +2,19 @@ import { api as index } from '..';
 
 const api = index.injectEndpoints({
 	endpoints: (build) => ({
-		getMe: build.query<GetMeResponse, GetMeRequest>({
-			query: () => ({
-				url: '/auth/user',
-				method: 'GET'
-			}),
-			providesTags: ['me']
+		postSignUp: build.mutation({
+			query: (data) => {
+				console.log('asd0');
+				console.log(data, 'checkout');
+				return {
+					url: '/api/auth/signUpForClient',
+					method: 'POST',
+					body: data
+				};
+			},
+			invalidatesTags: ['me']
 		})
 	})
 });
-export const { useGetMeQuery } = api;
+
+export const { usePostSignUpMutation } = api;
