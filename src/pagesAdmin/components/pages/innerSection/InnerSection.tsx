@@ -103,7 +103,7 @@ const InnerSection = () => {
 								</div>
 							}
 							<div
-								onClick={() => navigate(`/admin/users/${book.id}`)}
+								onClick={() => navigate(`/admin/inner/${book.id}`)}
 								className={scss.book_content}
 							>
 								<div className={scss.book_img}>

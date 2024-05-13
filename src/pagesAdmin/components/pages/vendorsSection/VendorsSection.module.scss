@@ -1,6 +1,5 @@
 .container {
 	padding-inline: 20px;
-	max-width: 1350px;
 	margin: 0px auto;
 }
 
@@ -74,9 +73,6 @@
 			padding: 12px;
 			text-align: left;
 			border-bottom: 1px solid #ddd;
-			&:nth-child(5n) {
-				max-width: 30px;
-			}
 
 			@media (max-width: 1050px) {
 				padding: 10px;

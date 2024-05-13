@@ -137,13 +137,25 @@ const Header = () => {
 											<IconBurgerMenu />
 										</div>
 										<div
-											className={`${scss.navbar_menu} ${isNavBar ? scss.navbar_block : scss.navbar_none}`}
+											className={`${isNavBar ? scss.navbar_menu : scss.navbar_none}`}
 										>
 											<ul>
 												<li>Электронные книги</li>
 												<li>Audio books</li>
-												<li>Промокоды</li>
-												<li>Начать продавать на eBook</li>
+												<li
+													onClick={() => {
+														navigate('/promo_page');
+													}}
+												>
+													Промокоды
+												</li>
+												<li
+													onClick={() => {
+														navigate('/vendor/');
+													}}
+												>
+													Начать продавать на eBook
+												</li>
 											</ul>
 										</div>
 										<p
@@ -158,8 +170,20 @@ const Header = () => {
 										<ul>
 											<li>Электронные книги</li>
 											<li>Audio books</li>
-											<li>Промокоды</li>
-											<li>Начать продавать на eBook</li>
+											<li
+												onClick={() => {
+													navigate('/promo_page');
+												}}
+											>
+												Промокоды
+											</li>
+											<li
+												onClick={() => {
+													navigate('/vendor/');
+												}}
+											>
+												Начать продавать на eBook
+											</li>
 										</ul>
 									</div>
 								</div>
