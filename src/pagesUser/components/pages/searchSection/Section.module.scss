@@ -277,28 +277,28 @@
 								margin: 10px auto;
 
 								:global {
-								.ant-slider-rail {
-									max-width: 220px;
-									width: 100%;
-									height: 2px;
-									background-color: #c4c4c4;
-									border-radius: 0px;
-								}
-								.ant-slider-track {
-									top: 4px;
-									height: 2px;
-									background-color: #f34901;
-								}
-								.ant-slider-handle::after {
-									width: 24px;
-									height: 24px;
-									top: -7px;
-									box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
-								}
-								.ant-slider-step {
-									max-width: 254px;
-									width: 100%;
-								}
+									.ant-slider-rail {
+										max-width: 220px;
+										width: 100%;
+										height: 2px;
+										background-color: #c4c4c4;
+										border-radius: 0px;
+									}
+									.ant-slider-track {
+										top: 4px;
+										height: 2px;
+										background-color: #f34901;
+									}
+									.ant-slider-handle::after {
+										width: 24px;
+										height: 24px;
+										top: -7px;
+										box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+									}
+									.ant-slider-step {
+										max-width: 254px;
+										width: 100%;
+									}
 								}
 							}
 						}

@@ -38,12 +38,10 @@
 			padding-bottom: 15px;
 			justify-content: space-between;
 
-
 			@media (max-width: 970px) {
 				display: none;
 			}
 			.item_one {
-		
 				font-family: Open Sans;
 				font-size: 14px;
 				font-weight: 400;
@@ -56,7 +54,6 @@
 				width: 78%;
 				display: flex;
 				justify-content: space-between;
-
 
 				.item_two {
 					font-family: Open Sans;
@@ -110,9 +107,9 @@
 				border-right: 1px solid lightgray;
 				padding: 0 1rem;
 
-			@media (max-width:970px) {
-				border-right: none;
-			}
+				@media (max-width: 970px) {
+					border-right: none;
+				}
 			}
 
 			@media (max-width: 900px) {
