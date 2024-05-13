@@ -18,7 +18,6 @@ type Book = {
 };
 
 const BooksSection: React.FC = () => {
-	// const [isOpen, setIsOpen] = useState<boolean>(false);
 	const [openStates, setOpenStates] = useState<{ [key: number]: boolean }>({});
 
 	const [isOpenBooksType, setIsOpenBooksType] = useState<boolean>(false);
