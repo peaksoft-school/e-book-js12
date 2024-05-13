@@ -1,12 +1,17 @@
 .Welcome {
 	.content {
+		padding-bottom: 84px;
 		.section_title {
 			display: flex;
 			justify-content: space-between;
 			gap: 20px 98px;
 			height: 100%;
 			min-height: 584px;
-			@media (max-width: 1320px) {
+			@media (max-width: 1300px) {
+				gap: 0px;
+			}
+			@media (max-width: 1120px) {
+				flex-direction: column;
 			}
 			.left_content {
 				max-width: 572px;
@@ -55,6 +60,8 @@
 				max-width: 662px;
 				width: 100%;
 				position: relative;
+				height: 100%;
+
 				.bg_circle {
 					width: 100%;
 					height: 100%;
@@ -62,16 +69,125 @@
 					border-radius: 100%;
 					max-width: 568px;
 					max-height: 568px;
-					position: absolute;
+					position: relative;
+					transition: 0.3s;
+
+					@media (max-width: 1300px) {
+						max-width: 538px;
+						max-height: 538px;
+						min-height: 538px;
+						width: 100%;
+						height: 100%;
+						transition: 0.3s;
+					}
 					img {
-						position: absolute;
-						right: 28%;
+						position: relative;
+						right: 16%;
 						top: 15%;
 						z-index: 1;
 						width: 100%;
 						height: auto;
 						max-width: 500px;
 						max-height: 500px;
+						transition: 0.3s;
+
+						@media (max-width: 1300px) {
+							max-width: 470px;
+							max-height: 470px;
+							transition: 0.3s;
+							width: 100%;
+							height: 100%;
+						}
+						@media (max-width: 1120px) {
+							top: 16%;
+							right: 18%;
+						}
+					}
+				}
+			}
+		}
+		.condition_content {
+			display: flex;
+			flex-direction: column;
+			align-items: start;
+			gap: 151px 0px;
+			margin-top: 140px;
+			.first_container {
+				width: 100%;
+				p {
+					color: rgb(0, 0, 0);
+					font-family: Open Sans;
+					font-size: 24px;
+					font-weight: 600;
+					line-height: 130%;
+					letter-spacing: 0px;
+					text-align: left;
+				}
+				.card_container {
+					display: flex;
+					justify-content: space-between;
+					width: 100%;
+					margin-top: 61px;
+					gap: 20px;
+					.card {
+						display: flex;
+						flex-direction: column;
+						gap: 30px 0px;
+						max-width: 413px;
+						width: 100%;
+						img {
+							width: 100%;
+						}
+						p {
+							color: rgb(0, 0, 0);
+							font-family: Open Sans;
+							font-size: 16px;
+							font-weight: 400;
+							line-height: 140%;
+							letter-spacing: 10%;
+							text-align: left;
+							width: 100%;
+						}
+					}
+				}
+			}
+			.second_container {
+				width: 100%;
+				p {
+					color: rgb(0, 0, 0);
+					font-family: Open Sans;
+					font-size: 24px;
+					font-weight: 600;
+					line-height: 130%;
+					letter-spacing: 0px;
+					text-align: left;
+				}
+				.card_container {
+					display: flex;
+					justify-content: space-between;
+					width: 100%;
+					margin-top: 61px;
+					gap: 20px;
+
+					.card {
+						display: flex;
+						flex-direction: column;
+						gap: 30px 0px;
+						max-width: 413px;
+						width: 100%;
+						img {
+							width: 100%;
+						}
+						p {
+							color: rgb(0, 0, 0);
+							font-family: Open Sans;
+							font-size: 16px;
+							font-weight: 400;
+							line-height: 140%;
+							letter-spacing: 10%;
+							text-align: left;
+							width: 100%;
+						}
 					}
 				}
 			}

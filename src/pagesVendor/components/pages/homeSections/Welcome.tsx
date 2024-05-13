@@ -2,6 +2,46 @@ import { FC } from 'react';
 import scss from './Welcome.module.scss';
 import text_img from '../../../../assets/img/textPortal.png';
 import girl_img from '../../../../assets/img/Knowledgecuate.png';
+const firstData = [
+	{
+		image:
+			'https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEggTu7DsNwN06djRJalUksB-4Ev7Od5gqiLK3tGUianJl7nbaRoUcOpxpOSlfVMmt4l2bBQejcsUfEqP_AJp0j_fZDzXftR7fz_wZ2-SBFA1NaaFVBSVQAyMZR6NJO14iRApHY7mW5NYbg/w1200-h630-p-k-no-nu/Library.png',
+		description:
+			'В целом, конечно, экономическая повестка сегодняшнего дня прекрасно подходит для реализации переосмысления внешнеэкономических политик.'
+	},
+	{
+		image:
+			'https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEggTu7DsNwN06djRJalUksB-4Ev7Od5gqiLK3tGUianJl7nbaRoUcOpxpOSlfVMmt4l2bBQejcsUfEqP_AJp0j_fZDzXftR7fz_wZ2-SBFA1NaaFVBSVQAyMZR6NJO14iRApHY7mW5NYbg/w1200-h630-p-k-no-nu/Library.png',
+		description:
+			'В целом, конечно, экономическая повестка сегодняшнего дня прекрасно подходит для реализации переосмысления внешнеэкономических политик.'
+	},
+	{
+		image:
+			'https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEggTu7DsNwN06djRJalUksB-4Ev7Od5gqiLK3tGUianJl7nbaRoUcOpxpOSlfVMmt4l2bBQejcsUfEqP_AJp0j_fZDzXftR7fz_wZ2-SBFA1NaaFVBSVQAyMZR6NJO14iRApHY7mW5NYbg/w1200-h630-p-k-no-nu/Library.png',
+		description:
+			'В целом, конечно, экономическая повестка сегодняшнего дня прекрасно подходит для реализации переосмысления внешнеэкономических политик.'
+	}
+];
+const secondData = [
+	{
+		iamge:
+			'https://idsb.tmgrup.com.tr/ly/uploads/images/2020/03/29/thumbs/800x531/27574.jpg',
+		description:
+			'В целом, конечно, экономическая повестка сегодняшнего дня прекрасно подходит для реализации переосмысления внешнеэкономических политик.'
+	},
+	{
+		iamge:
+			'https://idsb.tmgrup.com.tr/ly/uploads/images/2020/03/29/thumbs/800x531/27574.jpg',
+		description:
+			'В целом, конечно, экономическая повестка сегодняшнего дня прекрасно подходит для реализации переосмысления внешнеэкономических политик.'
+	},
+	{
+		iamge:
+			'https://idsb.tmgrup.com.tr/ly/uploads/images/2020/03/29/thumbs/800x531/27574.jpg',
+		description:
+			'В целом, конечно, экономическая повестка сегодняшнего дня прекрасно подходит для реализации переосмысления внешнеэкономических политик.'
+	}
+];
 
 const Welcome: FC = () => {
 	return (
@@ -20,6 +60,34 @@ const Welcome: FC = () => {
 							<div className={scss.right_content}>
 								<div className={scss.bg_circle}>
 									<img src={girl_img} alt="" />
+								</div>
+							</div>
+						</div>
+						<div className={scss.condition_content}>
+							<div className={scss.first_container}>
+								<p>Как начать продавать на eBook?</p>
+								<div className={scss.card_container}>
+									{firstData.map((card, index) => (
+										<>
+											<div className={scss.card} key={index}>
+												<img src={card.image} alt="" />
+												<p>{card.description}</p>
+											</div>
+										</>
+									))}
+								</div>
+							</div>
+							<div className={scss.second_container}>
+								<p>Условия</p>
+								<div className={scss.card_container}>
+									{secondData.map((card, index) => (
+										<>
+											<div className={scss.card} key={index}>
+												<img src={card.iamge} alt="" />
+												<p>{card.description}</p>
+											</div>
+										</>
+									))}
 								</div>
 							</div>
 						</div>
