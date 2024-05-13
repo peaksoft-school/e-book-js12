@@ -92,7 +92,7 @@ const Header = () => {
 								>
 									<LogoeBook />
 								</div>
-								
+
 								<div className={scss.input_content}>
 									<CustomGenreInput placeholder="Искать жанр, книги, авторов, издательства... " />
 								</div>
