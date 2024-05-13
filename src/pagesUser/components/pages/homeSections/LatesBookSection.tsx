@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
- /* eslint-disable */
- //@ts-nocheck
+/* eslint-disable */
+//@ts-nocheck
 import { FC, useState } from 'react';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.scss';

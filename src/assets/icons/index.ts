@@ -55,3 +55,4 @@ export { default as IconBackgroundLine } from './icon-background-Line';
 export { default as IconGreenCheckmark } from './icon-greenCheckmark';
 export { default as IconGreyLine } from './icon-greyLine';
 export { default as IconSuccess } from './icon-success';
+export { default as IconTest } from './icon-test';
