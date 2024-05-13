@@ -10,6 +10,7 @@ import {
 	IconBlackLike,
 	IconBurgerMenu,
 	IconDeleteX,
+	IconUpIcon,
 	IconWhiteCircle,
 	IconWhiteLike
 } from '@/src/assets/icons';
@@ -99,7 +100,15 @@ const SearchSection = () => {
 							onClick={() => setIsSort(!isSort)}
 						>
 							<p>Сортировать</p>
-							<IconArrowBottom />
+							{isSort ? (
+								<>
+									<IconUpIcon />
+								</>
+							) : (
+								<>
+									<IconArrowBottom />
+								</>
+							)}
 						</div>
 						{
 							<>
@@ -130,7 +139,15 @@ const SearchSection = () => {
 								className={scss.genre_fillter}
 							>
 								<p>Жанры</p>
-								<IconArrowBottom />
+								{isGenre ? (
+									<>
+										<IconUpIcon />
+									</>
+								) : (
+									<>
+										<IconArrowBottom />
+									</>
+								)}
 							</div>
 							<hr />
 							<>
@@ -160,7 +177,15 @@ const SearchSection = () => {
 								className={scss.type_fillter}
 							>
 								<p>Тип</p>
-								<IconArrowBottom />
+								{filterType ? (
+									<>
+										<IconUpIcon />
+									</>
+								) : (
+									<>
+										<IconArrowBottom />
+									</>
+								)}
 							</div>
 							<hr />
 							<div
@@ -187,7 +212,15 @@ const SearchSection = () => {
 								className={scss.price_fillter}
 							>
 								<p>Стоимость</p>
-								<IconArrowBottom />
+								{priceGenre ? (
+									<>
+										<IconUpIcon />
+									</>
+								) : (
+									<>
+										<IconArrowBottom />
+									</>
+								)}
 							</div>
 							<hr />
 							<div className={`${priceGenre ? scss.fillters : scss.none}`}>
@@ -231,7 +264,15 @@ const SearchSection = () => {
 								className={scss.language_fillter}
 							>
 								<p>Язык издания</p>
-								<IconArrowBottom />
+								{language ? (
+									<>
+										<IconUpIcon />
+									</>
+								) : (
+									<>
+										<IconArrowBottom />
+									</>
+								)}
 							</div>
 							<hr />
 							<>

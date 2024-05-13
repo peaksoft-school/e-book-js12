@@ -1,49 +1,100 @@
 import DeleteIcon from '@/src/assets/icons/icon-delete';
 import scss from './UsersSection.module.scss';
+import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
+import { Modal } from 'antd';
+
+interface User {
+	id: number;
+	fullName: string;
+	gmail: string;
+}
 
 const UserSection = () => {
-	const usersData = [
+	const navigate = useNavigate();
+	const [selectVendor, setSelectVendor] = useState<User | null>(null);
+	const [isModalOpen, setIsModalOpen] = useState(false);
+
+	const users: User[] = [
 		{
-			id: Math.random(),
-			number: 1,
+			id: 1,
 			fullName: 'Мыктыбек Мыктыбеков',
 			gmail: 'myktybek@gmail.com'
 		},
 		{
-			id: Math.random(),
-			number: 2,
-			fullName: 'Мыктыбек Мыктыбеков',
-			gmail: 'myktybek@gmail.com'
+			id: 2,
+			fullName: 'Aibek Hairulla uulu',
+			gmail: 'aibek@gmail.com'
 		},
 		{
-			id: Math.random(),
-			number: 3,
-			fullName: 'Мыктыбек Мыктыбеков',
-			gmail: 'myktybek@gmail.com'
+			id: 3,
+			fullName: 'joomart Joomartov',
+			gmail: 'jomart@gmail.com'
 		}
 	];
+
+	const showModal = (user: User) => {
+		setSelectVendor(user);
+		setIsModalOpen(true);
+	};
+
+	const handleOk = () => {
+		setIsModalOpen(false);
+		setSelectVendor(null);
+	};
+
+	const handleCancel = () => {
+		setIsModalOpen(false);
+		setSelectVendor(null);
+	};
 
 	return (
 		<section className={scss.UserSection}>
 			<div className={scss.container}>
 				<div className={scss.content}>
-					<div className={scss.properties_container}>
-						<p className={scss.number_property}>№</p>
-						<p className={scss.full_name_property}>ФИО</p>
-						<p className={scss.gmail_property}>Почта</p>
-					</div>
-					{usersData.map((item) => (
-						<div key={item.id} className={scss.user_data_container}>
-							<p className={scss.number}>{item.number}</p>
-							<p className={scss.full_name}>{item.fullName}</p>
-							<p className={scss.gmail}>{item.gmail}</p>
-							<button className={scss.delete_button}>
-								<DeleteIcon />
-							</button>
-						</div>
-					))}
+					<table className={scss.properties_container}>
+						<thead>
+							<tr>
+								<th>№</th>
+								<th>ФИО</th>
+								<th>Почта</th>
+								<th></th>
+							</tr>
+						</thead>
+					</table>
+					<tbody>
+						{users.map((user) => (
+							<tr key={user.id} className={scss.users}>
+								<td>{user.id}</td>
+								<td onClick={() => navigate(`/admin/users/${user.fullName}`)}>
+									{user.fullName}
+								</td>
+								<td onClick={() => navigate(`/admin/users/${user.fullName}`)}>
+									{user.gmail}
+								</td>
+								<td></td>
+								<td></td>
+								<td className={scss.button_as}>
+									<button onClick={() => showModal(user)}>
+										<DeleteIcon />
+									</button>
+								</td>
+							</tr>
+						))}
+					</tbody>
 				</div>
 			</div>
+			<Modal
+				visible={isModalOpen}
+				onOk={handleOk}
+				onCancel={handleCancel}
+				okText="Удалить"
+				cancelText="Отменить"
+			>
+				<p>
+					Вы уверены, что хотите удалить <span>{selectVendor?.fullName}</span>?
+				</p>
+			</Modal>
 		</section>
 	);
 };

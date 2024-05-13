@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable */
 //@ts-nocheck
 import { FC, useState } from 'react';

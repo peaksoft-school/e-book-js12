@@ -1,0 +1,682 @@
+.AboutVendorsBooks {
+	.container {
+		padding-inline: 20px;
+		hr {
+			width: 100%;
+			height: 1px;
+			margin-bottom: 10px;
+			border: 1px solid rgb(196, 196, 196);
+		}
+		.total_quantity {
+			display: flex;
+			justify-content: space-between;
+			gap: 22px;
+			width: 100%;
+			margin-bottom: 30px;
+			margin-top: 40px;
+			position: relative;
+			@media (max-width: 360px) {
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+				justify-content: center;
+			}
+			p {
+				color: rgb(181, 181, 181);
+				font-family: 'Open Sans', sans-serif;
+				font-size: 16px;
+				font-weight: 400;
+				line-height: 130%;
+				letter-spacing: 0px;
+				text-align: left;
+				padding: 10px;
+
+				@media (max-width: 360px) {
+					font-size: 16px;
+				}
+
+				span {
+					color: rgb(34, 34, 34);
+					font-family: Open Sans;
+					font-size: 16px;
+					font-weight: 600;
+					line-height: 120%;
+					letter-spacing: 0px;
+					text-align: left;
+					margin-right: 20px;
+				}
+			}
+			.click {
+				p {
+					cursor: default;
+					span {
+						cursor: default;
+					}
+				}
+
+				.type_list {
+					max-width: 191px;
+					width: 100%;
+					padding: 20px;
+					display: flex;
+					flex-direction: column;
+					gap: 7px;
+					position: absolute;
+					top: 40px;
+					right: 40px;
+					background-color: #f8f8f8;
+					box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+					z-index: 100;
+					transition: 0.4s;
+					opacity: 100;
+					@media (max-width: 360px) {
+						top: 100px;
+						right: 0px;
+					}
+
+					p {
+						color: rgb(35, 35, 35);
+						font-family: Open Sans;
+						font-size: 14px;
+						font-weight: 400;
+						line-height: 130%;
+						letter-spacing: 0px;
+						text-align: left;
+
+						@media (max-width: 360px) {
+							font-size: 10px;
+						}
+					}
+				}
+			}
+			.none_books_type {
+				padding: 10px;
+				background-color: #f8f8f8;
+				position: absolute;
+				top: -0px;
+				right: 0px;
+				opacity: 0;
+				user-select: none;
+				max-width: 191px;
+				width: 100%;
+				padding: 20px;
+				display: flex;
+				flex-direction: column;
+				gap: 7px;
+				transition: 0.3s;
+				cursor: default;
+				z-index: -10;
+				@media (max-width: 360px) {
+					top: 60px;
+					right: 0px;
+				}
+				p {
+					color: rgb(35, 35, 35);
+					font-family: Open Sans;
+					font-size: 14px;
+					font-weight: 400;
+					line-height: 130%;
+					letter-spacing: 0px;
+					text-align: left;
+				}
+			}
+		}
+
+		.content {
+			display: flex;
+			flex-wrap: wrap;
+			justify-content: space-between;
+			gap: 20px 10px;
+			width: 100%;
+
+			@media (max-width: 500px) {
+				width: 100%;
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+			}
+			@media (max-width: 440px) {
+				width: 100%;
+				display: flex;
+				flex-direction: column;
+			}
+
+			.book {
+				position: relative;
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+				justify-content: center;
+				padding: 14px 34px;
+				max-width: 268px;
+				width: 100%;
+				background: rgb(237, 237, 237);
+
+				@media (max-width: 1170px) {
+					max-width: 230px;
+					padding: 35px 36px 20px;
+				}
+				@media (max-width: 1160px) {
+					max-width: 250px;
+					padding: 35px 36px 20px;
+				}
+
+				@media (max-width: 1140px) {
+					max-width: 220px;
+					padding: 35px 36px 20px;
+				}
+				@media (max-width: 1110px) {
+					max-width: 240px;
+					padding: 35px 36px 20px;
+				}
+
+				@media (max-width: 1070px) {
+					max-width: 230px;
+					padding: 35px 36px 20px;
+				}
+				@media (max-width: 1040px) {
+					max-width: 220px;
+					padding: 35px 36px 20px;
+				}
+				@media (max-width: 1010px) {
+					max-width: 210px;
+					padding: 35px 36px 20px;
+				}
+				@media (max-width: 980px) {
+					max-width: 280px;
+					padding: 35px 36px 20px;
+				}
+				@media (max-width: 900px) {
+					max-width: 260px;
+					padding: 35px 36px 20px;
+				}
+
+				@media (max-width: 870px) {
+					max-width: 240px;
+					padding: 35px 36px 20px;
+				}
+				@media (max-width: 830px) {
+					max-width: 220px;
+					padding: 35px 36px 20px;
+				}
+
+				@media (max-width: 780px) {
+					max-width: 210px;
+					padding: 35px 36px 20px;
+				}
+				@media (max-width: 768px) {
+					max-width: 280px;
+					padding: 35px 36px 20px;
+				}
+				@media (max-width: 700px) {
+					max-width: 230px;
+					padding: 35px 36px 20px;
+				}
+				@media (max-width: 600px) {
+					max-width: 220px;
+					padding: 30px 16px 10px;
+				}
+
+				@media (max-width: 500px) {
+					display: flex;
+					align-items: center;
+					justify-content: center;
+					max-width: 260px;
+					width: 100%;
+					padding: 30px 16px 10px;
+				}
+				@media (max-width: 440px) {
+					max-width: 300px;
+					width: 100%;
+					padding: 30px 16px 10px;
+				}
+
+				@media (max-width: 360px) {
+					max-width: 200px;
+					padding: 15px 16px 10px;
+				}
+
+				.book_header {
+					max-width: 150px;
+					width: 100%;
+					display: flex;
+					margin-bottom: 14px;
+					gap: 14px;
+
+					@media (max-width: 1010px) {
+						display: flex;
+						flex-direction: column;
+						gap: 5px;
+						margin-bottom: 7px;
+					}
+					@media (max-width: 980px) {
+						display: flex;
+					}
+					@media (max-width: 840px) {
+						display: flex;
+						flex-direction: column;
+						gap: 5px;
+						margin-bottom: 7px;
+					}
+					@media (max-width: 768px) {
+						display: flex;
+						flex-direction: column;
+						gap: 5px;
+						margin-bottom: 7px;
+					}
+					@media (max-width: 500px) {
+						display: flex;
+						flex-direction: column;
+						gap: 5px;
+						margin-bottom: 7px;
+					}
+					@media (max-width: 440px) {
+						display: flex;
+						gap: 12px;
+						margin-bottom: 7px;
+					}
+					@media (max-width: 360px) {
+						display: flex;
+						flex-direction: column;
+						gap: 5px;
+						margin-bottom: 7px;
+					}
+					.hearts {
+						display: flex;
+						gap: 7px;
+						align-items: center;
+
+						@media (max-width: 360px) {
+							gap: 4px;
+						}
+						svg {
+							max-width: 13.19px;
+							width: 100%;
+							max-height: 12.43px;
+							color: rgb(138, 138, 138);
+
+							@media (max-width: 360px) {
+								max-width: 10px;
+								width: 100%;
+								max-height: 10px;
+							}
+						}
+						p {
+							color: rgb(138, 138, 138);
+							font-family: Open Sans;
+							font-size: 14px;
+							font-weight: 400;
+							line-height: 120%;
+							letter-spacing: 0px;
+							text-align: left;
+							@media (max-width: 360px) {
+								font-size: 8px;
+							}
+						}
+					}
+
+					.in_basket {
+						color: rgb(138, 138, 138);
+						font-size: 14px;
+						font-weight: 400;
+						line-height: 120%;
+						letter-spacing: 0px;
+						text-align: left;
+
+						@media (max-width: 360px) {
+							font-size: 8px;
+						}
+					}
+				}
+
+				.extra {
+					position: absolute;
+					top: 10px;
+					right: 10px;
+					cursor: pointer;
+					cursor: default;
+					position: absolute;
+					top: 10px;
+					right: 10px;
+					cursor: pointer;
+					cursor: default;
+
+					@media (max-width: 990px) {
+						top: 1px;
+						right: 1px;
+					}
+					@media (max-width: 470px) {
+						top: 5px;
+						right: 1px;
+					}
+					@media (max-width: 560px) {
+						top: 2px;
+						right: -3px;
+					}
+
+					svg {
+						@media (max-width: 360px) {
+							max-width: 13px;
+							width: 100%;
+							max-height: 13px;
+						}
+					}
+
+					@media (max-width: 560px) {
+						top: 2px;
+						right: -3px;
+					}
+					@media (max-width: 360px) {
+						top: 2px;
+						right: 0px;
+					}
+				}
+
+				.book_content {
+					display: flex;
+					flex-direction: column;
+					gap: 13px;
+					max-width: 196px;
+					width: 100%;
+					cursor: pointer;
+
+					.book_img {
+						display: flex;
+						align-items: center;
+						justify-content: center;
+
+						img {
+							width: 100%;
+							max-width: 197px;
+							max-height: 297px;
+							height: auto;
+
+							@media (max-width: 830px) {
+								max-width: 240px;
+							}
+							@media (max-width: 600px) {
+								max-width: 170px;
+							}
+
+							@media (max-width: 440px) {
+								max-width: 200px;
+							}
+							@media (max-width: 360px) {
+								max-width: 140px;
+							}
+						}
+					}
+
+					.info_book {
+						display: flex;
+						flex-direction: column;
+						gap: 2px;
+
+						h3 {
+							color: rgb(34, 34, 34);
+							font-family: 'Open Sans', sans-serif;
+							font-size: 14px;
+							font-weight: 600;
+							line-height: 120%;
+							text-align: left;
+							text-transform: uppercase;
+
+							@media (max-width: 830px) {
+								font-size: 8px;
+							}
+							@media (max-width: 500px) {
+								font-size: 7px;
+							}
+							@media (max-width: 360px) {
+								font-size: 5px;
+							}
+						}
+
+						.date_and_price {
+							display: flex;
+							align-items: center;
+							justify-content: space-between;
+							max-width: 197px;
+							width: 100%;
+
+							p {
+								color: rgb(138, 138, 138);
+								font-family: 'Open Sans', sans-serif;
+								font-size: 14px;
+								font-weight: 400;
+								line-height: 120%;
+								text-align: left;
+								@media (max-width: 830px) {
+									font-size: 10px;
+								}
+
+								@media (max-width: 430px) {
+									font-size: 7px;
+								}
+								@media (max-width: 360px) {
+									font-size: 8px;
+								}
+							}
+
+							.price {
+								color: rgb(255, 76, 0);
+								font-family: 'Open Sans', sans-serif;
+								font-size: 16px;
+								font-weight: 600;
+								line-height: 120%;
+								text-align: left;
+
+								@media (max-width: 830px) {
+									font-size: 10px;
+								}
+								@media (max-width: 430px) {
+									font-size: 7px;
+								}
+
+								@media (max-width: 360px) {
+									font-size: 8px;
+								}
+							}
+						}
+					}
+				}
+			}
+			.on_close {
+				padding: 20px;
+				display: flex;
+				flex-direction: column;
+				gap: 7px;
+				position: absolute;
+				top: 0px;
+				right: 0px;
+				background-color: #f8f8f8;
+				box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+				z-index: -100;
+				transition: 0.3s;
+				opacity: 0;
+				cursor: default;
+				user-select: none;
+
+				ul {
+					display: flex;
+					flex-direction: column;
+					gap: 10px;
+					width: 100%;
+					li {
+						display: flex;
+						align-items: center;
+						justify-content: center;
+						gap: 10px;
+						color: rgb(35, 35, 35);
+						font-family: Open Sans;
+						font-size: 14px;
+						font-weight: 400;
+						line-height: 130%;
+						letter-spacing: 0px;
+						text-align: left;
+					}
+				}
+			}
+			.is_open {
+				padding: 20px;
+				display: flex;
+				flex-direction: column;
+				gap: 7px;
+				position: absolute;
+				top: 30px;
+				right: 30px;
+				background-color: #f8f8f8;
+				box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+				z-index: 100;
+				transition: 0.4s;
+				opacity: 100;
+
+				@media (max-width: 830px) {
+					top: 19px;
+					right: 16px;
+					padding: 10px;
+				}
+
+				@media (max-width: 560px) {
+					top: 27px;
+					right: 7px;
+					padding: 16px;
+					width: 100%;
+					max-width: max-content;
+				}
+				@media (max-width: 360px) {
+					top: 19px;
+					right: 7px;
+					padding: 16px;
+					width: 100%;
+					max-width: max-content;
+				}
+				ul {
+					display: flex;
+					flex-direction: column;
+					gap: 10px;
+					width: 100%;
+					li {
+						display: flex;
+						align-items: center;
+						justify-content: center;
+						gap: 10px;
+						color: rgb(35, 35, 35);
+						font-family: Open Sans;
+						font-size: 14px;
+						font-weight: 400;
+						line-height: 130%;
+						letter-spacing: 0px;
+						text-align: left;
+
+						@media (max-width: 830px) {
+							font-size: 14px;
+							gap: 5px;
+						}
+
+						span {
+							svg {
+								@media (max-width: 768px) {
+									max-width: 20px;
+									width: 100%;
+								}
+								@media (max-width: 450px) {
+									max-width: 20px;
+									width: 100%;
+								}
+								@media (max-width: 350px) {
+									max-width: 15px;
+									width: 100%;
+								}
+							}
+						}
+
+						@media (max-width: 830px) {
+							font-size: 14px;
+						}
+						@media (max-width: 360px) {
+							font-size: 12px;
+						}
+					}
+				}
+			}
+		}
+		.div_delete {
+			display: flex;
+			align-items: flex-end;
+			justify-content: flex-end;
+			@media (max-width: 1260px) {
+				margin-top: 20px;
+				display: flex;
+				align-items: center;
+				justify-content: end;
+				margin-top: 30px;
+			}
+			@media (max-width: 1110px) {
+				margin-top: 20px;
+				display: flex;
+				align-items: center;
+				justify-content: end;
+
+				margin-top: 30px;
+			}
+			@media (max-width: 985px) {
+				margin-top: 20px;
+				display: flex;
+				align-items: center;
+				justify-content: end;
+
+				margin-top: 30px;
+			}
+			@media (max-width: 870px) {
+				margin-top: 20px;
+				display: flex;
+				align-items: center;
+				justify-content: end;
+
+				margin-top: 30px;
+			}
+			@media (max-width: 768px) {
+				margin-top: 20px;
+				display: flex;
+				align-items: center;
+				justify-content: end;
+
+				margin-top: 30px;
+			}
+			@media (max-width: 360px) {
+				margin-top: 20px;
+				display: flex;
+				align-items: center;
+				justify-content: end;
+
+				margin-top: 30px;
+			}
+			.delete_profile {
+				max-width: 193px;
+				width: 100%;
+				padding: 10px 24px 10px 24px;
+				color: rgb(241, 0, 0);
+				font-family: Open Sans;
+				font-size: 16px;
+				font-weight: 600;
+				line-height: 22px;
+				letter-spacing: 0px;
+				margin-top: 70px;
+				cursor: pointer;
+				cursor: default;
+				background: none;
+				border: none;
+				@media (max-width: 360px) {
+					margin-top: 30px;
+					padding: 10px 10px 10px 10px;
+					font-size: 14px;
+					letter-spacing: 0px;
+					cursor: pointer;
+					cursor: default;
+					background: none;
+				}
+			}
+		}
+	}
+}
