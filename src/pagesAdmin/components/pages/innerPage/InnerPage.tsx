@@ -63,7 +63,7 @@ const InnerPageUser: React.FC = () => {
 			<div className={scss.container}>
 				<div className={scss.link}>
 					<Link
-						to={'/admin/users'}
+						to={"/admin/users"}
 						className={`${scss.link_home}  ${
 							location.pathname === '/admin/users/' ? scss.link_home_active : ''
 						}`}
