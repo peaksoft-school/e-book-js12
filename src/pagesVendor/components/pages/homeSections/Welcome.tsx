@@ -2,6 +2,7 @@ import { FC } from 'react';
 import scss from './Welcome.module.scss';
 import text_img from '../../../../assets/img/textPortal.png';
 import girl_img from '../../../../assets/img/Knowledgecuate.png';
+import { useNavigate } from 'react-router-dom';
 const firstData = [
 	{
 		image:
@@ -44,6 +45,7 @@ const secondData = [
 ];
 
 const Welcome: FC = () => {
+	const navigate = useNavigate();
 	return (
 		<>
 			<section className={scss.Welcome}>
@@ -54,7 +56,13 @@ const Welcome: FC = () => {
 								<img src={text_img} alt="" />
 								<div className={scss.text}>
 									<p>Начните продавать свои книги на eBook</p>
-									<button>Стать продавцом</button>
+									<button
+										onClick={() => {
+											navigate('registration');
+										}}
+									>
+										Стать продавцом
+									</button>
 								</div>
 							</div>
 							<div className={scss.right_content}>

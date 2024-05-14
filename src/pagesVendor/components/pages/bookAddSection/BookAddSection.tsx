@@ -11,20 +11,16 @@ import {
 } from '@/src/assets/icons';
 import { useState } from 'react';
 import CustomUserNameInput from '@/src/ui/customInpute/CustomUserNameInput';
-import { ConfigProvider, Modal, Select, Space, Tooltip } from 'antd';
+import { Modal, Select, Space } from 'antd';
 import CustomBasketButton from '@/src/ui/customButton/CustomBasketButton';
 import CustomAudioDownloadInput from '@/src/ui/customAudioInput/CustomAudioDownloadInput';
 import CustomPDFDownloadInput from '@/src/ui/customPDFInput/CustomPDFDownloadInput';
-import { Link, useNavigate } from 'react-router-dom';
-import { IconInfoCircle } from '@tabler/icons-react';
-import CustomAddBookButton from '@/src/ui/customButton/CustomAddBook';
+import { Link } from 'react-router-dom';
 
 const BookAddSection = () => {
-	const navigate = useNavigate();
 	const [clickRadio, setClickRadio] = useState(false);
 	const [audioBook, setAudioBook] = useState(false);
-	const [isModalOpen, setIsModalOpen] = useState(false);
-	const [modalSuccess, setModalSuccess] = useState(false);
+
 	const [ebook, setEBook] = useState(false);
 	const [modal, setModal] = useState(false);
 
@@ -59,107 +55,11 @@ const BookAddSection = () => {
 			desc: 'Korea (韩国)'
 		}
 	];
-	const showModal = () => {
-		setIsModalOpen(true);
-	};
-	const handleOk = () => {
-		setIsModalOpen(false);
-	};
 
-	const openModalSuccess = () => {
-		Modal.success({
-			title: 'Промокод успешно создан!',
-			closeIcon: true,
-			closable: true,
-			afterClose() {
-				setTimeout(() => {
-					setModalSuccess(false);
-				}, 3000);
-			}
-		});
-	};
 	return (
 		<section className={scss.AddBookSection}>
 			<div className={scss.container}>
 				<div className={scss.content}>
-					<div className={scss.books_header}>
-						<div className={`customVendorsBooksModal ${scss.promocode_button}`}>
-							<button onClick={showModal}>Создать промокод</button>
-							<ConfigProvider
-								theme={{
-									components: {
-										Modal: {
-											lineWidth: 20
-										}
-									}
-								}}
-							>
-								<Modal
-									className={scss.modal}
-									open={isModalOpen}
-									onCancel={() => {
-										setIsModalOpen(false);
-									}}
-									footer={[
-										<button
-											key="submit"
-											onClick={() => {
-												handleOk();
-												setModalSuccess(true);
-												setTimeout(() => {
-													modalSuccess ? openModalSuccess() : null;
-												}, 300);
-											}}
-										>
-											Создать
-										</button>
-									]}
-								>
-									<div className={scss.promocode}>
-										<label>Промокод</label>
-										<input
-											className={scss.promocode_input}
-											type="text"
-											placeholder="Напишите промокод"
-										/>
-									</div>
-									<div className={scss.inputs}>
-										<div className={scss.input_x_label}>
-											<label>Дата начала</label>
-
-											<input type="date" />
-										</div>
-										<div className={scss.input_x_label}>
-											<label>Дата завершения</label>
-											<input type="date" />
-										</div>
-										<div className={`${scss.input_x_label} ${scss.last_input}`}>
-											<label>Процент скидки</label>
-											<input type="text" placeholder="%" />
-										</div>
-									</div>
-								</Modal>
-							</ConfigProvider>
-							<Tooltip
-								className={scss.info_hover}
-								title="Промокод применится ко всем вашим книгам"
-								color={'orangered'}
-								placement="bottomLeft"
-							>
-								<span>
-									<IconInfoCircle />
-								</span>
-							</Tooltip>
-						</div>
-						<div className={scss.add_book_button}>
-							<CustomAddBookButton
-								children="+ Добавить книгу"
-								onClick={() => {
-									navigate('vendor/addBook');
-								}}
-							/>
-						</div>
-					</div>
 					<div className={scss.links}>
 						<Link
 							to={'/vendor'}
