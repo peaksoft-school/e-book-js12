@@ -6,6 +6,8 @@ import HomePage from '../pages/HomePage';
 import Login from '@/src/pagesAuth/components/pages/vendorLogin/Login';
 import Registration from '@/src/pagesAuth/components/pages/vendorRegistration/Registration';
 import AboutBook from '../pages/aboutBook/AboutBook';
+import BookAddSection from '../pages/bookAddSection/BookAddSection';
+import ProfileVendor from '../pages/profileVendor/ProfileVendor';
 
 const LayoutVendor = () => {
 	return (
@@ -16,6 +18,8 @@ const LayoutVendor = () => {
 					<Routes>
 						<Route path="/" element={<HomePage />} />
 						<Route path="vendor/:id" element={<AboutBook />} />
+						<Route path="vendor/addBook" element={<BookAddSection />} />
+						<Route path="vendor/profile" element={<ProfileVendor />} />
 						<Route path="/login" element={<Login />} />
 						<Route path="/registration" element={<Registration />} />
 					</Routes>

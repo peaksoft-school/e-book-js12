@@ -258,7 +258,7 @@ const VendorsBooks: FC = () => {
 							<CustomAddBookButton
 								children="+ Добавить книгу"
 								onClick={() => {
-									navigate('/admin/books/book_adding');
+									navigate('vendor/addBook');
 								}}
 							/>
 						</div>
@@ -267,11 +267,13 @@ const VendorsBooks: FC = () => {
 						<p>Всего {filteredBooks.length} книг</p>
 						<div className={scss.all_books}>
 							<div className={scss.click}>
-								<p onClick={toggleTypeList}>
+								<p className={scss.all} onClick={toggleTypeList}>
 									<span onClick={() => handleGenreSelect(null)}>
 										{bookTypeText}
 									</span>
-									{isOpenBooksType ? <UpIcon /> : <IconArrowBottom />}
+									<span>
+										{isOpenBooksType ? <UpIcon /> : <IconArrowBottom />}
+									</span>
 								</p>
 								{
 									<div

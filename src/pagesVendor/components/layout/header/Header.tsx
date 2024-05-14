@@ -41,7 +41,12 @@ const Header = () => {
 					<div className="container">
 						<div className={scss.content}>
 							<div className={scss.header_content}>
-								<div className={scss.logo_content}>
+								<div
+									onClick={() => {
+										navigate('/vendor');
+									}}
+									className={scss.logo_content}
+								>
 									<LogoeBook />
 								</div>
 								<div className={scss.input_vontent}>
@@ -72,7 +77,8 @@ const Header = () => {
 												<ul>
 													<li
 														onClick={() => {
-															navigate('/profile');
+															navigate('vendor/profile');
+															setIsUser(false);
 														}}
 													>
 														Профиль
