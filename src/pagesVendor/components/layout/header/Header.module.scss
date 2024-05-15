@@ -23,6 +23,7 @@
 		}
 	}
 	.content {
+		margin-bottom: 40px;
 		.header_content {
 			display: flex;
 			justify-content: space-between;
@@ -73,6 +74,7 @@
 					display: flex;
 					align-items: start;
 					cursor: pointer;
+					cursor: default;
 					position: relative;
 					span {
 						&:first-child {
@@ -185,6 +187,65 @@
 			position: absolute;
 			top: -1000px;
 			left: 0px;
+		}
+	}
+	.books_header {
+		display: flex;
+		justify-content: space-between;
+		margin-bottom: 40px;
+
+		@media (max-width: 500px) {
+			flex-direction: column;
+			gap: 20px;
+		}
+
+		.promocode_button {
+			display: flex;
+			gap: 16px;
+			align-items: center;
+			cursor: pointer;
+			cursor: default;
+
+			button {
+				padding: 10px 16px;
+				border: 1px solid rgb(255, 76, 0);
+				background-color: #fff;
+				color: rgb(255, 76, 0);
+				cursor: pointer;
+				cursor: default;
+			}
+
+			svg {
+				max-width: 20px;
+			}
+			@media (max-width: 500px) {
+				display: flex;
+				gap: 16px;
+			}
+
+			.promo_notice {
+				max-width: 400px;
+				width: 100%;
+				max-height: 40px;
+				background-color: white;
+				padding: 10px 19px;
+				p {
+					color: rgb(150, 150, 150);
+					font-family: Open Sans;
+					font-size: 12px;
+					font-weight: 400;
+					line-height: 130%;
+					letter-spacing: 0px;
+					text-align: center;
+				}
+			}
+		}
+		.add_book_button {
+			display: flex;
+			gap: 16px;
+			align-items: center;
+			cursor: pointer;
+			cursor: default;
 		}
 	}
 }

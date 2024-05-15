@@ -2,6 +2,7 @@ import { useState } from 'react';
 import ProfilePageHistory from '../profileHistory/ProfilePageHistory';
 import ProfilePage from '../profilePage/ProfilePage';
 import scss from './ProfilePageContainer.module.scss';
+import { Link } from 'react-router-dom';
 
 const ProfilePageContainer = () => {
 	const [activeComponent, setActiveComponent] = useState('history');
@@ -14,9 +15,21 @@ const ProfilePageContainer = () => {
 		<div className={scss.profile_page_container}>
 			<div className="container">
 				<div className={scss.test}>
-					<p className={scss.head_text}>
-						<span>Главная</span> / Профиль
-					</p>
+					<div className={scss.links}>
+						<Link
+							to={'/'}
+							className={`${scss.link_to_home} ${location.pathname === '/' ? scss.link_to_home_active : ''}`}
+						>
+							Главная
+						</Link>
+						/
+						<Link
+							to={'/profile'}
+							className={`${scss.link_to_basket} ${location.pathname === 'basket' ? scss.link_to_basket_active : ''}`}
+						>
+							Профиль
+						</Link>
+					</div>
 					<div className={scss.profile_text}>
 						<div className={scss.navigate_title}>
 							<p

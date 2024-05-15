@@ -130,14 +130,7 @@ const AboutBook = () => {
 								>
 									O книге
 								</p>
-								<p
-									className={`${isModalOpen ? scss.color_text : ''}`}
-									onClick={() => {
-										setIsModalOpen(true);
-									}}
-								>
-									Читать фрагмент
-								</p>
+								<p>Читать фрагмент</p>
 							</div>
 							<p className={scss.book_info}>
 								«Заговор, Гарри Поттер. Заговор — в этом году в Хогвартсе, школе

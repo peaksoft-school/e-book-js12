@@ -1,4 +1,4 @@
-import Welcome from './homeSections/VendorsBooks';
+import Welcome from './homeSections/Welcome';
 
 const HomePage = () => {
 	return (

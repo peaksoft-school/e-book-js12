@@ -6,15 +6,16 @@ import {
 } from '@/src/assets/icons';
 import LogoeBook from '../logoeBook/LogoeBook';
 import scss from './Navbar.module.scss';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 
 const Navbar = () => {
 	const location = useLocation();
+	const navigate = useNavigate();
 
 	return (
 		<div className={scss.Navbar}>
 			<nav>
-				<span>
+				<span onClick={() => navigate('/admin')}>
 					<LogoeBook />
 				</span>
 				<ul>
