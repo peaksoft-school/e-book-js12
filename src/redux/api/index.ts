@@ -5,13 +5,12 @@ import {
 } from '@reduxjs/toolkit/query/react';
 
 const baseQuery = fetchBaseQuery({
-	baseUrl: 'http://13.60.43.123:8080',
-	prepareHeaders: (headers) => {
-		return headers;
-	},
-	credentials: 'include'
+	baseUrl: import.meta.env.VITE_PUBLIC_API_URL
+	// prepareHeaders: (headers) => {
+	// 	return headers;
+	// },
+	// credentials: 'include'
 });
-console.log(import.meta.env.VITE_PUBLIC_API_URL, 'sli');
 
 const baseQueryExtended: BaseQueryFn = async (args, api, extraOptions) => {
 	const result = await baseQuery(args, api, extraOptions);

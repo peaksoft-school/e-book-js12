@@ -2,6 +2,8 @@ import scss from './PromoCode.module.scss';
 import CustomBasketButton from '@/src/ui/customButton/CustomBasketButton';
 import bg_promo from '../../../../assets/booksImg/Discount-cuate 1.png';
 import mark_book from '../../../../assets/booksImg/img-Mark-Meson.png';
+import { Modal } from 'antd';
+import { useState } from 'react';
 
 const data_book = [
 	{
@@ -69,6 +71,7 @@ const data_book = [
 	}
 ];
 const PromoSection = () => {
+	const [promoModal, setPromoModal] = useState(false);
 	return (
 		<section className={scss.PromoSection}>
 			<div className="container">
@@ -82,12 +85,27 @@ const PromoSection = () => {
 							<div className={scss.promo_form}>
 								<input type="text" placeholder="Введите промокод" />
 								<CustomBasketButton
-									onClick={() => {}}
+									onClick={() => {
+										setPromoModal(true);
+									}}
 									nameClass={scss.promo_add_btn}
 								>
 									Активировать
 								</CustomBasketButton>
 							</div>
+							<Modal
+								open={promoModal}
+								footer={false}
+								className={scss.modal_promo}
+								onCancel={() => setPromoModal(false)}
+							>
+								<div className={scss.promo_modal_content}>
+									<p>Введены неверные символы в коде купона</p>
+									<button onClick={() => {
+										setPromoModal(false)
+									}}>Ok</button>
+								</div>
+							</Modal>
 							<p>
 								Промокоды eBook на скидки и подарки вы можете получить в
 								рассылках.

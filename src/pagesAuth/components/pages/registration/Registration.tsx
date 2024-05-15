@@ -5,24 +5,24 @@ import { useState } from 'react';
 import EyeSeeIcon from '@/src/assets/icons/icon-eyeSee';
 import EyeClose from '@/src/assets/icons/icon-eyeClose';
 import { useForm } from 'react-hook-form';
-import { usePostSignUpMutation } from '@/src/redux/api/me';
+import { usePostRegistrationMutation } from '@/src/redux/api/me';
 
 const Registration = () => {
 	const [isPassword, setIsPassword] = useState(false);
 	const [isLogPassword, setLogPassword] = useState(false);
-	const [postUser] = usePostSignUpMutation();
+	const [postUser] = usePostRegistrationMutation();
 
 	const {
 		formState: { errors },
 		// control, ! Это нам понадобится
 		register,
-		// reset,  ! Это нам понадобится
+		reset,
 		handleSubmit
 	} = useForm();
 
 	const onSubmit = (data: any) => {
-		console.log(data);
 		postUser(data);
+		reset()
 	};
 
 	return (
