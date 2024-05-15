@@ -3,6 +3,8 @@ import scss from './Welcome.module.scss';
 import text_img from '../../../../assets/img/textPortal.png';
 import girl_img from '../../../../assets/img/Knowledgecuate.png';
 import { useNavigate } from 'react-router-dom';
+import LogoeBook from '@/src/ui/logoeBook/LogoeBook';
+import CustomPersonalAreaButton from '@/src/ui/customButton/CustomPersonalArea';
 const firstData = [
 	{
 		image:
@@ -50,6 +52,18 @@ const Welcome: FC = () => {
 		<>
 			<section className={scss.Welcome}>
 				<div className="container">
+					<header>
+						<div>
+							<LogoeBook />
+						</div>
+						<div className={scss.button_content}>
+							<CustomPersonalAreaButton
+								children="Личный кабинет"
+								onClick={function (): void {}}
+								nameClass={scss.custom_button_personal}
+							/>
+						</div>
+					</header>
 					<div className={scss.content}>
 						<div className={scss.section_title}>
 							<div className={scss.left_content}>
@@ -98,6 +112,15 @@ const Welcome: FC = () => {
 									))}
 								</div>
 							</div>
+						</div>
+						<div className={scss.text}>
+							<button
+								onClick={() => {
+									navigate('registration');
+								}}
+							>
+								Стать продавцом
+							</button>
 						</div>
 					</div>
 				</div>
