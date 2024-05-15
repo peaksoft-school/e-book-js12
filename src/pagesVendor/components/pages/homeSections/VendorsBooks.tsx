@@ -1,6 +1,7 @@
 import { FC, useState } from 'react';
 import scss from './VendorsBooks.module.scss';
 import { IconPencil, IconX } from '@tabler/icons-react';
+
 import { useNavigate } from 'react-router-dom';
 import bookImage from '../../../../assets/booksImg/harrry-potter.png';
 import { IconArrowBottom, IconWhiteLike } from '@/src/assets/icons';
@@ -143,7 +144,6 @@ const VendorsBooks: FC = () => {
 			inBasket: 3
 		}
 	];
-
 	const [isOpenBooksType, setIsOpenBooksType] = useState(false);
 	const [selectedType, setSelectedType] = useState<string | null>(null);
 
@@ -155,6 +155,7 @@ const VendorsBooks: FC = () => {
 		setSelectedType(type);
 		setIsOpenBooksType(false);
 	};
+
 	const bookTypeText = selectedType ? selectedType : 'Все';
 
 	const filteredBooks: Book[] = selectedType

@@ -5,8 +5,8 @@ import WhiteLikeIcon from '@/src/assets/icons/icon-whiteLike';
 import { IconBurgerMenu, IconRedDot } from '@/src/assets/icons';
 import LogoeBook from '@/src/ui/logoeBook/LogoeBook';
 import WhiteProfileIcon from '@/src/assets/icons/icon-whiteProfile';
-import ExitModal from '@/src/ui/customModals/ExitModal';
 import { useNavigate } from 'react-router-dom';
+import { Modal } from 'antd';
 
 const dataGenre = [
 	{
@@ -214,17 +214,27 @@ const Header = () => {
 										</div>
 									</>
 								}
-								{userExit ? (
-									<>
-										<ExitModal
-											isOpen={userExit}
-											onClose={() => setUserExit(false)}
-											btnClose={() => {
+								<Modal
+									open={userExit}
+									className={scss.modal_exit}
+									closable={false}
+									footer={false}
+								>
+									<div className={scss.modal_text}>
+										<p>Вы уверены, что хотите выйти?</p>
+									</div>
+									<div className={scss.footer_modal}>
+										<button onClick={() => setUserExit(false)}>Отменить</button>
+										<button
+											onClick={() => {
+												setUserExit(false);
 												navigate('/auth/login');
 											}}
-										/>
-									</>
-								) : null}
+										>
+											Выйти
+										</button>
+									</div>
+								</Modal>
 							</nav>
 							<div className={scss.search_input}>
 								<CustomGenreInput placeholder="Искать жанр, книги, авторов, издательства... " />
