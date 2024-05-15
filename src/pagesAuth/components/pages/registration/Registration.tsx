@@ -22,7 +22,7 @@ const Registration = () => {
 
 	const onSubmit = (data: any) => {
 		postUser(data);
-		reset()
+		reset();
 	};
 
 	return (

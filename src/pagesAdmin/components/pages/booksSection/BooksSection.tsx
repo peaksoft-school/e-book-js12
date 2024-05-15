@@ -18,7 +18,6 @@ type Book = {
 };
 
 const BooksSection: React.FC = () => {
-	// const [isOpen, setIsOpen] = useState<boolean>(false);
 	const [openStates, setOpenStates] = useState<{ [key: number]: boolean }>({});
 
 	const [isOpenBooksType, setIsOpenBooksType] = useState<boolean>(false);
@@ -59,40 +58,9 @@ const BooksSection: React.FC = () => {
 			price: 350,
 			type: 'Электронные книги'
 		},
-		{
-			id: 5,
-			img: bookImage,
-			name: 'История книги',
-			date: '20 Feb 2021',
-			price: 350,
-			type: 'Электронные книги'
-		},
-		{
-			id: 6,
-			img: bookImage,
-			name: 'История книги',
-			date: '20 Feb 2021',
-			price: 350,
-			type: 'Электронные книги'
-		},
+
 		{
 			id: 7,
-			img: bookImage,
-			name: 'История книги',
-			date: '20 Feb 2021',
-			price: 350,
-			type: 'Аудиокниги'
-		},
-		{
-			id: 8,
-			img: bookImage,
-			name: 'История книги',
-			date: '20 Feb 2021',
-			price: 350,
-			type: 'Аудиокниги'
-		},
-		{
-			id: 9,
 			img: bookImage,
 			name: 'История книги',
 			date: '20 Feb 2021',

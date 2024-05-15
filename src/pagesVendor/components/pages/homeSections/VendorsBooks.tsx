@@ -1,12 +1,10 @@
-import { FC,  useState } from 'react';
+import { FC, useState } from 'react';
 import scss from './VendorsBooks.module.scss';
-import {  IconPencil, IconX } from '@tabler/icons-react';
+import { IconPencil, IconX } from '@tabler/icons-react';
+
 import { useNavigate } from 'react-router-dom';
 import bookImage from '../../../../assets/booksImg/harrry-potter.png';
-import {
-	IconArrowBottom,
-	IconWhiteLike
-} from '@/src/assets/icons';
+import { IconArrowBottom, IconWhiteLike } from '@/src/assets/icons';
 import ThreeDotIcon from '@/src/assets/icons/icon-threeDot';
 import CustomSeeMoreButton from '@/src/ui/customButton/CustomSeeMoreButton';
 import UpIcon from '@/src/assets/icons/icon-upIcon';
@@ -148,8 +146,6 @@ const VendorsBooks: FC = () => {
 	];
 	const [isOpenBooksType, setIsOpenBooksType] = useState(false);
 	const [selectedType, setSelectedType] = useState<string | null>(null);
-	
-	
 
 	const toggleTypeList = (): void => {
 		setIsOpenBooksType(!isOpenBooksType);
@@ -160,7 +156,6 @@ const VendorsBooks: FC = () => {
 		setIsOpenBooksType(false);
 	};
 
-	
 	const bookTypeText = selectedType ? selectedType : 'Все';
 
 	const filteredBooks: Book[] = selectedType
@@ -170,16 +165,17 @@ const VendorsBooks: FC = () => {
 		<section className={scss.VendorsBooks}>
 			<div className="container">
 				<div className={scss.content}>
-				
 					<div className={scss.books_quantity}>
 						<p>Всего {filteredBooks.length} книг</p>
 						<div className={scss.all_books}>
 							<div className={scss.click}>
-								<p onClick={toggleTypeList}>
+								<p className={scss.all} onClick={toggleTypeList}>
 									<span onClick={() => handleGenreSelect(null)}>
 										{bookTypeText}
 									</span>
-									{isOpenBooksType ? <UpIcon /> : <IconArrowBottom />}
+									<span>
+										{isOpenBooksType ? <UpIcon /> : <IconArrowBottom />}
+									</span>
 								</p>
 								{
 									<div

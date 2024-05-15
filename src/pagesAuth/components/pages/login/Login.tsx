@@ -18,7 +18,7 @@ const Login = () => {
 		postLogin(data);
 		reset();
 	};
-	
+
 	return (
 		<div className={scss.Login}>
 			<div className="container">

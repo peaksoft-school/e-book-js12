@@ -111,6 +111,10 @@
 						cursor: default;
 					}
 				}
+				.all {
+					display: flex;
+					gap: 2px;
+				}
 
 				.type_list {
 					width: 100%;
@@ -470,4 +474,3 @@
 		}
 	}
 }
-

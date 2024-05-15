@@ -15,10 +15,12 @@ import { Modal, Select, Space } from 'antd';
 import CustomBasketButton from '@/src/ui/customButton/CustomBasketButton';
 import CustomAudioDownloadInput from '@/src/ui/customAudioInput/CustomAudioDownloadInput';
 import CustomPDFDownloadInput from '@/src/ui/customPDFInput/CustomPDFDownloadInput';
+import { Link } from 'react-router-dom';
 
 const BookAddSection = () => {
 	const [clickRadio, setClickRadio] = useState(false);
 	const [audioBook, setAudioBook] = useState(false);
+
 	const [ebook, setEBook] = useState(false);
 	const [modal, setModal] = useState(false);
 
@@ -53,14 +55,25 @@ const BookAddSection = () => {
 			desc: 'Korea (韩国)'
 		}
 	];
+
 	return (
 		<section className={scss.AddBookSection}>
 			<div className={scss.container}>
 				<div className={scss.content}>
-					<div className={scss.title_content_page}>
-						<p>
-							<span>Книги</span>/ Добавить книгу
-						</p>
+					<div className={scss.links}>
+						<Link
+							to={'/vendor'}
+							className={`${scss.link_to_home} ${location.pathname === '/vendor' ? scss.link_to_home_active : ''}`}
+						>
+							Главная
+						</Link>
+						/
+						<Link
+							to={'vendor/addBook'}
+							className={`${scss.link_to_addBook} ${location.pathname === '/addBook' ? scss.link_to_addBook_active : ''}`}
+						>
+							Добавить кригу
+						</Link>
 					</div>
 					<div className={scss.add_photo_form}>
 						<div className={scss.title_form}>

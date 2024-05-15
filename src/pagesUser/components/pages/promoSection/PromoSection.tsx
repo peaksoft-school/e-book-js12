@@ -101,9 +101,13 @@ const PromoSection = () => {
 							>
 								<div className={scss.promo_modal_content}>
 									<p>Введены неверные символы в коде купона</p>
-									<button onClick={() => {
-										setPromoModal(false)
-									}}>Ok</button>
+									<button
+										onClick={() => {
+											setPromoModal(false);
+										}}
+									>
+										Ok
+									</button>
 								</div>
 							</Modal>
 							<p>
