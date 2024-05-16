@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { FC, useState } from 'react';
 import scss from './Style.module.scss';
 import EyeSeeIcon from '@/src/assets/icons/icon-eyeSee';
@@ -6,9 +7,16 @@ import EyeClose from '@/src/assets/icons/icon-eyeClose';
 interface TypeProps {
 	placeholder: string;
 	type: string;
+	register: any;
+	registerName: string;
 }
 
-const CustomPasswordInput: FC<TypeProps> = ({ placeholder, type }) => {
+const CustomPasswordInput: FC<TypeProps> = ({
+	placeholder,
+	type,
+	register,
+	registerName
+}) => {
 	const [showPassword, setShowPassword] = useState(true);
 	const [icon, setIcon] = useState(<EyeSeeIcon />);
 	const [isFocused, setIsFocused] = useState(false);
@@ -34,6 +42,7 @@ const CustomPasswordInput: FC<TypeProps> = ({ placeholder, type }) => {
 				className={`${scss.password_input} ${isFocused ? scss.FocusedIcon : ''}`}
 				onFocus={handleFocus}
 				onBlur={handleBlur}
+				{...register(`${registerName}`)}
 			/>
 			<div
 				onClick={togglePasswordVisibility}

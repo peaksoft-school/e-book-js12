@@ -749,3 +749,54 @@
 		}
 	}
 }
+.modal_exit {
+	:global {
+		.ant-modal-content {
+			max-width: 460px !important;
+			max-height: 150px !important;
+			border-radius: 5px;
+			@media (max-width: 330px) {
+				min-height: 170px !important;
+				max-height: 170px !important;
+			}
+		}
+	}
+	.modal_text {
+		display: flex;
+		justify-content: center;
+		p {
+			color: rgb(0, 0, 0);
+			font-family: Open Sans;
+			font-size: 18px;
+			font-weight: 400;
+			line-height: 130%;
+			letter-spacing: 0px;
+			text-align: center;
+		}
+	}
+	.footer_modal {
+		display: flex;
+		justify-content: space-between;
+		max-width: 264px;
+		margin-top: 24px;
+		button {
+			border: none;
+			outline: none;
+			cursor: pointer;
+			font-family: Open Sans;
+			font-size: 16px;
+			font-weight: 600;
+			line-height: 22px;
+			letter-spacing: 0px;
+			padding: 10px 24px;
+			background-color: black;
+			color: #ffffff;
+			max-width: 102px;
+			&:first-child {
+				background-color: transparent;
+				color: rgb(163, 163, 163);
+				max-width: 130px;
+			}
+		}
+	}
+}

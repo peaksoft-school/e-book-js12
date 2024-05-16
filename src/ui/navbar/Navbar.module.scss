@@ -29,6 +29,7 @@
 
 		span {
 			display: block;
+			cursor: pointer;
 			@media (max-width: 768px) {
 				display: none;
 			}
