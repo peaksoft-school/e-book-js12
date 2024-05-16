@@ -5,18 +5,24 @@ import CustomPasswordInput from '@/src/ui/customInpute/CustomPasswordInput';
 import { Link } from 'react-router-dom';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { usePostLoginMutation } from '@/src/redux/api/me';
+
 interface IFormInput {
 	email: string;
 	password: string;
 }
+
 const Login = () => {
 	const [postLogin] = usePostLoginMutation();
 	const { register, reset, handleSubmit } = useForm<IFormInput>();
 
-	const onSubmit: SubmitHandler<IFormInput> = (data: any) => {
-		console.log(data);
-		postLogin(data);
-		reset();
+	const onSubmit: SubmitHandler<IFormInput> = async (data: IFormInput) => {
+		try {
+			const response = await postLogin(data).unwrap();
+			localStorage.setItem('auth_token', response.token);
+			reset();
+		} catch (error) {
+			console.log(error);
+		}
 	};
 
 	return (
