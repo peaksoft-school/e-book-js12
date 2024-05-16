@@ -22,7 +22,6 @@ const api = index.injectEndpoints({
 			query: (id) => ({
 				url: `/api/basket/addBookToBasket/${id}`,
 				method: 'PUT'
-				// body: addToBasketBook
 			}),
 			invalidatesTags: ['audio_book']
 		})
