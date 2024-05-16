@@ -3,6 +3,7 @@ import { FC, useEffect, useState } from 'react';
 import scss from './LastPublication.module.scss';
 import { IconLongLine, IconShortLine } from '@/src/assets/icons';
 import history_book from '../../../../assets/booksImg/img-History-books.png';
+import { Link } from 'react-router-dom';
 
 const LastPublicationSection: FC = () => {
 	const [navClicked, setNavClicked] = useState(() => {
@@ -24,9 +25,9 @@ const LastPublicationSection: FC = () => {
 				<div className={scss.content}>
 					<div className={scss.section_header}>
 						<h1 className={scss.section_title}>Последние публикации</h1>
-						<a href="#" className={scss.nav_to_all}>
+						<Link to={'/search_book'} className={scss.nav_to_all}>
 							Смотреть все
-						</a>
+						</Link>
 					</div>
 					<div className={scss.section_main}>
 						<div className={scss.content_book}>

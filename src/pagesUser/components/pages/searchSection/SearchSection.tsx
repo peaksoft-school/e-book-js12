@@ -35,8 +35,7 @@ const SearchSection = () => {
 	const [language, setLanguage] = useState(false);
 
 	const [menufilters, setMenuFilters] = useState(false);
-
-	const data = [
+	const databook = [
 		{
 			id: 1,
 			image: history_img,
@@ -326,7 +325,7 @@ const SearchSection = () => {
 							</>
 						</div>
 						<div className={scss.container_books}>
-							{data.map((item) => (
+							{databook.map((item) => (
 								<div className={scss.card_book} key={item.id}>
 									<div
 										onClick={() => setFavoriteBook(!favoriteBook)}
