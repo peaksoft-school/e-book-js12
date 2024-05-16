@@ -1,16 +1,24 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import scss from './Registration.module.scss';
 import { useState } from 'react';
 import EyeSeeIcon from '@/src/assets/icons/icon-eyeSee';
 import EyeClose from '@/src/assets/icons/icon-eyeClose';
-import { useForm } from 'react-hook-form';
+import { SubmitHandler, useForm } from 'react-hook-form';
 import { usePostRegistrationMutation } from '@/src/redux/api/me';
+
+interface TypeData {
+	email: string;
+	name: string;
+	password: string | number;
+}
 
 const Registration = () => {
 	const [isPassword, setIsPassword] = useState(false);
 	const [isLogPassword, setLogPassword] = useState(false);
+	const [checkPassword, setCheckPassword] = useState('');
 	const [postUser] = usePostRegistrationMutation();
+	const navigate = useNavigate();
 
 	const {
 		formState: { errors },
@@ -18,15 +26,23 @@ const Registration = () => {
 		register,
 		reset,
 		handleSubmit
-	} = useForm();
+	} = useForm<TypeData>({
+		defaultValues: { email: '', name: '', password: '' }
+	});
 
-	const onSubmit = (data: any) => {
-		postUser(data);
-		reset();
+	const onHandleChange: SubmitHandler<TypeData> = async (data) => {
+		if (checkPassword === data.password) {
+			await postUser(data);
+			reset();
+			setCheckPassword('');
+			navigate('/auth/login');
+		} else {
+			alert('confirm password ');
+		}
 	};
 
 	return (
-		<div onSubmit={handleSubmit(onSubmit)} className={scss.Registration}>
+		<div onSubmit={handleSubmit(onHandleChange)} className={scss.Registration}>
 			<div className="container">
 				<div className={scss.content}>
 					<div className={scss.headline}>
@@ -98,16 +114,12 @@ const Registration = () => {
 							</div>
 							<input
 								className={
-									errors.confirmPassword
-										? `${scss.input_error}`
-										: `${scss.input}`
+									errors.password ? `${scss.input_error}` : `${scss.input}`
 								}
 								type={isLogPassword ? 'text' : 'password'}
 								placeholder="Подтвердите пароль"
-								// {...register('confirmPassword', {
-								// 	minLength: 4,
-								// 	required: true
-								// })}
+								value={checkPassword}
+								onChange={(e) => setCheckPassword(e.target.value)}
 							/>
 							{isLogPassword ? (
 								<div
