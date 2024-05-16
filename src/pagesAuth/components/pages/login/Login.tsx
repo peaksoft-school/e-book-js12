@@ -13,9 +13,12 @@ const Login = () => {
 	const [postLogin] = usePostLoginMutation();
 	const { register, reset, handleSubmit } = useForm<IFormInput>();
 
-	const onSubmit: SubmitHandler<IFormInput> = (data: any) => {
+	const onSubmit: SubmitHandler<IFormInput> = async (data: any) => {
 		console.log(data);
-		postLogin(data);
+		const response = await postLogin(data);
+		if('data' in response){
+			console.log(response.data);
+		}
 		reset();
 	};
 

@@ -1,17 +1,15 @@
 import { api as index } from '..';
 
-// const favData =
-// 	'https://api.elchocrud.pro/api/v1/4c786684007b4979907332488eb72a39/favorites';
-
 const api = index.injectEndpoints({
 	endpoints: (build) => ({
-		getProductsFavorite: build.query(
-			// FAVORITE.GetProductsResponse,
-			// FAVORITE.GetProductsRequest
-			{
+		getProductsFavorite: build.query<
+			FAVORITE.GetProductsResponse,
+			FAVORITE.GetProductsRequest
+			>({
 				query: () => ({
-					url: '',
-					method: 'GET'
+					url: '/api/favorite/findAllInFavorite',
+					method: 'GET',
+					
 				}),
 				providesTags: ['favorite']
 			}

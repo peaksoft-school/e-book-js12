@@ -2,35 +2,12 @@ import { FC } from 'react';
 import scss from './Favorites.module.scss';
 import { IconX } from '@/src/assets/icons';
 import { NavLink } from 'react-router-dom';
-import book_harry from '../../../../assets/booksImg/harry-potter-chamber.png';
+import { useGetProductsFavoriteQuery } from '@/src/redux/api/favorite';
 
 const FavoritSection: FC = () => {
-	const infoDates = [
-		{
-			_id: 1,
-			image: book_harry,
-			title: 'Гарри Поттер и тайная комната ',
-			author: 'Роулинг Джоан Кэтлин',
-			description:
-				'Второй роман в серии книг про юного волшебника Гарри Поттера, написанный Джоан Роулинг. Книга рассказывает о втором учебном годе в школе чародейства и волшебства Хогвартс, на котором Гарри и его друзья - Рон Уизли и Гермиона Грейнджер - расследуют...'
-		},
-		{
-			_id: 2,
-			image: book_harry,
-			title: 'Гарри Поттер и тайная комната ',
-			author: 'Роулинг Джоан Кэтлин',
-			description:
-				'Второй роман в серии книг про юного волшебника Гарри Поттера, написанный Джоан Роулинг. Книга рассказывает о втором учебном годе в школе чародейства и волшебства Хогвартс, на котором Гарри и его друзья - Рон Уизли и Гермиона Грейнджер - расследуют...'
-		},
-		{
-			_id: 3,
-			image: book_harry,
-			title: 'Гарри Поттер и тайная комната ',
-			author: 'Роулинг Джоан Кэтлин',
-			description:
-				'Второй роман в серии книг про юного волшебника Гарри Поттера, написанный Джоан Роулинг. Книга рассказывает о втором учебном годе в школе чародейства и волшебства Хогвартс, на котором Гарри и его друзья - Рон Уизли и Гермиона Грейнджер - расследуют...'
-		}
-	];
+	const { data } = useGetProductsFavoriteQuery();
+	console.log(data);  
+	
 
 	return (
 		<>
@@ -47,7 +24,7 @@ const FavoritSection: FC = () => {
 						<div className={scss.favorite_header}>
 							<div className={scss.favorites_title}>
 								<h1>Ваши книги</h1>
-								<p>Всего: {infoDates ? infoDates.length : 0}</p>
+								{/* <p>Всего: {infoDates ? infoDates.length : 0}</p> */}
 							</div>
 							<hr />
 							<button className={scss.clear_favorite_button}>
@@ -55,7 +32,7 @@ const FavoritSection: FC = () => {
 							</button>
 						</div>
 						<div className={scss.favorite_card_container}>
-							{infoDates?.map((item) => (
+							{data?.map((item: any) => (
 								<>
 									<hr />
 									<div className={scss.favorite_card_content}>
@@ -78,7 +55,7 @@ const FavoritSection: FC = () => {
 														{item.title}
 													</h1>
 													<p className={scss.favorite_card_author}>
-														{item.author}
+														{item.authorFullName}
 													</p>
 													<p className={scss.favorite_card_description}>
 														{item.description}

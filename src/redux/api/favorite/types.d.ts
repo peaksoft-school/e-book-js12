@@ -22,8 +22,9 @@ namespace FAVORITE {
 	type GetProductsResponse = {
 		image: string;
 		title: string;
-		author: string;
+		authorFullName: string;
 		description: string;
+		id: number;
 	}[];
 	type GetProductsRequest = void;
 
