@@ -3,7 +3,8 @@ import CustomBasketButton from '@/src/ui/customButton/CustomBasketButton';
 import bg_promo from '../../../../assets/booksImg/Discount-cuate 1.png';
 import mark_book from '../../../../assets/booksImg/img-Mark-Meson.png';
 import { Modal } from 'antd';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useGetPromoQuery } from '@/src/redux/api/promo';
 
 const data_book = [
 	{
@@ -71,6 +72,12 @@ const data_book = [
 	}
 ];
 const PromoSection = () => {
+	const { data } = useGetPromoQuery();
+
+	useEffect(() => {
+		console.log(data);
+	});
+
 	const [promoModal, setPromoModal] = useState(false);
 	return (
 		<section className={scss.PromoSection}>
