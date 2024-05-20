@@ -4,15 +4,15 @@ import scss from './Information.module.scss';
 import { FC, useState } from 'react';
 import CustomBasketButton from '@/src/ui/customButton/CustomBasketButton';
 import CustomPersonalAreaButton from '@/src/ui/customButton/CustomPersonalArea';
-import harryPotter from '../../../../assets/booksImg/harrry-potter.png';
 import {
 	useAddBookToBasketMutation,
+	useAddBookToFavoriteMutation,
 	useGetBookByIdQuery
 } from '@/src/redux/api/bookInfo';
 import { useParams } from 'react-router-dom';
 
 interface BookIdProps {
-	id: string | number;
+	id: number;
 }
 
 interface GetResponse {
@@ -22,7 +22,7 @@ interface GetResponse {
 }
 
 interface BookData {
-	id?: number | string;
+	id?: number;
 	image: string;
 	bookType: string;
 	title: string;
@@ -44,14 +44,17 @@ interface BookData {
 const InformationBook: FC<BookIdProps> = () => {
 	const [showBookInfo, setShowBookInfo] = useState(false);
 	const paramsId = useParams();
-	const bookId = String(paramsId.id);
-	const { data, isLoading, error } = useGetBookByIdQuery<GetResponse>(bookId);
-	const [addBookToBasket] = useAddBookToBasketMutation();
-	console.log('error:', error);
+	const bookId = Number(paramsId.id);
 
-	const handleAddBookToBasket = async (id: string) => {
-		console.log(id);
+	const { data, isLoading } = useGetBookByIdQuery<GetResponse>(bookId);
+	const [addBookToBasket] = useAddBookToBasketMutation();
+	const [addBookToFavorite] = useAddBookToFavoriteMutation();
+
+	const handleAddBookToBasket = async (id: number) => {
 		await addBookToBasket(id);
+	};
+	const handleAddBookToFavorite = async (id: number) => {
+		await addBookToFavorite(id);
 	};
 
 	return (
@@ -71,7 +74,7 @@ const InformationBook: FC<BookIdProps> = () => {
 							<div className={scss.contents_book}>
 								<div className={scss.section_about_book}>
 									<div className={scss.woman_book}>
-										<img src={harryPotter} alt="Harry Potter" />
+										<img src={data.image} alt="Harry Potter" />
 									</div>
 								</div>
 								<div className={scss.section_content_text}>
@@ -80,7 +83,20 @@ const InformationBook: FC<BookIdProps> = () => {
 									</div>
 									<div className={scss.section_mony}>
 										<p>{data?.price} $</p>
+										{data.bookType === 'AUDIO_BOOK' ? (
+											<>
+												<div>
+													<audio id="audioPlayer" controls>
+														<source
+															src="path_to_your_audio_file.mp3"
+															type="audio/mpeg"
+														/>
+													</audio>
+												</div>
+											</>
+										) : null}
 									</div>
+
 									<div className={scss.section_info}>
 										<div className={scss.section_info_name}>
 											<p>Автор</p>
@@ -88,7 +104,15 @@ const InformationBook: FC<BookIdProps> = () => {
 											<p>Язык</p>
 											<p>Издательство</p>
 											<p>Год выпуска</p>
-											<p>Объем</p>
+											{data.bookType === 'AUDIO_BOOK' ? (
+												<>
+													<p>Длительность</p>
+												</>
+											) : (
+												<>
+													<p>Объем</p>
+												</>
+											)}
 										</div>
 										<div className={scss.section_info_two}>
 											{
@@ -99,7 +123,15 @@ const InformationBook: FC<BookIdProps> = () => {
 														<p>{data?.language}</p>
 														<p>{data?.publishingHouse}</p>
 														<p>{data?.publishedYear}</p>
-														<p>{data?.volume}</p>
+														{data.bookType === 'AUDIO_BOOK' ? (
+															<>
+																<p>{data?.duration}</p>
+															</>
+														) : (
+															<>
+																<p>{data?.volume}</p>
+															</>
+														)}
 													</div>
 												</>
 											}
@@ -108,7 +140,9 @@ const InformationBook: FC<BookIdProps> = () => {
 									<div className={scss.section_boot}>
 										<CustomPersonalAreaButton
 											nameClass={scss.favorite_btn}
-											onClick={() => {}}
+											onClick={() => {
+												handleAddBookToFavorite(bookId);
+											}}
 										>
 											<p className={scss.boot1}>В избранное</p>
 										</CustomPersonalAreaButton>
@@ -116,7 +150,6 @@ const InformationBook: FC<BookIdProps> = () => {
 											nameClass={scss.basket_btn}
 											onClick={() => {
 												handleAddBookToBasket(bookId);
-												console.log(data);
 											}}
 										>
 											<p className={scss.boot1}>Добавить в корзину</p>
@@ -127,29 +160,34 @@ const InformationBook: FC<BookIdProps> = () => {
 							<div className={scss.section_text_books}>
 								<div className={scss.section_show_info}>
 									<div className={scss.show_info_book}>
+										{data.bookType === 'PAPER_BOOK' ? (
+											<>
+												{' '}
+												<p
+													className={showBookInfo ? scss.color_text : ''}
+													onClick={() => setShowBookInfo(true)}
+												>
+													Читать фрагмент
+												</p>
+											</>
+										) : null}
 										<p
 											className={showBookInfo ? '' : scss.color_text}
 											onClick={() => setShowBookInfo(false)}
 										>
 											О книге
 										</p>
-										<p
-											className={showBookInfo ? scss.color_text : ''}
-											onClick={() => setShowBookInfo(true)}
-										>
-											Читать фрагмент
-										</p>
 									</div>
 									<p className={scss.book_info}>
 										{showBookInfo ? (
 											<>{data.description}</>
 										) : (
-											<>{data.description}</>
+											<>{data.fragment}</>
 										)}
 									</p>
 								</div>
 								<div className={scss.info_img}>
-									{/* <img src={''} alt="Book List" /> */}
+									<img src={data.image} alt="Book List" />
 								</div>
 							</div>
 						</>
