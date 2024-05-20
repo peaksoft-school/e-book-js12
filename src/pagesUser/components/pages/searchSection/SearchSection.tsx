@@ -65,6 +65,44 @@ const SearchSection = () => {
 			price: '549 с'
 		}
 	];
+	const jenreData = [
+		{
+			id: 1,
+			jenreName: 'ХУДОЖЕСТВЕННАЯ ЛИТЕРАТУРА'
+		},
+		{
+			id: 2,
+			jenreName: 'ОБРАЗОВАНИЕ'
+		},
+		{
+			id: 3,
+			jenreName: 'КНИГИ ДЛЯ ДЕТЕЙ'
+		},
+		{
+			id: 4,
+			jenreName: 'НАУКА И ТЕХНОЛОГИЯ БРАЗОВАНИЕ'
+		},
+		{
+			id: 5,
+			jenreName: 'СООБЩЕСТВО'
+		},
+		{
+			id: 6,
+			jenreName: 'БИЗНЕС ЛИТЕРАТУРА'
+		},
+		{
+			id: 7,
+			jenreName: 'КРАСОТА ЗДОРОВЬЕ СПОРТ'
+		},
+		{
+			id: 8,
+			jenreName: 'УВЛЕЧЕНИЯ'
+		},
+		{
+			id: 9,
+			jenreName: 'ПСИХОЛОГИЯ'
+		}
+	];
 
 	return (
 		<section className={scss.SearchSection}>
@@ -152,21 +190,31 @@ const SearchSection = () => {
 							<>
 								<div className={`${isGenre ? scss.fillters : scss.none}`}>
 									<CustomGenreInput placeholder="Я ищу..." />
-									<div
-										onClick={() => setCheckGenre(!checkGenre)}
-										className={scss.checkbox}
-									>
-										{checkGenre ? (
-											<>
-												<BlackSquareIcon />
-											</>
-										) : (
-											<>
-												<WhiteSquareIcon />
-											</>
-										)}
-										<p>Зарубежная литература</p>
-									</div>
+									{jenreData.map((jenre) => (
+										<>
+											<div
+												onClick={() => {
+													setCheckGenre(!checkGenre);
+													console.log(jenre.id);
+													
+												}}
+												className={scss.checkbox}
+											>
+												<div className={scss.checkbox_jenre}>
+													{checkGenre ? (
+														<>
+															<BlackSquareIcon />
+														</>
+													) : (
+														<>
+															<WhiteSquareIcon />
+														</>
+													)}
+												</div>
+												<p>{jenre.jenreName}</p>
+											</div>
+										</>
+									))}
 								</div>
 							</>
 							<div
