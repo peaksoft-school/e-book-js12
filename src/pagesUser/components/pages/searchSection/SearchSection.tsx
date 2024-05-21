@@ -158,7 +158,7 @@ const SearchSection = () => {
 									<CustomGenreInput
 										placeholder="Я ищу..."
 										value={''}
-										onChange={{}}
+										onChange={function (): void {}}
 									/>
 									<div
 										onClick={() => setCheckGenre(!checkGenre)}
