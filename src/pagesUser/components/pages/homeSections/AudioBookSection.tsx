@@ -3,14 +3,16 @@ import first_book from '../../../../assets/booksImg/img-milky-way-empire.png';
 import second_book from '../../../../assets/booksImg/img-green-color.png';
 import third_book from '../../../../assets/booksImg/img-nisa.png';
 import { IconNewIcon } from '@/src/assets/icons';
+import { useNavigate } from 'react-router-dom';
 const AudioBookSection = () => {
+	const navigate = useNavigate();
 	return (
 		<section className={scss.AudioBooks}>
 			<div className="container">
 				<div className={scss.content}>
 					<div className={scss.title_audio_books}>
 						<h5>Аудиокниги</h5>
-						<p>Смотреть все</p>
+						<p onClick={() => navigate('/search_book')}>Смотреть все</p>
 					</div>
 					<div className={scss.books_container}>
 						<div className={scss.book_first}>

@@ -1,7 +1,4 @@
 .Header {
-	// position: fixed;
-	// left: 0;
-	// top: 0;
 	width: 100%;
 	z-index: 999;
 
@@ -32,6 +29,7 @@
 			align-items: center;
 			gap: 44.5px;
 			margin-bottom: 20px;
+			position: relative;
 			@media (max-width: 1350px) {
 				gap: 40px;
 			}
@@ -49,8 +47,43 @@
 				max-width: 896px;
 				width: 100%;
 				margin: 30px 0px 15px 0px;
+
 				@media (max-width: 470px) {
 					display: none;
+				}
+			}
+			.search_content {
+				display: flex;
+				flex-direction: column;
+				min-width: 810px;
+				width: 100%;
+				.search_results {
+					position: absolute;
+					top: 76px;
+					z-index: 333;
+					ul {
+						display: flex;
+						flex-direction: column;
+						background-color: #fff;
+						padding: 20px 24px;
+						gap: 10px;
+						li {
+							min-width: 810px;
+							width: 100%;
+							border-bottom: 1px solid silver;
+							margin-bottom: 10px;
+							padding: 5px;
+							cursor: pointer;
+							h3 {
+								color: rgb(34, 34, 34);
+								font-size: 16px;
+								font-weight: 400;
+								line-height: 22px;
+								letter-spacing: 0px;
+								text-align: left;
+							}
+						}
+					}
 				}
 			}
 			.right_content {
@@ -77,6 +110,7 @@
 					align-items: start;
 					cursor: pointer;
 					position: relative;
+					padding: 5px;
 					span {
 						&:first-child {
 							color: rgb(0, 0, 0);
