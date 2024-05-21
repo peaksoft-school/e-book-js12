@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
-
 namespace SORT {
 	type GetSortsResponse = {
 		id: number;
@@ -25,6 +24,4 @@ namespace SORT {
 		price: number;
 		quantity: number;
 	};
-
-
 }

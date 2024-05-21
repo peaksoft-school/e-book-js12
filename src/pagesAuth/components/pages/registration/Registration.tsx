@@ -47,7 +47,6 @@ const Registration = () => {
 			alert('confirm password ');
 		}
 	};
-
 	const signInWithGoogleHandler = async () => {
 		await signInWithPopup(auth, provider).then(({ user }) => {
 			const data = {
@@ -175,8 +174,8 @@ const Registration = () => {
 					<div className={scss.btn_with_google}>
 						<button onClick={signInWithGoogleHandler}>
 							<div className={scss.content_btn}>
-							<IconGoogleLogo />
-							<p>войти через google</p>
+								<IconGoogleLogo />
+								<p>войти через google</p>
 							</div>
 						</button>
 					</div>

@@ -5,7 +5,6 @@ import { NavLink } from 'react-router-dom';
 import book_harry from '../../../../assets/booksImg/harry-potter-chamber.png';
 
 const FavoritSection: FC = () => {
-
 	const infoDates = [
 		{
 			_id: 1,

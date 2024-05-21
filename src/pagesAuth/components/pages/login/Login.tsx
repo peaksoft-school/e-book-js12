@@ -23,7 +23,7 @@ const Login = () => {
 			navigate('/');
 		}
 	};
-	
+
 	return (
 		<div className={scss.Login}>
 			<div className="container">
