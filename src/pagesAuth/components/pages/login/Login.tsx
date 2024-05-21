@@ -2,7 +2,7 @@
 import CustomLoginInput from '@/src/ui/customInpute/CustomLoginInput';
 import scss from './Login.module.scss';
 import CustomPasswordInput from '@/src/ui/customInpute/CustomPasswordInput';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { usePostLoginMutation } from '@/src/redux/api/me';
 interface IFormInput {
@@ -11,14 +11,18 @@ interface IFormInput {
 }
 const Login = () => {
 	const [postLogin] = usePostLoginMutation();
+	const navigate = useNavigate();
 	const { register, reset, handleSubmit } = useForm<IFormInput>();
-
-	const onSubmit: SubmitHandler<IFormInput> = (data: any) => {
-		console.log(data);
-		postLogin(data);
-		reset();
+	const onSubmit: SubmitHandler<IFormInput> = async (data: any) => {
+		const results = await postLogin(data);
+		if ('data' in results) {
+			const { token } = results.data;
+			localStorage.setItem('token', token);
+			localStorage.setItem('isAuth', 'true');
+			reset();
+			navigate('/');
+		}
 	};
-
 	return (
 		<div className={scss.Login}>
 			<div className="container">

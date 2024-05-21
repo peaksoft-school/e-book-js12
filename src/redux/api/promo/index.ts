@@ -2,14 +2,9 @@ import { api as index } from '..';
 
 const api = index.injectEndpoints({
   endpoints: (build) => ({
-    getPromo: build.query<
-    GETBOOKPROMO.GetBookPromoResponse,
-    GETBOOKPROMO.GetBookPromoResponse
-    >({
-      query: () => (
-        console.log('promo'),
-        {
-        url: `/api/promoCode/enterPromotionalCode`,
+    getPromo: build.query<PROMO.GetBookPromoResponse, { promoCode: string }>({
+      query: ({ promoCode }) => ({
+        url: `/api/promoCode/enterPromotionalCode?promoCode=${promoCode}`,
         method: 'GET',
       }),
       providesTags: ['promo'],
