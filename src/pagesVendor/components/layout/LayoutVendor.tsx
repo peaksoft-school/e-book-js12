@@ -26,15 +26,20 @@ const LayoutVendor = () => {
 				<main>
 					<Routes>
 						<Route path="/" element={<HomePage />} />
-						<Route path="/vendor/home" element={<VendorsBooks />} />
-						<Route path="vendor/:id" element={<AboutBook />} />
-						<Route path="vendor/addBook" element={<BookAddSection />} />
-						<Route path="vendor/profile" element={<ProfileVendor />} />
+						<Route path="/home" element={<VendorsBooks />} />
+						<Route path="/:id" element={<AboutBook />} />
+						<Route path="/addBook" element={<BookAddSection />} />
+						<Route path="/profile" element={<ProfileVendor />} />
 						<Route path="/login" element={<Login />} />
 						<Route path="/registration" element={<Registration />} />
 					</Routes>
 				</main>
-				<Footer />
+				{location.pathname === '/vendor/registration' ||
+				location.pathname === '/vendor/login' ? null : (
+					<>
+						<Footer />
+					</>
+				)}
 			</div>
 		</>
 	);
