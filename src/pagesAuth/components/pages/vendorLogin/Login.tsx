@@ -1,13 +1,12 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Link } from 'react-router-dom';
 import scss from './Login.module.scss';
-import { useForm } from 'react-hook-form';
+import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
 import CustomLoginInput from '@/src/ui/customInpute/CustomLoginInput';
 import CustomPasswordInput from '@/src/ui/customInpute/CustomPasswordInput';
 import { usePostLoginMutation } from '@/src/redux/api/me';
 
 const Login = () => {
-	const [postLogin] = usePostLoginMutation()
+	const [postLogin] = usePostLoginMutation();
 	const {
 		// control,
 		register,
@@ -15,9 +14,9 @@ const Login = () => {
 		handleSubmit
 	} = useForm();
 
-	const handleOnSubmit = async (data: any) => {
+	const handleOnSubmit: SubmitHandler<FieldValues> = async (data) => {
 		console.log(data);
-		await postLogin(data)
+		await postLogin(data);
 		reset();
 	};
 	return (

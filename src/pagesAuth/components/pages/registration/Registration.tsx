@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Link, useNavigate } from 'react-router-dom';
 import scss from './Registration.module.scss';
 import { useState } from 'react';
@@ -165,27 +164,26 @@ const Registration = () => {
 								</div>
 							)}
 						</label>
-						{/* <div className={scss.follow_checkbox}>
-							<label>
-								<div className={scss.checkbox_content}>
-									<input type="checkbox" />
-									<p>
-										Подпишитесь на рассылку, чтобы получать новости от eBook{' '}
-									</p>
-								</div>
-							</label>
-						</div> */}
+
 						<div className={scss.btn_container}>
 							<button type="submit">Создать аккаунт</button>
-							<button>Стать продавцом на eBook</button>
 						</div>
 					</form>
 					<div className={scss.btn_with_google}>
 						<button onClick={signInWithGoogleHandler}>
 							<div className={scss.content_btn}>
 								<IconGoogleLogo />
-								<p>войти через google</p>
+								<p>Sign up with Google</p>
 							</div>
+						</button>
+					</div>
+					<div className={scss.vendor_btn}>
+						<button
+							onClick={() => {
+								navigate('/vendor/registration');
+							}}
+						>
+							Стать продавцом на eBook
 						</button>
 					</div>
 				</div>

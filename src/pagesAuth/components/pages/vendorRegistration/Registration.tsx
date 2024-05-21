@@ -1,10 +1,14 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Link } from 'react-router-dom';
 import scss from './Registration.module.scss';
 import { useState } from 'react';
 import EyeSeeIcon from '@/src/assets/icons/icon-eyeSee';
 import EyeClose from '@/src/assets/icons/icon-eyeClose';
-import { Controller, useForm } from 'react-hook-form';
+import {
+	Controller,
+	FieldValues,
+	SubmitHandler,
+	useForm
+} from 'react-hook-form';
 import { PhoneInput } from 'react-international-phone';
 import 'react-international-phone/style.css';
 import { usePostVendorRegistrationMutation } from '@/src/redux/api/me';
@@ -23,7 +27,7 @@ const Registration = () => {
 		handleSubmit
 	} = useForm();
 
-	const onSubmit = async (data: any) => {
+	const onSubmit: SubmitHandler<FieldValues> = async (data) => {
 		const results = await postVendor(data);
 		if ('data' in results) {
 			const { token } = results.data;
@@ -163,16 +167,6 @@ const Registration = () => {
 								</div>
 							)}
 						</label>
-						<div className={scss.follow_checkbox}>
-							<label>
-								<div className={scss.checkbox_content}>
-									<input type="checkbox" />
-									<p>
-										Подпишитесь на рассылку, чтобы получать новости от eBook{' '}
-									</p>
-								</div>
-							</label>
-						</div>
 						<div className={scss.btn_container}>
 							<button type="submit">Создать аккаунт</button>
 							<button>Стать продавцом на eBook</button>
