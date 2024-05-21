@@ -56,8 +56,10 @@ const UserSection = () => {
 						<thead>
 							<tr>
 								<th>№</th>
-								<th>ФИО</th>
-								<th>Почта</th>
+								<td></td>
+								<td>ФИО</td>
+								<td>Почта</td>
+								<th></th>
 								<th></th>
 							</tr>
 						</thead>
@@ -69,10 +71,11 @@ const UserSection = () => {
 								<td onClick={() => navigate(`/admin/users/${user.fullName}`)}>
 									{user.fullName}
 								</td>
+								<tr></tr>
 								<td onClick={() => navigate(`/admin/users/${user.fullName}`)}>
 									{user.gmail}
 								</td>
-								<td></td>
+								<tr></tr>
 								<td></td>
 								<td className={scss.button_as}>
 									<button onClick={() => showModal(user)}>
