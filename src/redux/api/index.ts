@@ -6,8 +6,8 @@ import {
 
 const baseQuery = fetchBaseQuery({
 	baseUrl: import.meta.env.VITE_PUBLIC_API_URL,
-	prepareHeaders: (headers) => {		
-		const token = localStorage.getItem('auth_token');		
+	prepareHeaders: (headers) => {
+		const token = localStorage.getItem('token');
 		if (token) {
 			headers.set('Authorization', `Bearer ${token}`);
 		}
@@ -25,6 +25,6 @@ export const api = createApi({
 	baseQuery: baseQueryExtended,
 	refetchOnReconnect: true,
 	refetchOnFocus: false,
-	tagTypes: ['me', 'product', 'basket', 'favorite'],
+	tagTypes: ['me', 'product', 'basket', 'favorite', 'sort'],
 	endpoints: () => ({})
 });

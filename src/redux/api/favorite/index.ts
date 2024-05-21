@@ -2,30 +2,42 @@ import { api as index } from '..';
 
 const api = index.injectEndpoints({
 	endpoints: (build) => ({
-		getProductsFavorite: build.query<
-			FAVORITE.GetProductsResponse,
-			FAVORITE.GetProductsRequest
-			>({
-				query: () => ({
-					url: '/api/favorite/findAllInFavorite',
-					method: 'GET',
-					
-				}),
-				providesTags: ['favorite']
-			}
-		),
-
-		addProductFavorite: build.mutation<
-			FAVORITE.PatchProductResponse,
-			FAVORITE.PatchProductRequest
+		getAllBooksInFavorite: build.query<
+			FAVORITE.GetAllBooksInFavoriteResponse,
+			FAVORITE.GetAllBooksInFavoriteRequest
 		>({
-			query: (id) => ({
-				url: `https://api.elchocrud.pro/api/v1/4c786684007b4979907332488eb72a39/favorites/${id}`,
-				method: 'PATCH'
+			query: () => ({
+				url: '/api/favorite/findAllInFavorite',
+				method: 'GET'
+			}),
+			providesTags: ['favorite']
+		}),
+
+		getCountOfBooksInFavorite: build.query<
+			FAVORITE.GetCountOfBooksResponse,
+			FAVORITE.GetCountOfBooksRequest
+		>({
+			query: () => ({
+				url: '/api/favorite/countOfBooksInFavorite',
+				method: 'GET'
+			}),
+			providesTags: ['favorite']
+		}),
+
+		clearFavorite: build.mutation<
+		FAVORITE.ClearFavoriteResponse,
+		FAVORITE.ClearFavoriteRequest
+		>({
+			query: (data) => ({
+				url: '/api/favorite/clearFavorites',
+				method: 'DELETE',
+				body: data
 			}),
 			invalidatesTags: ['favorite']
-		})
+		}),
+
 	})
 });
-export const { useGetProductsFavoriteQuery, useAddProductFavoriteMutation } =
+
+export const { useGetAllBooksInFavoriteQuery, useGetCountOfBooksInFavoriteQuery, useClearFavoriteMutation } =
 	api;

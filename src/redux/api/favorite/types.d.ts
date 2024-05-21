@@ -19,18 +19,23 @@ interface Vendor {
 }
 
 namespace FAVORITE {
-	type GetProductsResponse = {
+	type GetAllBooksInFavoriteResponse = {
 		image: string;
 		title: string;
 		authorFullName: string;
 		description: string;
 		id: number;
 	}[];
-	type GetProductsRequest = void;
+	type GetAllBooksInFavoriteRequest = void;
 
-	type PatchProductResponse = {
-		success: boolean;
-		results: Results;
-	};
-	type PatchProductRequest = number;
+	type GetCountOfBooksResponse = {
+		count: string;
+	}
+	type GetCountOfBooksRequest = void;
+
+	type ClearFavoriteResponse = {
+		httpStatus: string;
+		message: string;
+	}[];
+	type ClearFavoriteRequest = void;
 }

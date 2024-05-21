@@ -2,12 +2,21 @@ import { FC } from 'react';
 import scss from './Favorites.module.scss';
 import { IconX } from '@/src/assets/icons';
 import { NavLink } from 'react-router-dom';
-import { useGetProductsFavoriteQuery } from '@/src/redux/api/favorite';
+import {
+	useClearFavoriteMutation,
+	useGetAllBooksInFavoriteQuery,
+	useGetCountOfBooksInFavoriteQuery
+} from '@/src/redux/api/favorite';
 
 const FavoritSection: FC = () => {
-	const { data } = useGetProductsFavoriteQuery();
-	console.log(data);  
-	
+	const { data } = useGetAllBooksInFavoriteQuery();
+	console.log(data);
+	const { data: count } = useGetCountOfBooksInFavoriteQuery();
+	const [clearFavorite] = useClearFavoriteMutation();
+
+	const handleClearFavorite = () => {
+		clearFavorite();
+	};
 
 	return (
 		<>
@@ -24,10 +33,13 @@ const FavoritSection: FC = () => {
 						<div className={scss.favorite_header}>
 							<div className={scss.favorites_title}>
 								<h1>Ваши книги</h1>
-								{/* <p>Всего: {infoDates ? infoDates.length : 0}</p> */}
+								<p>Всего: {count}</p>
 							</div>
 							<hr />
-							<button className={scss.clear_favorite_button}>
+							<button
+								className={scss.clear_favorite_button}
+								onClick={handleClearFavorite}
+							>
 								Очистить избранные
 							</button>
 						</div>
