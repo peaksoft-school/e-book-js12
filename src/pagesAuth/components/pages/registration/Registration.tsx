@@ -5,7 +5,13 @@ import { useState } from 'react';
 import EyeSeeIcon from '@/src/assets/icons/icon-eyeSee';
 import EyeClose from '@/src/assets/icons/icon-eyeClose';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { usePostRegistrationMutation } from '@/src/redux/api/me';
+import {
+	usePostRegistrationMutation,
+	usePostWithGoogleMutation
+} from '@/src/redux/api/me';
+import { signInWithPopup } from 'firebase/auth';
+import { auth, provider } from '@/src/configs/firebase';
+import { IconGoogleLogo } from '@/src/assets/icons';
 
 interface TypeData {
 	email: string;
@@ -18,6 +24,7 @@ const Registration = () => {
 	const [isLogPassword, setLogPassword] = useState(false);
 	const [checkPassword, setCheckPassword] = useState('');
 	const [postUser] = usePostRegistrationMutation();
+	const [postGoogleToken] = usePostWithGoogleMutation();
 	const navigate = useNavigate();
 
 	const {
@@ -39,6 +46,15 @@ const Registration = () => {
 		} else {
 			alert('confirm password ');
 		}
+	};
+
+	const signInWithGoogleHandler = async () => {
+		await signInWithPopup(auth, provider).then(({ user }) => {
+			const data = {
+				idToken: user.accessToken
+			};
+			postGoogleToken(data);
+		});
 	};
 
 	return (
@@ -156,6 +172,14 @@ const Registration = () => {
 							<button>Стать продавцом на eBook</button>
 						</div>
 					</form>
+					<div className={scss.btn_with_google}>
+						<button onClick={signInWithGoogleHandler}>
+							<div className={scss.content_btn}>
+							<IconGoogleLogo />
+							<p>войти через google</p>
+							</div>
+						</button>
+					</div>
 				</div>
 			</div>
 		</div>

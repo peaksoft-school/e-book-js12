@@ -17,8 +17,23 @@ const api = index.injectEndpoints({
 				body: data
 			}),
 			invalidatesTags: ['me']
+		}),
+		postWithGoogle: build.mutation({
+			query: (tokenGoogle) => (
+				console.log(tokenGoogle, 'test'),
+				{
+					url: '/api/auth/authWithGoogle',
+					method: 'POST',
+					body: tokenGoogle
+				}
+			),
+			invalidatesTags: ['me']
 		})
 	})
 });
 
-export const { usePostRegistrationMutation, usePostLoginMutation } = api;
+export const {
+	usePostRegistrationMutation,
+	usePostLoginMutation,
+	usePostWithGoogleMutation
+} = api;
