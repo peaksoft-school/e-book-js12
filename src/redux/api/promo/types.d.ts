@@ -1,15 +1,13 @@
-export interface Book {
-  id: number;
-  images: string[];
-  title: string;
-  authorsFullName: string;
-  price: number;
-  disCount: number;
-  newPricePromoCodeBook: number;
-}
-
-export interface ApiResponse {
-  page: number;
-  size: number;
-  allBooksByVendors:Book[];
+/* eslint-disable @typescript-eslint/no-unused-vars */
+namespace GETBOOKPROMO {
+  type GetBookPromoResponse = {
+    id?: number;
+    image:string;
+    title:string;
+    authorsFullName: string;
+    price: number;
+    disCount: number;
+    newPricePromoCodeBook: number;
+  }[];
+  type GetBookPromoResponse= number
 }

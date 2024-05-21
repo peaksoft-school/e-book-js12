@@ -76,7 +76,7 @@ const PromoSection = () => {
 
 	useEffect(() => {
 		console.log(data);
-	});
+	}, [data]);
 
 	const [promoModal, setPromoModal] = useState(false);
 	return (
