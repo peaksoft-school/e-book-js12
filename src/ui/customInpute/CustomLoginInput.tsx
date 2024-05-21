@@ -1,13 +1,30 @@
-import { FC } from 'react';
+/* eslint-disable */
+//@ts-nocheck
+import { UseFormRegister, FieldValues } from 'react-hook-form';
 import scss from './Style.module.scss';
 
-interface TypeProps {
+type FieldPath<T extends FieldValues> = keyof T | (keyof T)[];
+
+interface TypeProps<T extends FieldValues> {
 	placeholder: string;
 	type: string;
+	register: UseFormRegister<T>;
+	registerName: FieldPath<T>;
 }
-const CustomLoginInput: FC<TypeProps> = ({ placeholder, type }) => {
+
+const CustomLoginInput = <T extends FieldValues>({
+	placeholder,
+	type,
+	register,
+	registerName
+}: TypeProps<T>) => {
 	return (
-		<input placeholder={placeholder} type={type} className={scss.login_input} />
+		<input
+			placeholder={placeholder}
+			{...register(registerName, { required: true })}
+			type={type}
+			className={scss.login_input}
+		/>
 	);
 };
 

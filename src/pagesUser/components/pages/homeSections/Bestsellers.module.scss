@@ -1,18 +1,17 @@
 .Bestsellers {
 	.content {
 		padding-bottom: 104px;
+		@media (max-width: 767px) {
+			padding: 0px;
+		}
 		.title {
 			display: flex;
 			justify-content: space-between;
+			align-items: center;
+			flex-wrap: wrap;
 			margin-bottom: 50px;
 			margin-top: 126.5px;
-			@media (max-width: 767px) {
-				display: flex;
-				flex-direction: column;
-				gap: 15px;
-				align-items: center;
-				justify-content: center;
-			}
+			gap: 10px;
 
 			h2 {
 				color: rgb(28, 28, 28);
@@ -33,6 +32,7 @@
 				letter-spacing: 0px;
 				text-align: left;
 				text-decoration-line: underline;
+				// width: 100%;
 			}
 		}
 
@@ -150,9 +150,10 @@
 					}
 				}
 			}
-			.test {
+			.sliders {
 				display: flex;
 				justify-content: center;
+				height: max-content;
 				.slider_container {
 					width: 100%;
 					height: 1000px;

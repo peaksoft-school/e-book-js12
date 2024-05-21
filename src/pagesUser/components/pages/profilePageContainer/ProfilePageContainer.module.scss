@@ -3,6 +3,31 @@
 	.test {
 		position: relative;
 		z-index: 555;
+		.links {
+			display: flex;
+			align-items: center;
+			margin-bottom: 30px;
+			.link_to_home {
+				color: rgb(150, 150, 150);
+				font-size: 14px;
+				font-weight: 400;
+			}
+			.link_to_home_active {
+				color: black;
+			}
+			.link_to_basket {
+				color: rgb(150, 150, 150);
+				color: rgb(41, 41, 41);
+				font-size: 14px;
+				font-weight: 600;
+				line-height: 130%;
+				letter-spacing: 0px;
+				text-align: left;
+			}
+			.link_to_basket_active {
+				color: black;
+			}
+		}
 	}
 	.head_text {
 		font-family: Open Sans;

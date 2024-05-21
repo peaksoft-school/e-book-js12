@@ -96,7 +96,7 @@ const EbookSection = () => {
 								</div>
 							))}
 						</div>
-						<div className={scss.test}>
+						<div className={scss.sliders}>
 							<div className={scss.slider_container}>
 								<Swiper
 									pagination={{

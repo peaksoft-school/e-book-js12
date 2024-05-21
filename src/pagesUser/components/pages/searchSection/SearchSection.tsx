@@ -10,6 +10,7 @@ import {
 	IconBlackLike,
 	IconBurgerMenu,
 	IconDeleteX,
+	IconUpIcon,
 	IconWhiteCircle,
 	IconWhiteLike
 } from '@/src/assets/icons';
@@ -34,14 +35,13 @@ const SearchSection = () => {
 	const [language, setLanguage] = useState(false);
 
 	const [menufilters, setMenuFilters] = useState(false);
-
-	const data = [
+	const databook = [
 		{
 			id: 1,
 			image: history_img,
 			title: 'История Книги',
 			aftor: 'Э. Эггер, А. Бахтияров',
-			price: '549 с'
+			price: '33333 с'
 		},
 		{
 			id: 2,
@@ -99,7 +99,15 @@ const SearchSection = () => {
 							onClick={() => setIsSort(!isSort)}
 						>
 							<p>Сортировать</p>
-							<IconArrowBottom />
+							{isSort ? (
+								<>
+									<IconUpIcon />
+								</>
+							) : (
+								<>
+									<IconArrowBottom />
+								</>
+							)}
 						</div>
 						{
 							<>
@@ -130,7 +138,15 @@ const SearchSection = () => {
 								className={scss.genre_fillter}
 							>
 								<p>Жанры</p>
-								<IconArrowBottom />
+								{isGenre ? (
+									<>
+										<IconUpIcon />
+									</>
+								) : (
+									<>
+										<IconArrowBottom />
+									</>
+								)}
 							</div>
 							<hr />
 							<>
@@ -160,7 +176,15 @@ const SearchSection = () => {
 								className={scss.type_fillter}
 							>
 								<p>Тип</p>
-								<IconArrowBottom />
+								{filterType ? (
+									<>
+										<IconUpIcon />
+									</>
+								) : (
+									<>
+										<IconArrowBottom />
+									</>
+								)}
 							</div>
 							<hr />
 							<div
@@ -187,7 +211,15 @@ const SearchSection = () => {
 								className={scss.price_fillter}
 							>
 								<p>Стоимость</p>
-								<IconArrowBottom />
+								{priceGenre ? (
+									<>
+										<IconUpIcon />
+									</>
+								) : (
+									<>
+										<IconArrowBottom />
+									</>
+								)}
 							</div>
 							<hr />
 							<div className={`${priceGenre ? scss.fillters : scss.none}`}>
@@ -231,7 +263,15 @@ const SearchSection = () => {
 								className={scss.language_fillter}
 							>
 								<p>Язык издания</p>
-								<IconArrowBottom />
+								{language ? (
+									<>
+										<IconUpIcon />
+									</>
+								) : (
+									<>
+										<IconArrowBottom />
+									</>
+								)}
 							</div>
 							<hr />
 							<>
@@ -285,7 +325,7 @@ const SearchSection = () => {
 							</>
 						</div>
 						<div className={scss.container_books}>
-							{data.map((item) => (
+							{databook.map((item) => (
 								<div className={scss.card_book} key={item.id}>
 									<div
 										onClick={() => setFavoriteBook(!favoriteBook)}
@@ -301,8 +341,15 @@ const SearchSection = () => {
 											</>
 										)}
 									</div>
-									<img src={item.image} alt="" />
-									<div className={scss.card_description}>
+									<img
+										onClick={() => navigate(`/search_book/${item.id}`)}
+										src={item.image}
+										alt=""
+									/>
+									<div
+										onClick={() => navigate(`/search_book/${item.id}`)}
+										className={scss.card_description}
+									>
 										<h3>{item.title}</h3>
 										<p>{item.aftor}</p>
 										<p>{item.price}</p>

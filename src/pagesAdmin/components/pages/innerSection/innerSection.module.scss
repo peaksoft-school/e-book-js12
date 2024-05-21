@@ -1,7 +1,6 @@
 .InnerSection {
 	.container {
 		padding-inline: 20px;
-		max-width: 1350px;
 		margin: 0px auto;
 		.total_quantity {
 			display: flex;
@@ -50,6 +49,7 @@
 			max-width: 268px;
 			width: calc(50% - 15px);
 			background: rgb(237, 237, 237);
+			cursor: pointer;
 
 			@media (max-width: 830px) {
 				max-width: 200px;

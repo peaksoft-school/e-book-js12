@@ -150,21 +150,22 @@ const AboutVendorsBooks = () => {
 							</span>
 							{isOpenBooksType ? <UpIcon /> : <IconArrowBottom />}
 						</p>
-						{isOpenBooksType && (
-							<div className={scss.type_list}>
-								<p onClick={() => handleGenreSelect('В избранном')}>
-									В избранном
-								</p>
-								<hr />
-								<p onClick={() => handleGenreSelect('В корзине')}>В корзине</p>
-								<hr />
-								<p onClick={() => handleGenreSelect('	Со скидками')}>
-									Со скидками
-								</p>
-								<hr />
-								<p onClick={() => handleGenreSelect('Проданы')}>Проданы</p>
-							</div>
-						)}
+
+						<div
+							className={`${isOpenBooksType ? scss.type_list : scss.none_books_type}`}
+						>
+							<p onClick={() => handleGenreSelect('В избранном')}>
+								В избранном
+							</p>
+							<hr />
+							<p onClick={() => handleGenreSelect('В корзине')}>В корзине</p>
+							<hr />
+							<p onClick={() => handleGenreSelect('	Со скидками')}>
+								Со скидками
+							</p>
+							<hr />
+							<p onClick={() => handleGenreSelect('Проданы')}>Проданы</p>
+						</div>
 					</div>
 				</div>
 				<hr />
