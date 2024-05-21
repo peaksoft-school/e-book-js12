@@ -110,6 +110,8 @@
 
 				.section_mony {
 					display: flex;
+					justify-content: space-between;
+					align-items: center;
 					margin-top: 40px;
 					@media (max-width: 650px) {
 						margin-top: 20px;

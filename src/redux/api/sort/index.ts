@@ -9,7 +9,6 @@ const api = index.injectEndpoints({
 			}),
 			providesTags: ['sort']
 		}),
-
 		postSortBook: build.mutation<SORT.PostSortResponse, SORT.PostSortRequest>({
 			query: (newData) => ({
 				url: '/products/create',

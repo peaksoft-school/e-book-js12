@@ -1,25 +1,43 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Link } from 'react-router-dom';
 import scss from './Registration.module.scss';
 import { useState } from 'react';
 import EyeSeeIcon from '@/src/assets/icons/icon-eyeSee';
 import EyeClose from '@/src/assets/icons/icon-eyeClose';
-import { useForm } from 'react-hook-form';
+import {
+	Controller,
+	FieldValues,
+	SubmitHandler,
+	useForm
+} from 'react-hook-form';
+import { PhoneInput } from 'react-international-phone';
+import 'react-international-phone/style.css';
+import { usePostVendorRegistrationMutation } from '@/src/redux/api/me';
 
 const Registration = () => {
 	const [isPassword, setIsPassword] = useState(false);
 	const [isLogPassword, setLogPassword] = useState(false);
+	const [confirmPassword, setConfirmPassword] = useState('');
+	const [postVendor] = usePostVendorRegistrationMutation();
 
 	const {
 		formState: { errors },
-		// control, ! Это нам понадобится
+		control,
 		register,
-		// reset,  ! Это нам понадобится
+		reset,
 		handleSubmit
 	} = useForm();
 
-	const onSubmit = (data: any) => {
-		console.log(data);
+	const onSubmit: SubmitHandler<FieldValues> = async (data) => {
+		const results = await postVendor(data);
+		if ('data' in results) {
+			const { token } = results.data;
+			localStorage.setItem('tokenVendor', token);
+			localStorage.setItem('isVendor', 'true');
+			localStorage.setItem('isAuth', 'false');
+			localStorage.removeItem('token');
+			reset();
+			setConfirmPassword('');
+		}
 	};
 
 	return (
@@ -39,9 +57,36 @@ const Registration = () => {
 								className={
 									errors.name ? `${scss.input_error}` : `${scss.input}`
 								}
-								{...register('name', { minLength: 4, required: true })}
+								{...register('firstName', { minLength: 4, required: true })}
 								type="text"
 								placeholder="Напишите ваше имя"
+							/>
+						</label>
+						<label>
+							<div className={scss.label}>
+								Ваша фамилия<span>*</span>
+							</div>
+							<input
+								className={
+									errors.name ? `${scss.input_error}` : `${scss.input}`
+								}
+								{...register('lastName', { minLength: 4, required: true })}
+								type="text"
+								placeholder="Напишите вашу фамилию"
+							/>
+						</label>
+						<label>
+							<div className={scss.label}>
+								Номер вашего телефона<span>*</span>
+							</div>
+							<Controller
+								name="phoneNumber"
+								control={control}
+								defaultValue=""
+								rules={{ required: true }}
+								render={({ field }) => (
+									<PhoneInput defaultCountry={'kg'} {...field} />
+								)}
 							/>
 						</label>
 						<label>
@@ -95,16 +140,12 @@ const Registration = () => {
 							</div>
 							<input
 								className={
-									errors.confirmPassword
-										? `${scss.input_error}`
-										: `${scss.input}`
+									errors.passwor ? `${scss.input_error}` : `${scss.input}`
 								}
 								type={isLogPassword ? 'text' : 'password'}
 								placeholder="Подтвердите пароль"
-								{...register('confirmPassword', {
-									minLength: 4,
-									required: true
-								})}
+								value={confirmPassword}
+								onChange={(e) => setConfirmPassword(e.target.value)}
 							/>
 							{isLogPassword ? (
 								<div
@@ -126,16 +167,6 @@ const Registration = () => {
 								</div>
 							)}
 						</label>
-						<div className={scss.follow_checkbox}>
-							<label>
-								<div className={scss.checkbox_content}>
-									<input type="checkbox" />
-									<p>
-										Подпишитесь на рассылку, чтобы получать новости от eBook{' '}
-									</p>
-								</div>
-							</label>
-						</div>
 						<div className={scss.btn_container}>
 							<button type="submit">Создать аккаунт</button>
 							<button>Стать продавцом на eBook</button>
