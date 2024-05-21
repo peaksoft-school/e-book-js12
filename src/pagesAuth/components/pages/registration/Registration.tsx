@@ -40,20 +40,29 @@ const Registration = () => {
 	const onHandleChange: SubmitHandler<TypeData> = async (data) => {
 		if (checkPassword === data.password) {
 			await postUser(data);
-			reset();
 			setCheckPassword('');
 			navigate('/auth/login');
+			reset();
 		} else {
 			alert('confirm password ');
 		}
 	};
 	const signInWithGoogleHandler = async () => {
-		await signInWithPopup(auth, provider).then(({ user }) => {
-			const data = {
-				idToken: user.accessToken
-			};
-			postGoogleToken(data);
-		});
+		const result = await signInWithPopup(auth, provider);
+		const user = result.user;
+		const idToken = await user.getIdToken();
+		console.log(idToken);
+
+		const data = {
+			idToken: idToken
+		};
+		postGoogleToken(data);
+		// await signInWithPopup(auth, provider).then(({ user }) => {
+		// 	const data = {
+		// 		idToken: user.accessToken
+		// 	};
+		// 	postGoogleToken(data);
+		// });
 	};
 
 	return (
@@ -156,7 +165,7 @@ const Registration = () => {
 								</div>
 							)}
 						</label>
-						<div className={scss.follow_checkbox}>
+						{/* <div className={scss.follow_checkbox}>
 							<label>
 								<div className={scss.checkbox_content}>
 									<input type="checkbox" />
@@ -165,7 +174,7 @@ const Registration = () => {
 									</p>
 								</div>
 							</label>
-						</div>
+						</div> */}
 						<div className={scss.btn_container}>
 							<button type="submit">Создать аккаунт</button>
 							<button>Стать продавцом на eBook</button>

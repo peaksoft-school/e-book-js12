@@ -25,6 +25,14 @@ const api = index.injectEndpoints({
 				body: tokenGoogle
 			}),
 			invalidatesTags: ['me']
+		}),
+		postVendorRegistration: build.mutation({
+			query: (data) => ({
+				url: '/api/auth/signUpForVendor',
+				method: 'POST',
+				body: data
+			}),
+			invalidatesTags: ['me']
 		})
 	})
 });
@@ -32,5 +40,6 @@ const api = index.injectEndpoints({
 export const {
 	usePostRegistrationMutation,
 	usePostLoginMutation,
-	usePostWithGoogleMutation
+	usePostWithGoogleMutation,
+	usePostVendorRegistrationMutation
 } = api;
