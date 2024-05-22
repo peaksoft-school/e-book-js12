@@ -2,17 +2,49 @@ import scss from './PromoCode.module.scss';
 import CustomBasketButton from '@/src/ui/customButton/CustomBasketButton';
 import bg_promo from '../../../../assets/booksImg/Discount-cuate 1.png';
 import { Modal } from 'antd';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useGetPromoQuery } from '@/src/redux/api/promo';
 
-
-
+interface TypeRequest {
+	page: number;
+	size: number;
+	allBooksByVendors: Book[];
+}
+interface Book {
+	id: number;
+	images: string[];
+	title: string;
+	authorsFullName: string;
+	price: number;
+	disCount: number;
+	newPricePromoCodeBook: number;
+}
 
 const PromoSection = () => {
 	const [promoCode, setPromoCode] = useState('');
 	const [promoModal, setPromoModal] = useState(false);
-	const { data } = useGetPromoQuery<PROMO.GetBookPromoResponse>({ promoCode });
+	const [foundBooks, setFoundBooks] = useState<Book[]>([]);
+	const [foundBooksCount, setFoundBooksCount] = useState(0)
+	const { data } = useGetPromoQuery({ promoCode });
 	console.log(data);
+
+	useEffect(() => {
+		if (data && data.length > 0 && promoModal) {
+			let books: Book[] = [];
+			data.forEach((item: TypeRequest) => {
+				books = books.concat(item.allBooksByVendors);
+			});
+			setFoundBooks(books);
+		}
+
+		if (data && data.length > 0) {
+			let count = 0;
+			data.forEach((item: TypeRequest) => {
+				count += item.allBooksByVendors.length;
+			});
+			setFoundBooksCount(count);
+		}
+	}, [data, promoModal]);
 
 	const handleActivateClick = () => {
 		setPromoModal(true);
@@ -44,7 +76,7 @@ const PromoSection = () => {
 							</div>
 							<Modal
 								open={promoModal}
-								footer={false}
+								footer={true}
 								className={scss.modal_promo}
 								onCancel={() => setPromoModal(false)}
 							>
@@ -58,14 +90,13 @@ const PromoSection = () => {
 								рассылках.
 							</p>
 						</div>
+						<div className={scss.count_book}>
+							Найдены {foundBooksCount} книг
+						</div>
 					</div>
-					<div className={scss.count_book}>
-					</div>
-					<div className={scss.container_books}>
-						{data?.map((item: PROMO.GetBookPromoResponse) => (
-							<>
-								{item.allBooksByVendors.map((book) => (
-									<>
+					{foundBooks.length > 0 && (
+						<div className={scss.container_books}>
+							{foundBooks.map((book) => (
 								<div key={book.id} className={scss.card_book}>
 									<img src={book.images[0]} alt={book.title} />
 									<div className={scss.description}>
@@ -73,16 +104,14 @@ const PromoSection = () => {
 										<p>{book.authorsFullName}</p>
 										<div className={scss.info_price}>
 											<p>{book.disCount}%</p>
-											<p>{book.newPricePromoCodeBook} с</p>
 											<p>{book.price} с</p>
+											<p>{book.newPricePromoCodeBook} с</p>
 										</div>
 									</div>
 								</div>
-									</>
-								))}
-							</>
-						))}
-					</div>
+							))}
+						</div>
+					)}
 				</div>
 			</div>
 		</section>

@@ -1,11 +1,16 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Link, useNavigate } from 'react-router-dom';
 import scss from './Registration.module.scss';
 import { useState } from 'react';
 import EyeSeeIcon from '@/src/assets/icons/icon-eyeSee';
 import EyeClose from '@/src/assets/icons/icon-eyeClose';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { usePostRegistrationMutation } from '@/src/redux/api/me';
+import {
+	usePostRegistrationMutation,
+	usePostWithGoogleMutation
+} from '@/src/redux/api/me';
+import { signInWithPopup } from 'firebase/auth';
+import { auth, provider } from '@/src/configs/firebase';
+import { IconGoogleLogo } from '@/src/assets/icons';
 
 interface TypeData {
 	email: string;
@@ -18,6 +23,7 @@ const Registration = () => {
 	const [isLogPassword, setLogPassword] = useState(false);
 	const [checkPassword, setCheckPassword] = useState('');
 	const [postUser] = usePostRegistrationMutation();
+	const [postGoogleToken] = usePostWithGoogleMutation();
 	const navigate = useNavigate();
 
 	const {
@@ -33,12 +39,29 @@ const Registration = () => {
 	const onHandleChange: SubmitHandler<TypeData> = async (data) => {
 		if (checkPassword === data.password) {
 			await postUser(data);
-			reset();
 			setCheckPassword('');
 			navigate('/auth/login');
+			reset();
 		} else {
 			alert('confirm password ');
 		}
+	};
+	const signInWithGoogleHandler = async () => {
+		const result = await signInWithPopup(auth, provider);
+		const user = result.user;
+		const idToken = await user.getIdToken();
+		console.log(idToken);
+
+		const data = {
+			idToken: idToken
+		};
+		postGoogleToken(data);
+		// await signInWithPopup(auth, provider).then(({ user }) => {
+		// 	const data = {
+		// 		idToken: user.accessToken
+		// 	};
+		// 	postGoogleToken(data);
+		// });
 	};
 
 	return (
@@ -141,21 +164,28 @@ const Registration = () => {
 								</div>
 							)}
 						</label>
-						<div className={scss.follow_checkbox}>
-							<label>
-								<div className={scss.checkbox_content}>
-									<input type="checkbox" />
-									<p>
-										Подпишитесь на рассылку, чтобы получать новости от eBook{' '}
-									</p>
-								</div>
-							</label>
-						</div>
+
 						<div className={scss.btn_container}>
 							<button type="submit">Создать аккаунт</button>
-							<button>Стать продавцом на eBook</button>
 						</div>
 					</form>
+					<div className={scss.btn_with_google}>
+						<button onClick={signInWithGoogleHandler}>
+							<div className={scss.content_btn}>
+								<IconGoogleLogo />
+								<p>Sign up with Google</p>
+							</div>
+						</button>
+					</div>
+					<div className={scss.vendor_btn}>
+						<button
+							onClick={() => {
+								navigate('/vendor/registration');
+							}}
+						>
+							Стать продавцом на eBook
+						</button>
+					</div>
 				</div>
 			</div>
 		</div>
