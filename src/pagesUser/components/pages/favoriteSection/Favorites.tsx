@@ -15,18 +15,16 @@ interface BookId {
 }
 
 const FavoritSection: FC<BookId> = () => {
+	const paramsId = useParams();
+	const bookId = Number(paramsId.id);
 	const [expandedCards, setExpandedCards] = useState<{
 		[key: string]: boolean;
 	}>({});
-	const paramsId = useParams();
-	const bookId = Number(paramsId.id);
 	const { data } = useGetAllBooksInFavoriteQuery();
 	const { data: count } = useGetCountOfBooksInFavoriteQuery();
 	const [clearFavorite] = useClearFavoriteMutation();
 	const [deleteFavoriteBook] = useDeleteFavoriteBookMutation();
 	const [addBookToBasket] = useAddBookToBasketMutation();
-	console.log(data);
-	
 
 	const handleClick = (id: string) => {
 		setExpandedCards((prevExpanded) => ({

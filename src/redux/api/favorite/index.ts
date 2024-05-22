@@ -25,8 +25,8 @@ const api = index.injectEndpoints({
 		}),
 
 		clearFavorite: build.mutation<
-		FAVORITE.ClearFavoriteResponse,
-		FAVORITE.ClearFavoriteRequest
+			FAVORITE.ClearFavoriteResponse,
+			FAVORITE.ClearFavoriteRequest
 		>({
 			query: (data) => ({
 				url: '/api/favorite/clearFavorites',
@@ -37,28 +37,33 @@ const api = index.injectEndpoints({
 		}),
 
 		deleteFavoriteBook: build.mutation<
-		FAVORITE.DeleteFavoriteBookResponse,
-		FAVORITE.DeleteFavoriteBookRequest
+			FAVORITE.DeleteFavoriteBookResponse,
+			FAVORITE.DeleteFavoriteBookRequest
 		>({
 			query: (id) => ({
 				url: `/api/favorite/favoriteUnFavorite/${id}`,
-				method: 'POST',
+				method: 'POST'
 			}),
 			invalidatesTags: ['favorite']
 		}),
 
 		addBookToBasket: build.mutation<
-		FAVORITE.AddBookToBasketResponse,
-		FAVORITE.AddBookToBasketRequest
+			FAVORITE.AddBookToBasketResponse,
+			FAVORITE.AddBookToBasketRequest
 		>({
 			query: (id) => ({
-				url: `/api/basket/addBookToBasket${id}`,
-				method: 'PUT',
+				url: `/api/basket/addBookToBasket?bookId=${id}`,
+				method: 'PUT'
 			}),
 			invalidatesTags: ['favorite']
-		}),
+		})
 	})
 });
 
-export const { useGetAllBooksInFavoriteQuery, useGetCountOfBooksInFavoriteQuery, useClearFavoriteMutation, useDeleteFavoriteBookMutation, useAddBookToBasketMutation } =
-	api;
+export const {
+	useGetAllBooksInFavoriteQuery,
+	useGetCountOfBooksInFavoriteQuery,
+	useClearFavoriteMutation,
+	useDeleteFavoriteBookMutation,
+	useAddBookToBasketMutation
+} = api;

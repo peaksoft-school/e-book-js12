@@ -209,7 +209,15 @@ const Header = () => {
 													Профиль
 												</li>
 												<hr />
-												<li onClick={() => setUserExit(!userExit)}>Выйти</li>
+												<li
+													onClick={() => {
+														setUserExit(!userExit);
+														localStorage.removeItem('token');
+														localStorage.setItem('isAuth', 'false');
+													}}
+												>
+													Выйти
+												</li>
 											</ul>
 										</div>
 									</>

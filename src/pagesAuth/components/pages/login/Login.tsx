@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import CustomLoginInput from '@/src/ui/customInpute/CustomLoginInput';
 import scss from './Login.module.scss';
 import CustomPasswordInput from '@/src/ui/customInpute/CustomPasswordInput';
@@ -14,18 +13,21 @@ const Login = () => {
 	const navigate = useNavigate();
 	const { register, reset, handleSubmit } = useForm<IFormInput>();
 
-	const onSubmit: SubmitHandler<IFormInput> = async (data: any) => {
+	const onSubmit: SubmitHandler<IFormInput> = async (data) => {
+
 		const results = await postLogin(data);
 		if ('data' in results) {
 			const { token } = results.data;
-
 			localStorage.setItem('token', token);
 			localStorage.setItem('isAuth', 'true');
+			localStorage.removeItem('tokenVendor');
+			localStorage.setItem('isVendor', 'false');
 			reset();
 			navigate('/');
 		}
 
 	};
+
 	return (
 		<div className={scss.Login}>
 			<div className="container">
