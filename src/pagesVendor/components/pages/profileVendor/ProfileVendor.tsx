@@ -1,9 +1,10 @@
 import CustomUserNameInput from '@/src/ui/customInpute/CustomUserNameInput';
 import scss from './ProfileVendor.module.scss';
-
 import CustomPasswordInput from '@/src/ui/customInpute/CustomPasswordInput';
+import { useForm } from 'react-hook-form';
 
 const ProfileVendor = () => {
+	const { register } = useForm();
 	return (
 		<div className="container">
 			<div className={scss.section_profile}>
@@ -40,6 +41,8 @@ const ProfileVendor = () => {
 									<CustomPasswordInput
 										type="password"
 										placeholder="Напишите текущий пароль"
+										register={register}
+										registerName={'ff'}
 									/>
 								</div>
 								<div className={scss.input_new_password}>
@@ -47,6 +50,8 @@ const ProfileVendor = () => {
 									<CustomPasswordInput
 										type="password"
 										placeholder="Напишите новый пароль"
+										register={register}
+										registerName={'ff'}
 									/>
 								</div>
 								<div className={scss.input_new_password}>
@@ -54,6 +59,8 @@ const ProfileVendor = () => {
 									<CustomPasswordInput
 										type="password"
 										placeholder="Подтвердите пароль"
+										register={register}
+										registerName={'ff'}
 									/>
 								</div>
 							</div>
