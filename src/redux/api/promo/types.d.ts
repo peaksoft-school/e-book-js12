@@ -1,6 +1,12 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 namespace PROMO {
-  type Book = {
+  export type GetBookPromoResponse = {
+    page: number;
+    size: number;
+    allBooksByVendors: Book[];
+  };
+
+  export type Book = {
     id: number;
     images: string[];
     title: string;
@@ -10,9 +16,7 @@ namespace PROMO {
     newPricePromoCodeBook: number;
   };
 
-  type GetBookPromoResponse = {
-    page: number;
-    size: number;
-    allBooksByVendors: Book[];
+  export type GetBookPromoRequest = {
+    promoCode: string;
   };
 }
