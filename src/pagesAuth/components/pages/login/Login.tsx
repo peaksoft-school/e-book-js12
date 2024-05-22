@@ -12,7 +12,9 @@ const Login = () => {
 	const [postLogin] = usePostLoginMutation();
 	const navigate = useNavigate();
 	const { register, reset, handleSubmit } = useForm<IFormInput>();
+
 	const onSubmit: SubmitHandler<IFormInput> = async (data) => {
+
 		const results = await postLogin(data);
 		if ('data' in results) {
 			const { token } = results.data;
@@ -23,6 +25,7 @@ const Login = () => {
 			reset();
 			navigate('/');
 		}
+
 	};
 
 	return (
