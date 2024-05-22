@@ -41,7 +41,7 @@ const SearchSection = () => {
 			image: history_img,
 			title: 'История Книги',
 			aftor: 'Э. Эггер, А. Бахтияров',
-			price: '549 с'
+			price: '33333 с'
 		},
 		{
 			id: 2,
@@ -341,8 +341,15 @@ const SearchSection = () => {
 											</>
 										)}
 									</div>
-									<img src={item.image} alt="" />
-									<div className={scss.card_description}>
+									<img
+										onClick={() => navigate(`/search_book/${item.id}`)}
+										src={item.image}
+										alt=""
+									/>
+									<div
+										onClick={() => navigate(`/search_book/${item.id}`)}
+										className={scss.card_description}
+									>
 										<h3>{item.title}</h3>
 										<p>{item.aftor}</p>
 										<p>{item.price}</p>

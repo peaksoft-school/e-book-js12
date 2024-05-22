@@ -38,4 +38,16 @@ namespace FAVORITE {
 		message: string;
 	}[];
 	type ClearFavoriteRequest = void;
+
+	type DeleteFavoriteBookResponse = {
+		httpStatus: string;
+		message: string;
+	}
+	type DeleteFavoriteBookRequest = number;
+
+	type AddBookToBasketResponse = {
+		httpStatus: string;
+		message: string;
+	}
+	type AddBookToBasketRequest = number;
 }

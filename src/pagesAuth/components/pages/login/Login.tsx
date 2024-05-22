@@ -18,6 +18,7 @@ const Login = () => {
 		const results = await postLogin(data);
 		if ('data' in results) {
 			const { token } = results.data;
+
 			localStorage.setItem('token', token);
 			localStorage.setItem('isAuth', 'true');
 			reset();

@@ -1,21 +1,50 @@
-import { FC } from 'react';
+import { FC, useState } from 'react';
 import scss from './Favorites.module.scss';
 import { IconX } from '@/src/assets/icons';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useParams } from 'react-router-dom';
 import {
+	useAddBookToBasketMutation,
 	useClearFavoriteMutation,
+	useDeleteFavoriteBookMutation,
 	useGetAllBooksInFavoriteQuery,
 	useGetCountOfBooksInFavoriteQuery
 } from '@/src/redux/api/favorite';
 
-const FavoritSection: FC = () => {
+interface BookId {
+	id: number;
+}
+
+const FavoritSection: FC<BookId> = () => {
+	const [expandedCards, setExpandedCards] = useState<{
+		[key: string]: boolean;
+	}>({});
+	const paramsId = useParams();
+	const bookId = Number(paramsId.id);
 	const { data } = useGetAllBooksInFavoriteQuery();
-	console.log(data);
 	const { data: count } = useGetCountOfBooksInFavoriteQuery();
 	const [clearFavorite] = useClearFavoriteMutation();
+	const [deleteFavoriteBook] = useDeleteFavoriteBookMutation();
+	const [addBookToBasket] = useAddBookToBasketMutation();
+	console.log(data);
+	
+
+	const handleClick = (id: string) => {
+		setExpandedCards((prevExpanded) => ({
+			...prevExpanded,
+			[id]: !prevExpanded[id] || false
+		}));
+	};
 
 	const handleClearFavorite = () => {
 		clearFavorite();
+	};
+
+	const handleDeleteFavoriteBook = async (id: number) => {
+		await deleteFavoriteBook(id);
+	};
+
+	const handleAddToBasket = async (id: number) => {
+		await addBookToBasket(id);
 	};
 
 	return (
@@ -49,7 +78,12 @@ const FavoritSection: FC = () => {
 									<hr />
 									<div className={scss.favorite_card_content}>
 										<div className={scss.btn_delete}>
-											<button className={scss.close_button}>
+											<button
+												className={scss.close_button}
+												onClick={() => {
+													handleDeleteFavoriteBook(item.id);
+												}}
+											>
 												<IconX />
 											</button>
 										</div>
@@ -69,14 +103,26 @@ const FavoritSection: FC = () => {
 													<p className={scss.favorite_card_author}>
 														{item.authorFullName}
 													</p>
-													<p className={scss.favorite_card_description}>
-														{item.description}
-													</p>
+													<div
+														className={scss.favorite_card_description}
+														onClick={() => handleClick(item.id)}
+													>
+														{expandedCards[item.id] ? (
+															<p>{item.description}</p>
+														) : (
+															<p>{item.description.substring(0, 250)}...</p>
+														)}
+													</div>
 												</div>
 											</div>
 										</div>
 										<div className={scss.favorite_card_buttons}>
-											<button className={scss.button_to_busket}>
+											<button
+												className={scss.button_to_busket}
+												onClick={() => {
+													handleAddToBasket(item.id);
+												}}
+											>
 												Добавить в корзину
 											</button>
 										</div>
