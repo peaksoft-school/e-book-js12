@@ -15,7 +15,6 @@
 				&:hover {
 					color: #333;
 				}
-
 				&.active {
 					color: #000;
 					font-size: 16px;
@@ -164,6 +163,7 @@
 								line-height: 18.2px;
 								text-align: left;
 								color: #000000;
+								cursor: pointer;
 								@media (max-width: 765px) {
 									max-width: 300px;
 									font-size: 12px;
