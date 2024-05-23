@@ -1,8 +1,24 @@
 import { Link } from 'react-router-dom';
 import scss from './Login.module.scss';
+import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
 import CustomLoginInput from '@/src/ui/customInpute/CustomLoginInput';
 import CustomPasswordInput from '@/src/ui/customInpute/CustomPasswordInput';
+import { usePostLoginMutation } from '@/src/redux/api/me';
+
 const Login = () => {
+	const [postLogin] = usePostLoginMutation();
+	const {
+		// control,
+		register,
+		reset,
+		handleSubmit
+	} = useForm();
+
+	const handleOnSubmit: SubmitHandler<FieldValues> = async (data) => {
+		console.log(data);
+		await postLogin(data);
+		reset();
+	};
 	return (
 		<div className={scss.Login}>
 			<div className="container">
@@ -11,12 +27,20 @@ const Login = () => {
 						<Link to="/vendor/login">Войти</Link>
 						<Link to="/vendor/registration">Регистрация</Link>
 					</div>
-					<form className={scss.form_container}>
+					<form
+						className={scss.form_container}
+						onSubmit={handleSubmit(handleOnSubmit)}
+					>
 						<div className={scss.email_content}>
 							<label>
 								Email<span>*</span>
 							</label>
-							<CustomLoginInput type="text" placeholder="Напишите email" />
+							<CustomLoginInput
+								register={register}
+								registerName={'email'}
+								type="text"
+								placeholder="Напишите email"
+							/>
 						</div>
 						<div
 							className={scss.password_content}
@@ -28,6 +52,8 @@ const Login = () => {
 								Пароль<span>*</span>
 							</label>
 							<CustomPasswordInput
+								register={register}
+								registerName="password"
 								type="password"
 								placeholder="Напишите пароль"
 							/>

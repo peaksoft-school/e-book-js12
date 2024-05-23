@@ -140,10 +140,72 @@
 					letter-spacing: 0px;
 					text-align: center;
 					cursor: pointer;
+					border: none;
+					outline: none;
+					font-family: Open Sans;
+
 					&:nth-child(2n) {
 						background-color: transparent;
 						color: rgb(34, 34, 34);
 						border: 1px solid rgb(34, 34, 34);
+					}
+				}
+			}
+		}
+		.vendor_btn {
+			display: flex;
+			justify-content: center;
+			max-width: 437px;
+			width: 100%;
+			margin-top: 12px;
+			button {
+				padding: 10px 24px;
+				font-size: 16px;
+				font-weight: 600;
+				line-height: 22px;
+				letter-spacing: 0px;
+				text-align: center;
+				border: 1px solid rgb(34, 34, 34);
+				background-color: transparent;
+				color: rgb(34, 34, 34);
+				width: 100%;
+				font-family: Open Sans;
+			}
+		}
+		.btn_with_google {
+			display: flex;
+			justify-content: center;
+			margin-top: 10px;
+			max-width: 437px;
+			width: 100%;
+			button {
+				display: flex;
+				justify-content: center;
+				border: none;
+				outline: none;
+				width: 100%;
+				padding: 6px 24px;
+				background-color: #f8f8f8;
+				border: 1px solid black;
+				.content_btn {
+					display: flex;
+					align-items: center;
+					justify-content: space-between;
+					max-width: 200px;
+					width: 100%;
+					margin-right: 15px;
+					svg {
+						width: 30px;
+						height: 30px;
+					}
+					p {
+						color: rgb(34, 34, 34);
+						font-family: Open Sans;
+						font-size: 16px;
+						font-weight: 600;
+						line-height: 22px;
+						letter-spacing: 0px;
+						text-align: left;
 					}
 				}
 			}

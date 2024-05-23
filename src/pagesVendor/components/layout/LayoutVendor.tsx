@@ -34,7 +34,12 @@ const LayoutVendor = () => {
 						<Route path="/registration" element={<Registration />} />
 					</Routes>
 				</main>
-				<Footer />
+				{location.pathname === '/vendor/registration' ||
+				location.pathname === '/vendor/login' ? null : (
+					<>
+						<Footer />
+					</>
+				)}
 			</div>
 		</>
 	);
