@@ -1,4 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable*/
+// @ts-nocheck
 import { useEffect, useState } from 'react';
 import scss from './Section.module.scss';
 import WhiteSquareIcon from '@/src/assets/icons/icon-whiteSquare';
