@@ -19,6 +19,10 @@ import CustomBasketButton from '@/src/ui/customButton/CustomBasketButton';
 import { Slider, ConfigProvider } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import { usePostSortBookMutation } from '@/src/redux/api/sort';
+import {
+	useAddBookToBasketMutation,
+	usePostFavoriteUnFavoriteMutation
+} from '@/src/redux/api/favorite';
 
 interface TypeDataBook {
 	id: number;
@@ -38,6 +42,24 @@ interface TypeResponse {
 }
 
 const SearchSection = () => {
+// 	const useDebounce = (value:number[], delay: number) => {
+// 		const [debouncedValue, setDebouncedValue] = useState(value);
+
+// 		useEffect(() => {
+// 			const handler = setTimeout(() => {
+// 				setDebouncedValue(value);
+// 			}, delay);
+
+// 			return () => {
+// 				clearTimeout(handler);
+// 			};
+// 		}, [value, delay]);
+
+// 		return debouncedValue;
+// 	};
+	const [value, setValue] = useState<number[]>([100, 9990]);
+	// const debouncedValue = useDebounce(value, 1000);
+
 	const [isGenre, setIsGenre] = useState(false);
 	const [isSort, setIsSort] = useState(false);
 	const navigate = useNavigate();
@@ -47,14 +69,13 @@ const SearchSection = () => {
 
 	const [priceGenre, setPriceGenre] = useState(false);
 
-	const [favoriteBook, setFavoriteBook] = useState(false);
-	const [value, setValue] = useState<number[]>([100, 9990]);
-
 	const [language, setLanguage] = useState(false);
 
 	const [menufilters, setMenuFilters] = useState(false);
 
 	const [postFillter] = usePostSortBookMutation();
+	const [addBookFavorite] = usePostFavoriteUnFavoriteMutation();
+	const [addBookToBasket] = useAddBookToBasketMutation();
 	const [jenreData, setJenreData] = useState([
 		{
 			jenreId: 1,
@@ -174,6 +195,16 @@ const SearchSection = () => {
 		}
 	]);
 
+	const hanleAddBookFavorite = async (id: number) => {
+		await addBookFavorite(id);
+		handleChangeFillter();
+	};
+
+	const handleAddBookToBasket = async (id: number) => {
+		await addBookToBasket(id);
+		handleChangeFillter();
+	};
+
 	const deleteIsFalseJenre = (id: number) => {
 		setJenreData((prev) =>
 			prev.map((item) =>
@@ -267,7 +298,6 @@ const SearchSection = () => {
 			},
 			sort: sortValue
 		};
-		console.log(newData, 'newData');
 		const result = await postFillter(newData);
 		if (result && (result as { data: TypeResponse }).data.books) {
 			const booksData = (result as { data: TypeResponse }).data.books;
@@ -522,7 +552,7 @@ const SearchSection = () => {
 												onChange={(event) => {
 													setValue(event);
 												}}
-												tooltipVisible={false}
+												tooltip={{ visible: false }}
 												value={value}
 												defaultValue={value}
 												className={scss.price_range}
@@ -579,10 +609,12 @@ const SearchSection = () => {
 							{dataBooks.map((item) => (
 								<div className={scss.card_book} key={item.id}>
 									<div
-										onClick={() => setFavoriteBook(!favoriteBook)}
+										onClick={() => {
+											hanleAddBookFavorite(item.id);
+										}}
 										className={scss.favorite_icon}
 									>
-										{favoriteBook ? (
+										{item.inFavorites ? (
 											<>
 												<IconBlackLike />
 											</>
@@ -606,7 +638,12 @@ const SearchSection = () => {
 										<p>{item.price}</p>
 									</div>
 									<div className={scss.btn_basket}>
-										<CustomBasketButton nameClass="" onClick={() => {}}>
+										<CustomBasketButton
+											nameClass=""
+											onClick={() => {
+												handleAddBookToBasket(item.id);
+											}}
+										>
 											<p>Добавить в корзину</p>
 										</CustomBasketButton>
 									</div>
