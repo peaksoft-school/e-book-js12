@@ -25,6 +25,7 @@ export const api = createApi({
 	baseQuery: baseQueryExtended,
 	refetchOnReconnect: true,
 	refetchOnFocus: false,
+
 	tagTypes: [
 		'me',
 		'book_info',
@@ -36,5 +37,6 @@ export const api = createApi({
 		'basket',
 		'clientProfile'
 	],
+
 	endpoints: () => ({})
 });
