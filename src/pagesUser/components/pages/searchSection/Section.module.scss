@@ -42,10 +42,12 @@
 
 			.center_content {
 				display: flex;
-				justify-content: center;
+				justify-content: start;
 				flex-wrap: wrap;
 				gap: 20px;
 				margin-left: 6px;
+				max-width: 950px;
+				width: 100%;
 				@media (max-width: 1067px) {
 					justify-content: start;
 				}
@@ -181,6 +183,9 @@
 						margin-bottom: 8.25px;
 						border: none;
 						border-top: 0.5px solid rgb(196, 196, 196);
+						&:last-child {
+							display: none;
+						}
 					}
 				}
 			}
@@ -276,7 +281,7 @@
 						user-select: none;
 						max-width: 266px;
 						width: 100%;
-						.checkbox_jenre{
+						.checkbox_jenre {
 							width: 26px;
 							height: 26px;
 						}
