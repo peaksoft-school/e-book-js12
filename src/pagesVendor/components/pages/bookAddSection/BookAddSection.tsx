@@ -16,8 +16,10 @@ import CustomBasketButton from '@/src/ui/customButton/CustomBasketButton';
 import CustomAudioDownloadInput from '@/src/ui/customAudioInput/CustomAudioDownloadInput';
 import CustomPDFDownloadInput from '@/src/ui/customPDFInput/CustomPDFDownloadInput';
 import { Link } from 'react-router-dom';
+import { useAddBookToBasketMutation } from '@/src/redux/api/favorite';
 
 const BookAddSection = () => {
+	const { addBook } = useAddBookToBasketMutation();
 	const [clickRadio, setClickRadio] = useState(false);
 	const [audioBook, setAudioBook] = useState(false);
 
@@ -55,6 +57,8 @@ const BookAddSection = () => {
 			desc: 'Korea (韩国)'
 		}
 	];
+
+	const handleAddBook = async () => {};
 
 	return (
 		<section className={scss.AddBookSection}>

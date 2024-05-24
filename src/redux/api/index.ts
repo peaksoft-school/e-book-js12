@@ -34,7 +34,8 @@ export const api = createApi({
 		'sort',
 		'product',
 		'favorite',
-		'basket'
+		'basket',
+		'add_book'
 	],
 
 	endpoints: () => ({})
