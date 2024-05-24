@@ -35,6 +35,7 @@ export const api = createApi({
 		'product',
 		'favorite',
 		'basket',
+		'clientProfile',
 		'add_book'
 	],
 

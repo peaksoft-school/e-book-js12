@@ -2,10 +2,7 @@ import { api as index } from '..';
 
 const api = index.injectEndpoints({
 	endpoints: (build) => ({
-		addBookVendor: build.mutation<
-			ADDBOOKVENDOR.AddBookVendorResponse,
-			ADDBOOKVENDOR.AddBookVendorRequest
-		>({
+		addBookVendor: build.mutation({
 			query: (newBook) => ({
 				url: `/api/book/saveBook`,
 				method: 'POST',

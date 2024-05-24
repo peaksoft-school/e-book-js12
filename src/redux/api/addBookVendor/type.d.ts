@@ -14,5 +14,18 @@ namespace ADDBOOKVENDOR {
 		price: number;
 		bestseller: boolean;
 	};
-	type AddBookVendorRequest = void;
+	type AddBookVendorRequest = {
+		multipartFiles: string[];
+		title: string;
+		authorsFullName: string;
+		publishingHouse: string;
+		description: string;
+		fragment: string;
+		publishedYear: number;
+		volume: number;
+		amountOfBook: number;
+		discount: number;
+		price: number;
+		bestseller: boolean;
+	};
 }

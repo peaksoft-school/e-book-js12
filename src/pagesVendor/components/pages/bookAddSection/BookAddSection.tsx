@@ -16,18 +16,19 @@ import CustomBasketButton from '@/src/ui/customButton/CustomBasketButton';
 import CustomAudioDownloadInput from '@/src/ui/customAudioInput/CustomAudioDownloadInput';
 import CustomPDFDownloadInput from '@/src/ui/customPDFInput/CustomPDFDownloadInput';
 import { Link } from 'react-router-dom';
-import { useAddBookToBasketMutation } from '@/src/redux/api/favorite';
+import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
+import { useAddBookVendorMutation } from '@/src/redux/api/addBookVendor';
 
 const BookAddSection = () => {
-	const { addBook } = useAddBookToBasketMutation();
 	const [clickRadio, setClickRadio] = useState(false);
 	const [audioBook, setAudioBook] = useState(false);
-
+	const { register, handleSubmit, reset } = useForm();
 	const [ebook, setEBook] = useState(false);
 	const [modal, setModal] = useState(false);
 
 	const [value, setValue] = useState('');
-	console.log(value);
+	const [description, setDescription] = useState('');
+	// console.log(value);
 	const handleChange = (value: any) => {
 		console.log(`selected ${value}`);
 	};
@@ -58,12 +59,32 @@ const BookAddSection = () => {
 		}
 	];
 
-	const handleAddBook = async () => {};
+	const [addBookVendor] = useAddBookVendorMutation();
+	console.log(addBookVendor);
+
+	const onSubmit: SubmitHandler<FieldValues> = async (book) => {
+		const newBook = {
+			title: book.title,
+			authorsFullName: book.authorsFullName,
+			publishingHouse: book.publishingHouse,
+			description: book.description,
+			fragment: book.fragment,
+			publishedYear: book.publishedYear,
+			volume: book.volume,
+			amountOfBook: book.amountOfBook,
+			discount: book.discount,
+			price: book.price,
+			bestseller: book.bestseller
+		};
+		// await addBookVendor(newBook);
+		// reset();
+		console.log(newBook);
+	};
 
 	return (
 		<section className={scss.AddBookSection}>
 			<div className={scss.container}>
-				<div className={scss.content}>
+				<form onSubmit={handleSubmit(onSubmit)} className={scss.content}>
 					<div className={scss.links}>
 						<Link
 							to={'/vendor'}
@@ -195,19 +216,35 @@ const BookAddSection = () => {
 									<div className={scss.left_inputs}>
 										<label>
 											Название книги
-											<CustomUserNameInput placeholder="Напишите полное название книги" />
+											<CustomUserNameInput
+												placeholder="Напишите полное название книги"
+												registerName="title"
+												register={register}
+											/>
 										</label>
 										<label>
 											ФИО автора
-											<CustomUserNameInput placeholder="Напишите ФИО автора" />
+											<CustomUserNameInput
+												placeholder="Напишите ФИО автора"
+												registerName="authorsFullName"
+												register={register}
+											/>
 										</label>
 										<label>
 											Выберите жанр
-											<CustomUserNameInput placeholder="Литература, роман, стихи..." />
+											<CustomUserNameInput
+												placeholder="Литература, роман, стихи..."
+												registerName="title"
+												register={register}
+											/>
 										</label>
 										<label>
 											Издательство
-											<CustomUserNameInput placeholder="Напишите название издательства" />
+											<CustomUserNameInput
+												placeholder="Напишите название издательства"
+												registerName="title"
+												register={register}
+											/>
 										</label>
 										{}
 										<label>
@@ -320,19 +357,35 @@ const BookAddSection = () => {
 									<div className={scss.left_inputs}>
 										<label>
 											Название книги
-											<CustomUserNameInput placeholder="Напишите полное название книги" />
+											<CustomUserNameInput
+												placeholder="Напишите полное название книги"
+												registerName="title"
+												register={register}
+											/>
 										</label>
 										<label>
 											ФИО автора
-											<CustomUserNameInput placeholder="Напишите ФИО автора" />
+											<CustomUserNameInput
+												placeholder="Напишите ФИО автора"
+												registerName="title"
+												register={register}
+											/>
 										</label>
 										<label>
 											Выберите жанр
-											<CustomUserNameInput placeholder="Литература, роман, стихи..." />
+											<CustomUserNameInput
+												placeholder="Литература, роман, стихи..."
+												registerName="title"
+												register={register}
+											/>
 										</label>
 										<label>
 											Издательство
-											<CustomUserNameInput placeholder="Напишите название издательства" />
+											<CustomUserNameInput
+												placeholder="Напишите название издательства"
+												registerName="title"
+												register={register}
+											/>
 										</label>
 										{}
 										<label>
@@ -444,15 +497,27 @@ const BookAddSection = () => {
 									<div className={scss.left_inputs}>
 										<label>
 											Название книги
-											<CustomUserNameInput placeholder="Напишите полное название книги" />
+											<CustomUserNameInput
+												placeholder="Напишите полное название книги"
+												registerName="title"
+												register={register}
+											/>
 										</label>
 										<label>
 											ФИО автора
-											<CustomUserNameInput placeholder="Напишите ФИО автора" />
+											<CustomUserNameInput
+												placeholder="Напишите ФИО автора"
+												registerName="title"
+												register={register}
+											/>
 										</label>
 										<label>
 											Выберите жанр
-											<CustomUserNameInput placeholder="Литература, роман, стихи..." />
+											<CustomUserNameInput
+												placeholder="Литература, роман, стихи..."
+												registerName="title"
+												register={register}
+											/>
 										</label>
 
 										{}
@@ -582,19 +647,35 @@ const BookAddSection = () => {
 									<div className={scss.left_inputs}>
 										<label>
 											Название книги
-											<CustomUserNameInput placeholder="Напишите полное название книги" />
+											<CustomUserNameInput
+												placeholder="Напишите полное название книги"
+												registerName="title"
+												register={register}
+											/>
 										</label>
 										<label>
 											ФИО автора
-											<CustomUserNameInput placeholder="Напишите ФИО автора" />
+											<CustomUserNameInput
+												placeholder="Напишите ФИО автора"
+												registerName="authorsFullName"
+												register={register}
+											/>
 										</label>
 										<label>
 											Выберите жанр
-											<CustomUserNameInput placeholder="Литература, роман, стихи..." />
+											<CustomUserNameInput
+												placeholder="Литература, роман, стихи..."
+												registerName="title"
+												register={register}
+											/>
 										</label>
 										<label>
 											Издательство
-											<CustomUserNameInput placeholder="Напишите название издательства" />
+											<CustomUserNameInput
+												placeholder="Напишите название издательства"
+												registerName="title"
+												register={register}
+											/>
 										</label>
 										{}
 										<label>
@@ -714,8 +795,9 @@ const BookAddSection = () => {
 						<div className={scss.btn_content}>
 							<CustomBasketButton
 								nameClass={scss.button}
+								type="submit"
 								onClick={() => {
-									setModal(!modal);
+									// setModal(!modal);
 								}}
 							>
 								Добавить
@@ -744,7 +826,7 @@ const BookAddSection = () => {
 							</Modal>
 						</div>
 					</div>
-				</div>
+				</form>
 			</div>
 		</section>
 	);
