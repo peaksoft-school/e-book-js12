@@ -71,12 +71,17 @@ const SearchSection = () => {
 			<div className="container">
 				<div className={scss.content}>
 					<div className={scss.title_navigate}>
-						<p
-							onClick={() => {
-								navigate('/');
-							}}
-						>
-							Главная/<span>Психология</span>
+						<p>
+							<span
+								className={scss.home}
+								onClick={() => {
+									navigate('/');
+								}}
+							>
+								Главная/
+							</span>
+
+							<span className={scss.genre}>Психология</span>
 						</p>
 					</div>
 					<div className={scss.info_filtred}>
@@ -148,10 +153,13 @@ const SearchSection = () => {
 									</>
 								)}
 							</div>
-							<hr />
 							<>
 								<div className={`${isGenre ? scss.fillters : scss.none}`}>
-									<CustomGenreInput placeholder="Я ищу..." />
+									<CustomGenreInput
+										placeholder="Я ищу..."
+										value={''}
+										onChange={function (): void {}}
+									/>
 									<div
 										onClick={() => setCheckGenre(!checkGenre)}
 										className={scss.checkbox}

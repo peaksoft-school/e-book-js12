@@ -1,61 +1,28 @@
-import book from '../../../../assets/booksImg/book.png';
+import { useClientProfileHistoryQuery } from '@/src/redux/api/userHistory';
 
 import scss from './ProfilePageHistory.module.scss';
 
-const info = [
-	{
-		id: 1,
-		image: book,
-		nameBook: 'Гарри Поттер и тайна...',
-		name: 'Роулинг Джоан Кэтлин',
-		quantity: '1шт',
-		price: '255c',
-		data: '12.12.21',
-		state: 'Завершен'
-	},
-	{
-		id: 1,
-		image: book,
-		nameBook: 'Гарри Поттер и тайна...',
-		name: 'Роулинг Джоан Кэтлин',
-		quantity: '1шт',
-		price: '255c',
-		data: '12.12.21',
-		state: 'Завершен'
-	},
-	{
-		id: 1,
-		image: book,
-		nameBook: 'Гарри Поттер и тайна...',
-		name: 'Роулинг Джоан Кэтлин',
-		quantity: '1шт',
-		price: '255c',
-		data: '12.12.21',
-		state: 'Завершен'
-	},
-	{
-		id: 1,
-		image: book,
-		nameBook: 'Гарри Поттер и тайна...',
-		name: 'Роулинг Джоан Кэтлин',
-		quantity: '1шт',
-		price: '255c',
-		data: '12.12.21',
-		state: 'Завершен'
-	},
-	{
-		id: 1,
-		image: book,
-		nameBook: 'Гарри Поттер и тайна...',
-		name: 'Роулинг Джоан Кэтлин',
-		quantity: '1шт',
-		price: '255c',
-		data: '12.12.21',
-		state: 'Завершен'
-	}
-];
+interface GetResponse {
+	data: UserHistory[];
+}
+
+interface UserHistory {
+	id: number;
+	title: string;
+	authorsFullName: string;
+	imageUrl: string;
+	quantity: number;
+	discount: number;
+	price: number;
+	priceWithDiscount: number;
+	createdAt: string;
+	historyStatus: string;
+}
 
 const ProfilePageHistory = () => {
+	const clientId = 3;
+	const { data } = useClientProfileHistoryQuery<GetResponse>(clientId);
+
 	return (
 		<div className={scss.profile_history}>
 			<div className="container">
@@ -65,12 +32,12 @@ const ProfilePageHistory = () => {
 							<p>Очистить историю</p>
 						</div>
 
-						<div className={scss.info_tes_two}>
+						<div className={scss.info_text_two}>
 							<p className={scss.item_two}>Фото</p>
-							<p className={scss.item_tree}>Название/Автор</p>
+							<p className={scss.item_three}>Название/Автор</p>
 							<p className={scss.item_four}>Кол-во</p>
 							<p className={scss.item_five}>Цена</p>
-							<p className={scss.item_sics}>Дата</p>
+							<p className={scss.item_six}>Дата</p>
 							<p className={scss.item_seven}>Состояние</p>
 						</div>
 					</div>
@@ -78,27 +45,41 @@ const ProfilePageHistory = () => {
 					<div className={scss.info_history}>
 						<div className={scss.line_}>
 							<div className={scss.text_book}>
-								<p>Купленные (123 книг)</p>
+								<p>Купленные ({data ? data.length : 0} книг)</p>
 							</div>
 						</div>
 						<div className={scss.image_line}></div>
 						<div className={scss.map_section}>
-							{info.map((item) => (
-								<div className={scss.line}>
-									<div className={scss.book_map_info}>
-										<img className={scss.book_image} src={item.image} alt="#" />
+							{data && data.length > 0 ? (
+								data.map((historyItem) => (
+									<div className={scss.line} key={historyItem.id}>
+										<div className={scss.book_map_info}>
+											<img
+												className={scss.book_image}
+												src={historyItem.imageUrl}
+												alt={historyItem.title}
+											/>
 
-										<div className={scss.book_name_end}>
-											<p>{item.nameBook}</p>
-											<p className={scss.book_name_people}>{item.name}</p>
+											<div className={scss.book_name_end}>
+												<p>{historyItem.title}</p>
+												<p className={scss.book_name_people}>
+													{historyItem.authorsFullName}
+												</p>
+											</div>
+											<p className={scss.book_quantity}>
+												{historyItem.quantity} шт
+											</p>
+											<p className={scss.book_price}>{historyItem.price} ₽</p>
+											<p className={scss.book_data}>{historyItem.createdAt}</p>
+											<p className={scss.book_state}>
+												{historyItem.historyStatus}
+											</p>
 										</div>
-										<p className={scss.book_quantity}>{item.quantity}</p>
-										<p className={scss.book_price}>{item.price}</p>
-										<p className={scss.book_data}>{item.data}</p>
-										<p className={scss.book_state}>{item.state}</p>
 									</div>
-								</div>
-							))}
+								))
+							) : (
+								<p>История пуста.</p>
+							)}
 						</div>
 					</div>
 				</div>
