@@ -30,7 +30,7 @@ namespace FAVORITE {
 
 	type GetCountOfBooksResponse = {
 		count: string;
-	}
+	};
 	type GetCountOfBooksRequest = void;
 
 	type ClearFavoriteResponse = {
@@ -42,12 +42,12 @@ namespace FAVORITE {
 	type DeleteFavoriteBookResponse = {
 		httpStatus: string;
 		message: string;
-	}
+	};
 	type DeleteFavoriteBookRequest = number;
 
 	type AddBookToBasketResponse = {
 		httpStatus: string;
 		message: string;
-	}
+	};
 	type AddBookToBasketRequest = number;
 }

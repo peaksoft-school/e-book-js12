@@ -19,6 +19,7 @@ import 'swiper/css/pagination';
 import 'swiper/css/navigation';
 import { useState } from 'react';
 import { IconOrangeLeftArrow, IconOrangeRightArrow } from '@/src/assets/icons';
+import { useGetEBookQuery } from '@/src/redux/api/elBooks';
 
 const booksData = [
 	{
@@ -62,9 +63,15 @@ const booksData = [
 		pages: 150
 	}
 ];
+console.log(booksData);
+
 
 const EbookSection = () => {
 	const [bookId, setBookId] = useState(1);
+
+	const {data} = useGetEBookQuery()
+	console.log(data);
+	
 
 	const handleSlideChange = (swiper: SwiperClass) => {
 		const activeIndex = swiper.activeIndex;
@@ -81,7 +88,7 @@ const EbookSection = () => {
 					</div>
 					<div className={scss.all_about_books}>
 						<div className={scss.books}>
-							{booksData.map((book) => (
+							{data?.map((book) => (
 								<div
 									key={book.id}
 									className={scss.about_books}
@@ -91,7 +98,7 @@ const EbookSection = () => {
 									<p className={scss.description_books}>{book.description}</p>
 									<div className={scss.paragraph}>
 										<p>Подробнее</p>
-										<p>{book.pages} c</p>
+										<p>{book.price} c</p>
 									</div>
 								</div>
 							))}
@@ -122,7 +129,7 @@ const EbookSection = () => {
 									onSlideChange={(swiper) => handleSlideChange(swiper)}
 									className={scss.swiper}
 								>
-									{booksData.map((book) => (
+									{data?.map((book) => (
 										<SwiperSlide
 											key={book.id}
 											className={scss.swiper_slider}
@@ -130,7 +137,7 @@ const EbookSection = () => {
 										>
 											<div className={scss.slide_item}>
 												<img
-													src={book.image}
+													src={book.imageUrl}
 													alt=""
 													style={{ maxHeight: '800px' }}
 												/>

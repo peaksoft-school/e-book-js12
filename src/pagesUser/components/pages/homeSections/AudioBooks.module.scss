@@ -86,6 +86,11 @@
 				justify-content: end;
 				gap: 17px;
 
+				img {
+					width: 309px;
+					height: 309px;
+				}
+
 				@media (max-width: 1200px) {
 					max-width: 260px;
 					width: 100%;
@@ -243,6 +248,9 @@
 				}
 
 				img {
+					width: 441px;
+					height: 441px;
+
 					max-width: 441px;
 					width: 100%;
 					@media (max-width: 1200px) {
@@ -395,6 +403,13 @@
 				flex-direction: column;
 				justify-content: start;
 				gap: 17px;
+
+				img {
+					width: 344px;
+					height: 305px;
+					top: 2992px;
+					left: 1016px;
+				}
 
 				@media (max-width: 1200px) {
 					max-width: 300px;
