@@ -42,21 +42,21 @@ interface TypeResponse {
 }
 
 const SearchSection = () => {
-// 	const useDebounce = (value:number[], delay: number) => {
-// 		const [debouncedValue, setDebouncedValue] = useState(value);
+	// 	const useDebounce = (value:number[], delay: number) => {
+	// 		const [debouncedValue, setDebouncedValue] = useState(value);
 
-// 		useEffect(() => {
-// 			const handler = setTimeout(() => {
-// 				setDebouncedValue(value);
-// 			}, delay);
+	// 		useEffect(() => {
+	// 			const handler = setTimeout(() => {
+	// 				setDebouncedValue(value);
+	// 			}, delay);
 
-// 			return () => {
-// 				clearTimeout(handler);
-// 			};
-// 		}, [value, delay]);
+	// 			return () => {
+	// 				clearTimeout(handler);
+	// 			};
+	// 		}, [value, delay]);
 
-// 		return debouncedValue;
-// 	};
+	// 		return debouncedValue;
+	// 	};
 	const [value, setValue] = useState<number[]>([100, 9990]);
 	// const debouncedValue = useDebounce(value, 1000);
 

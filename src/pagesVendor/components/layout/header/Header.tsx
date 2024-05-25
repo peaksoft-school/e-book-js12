@@ -55,7 +55,13 @@ const Header = () => {
 									<LogoeBook />
 								</div>
 								<div className={scss.input_vontent}>
-									<CustomGenreInput placeholder="Искать жанр, книги, авторов, издательства... " />
+									<CustomGenreInput
+										placeholder="Искать жанр, книги, авторов, издательства... "
+										value={''}
+										onChange={function (): void {
+											throw new Error('Function not implemented.');
+										}}
+									/>
 								</div>
 								<div className={scss.right_content}>
 									<div className={scss.notice_icon}>
@@ -126,7 +132,13 @@ const Header = () => {
 								</div>
 							</div>
 							<div className={scss.search_input}>
-								<CustomGenreInput placeholder="Искать жанр, книги, авторов, издательства... " />
+								<CustomGenreInput
+									placeholder="Искать жанр, книги, авторов, издательства... "
+									value={''}
+									onChange={function (): void {
+										throw new Error('Function not implemented.');
+									}}
+								/>
 							</div>
 							<div className={scss.buttons_contents}>
 								<div className={scss.books_header}>
@@ -155,7 +167,7 @@ const Header = () => {
 										<CustomAddBookButton
 											children="+ Добавить книгу"
 											onClick={() => {
-												navigate('/admin/books/book_adding');
+												navigate('vendor/addBook');
 											}}
 										/>
 									</div>

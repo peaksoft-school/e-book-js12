@@ -19,6 +19,7 @@ import 'swiper/css/pagination';
 import 'swiper/css/navigation';
 import { useState } from 'react';
 import { IconOrangeLeftArrow, IconOrangeRightArrow } from '@/src/assets/icons';
+import { useNavigate } from 'react-router-dom';
 
 const booksData = [
 	{
@@ -65,7 +66,7 @@ const booksData = [
 
 const EbookSection = () => {
 	const [bookId, setBookId] = useState(1);
-
+	const navigate = useNavigate();
 	const handleSlideChange = (swiper: SwiperClass) => {
 		const activeIndex = swiper.activeIndex;
 		setBookId(activeIndex + 1);
@@ -77,7 +78,7 @@ const EbookSection = () => {
 				<div className={scss.content}>
 					<div className={scss.title}>
 						<h2>Электронные книги</h2>
-						<p>Смотреть все</p>
+						<p onClick={() => navigate('/search_book')}>Смотреть все</p>
 					</div>
 					<div className={scss.all_about_books}>
 						<div className={scss.books}>
