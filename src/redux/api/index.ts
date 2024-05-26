@@ -35,7 +35,8 @@ export const api = createApi({
 		'product',
 		'favorite',
 		'basket',
-		'clientProfile'
+		'clientProfile',
+		'change'
 	],
 
 	endpoints: () => ({})

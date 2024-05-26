@@ -88,7 +88,7 @@ const Header = () => {
 												<ul>
 													<li
 														onClick={() => {
-															navigate('/profile');
+															navigate('/vendor/profile');
 														}}
 													>
 														Профиль
