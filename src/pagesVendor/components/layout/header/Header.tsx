@@ -8,6 +8,7 @@ import { IconInfoCircle, IconUserCircle } from '@tabler/icons-react';
 import { useNavigate } from 'react-router-dom';
 import { ConfigProvider, Modal, Tooltip } from 'antd';
 import CustomAddBookButton from '@/src/ui/customButton/CustomAddBook';
+import { usePostPromoCodeMutation } from '@/src/redux/api/promo';
 
 const Header = () => {
 	const [headerScroll, setHeaderScroll] = useState<boolean>(false);
@@ -15,6 +16,14 @@ const Header = () => {
 	const [userExit, setUserExit] = useState<boolean>(false);
 	const [isModalOpen, setIsModalOpen] = useState(false);
 	const [modalSuccess, setModalSuccess] = useState(false);
+	//
+	const [promoCode, setPromoCode] = useState('');
+	const [dateStart, setDateStart] = useState('');
+	const [dateEnd, setDateEnd] = useState('');
+	const [disCount, setDisCount] = useState('');
+	//
+	const [createNewPromo] = usePostPromoCodeMutation();
+	//
 	const navigate = useNavigate();
 	useEffect(() => {
 		const changeHeader = () => {
@@ -39,6 +48,16 @@ const Header = () => {
 			}, 3000);
 		}
 	}, [modalSuccess]);
+
+	const onSubmitAddPromo = async () => {
+		const newData = {
+			promoCode,
+			dateStart,
+			dateEnd,
+			disCount
+		};
+		await createNewPromo(newData);
+	};
 
 	return (
 		<>
@@ -172,63 +191,91 @@ const Header = () => {
 										/>
 									</div>
 								</div>
-								<ConfigProvider
-									theme={{
-										components: {
-											Modal: {
-												lineWidth: 20
+								<>
+									<ConfigProvider
+										theme={{
+											components: {
+												Modal: {
+													lineWidth: 20
+												}
 											}
-										}
-									}}
-								>
-									<Modal
-										className={scss.modal}
-										open={isModalOpen}
-										closable={false}
-										onCancel={() => {
-											setIsModalOpen(false);
 										}}
-										footer={[
-											<button
-												key="submit"
-												onClick={() => {
-													setIsModalOpen(false);
-													setTimeout(() => {
-														setModalSuccess(true);
-													}, 600);
-												}}
-											>
-												Создать
-											</button>
-										]}
 									>
-										<div className={scss.promocode}>
-											<label>Промокод</label>
-											<input
-												className={scss.promocode_input}
-												type="text"
-												placeholder="Напишите промокод"
-											/>
-										</div>
-										<div className={scss.inputs}>
-											<div className={scss.input_x_label}>
-												<label>Дата начала</label>
-
-												<input type="date" />
-											</div>
-											<div className={scss.input_x_label}>
-												<label>Дата завершения</label>
-												<input type="date" />
-											</div>
-											<div
-												className={`${scss.input_x_label} ${scss.last_input}`}
-											>
-												<label>Процент скидки</label>
-												<input type="text" placeholder="%" />
-											</div>
-										</div>
-									</Modal>
-								</ConfigProvider>
+										<Modal
+											className={scss.modal}
+											open={isModalOpen}
+											closable={false}
+											onCancel={() => {
+												setIsModalOpen(false);
+											}}
+											footer={[
+												<button
+													type="submit"
+													key="submit"
+													onClick={() => {
+														onSubmitAddPromo();
+														setIsModalOpen(false);
+														setTimeout(() => {
+															setModalSuccess(true);
+														}, 600);
+													}}
+												>
+													Создать
+												</button>
+											]}
+										>
+											<>
+												<div className={scss.promocode}>
+													<label>Промокод</label>
+													<input
+														className={scss.promocode_input}
+														type="text"
+														placeholder="Напишите промокод"
+														value={promoCode}
+														onChange={(e) => {
+															setPromoCode(e.target.value);
+														}}
+													/>
+												</div>
+												<div className={scss.inputs}>
+													<div className={scss.input_x_label}>
+														<label>Дата начала</label>
+														<input
+															type="date"
+															value={dateStart}
+															onChange={(e) => {
+																setDateStart(e.target.value);
+															}}
+														/>
+													</div>
+													<div className={scss.input_x_label}>
+														<label>Дата завершения</label>
+														<input
+															type="date"
+															value={dateEnd}
+															onChange={(e) => {
+																setDateEnd(e.target.value);
+															}}
+														/>
+													</div>
+													<div
+														className={`${scss.input_x_label} ${scss.last_input}`}
+													>
+														<label>Процент скидки</label>
+														<input
+															type="text"
+															placeholder="%"
+															value={disCount}
+															onChange={(e) => {
+																setDisCount(e.target.value);
+															}}
+														/>
+													</div>
+												</div>
+											</>
+										</Modal>
+									</ConfigProvider>
+								</>
 							</div>
 							<Modal
 								className={scss.modal_success}
