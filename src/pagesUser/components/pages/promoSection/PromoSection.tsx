@@ -1,15 +1,16 @@
-import scss from './PromoCode.module.scss';
+import { useState, useEffect } from 'react';
 import CustomBasketButton from '@/src/ui/customButton/CustomBasketButton';
 import bg_promo from '../../../../assets/booksImg/Discount-cuate 1.png';
+import { useLazyGetPromoQuery } from '@/src/redux/api/promo';
 import { Modal } from 'antd';
-import { useEffect, useState } from 'react';
-import { useGetPromoQuery } from '@/src/redux/api/promo';
+import scss from './PromoCode.module.scss';
 
 interface TypeRequest {
 	page: number;
 	size: number;
 	allBooksByVendors: Book[];
 }
+
 interface Book {
 	id: number;
 	images: string[];
@@ -22,32 +23,30 @@ interface Book {
 
 const PromoSection = () => {
 	const [promoCode, setPromoCode] = useState('');
-	const [promoModal, setPromoModal] = useState(false);
 	const [foundBooks, setFoundBooks] = useState<Book[]>([]);
-	const [foundBooksCount, setFoundBooksCount] = useState(0)
-	const { data } = useGetPromoQuery({ promoCode });
-	console.log(data);
+	const [foundBooksCount, setFoundBooksCount] = useState(0);
+	const [promoModal, setPromoModal] = useState(false); 
+
+	const [trigger, { data }] = useLazyGetPromoQuery();
 
 	useEffect(() => {
-		if (data && data.length > 0 && promoModal) {
+		if (data && data.length > 0) {
 			let books: Book[] = [];
 			data.forEach((item: TypeRequest) => {
 				books = books.concat(item.allBooksByVendors);
 			});
 			setFoundBooks(books);
+			setFoundBooksCount(books.length);
 		}
+	}, [data]);
 
-		if (data && data.length > 0) {
-			let count = 0;
-			data.forEach((item: TypeRequest) => {
-				count += item.allBooksByVendors.length;
-			});
-			setFoundBooksCount(count);
+	const handleActivateClick = async () => {
+		try {
+			await trigger({ promoCode }).unwrap();
+		} catch (error) {
+			console.error('Error fetching promo data:', error);
+			setPromoModal(true);
 		}
-	}, [data, promoModal]);
-
-	const handleActivateClick = () => {
-		setPromoModal(true);
 	};
 
 	return (
@@ -74,17 +73,6 @@ const PromoSection = () => {
 									Активировать
 								</CustomBasketButton>
 							</div>
-							<Modal
-								open={promoModal}
-								footer={true}
-								className={scss.modal_promo}
-								onCancel={() => setPromoModal(false)}
-							>
-								<div className={scss.promo_modal_content}>
-									<p>Введены неверные символы в коде купона</p>
-									<button onClick={() => setPromoModal(false)}>Ok</button>
-								</div>
-							</Modal>
 							<p>
 								Промокоды eBook на скидки и подарки вы можете получить в
 								рассылках.
@@ -114,8 +102,20 @@ const PromoSection = () => {
 					)}
 				</div>
 			</div>
+			<Modal
+				open={promoModal}
+				footer={true}
+				className={scss.modal_promo}
+				onCancel={() => setPromoModal(false)}
+			>
+				<div className={scss.promo_modal_content}>
+					<p>Введены неверные символы в коде купона</p>
+					<button onClick={() => setPromoModal(false)}>Ok</button>
+				</div>
+			</Modal>
 		</section>
 	);
 };
 
 export default PromoSection;
+

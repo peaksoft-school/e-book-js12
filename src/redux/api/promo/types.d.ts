@@ -4,7 +4,7 @@ namespace PROMO {
 		page: number;
 		size: number;
 		allBooksByVendors: Book[];
-	}[]
+	}[];
 
 	export type Book = {
 		id: number;

@@ -15,7 +15,7 @@ import { IconGoogleLogo } from '@/src/assets/icons';
 interface TypeData {
 	email: string;
 	name: string;
-	password: string | number;
+	password: string;
 }
 
 const Registration = () => {
@@ -56,6 +56,8 @@ const Registration = () => {
 			idToken: idToken
 		};
 		postGoogleToken(data);
+
+		// aaaaaa
 		// await signInWithPopup(auth, provider).then(({ user }) => {
 		// 	const data = {
 		// 		idToken: user.accessToken
