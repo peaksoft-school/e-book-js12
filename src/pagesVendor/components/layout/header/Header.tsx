@@ -88,7 +88,7 @@ const Header = () => {
 												<ul>
 													<li
 														onClick={() => {
-															navigate('/profile');
+															navigate('/vendor/profile');
 														}}
 													>
 														Профиль
@@ -122,7 +122,7 @@ const Header = () => {
 											<button
 												onClick={() => {
 													setUserExit(false);
-													navigate('/auth/login');
+													navigate('/vendor/login');
 												}}
 											>
 												Выйти

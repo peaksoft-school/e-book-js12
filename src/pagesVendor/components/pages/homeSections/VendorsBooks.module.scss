@@ -142,13 +142,18 @@
 						line-height: 130%;
 						letter-spacing: 0px;
 						text-align: left;
-
+						padding: 10px 0px;
 						@media (max-width: 360px) {
 							font-size: 10px;
 						}
 					}
 					hr {
-						margin-bottom: 10px;
+						&:last-child {
+							display: none;
+						}
+						height: 1px;
+						border: none;
+						background-color: rgb(212, 212, 212);
 					}
 				}
 			}
@@ -157,7 +162,6 @@
 				max-width: 191px;
 				display: flex;
 				flex-direction: column;
-				gap: 7px;
 				position: absolute;
 				background-color: #f8f8f8;
 				transition: 0.4s;
@@ -173,13 +177,18 @@
 					line-height: 130%;
 					letter-spacing: 0px;
 					text-align: left;
-
+					padding: 10px 0px;
 					@media (max-width: 360px) {
 						font-size: 10px;
 					}
 				}
 				hr {
-					margin-bottom: 10px;
+					&:last-child {
+						display: none;
+					}
+					height: 1px;
+					border: none;
+					background-color: rgb(212, 212, 212);
 				}
 				padding: 10px;
 				background-color: #f8f8f8;
@@ -307,7 +316,7 @@
 					cursor: pointer;
 
 					svg {
-						max-width: 13px;
+						max-width: 20px;
 					}
 				}
 
@@ -370,6 +379,8 @@
 				.is_open {
 					padding: 20px;
 					display: flex;
+					align-items: start;
+					text-align: start;
 					flex-direction: column;
 					gap: 7px;
 					position: absolute;
@@ -413,6 +424,8 @@
 					ul {
 						display: flex;
 						flex-direction: column;
+						align-items: start;
+						text-align: start;
 						gap: 10px;
 						width: 100%;
 						hr {
@@ -442,6 +455,8 @@
 
 							span {
 								svg {
+									width: 24px;
+									height: 24px;
 									@media (max-width: 440px) {
 										max-width: 30px;
 										width: 100%;

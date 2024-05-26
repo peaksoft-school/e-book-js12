@@ -32,16 +32,9 @@ const Registration = () => {
 	} = useForm<TypeData>();
 
 	const onSubmit: SubmitHandler<TypeData> = async (data) => {
-		const results = await postVendor(data);
-		if ('data' in results) {
-			const { token } = results.data;
-			localStorage.setItem('tokenVendor', token);
-			localStorage.setItem('isVendor', 'true');
-			localStorage.setItem('isAuth', 'false');
-			localStorage.removeItem('token');
-			reset();
-			setConfirmPassword('');
-		}
+		await postVendor(data);
+		reset();
+		setConfirmPassword('');
 	};
 
 	return (
@@ -173,7 +166,6 @@ const Registration = () => {
 						</label>
 						<div className={scss.btn_container}>
 							<button type="submit">Создать аккаунт</button>
-							<button>Стать продавцом на eBook</button>
 						</div>
 					</form>
 				</div>

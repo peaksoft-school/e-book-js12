@@ -1,29 +1,21 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-interface Results {
-	id: number;
-	title: string;
-	photo: string;
-	price: number;
-	quantity: number;
-	isBasket: boolean;
-	isFavorite: boolean;
-	vendor: Vendor;
-	createdAt: string;
-	updatedAt: string;
-}
-
-interface Vendor {
-	name: string;
-	login: string;
-	photo: string;
-}
-
 namespace PRODUCT {
 	type GetProductsResponse = {
-		success: boolean;
-		results: Results[];
+		id: number;
+		imageLink: string;
+		bookName: string;
+		publishedYear: number;
+		price: number;
+		quantityOfFavorite: number;
+		quantityOfBasket: number;
+		discount: number;
+		priceWithDiscount: number;
+	}[];
+	type GetProductsRequest = {
+		bookOperationType: string;
+		page: number;
+		pageSize: number;
 	};
-	type GetProductsRequest = void;
 
 	type PostProductResponse = {
 		success: boolean;

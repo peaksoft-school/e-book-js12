@@ -1,23 +1,35 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import scss from './Login.module.scss';
-import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import CustomLoginInput from '@/src/ui/customInpute/CustomLoginInput';
 import CustomPasswordInput from '@/src/ui/customInpute/CustomPasswordInput';
 import { usePostLoginMutation } from '@/src/redux/api/me';
+interface IFormInput {
+	email: string;
+	password: string;
+}
 
 const Login = () => {
+	const navigate = useNavigate();
 	const [postLogin] = usePostLoginMutation();
 	const {
 		// control,
 		register,
 		reset,
 		handleSubmit
-	} = useForm();
+	} = useForm<IFormInput>();
 
-	const handleOnSubmit: SubmitHandler<FieldValues> = async (data) => {
-		console.log(data);
-		await postLogin(data);
-		reset();
+	const handleOnSubmit = async (data: IFormInput) => {
+		const results = await postLogin(data);
+		if ('data' in results) {
+			const { token } = results.data;
+			localStorage.setItem('tokenVendor', token);
+			localStorage.setItem('isVendor', 'true');
+			localStorage.setItem('isAuth', 'false');
+			localStorage.removeItem('token');
+			reset();
+			navigate('/vendor/home');
+		}
 	};
 	return (
 		<div className={scss.Login}>
