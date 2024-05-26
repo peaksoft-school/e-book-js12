@@ -65,13 +65,11 @@ const booksData = [
 ];
 console.log(booksData);
 
-
 const EbookSection = () => {
 	const [bookId, setBookId] = useState(1);
 
-	const {data} = useGetEBookQuery()
+	const { data } = useGetEBookQuery();
 	console.log(data);
-	
 
 	const handleSlideChange = (swiper: SwiperClass) => {
 		const activeIndex = swiper.activeIndex;

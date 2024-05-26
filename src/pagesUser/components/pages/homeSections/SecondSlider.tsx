@@ -39,45 +39,60 @@ const SecondSlider: FC = () => {
 
 	const settings = {
 		infinite: true,
-		lazyLoad: 'ondemand' as const, 
+		lazyLoad: 'ondemand' as const,
 		speed: 500,
 		slidesToShow: 3,
-		nextArrow: <NextArrow onClick={() => setImageIndex((prev) => (prev + 1) % (data?.length ?? 1))} />,
-		prevArrow: <PrevArrow onClick={() => setImageIndex((prev) => (prev - 1 + (data?.length ?? 1)) % (data?.length ?? 1))} />,
+		nextArrow: (
+			<NextArrow
+				onClick={() =>
+					setImageIndex((prev) => (prev + 1) % (data?.length ?? 1))
+				}
+			/>
+		),
+		prevArrow: (
+			<PrevArrow
+				onClick={() =>
+					setImageIndex(
+						(prev) => (prev - 1 + (data?.length ?? 1)) % (data?.length ?? 1)
+					)
+				}
+			/>
+		),
 		beforeChange: (current: number, next: number) => setImageIndex(next)
 	};
 
 	return (
 		<div className="container">
 			<div className="title">
-						<h2>Электронные книги</h2>
-						<p className="see_orange">Смотреть все</p>
-					</div>
+				<h2>Электронные книги</h2>
+				<p className="see_orange">Смотреть все</p>
+			</div>
 			<div className="containers">
 				<div>
-					{data && data.map((item, idx) => (
-						<div key={item.id} className="description-box">
-							{idx === imageIndex && (
-								<div className="content">
-									<h2 className="name">{item.title}</h2>
-									<div
-										className="favorite_card_descriptions"
-										onClick={() => handleClick(item.id)}
-									>
-										{expandedCards[item.id] ? (
-											<p className="description">{item.description}</p>
-										) : (
-											<p>{item.description.substring(0, 250)}...</p>
-										)}
+					{data &&
+						data.map((item, idx) => (
+							<div key={item.id} className="description-box">
+								{idx === imageIndex && (
+									<div className="content">
+										<h2 className="name">{item.title}</h2>
+										<div
+											className="favorite_card_descriptions"
+											onClick={() => handleClick(item.id)}
+										>
+											{expandedCards[item.id] ? (
+												<p className="description">{item.description}</p>
+											) : (
+												<p>{item.description.substring(0, 250)}...</p>
+											)}
+										</div>
+										<div className="box">
+											<p className="read-more">Подробнее</p>
+											<p className="price">{item.price} c</p>
+										</div>
 									</div>
-									<div className="box">
-										<p className="read-more">Подробнее</p>
-										<p className="price">{item.price} c</p>
-									</div>
-								</div>
-							)}
-						</div>
-					))}
+								)}
+							</div>
+						))}
 				</div>
 				<div>
 					{data && data.length > 0 && (
