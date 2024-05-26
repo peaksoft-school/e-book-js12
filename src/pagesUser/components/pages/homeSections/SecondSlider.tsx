@@ -39,7 +39,7 @@ const SecondSlider: FC = () => {
 
 	const settings = {
 		infinite: true,
-		lazyLoad: 'ondemand' as const, // исправлено свойство lazyLoad
+		lazyLoad: 'ondemand' as const, 
 		speed: 500,
 		slidesToShow: 3,
 		nextArrow: <NextArrow onClick={() => setImageIndex((prev) => (prev + 1) % (data?.length ?? 1))} />,

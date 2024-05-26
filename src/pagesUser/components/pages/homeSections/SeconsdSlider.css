@@ -29,8 +29,7 @@
 	.content {
 		width: 100%;
 	}
-	
-	
+
 	.box {
 		width: 30%;
 	}
@@ -111,8 +110,8 @@
 	margin-top: 126.5px;
 }
 
-.see_orange{
- color: #ff4c00;
+.see_orange {
+	color: #ff4c00;
 }
 
 .active-line {
@@ -220,7 +219,7 @@
 		font-size: 14px;
 	}
 	.slide .name {
-		 margin-bottom: 50px;
+		margin-bottom: 50px;
 		font-size: 11px;
 	}
 	.slide .auth {
