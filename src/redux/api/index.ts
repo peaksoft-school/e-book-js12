@@ -35,7 +35,9 @@ export const api = createApi({
 		'sort',
 		'product',
 		'favorite',
-		'basket',
+		'audioBook',
+		'eBook',
+		'subscribe_api',
 		'promo'
 	],
 

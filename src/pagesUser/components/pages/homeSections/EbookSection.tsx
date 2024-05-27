@@ -19,7 +19,7 @@ import 'swiper/css/pagination';
 import 'swiper/css/navigation';
 import { useState } from 'react';
 import { IconOrangeLeftArrow, IconOrangeRightArrow } from '@/src/assets/icons';
-import { useNavigate } from 'react-router-dom';
+import { useGetEBookQuery } from '@/src/redux/api/elBooks';
 
 const booksData = [
 	{
@@ -63,10 +63,14 @@ const booksData = [
 		pages: 150
 	}
 ];
+console.log(booksData);
 
 const EbookSection = () => {
 	const [bookId, setBookId] = useState(1);
-	const navigate = useNavigate();
+
+	const { data } = useGetEBookQuery();
+	console.log(data);
+
 	const handleSlideChange = (swiper: SwiperClass) => {
 		const activeIndex = swiper.activeIndex;
 		setBookId(activeIndex + 1);
@@ -78,11 +82,11 @@ const EbookSection = () => {
 				<div className={scss.content}>
 					<div className={scss.title}>
 						<h2>Электронные книги</h2>
-						<p onClick={() => navigate('/search_book')}>Смотреть все</p>
+						<p>Смотреть все</p>
 					</div>
 					<div className={scss.all_about_books}>
 						<div className={scss.books}>
-							{booksData.map((book) => (
+							{data?.map((book) => (
 								<div
 									key={book.id}
 									className={scss.about_books}
@@ -92,7 +96,7 @@ const EbookSection = () => {
 									<p className={scss.description_books}>{book.description}</p>
 									<div className={scss.paragraph}>
 										<p>Подробнее</p>
-										<p>{book.pages} c</p>
+										<p>{book.price} c</p>
 									</div>
 								</div>
 							))}
@@ -123,7 +127,7 @@ const EbookSection = () => {
 									onSlideChange={(swiper) => handleSlideChange(swiper)}
 									className={scss.swiper}
 								>
-									{booksData.map((book) => (
+									{data?.map((book) => (
 										<SwiperSlide
 											key={book.id}
 											className={scss.swiper_slider}
@@ -131,7 +135,7 @@ const EbookSection = () => {
 										>
 											<div className={scss.slide_item}>
 												<img
-													src={book.image}
+													src={book.imageUrl}
 													alt=""
 													style={{ maxHeight: '800px' }}
 												/>
