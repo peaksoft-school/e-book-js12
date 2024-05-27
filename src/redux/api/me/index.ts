@@ -2,7 +2,10 @@ import { api as index } from '..';
 
 const api = index.injectEndpoints({
 	endpoints: (build) => ({
-		postRegistration: build.mutation({
+		postRegistration: build.mutation<
+			AUTHORIZATION.RegistrationResponse,
+			AUTHORIZATION.RegistrationRequest
+		>({
 			query: (data) => ({
 				url: '/api/auth/signUpForClient',
 				method: 'POST',
@@ -10,7 +13,10 @@ const api = index.injectEndpoints({
 			}),
 			invalidatesTags: ['me']
 		}),
-		postLogin: build.mutation({
+		postLogin: build.mutation<
+			AUTHORIZATION.LoginResponse,
+			AUTHORIZATION.LoginRequest
+		>({
 			query: (data) => ({
 				url: '/api/auth/signIn',
 				method: 'POST',
@@ -26,7 +32,10 @@ const api = index.injectEndpoints({
 			}),
 			invalidatesTags: ['me']
 		}),
-		postVendorRegistration: build.mutation({
+		postVendorRegistration: build.mutation<
+			AUTHORIZATION.VendorRegistrationResponse,
+			AUTHORIZATION.VendorRegistrationRequest
+		>({
 			query: (data) => ({
 				url: '/api/auth/signUpForVendor',
 				method: 'POST',
