@@ -20,7 +20,7 @@ interface UserHistory {
 }
 
 const ProfilePageHistory = () => {
-	const clientId = 8;
+	const clientId = 3;
 	const { data } = useClientProfileHistoryQuery<GetResponse>(clientId);
 
 	return (
@@ -75,7 +75,11 @@ const ProfilePageHistory = () => {
 											</p>
 											<p className={scss.book_data}>{historyItem.createdAt}</p>
 											<p className={scss.book_state}>
-												{historyItem.historyStatus}
+												{historyItem.historyStatus === 'COMPLETED' ? (
+													<>Завершен</>
+												) : (
+													<>В Прогрессe</>
+												)}
 											</p>
 										</div>
 									</div>
