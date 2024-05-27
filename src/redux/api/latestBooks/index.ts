@@ -11,8 +11,8 @@ const api = index.injectEndpoints({
 				method: 'GET'
 			}),
 			providesTags: ['latest_books']
-		}),
-	}),
+		})
+	})
 });
 
 export const { useGetAllLatestBooksQuery } = api;

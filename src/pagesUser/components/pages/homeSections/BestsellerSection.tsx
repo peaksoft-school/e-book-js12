@@ -62,7 +62,7 @@ const BestsellersSection: FC = () => {
 		<div className="container">
 			<div className="title_box">
 				<h2>Бестселлеры</h2>
-				<p className='see_all'>Смотреть все</p>
+				<p className="see_all">Смотреть все</p>
 			</div>
 			<div className="containers">
 				<div>
@@ -86,7 +86,6 @@ const BestsellersSection: FC = () => {
 											<p className="read-more">Подробнее</p>
 											<p className="price">{item.price} c</p>
 										</div>
-
 									</div>
 								)}
 							</div>

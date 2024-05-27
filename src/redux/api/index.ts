@@ -40,7 +40,6 @@ export const api = createApi({
 		'audioBook',
 		'eBook',
 		'subscribe_api'
-
 	],
 
 	endpoints: () => ({})

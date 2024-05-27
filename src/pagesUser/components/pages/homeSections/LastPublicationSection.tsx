@@ -112,18 +112,16 @@ const LastPublicationSection: FC = () => {
 						</div>
 						{data?.map((el) => (
 							<div className={scss.main_about}>
-							<h2 className={scss.title_book}>{el.title}</h2>
-							<p className={scss.about_book}>
-								{el.description}
-							</p>
-							<div className={scss.about_book_footer}>
-								<a className={scss.nav_to_all} href="#">
-									Подробнее
-								</a>
-								<p className={scss.price}>{el.price}с</p>
+								<h2 className={scss.title_book}>{el.title}</h2>
+								<p className={scss.about_book}>{el.description}</p>
+								<div className={scss.about_book_footer}>
+									<a className={scss.nav_to_all} href="#">
+										Подробнее
+									</a>
+									<p className={scss.price}>{el.price}с</p>
+								</div>
 							</div>
-						</div>
-					))}
+						))}
 					</div>
 				</div>
 			</div>

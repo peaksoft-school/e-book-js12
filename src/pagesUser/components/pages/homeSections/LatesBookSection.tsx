@@ -12,7 +12,6 @@ import {
 } from '@/src/assets/icons';
 import { useGetAllLatestBooksQuery } from '@/src/redux/api/latestBooks';
 
-
 interface Settings {
 	className?: string;
 	infinite: boolean;
