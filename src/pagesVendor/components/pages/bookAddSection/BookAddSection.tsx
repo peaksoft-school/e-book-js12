@@ -26,8 +26,8 @@ const BookAddSection = () => {
 	const [ebook, setEBook] = useState(false);
 	const [modal, setModal] = useState(false);
 
-	const [value, setValue] = useState('');
 	const [description, setDescription] = useState('');
+	const [fragment, setFragment] = useState('');
 	// console.log(value);
 	const handleChange = (value: any) => {
 		console.log(`selected ${value}`);
@@ -60,15 +60,14 @@ const BookAddSection = () => {
 	];
 
 	const [addBookVendor] = useAddBookVendorMutation();
-	console.log(addBookVendor);
 
 	const onSubmit: SubmitHandler<FieldValues> = async (book) => {
 		const newBook = {
 			title: book.title,
 			authorsFullName: book.authorsFullName,
 			publishingHouse: book.publishingHouse,
-			description: book.description,
-			fragment: book.fragment,
+			description: description,
+			fragment: fragment,
 			publishedYear: book.publishedYear,
 			volume: book.volume,
 			amountOfBook: book.amountOfBook,
@@ -76,8 +75,8 @@ const BookAddSection = () => {
 			price: book.price,
 			bestseller: book.bestseller
 		};
-		// await addBookVendor(newBook);
-		// reset();
+		await addBookVendor(newBook);
+		reset();
 		console.log(newBook);
 	};
 
@@ -133,7 +132,6 @@ const BookAddSection = () => {
 									<ul>
 										<li>
 											<p>
-												{' '}
 												Фон должен быть нейтральным, без теней, рисунков,
 												посторонних объектов или засветов
 											</p>
@@ -142,7 +140,7 @@ const BookAddSection = () => {
 											<p> Фото обязательно должно быть цветным</p>
 										</li>
 										<li>
-											<span>Фото</span>{' '}
+											<span>Фото</span>
 										</li>
 									</ul>
 								</div>
@@ -242,7 +240,7 @@ const BookAddSection = () => {
 											Издательство
 											<CustomUserNameInput
 												placeholder="Напишите название издательства"
-												registerName="title"
+												registerName="publishingHouse"
 												register={register}
 											/>
 										</label>
@@ -254,9 +252,9 @@ const BookAddSection = () => {
 												cols={264}
 												maxLength={1234}
 												placeholder="Напишите о книге"
-												onChange={(e) => setValue(e.target.value)}
+												onChange={(e) => setDescription(e.target.value)}
 											/>
-											<p>{value.length} / 1234</p>
+											<p>{description.length} / 1234</p>
 										</label>
 										<label>
 											Фрагмент книги
@@ -265,9 +263,9 @@ const BookAddSection = () => {
 												cols={264}
 												maxLength={1234}
 												placeholder="Напишите фрагмент книги"
-												onChange={(e) => setValue(e.target.value)}
+												onChange={(e) => setFragment(e.target.value)}
 											/>
-											<p>{value.length} / 1234</p>
+											<p>{fragment.length} / 1234</p>
 										</label>
 									</div>
 									<div className={scss.right_inputs}>
@@ -296,28 +294,31 @@ const BookAddSection = () => {
 												Объем
 												<div className={scss.input}>
 													<span>стр.</span>
-													<input type="text" />
+													<input type="text" {...register('volume')} />
 												</div>
 											</label>
 											<label>
 												Стоимость
 												<div className={scss.input}>
 													<span>сом</span>
-													<input type="text" />
+													<input type="text" {...register('price')} />
 												</div>
 											</label>
-											<label onClick={() => setClickRadio(!clickRadio)}>
+											<label>
 												<div className={scss.checkbox}>
 													{clickRadio ? (
-														<>
-															<IconBlackSquare />
-														</>
+														<IconBlackSquare />
 													) : (
-														<>
-															<IconWhiteSquare />
-														</>
+														<IconWhiteSquare />
 													)}
 													<p>Бестселлер</p>
+													<input
+														type="checkbox"
+														{...register('bestseller')}
+														checked={clickRadio}
+														onChange={() => setClickRadio(!clickRadio)}
+														style={{ display: 'none' }}
+													/>
 												</div>
 											</label>
 										</div>
@@ -367,7 +368,7 @@ const BookAddSection = () => {
 											ФИО автора
 											<CustomUserNameInput
 												placeholder="Напишите ФИО автора"
-												registerName="title"
+												registerName="authorsFullName"
 												register={register}
 											/>
 										</label>
@@ -383,7 +384,7 @@ const BookAddSection = () => {
 											Издательство
 											<CustomUserNameInput
 												placeholder="Напишите название издательства"
-												registerName="title"
+												registerName="publishingHouse"
 												register={register}
 											/>
 										</label>
@@ -395,9 +396,9 @@ const BookAddSection = () => {
 												cols={264}
 												maxLength={1234}
 												placeholder="Напишите о книге"
-												onChange={(e) => setValue(e.target.value)}
+												onChange={(e) => setDescription(e.target.value)}
 											/>
-											<p>{value.length} / 1234</p>
+											<p>{description.length} / 1234</p>
 										</label>
 										<label>
 											Фрагмент книги
@@ -406,9 +407,9 @@ const BookAddSection = () => {
 												cols={264}
 												maxLength={1234}
 												placeholder="Напишите фрагмент книги"
-												onChange={(e) => setValue(e.target.value)}
+												onChange={(e) => setFragment(e.target.value)}
 											/>
-											<p>{value.length} / 1234</p>
+											<p>{fragment.length} / 1234</p>
 										</label>
 									</div>
 									<div className={scss.right_inputs}>
@@ -507,7 +508,7 @@ const BookAddSection = () => {
 											ФИО автора
 											<CustomUserNameInput
 												placeholder="Напишите ФИО автора"
-												registerName="title"
+												registerName="authorsFullName"
 												register={register}
 											/>
 										</label>
@@ -528,9 +529,9 @@ const BookAddSection = () => {
 												cols={264}
 												maxLength={1234}
 												placeholder="Напишите о книге"
-												onChange={(e) => setValue(e.target.value)}
+												onChange={(e) => setDescription(e.target.value)}
 											/>
-											<p>{value.length} / 1234</p>
+											<p>{description.length} / 1234</p>
 										</label>
 									</div>
 									<div className={`${scss.right_inputs} ${scss.audio_inputs}`}>
@@ -685,9 +686,9 @@ const BookAddSection = () => {
 												cols={264}
 												maxLength={1234}
 												placeholder="Напишите о книге"
-												onChange={(e) => setValue(e.target.value)}
+												onChange={(e) => setDescription(e.target.value)}
 											/>
-											<p>{value.length} / 1234</p>
+											<p>{description.length} / 1234</p>
 										</label>
 										<label>
 											Фрагмент книги
@@ -696,9 +697,9 @@ const BookAddSection = () => {
 												cols={264}
 												maxLength={1234}
 												placeholder="Напишите фрагмент книги"
-												onChange={(e) => setValue(e.target.value)}
+												onChange={(e) => setFragment(e.target.value)}
 											/>
-											<p>{value.length} / 1234</p>
+											<p>{fragment.length} / 1234</p>
 										</label>
 									</div>
 									<div className={scss.right_inputs}>
@@ -800,7 +801,7 @@ const BookAddSection = () => {
 									// setModal(!modal);
 								}}
 							>
-								Добавить
+								Отправить
 							</CustomBasketButton>
 							{<></>}
 							<Modal
