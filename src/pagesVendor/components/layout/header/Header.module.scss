@@ -334,7 +334,7 @@
 		border: 1px solid rgb(196, 196, 196);
 		background-color: #f8f8f8;
 		color: rgb(150, 150, 150);
-		&:focus{
+		&:focus {
 			color: #0a0a0a;
 		}
 		@media (max-width: 420px) {
@@ -381,9 +381,9 @@
 			background-color: #f8f8f8;
 			color: rgb(150, 150, 150);
 			color-scheme: silver;
-			&:focus{
-			color: #0a0a0a;
-		}
+			&:focus {
+				color: #0a0a0a;
+			}
 
 			@media (max-width: 550px) {
 				max-width: 483px;

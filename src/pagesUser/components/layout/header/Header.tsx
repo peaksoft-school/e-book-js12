@@ -169,10 +169,12 @@ const Header = () => {
 												<li
 													onClick={() => {
 														navigate('/profile');
+														setIsUser(!isUser);
 													}}
 												>
 													Профиль
 												</li>
+
 												<hr />
 												<li
 													onClick={() => {

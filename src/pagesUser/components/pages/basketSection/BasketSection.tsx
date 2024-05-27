@@ -152,11 +152,11 @@ const BasketPage: React.FC = () => {
 													</div>
 													<div className={scss.book_quantity}>
 														<button onClick={() => decrementQuantity(book.id)}>
-															<IconMinusIcon/>
+															<IconMinusIcon />
 														</button>
 														<span>{book.quantity}</span>
 														<button onClick={() => incrementQuantity(book.id)}>
-															<IconPlus/>
+															<IconPlus />
 														</button>
 													</div>
 												</div>
