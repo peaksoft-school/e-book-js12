@@ -25,7 +25,7 @@ const PromoSection = () => {
 	const [promoCode, setPromoCode] = useState('');
 	const [foundBooks, setFoundBooks] = useState<Book[]>([]);
 	const [foundBooksCount, setFoundBooksCount] = useState(0);
-	const [promoModal, setPromoModal] = useState(false); 
+	const [promoModal, setPromoModal] = useState(false);
 
 	const [trigger, { data }] = useLazyGetPromoQuery();
 
@@ -118,4 +118,3 @@ const PromoSection = () => {
 };
 
 export default PromoSection;
-
