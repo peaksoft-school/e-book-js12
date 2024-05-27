@@ -15,13 +15,29 @@ namespace SORT {
 	type GetSortsRequest = void;
 
 	type PostSortResponse = {
-		success: boolean;
-		results: Results;
+		totalNumberOfBooks: number;
+		totalPages: number;
+		books: TypeDataBook;
+	};
+	type TypeDataBook = {
+		id: number;
+		cover: string;
+		title: string;
+		authorFullName: string;
+		price: number;
+		discount: number;
+		isAudioBook: boolean;
+		inFavorites: boolean;
 	};
 	type PostSortRequest = {
-		title: string;
-		photo: string;
-		price: number;
-		quantity: number;
+		genres: string[];
+		bookTypes: string[];
+		languages: string[];
+		price: Price;
+		sort: string;
+	};
+	type Price = {
+		from: number;
+		to: number;
 	};
 }

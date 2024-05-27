@@ -3,15 +3,19 @@ import scss from './Registration.module.scss';
 import { useState } from 'react';
 import EyeSeeIcon from '@/src/assets/icons/icon-eyeSee';
 import EyeClose from '@/src/assets/icons/icon-eyeClose';
-import {
-	Controller,
-	FieldValues,
-	SubmitHandler,
-	useForm
-} from 'react-hook-form';
+import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import { PhoneInput } from 'react-international-phone';
 import 'react-international-phone/style.css';
 import { usePostVendorRegistrationMutation } from '@/src/redux/api/me';
+
+interface TypeData {
+	firstName: string;
+	lastName: string;
+	phoneNumber: string;
+	email: string;
+	password: string;
+}
+[];
 
 const Registration = () => {
 	const [isPassword, setIsPassword] = useState(false);
@@ -25,9 +29,9 @@ const Registration = () => {
 		register,
 		reset,
 		handleSubmit
-	} = useForm();
+	} = useForm<TypeData>();
 
-	const onSubmit: SubmitHandler<FieldValues> = async (data) => {
+	const onSubmit: SubmitHandler<TypeData> = async (data) => {
 		const results = await postVendor(data);
 		if ('data' in results) {
 			const { token } = results.data;
@@ -55,7 +59,7 @@ const Registration = () => {
 							</div>
 							<input
 								className={
-									errors.name ? `${scss.input_error}` : `${scss.input}`
+									errors.firstName ? `${scss.input_error}` : `${scss.input}`
 								}
 								{...register('firstName', { minLength: 4, required: true })}
 								type="text"
@@ -68,7 +72,7 @@ const Registration = () => {
 							</div>
 							<input
 								className={
-									errors.name ? `${scss.input_error}` : `${scss.input}`
+									errors.lastName ? `${scss.input_error}` : `${scss.input}`
 								}
 								{...register('lastName', { minLength: 4, required: true })}
 								type="text"
@@ -140,7 +144,7 @@ const Registration = () => {
 							</div>
 							<input
 								className={
-									errors.passwor ? `${scss.input_error}` : `${scss.input}`
+									errors.password ? `${scss.input_error}` : `${scss.input}`
 								}
 								type={isLogPassword ? 'text' : 'password'}
 								placeholder="Подтвердите пароль"

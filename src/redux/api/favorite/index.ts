@@ -36,7 +36,7 @@ const api = index.injectEndpoints({
 			invalidatesTags: ['favorite']
 		}),
 
-		deleteFavoriteBook: build.mutation<
+		postFavoriteUnFavorite: build.mutation<
 			FAVORITE.DeleteFavoriteBookResponse,
 			FAVORITE.DeleteFavoriteBookRequest
 		>({
@@ -64,6 +64,6 @@ export const {
 	useGetAllBooksInFavoriteQuery,
 	useGetCountOfBooksInFavoriteQuery,
 	useClearFavoriteMutation,
-	useDeleteFavoriteBookMutation,
+	usePostFavoriteUnFavoriteMutation,
 	useAddBookToBasketMutation
 } = api;

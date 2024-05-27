@@ -1,7 +1,4 @@
 import scss from './AudioBooks.module.scss';
-// import first_book from '../../../../assets/booksImg/img-milky-way-empire.png';
-// import second_book from '../../../../assets/booksImg/img-green-color.png';
-// import third_book from '../../../../assets/booksImg/img-nisa.png';
 import { IconNewIcon } from '@/src/assets/icons';
 import { useGetAudioBookQuery } from '@/src/redux/api/eBook';
 
