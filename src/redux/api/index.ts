@@ -45,7 +45,10 @@ export const api = createApi({
 		'eBook',
 		'subscribe_api',
 		'clientProfile',
-		'book'
+		'book',
+		'last_publication',
+		'latest_books',
+		'book_search'
 	],
 
 	endpoints: () => ({})

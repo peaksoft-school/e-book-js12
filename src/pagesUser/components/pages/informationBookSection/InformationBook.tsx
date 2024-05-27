@@ -6,10 +6,10 @@ import CustomBasketButton from '@/src/ui/customButton/CustomBasketButton';
 import CustomPersonalAreaButton from '@/src/ui/customButton/CustomPersonalArea';
 import {
 	useAddBookToBasketMutation,
-	useAddBookToFavoriteMutation,
-	useGetBookByIdQuery
+	useAddBookToFavoriteMutation
 } from '@/src/redux/api/bookInfo';
 import { useNavigate } from 'react-router-dom';
+import { useGetBookByIdQuery } from '@/src/redux/api/book';
 
 interface BookIdProps {
 	id: number;
@@ -45,8 +45,8 @@ const InformationBook: FC<BookIdProps> = () => {
 	const [showBookInfo, setShowBookInfo] = useState(false);
 	// const paramsId = useParams();
 	// const bookId = Number(paramsId.id);
-	const bookId = 2
-	
+	const bookId = 2;
+
 	const navigate = useNavigate();
 	const { data, isLoading } = useGetBookByIdQuery<GetResponse>(bookId);
 	const [addBookToBasket] = useAddBookToBasketMutation();
