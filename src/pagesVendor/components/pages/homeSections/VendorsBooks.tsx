@@ -1,178 +1,77 @@
 import { FC, useState } from 'react';
 import scss from './VendorsBooks.module.scss';
-import { IconPencil, IconX } from '@tabler/icons-react';
+import { IconPencil } from '@tabler/icons-react';
 
 import { useNavigate } from 'react-router-dom';
-import bookImage from '../../../../assets/booksImg/harrry-potter.png';
-import { IconArrowBottom, IconWhiteLike } from '@/src/assets/icons';
+import { IconArrowBottom, IconDelete, IconWhiteLike } from '@/src/assets/icons';
 import ThreeDotIcon from '@/src/assets/icons/icon-threeDot';
 import CustomSeeMoreButton from '@/src/ui/customButton/CustomSeeMoreButton';
 import UpIcon from '@/src/assets/icons/icon-upIcon';
-
-interface Book {
-	id: number;
-	img: string;
-	name: string;
-	date: string;
-	type: string;
-	price: number;
-	hearts?: number;
-	inBasket?: number;
-}
+import {
+	useDeleteBookMutation,
+	useGetAllBookVedorQuery
+} from '@/src/redux/api/book';
 
 const VendorsBooks: FC = () => {
 	const [isOpen, setIsOpen] = useState<boolean>(false);
 	const navigate = useNavigate();
+	const [sortSelected, setSortSelected] = useState('ALL');
 
-	const books: Book[] = [
+	const [sortBookData] = useState([
 		{
 			id: 1,
-			img: bookImage,
-			name: 'История книги 1',
-			date: '20 Feb 2021',
-			price: 350,
-			type: 'Электронные книги',
-			hearts: 12,
-			inBasket: 3
+			sort: 'ALL',
+			sortName: 'Все'
 		},
 		{
 			id: 2,
-			img: bookImage,
-			name: 'История книги 2',
-			date: '20 Feb 2021',
-			price: 350,
-			type: 'Бумажные книги',
-			hearts: 12,
-			inBasket: 3
+			sort: 'IN_FAVORITE',
+			sortName: 'В избранном'
 		},
 		{
-			id: 2,
-			img: bookImage,
-			name: 'История книги 2',
-			date: '20 Feb 2021',
-			price: 350,
-			type: 'Бумажные книги',
-			hearts: 12,
-			inBasket: 3
+			id: 3,
+			sort: 'IN_BASKET',
+			sortName: 'В корзине'
 		},
 		{
-			id: 2,
-			img: bookImage,
-			name: 'История книги 2',
-			date: '20 Feb 2021',
-			price: 350,
-			type: 'Бумажные книги',
-			hearts: 12,
-			inBasket: 3
+			id: 4,
+			sort: 'SOLD',
+			sortName: 'Проданы'
 		},
 		{
-			id: 2,
-			img: bookImage,
-			name: 'История книги 2',
-			date: '20 Feb 2021',
-			price: 350,
-			type: 'Бумажные книги',
-			hearts: 12,
-			inBasket: 3
-		},
-		{
-			id: 2,
-			img: bookImage,
-			name: 'История книги 2',
-			date: '20 Feb 2021',
-			price: 350,
-			type: 'Бумажные книги',
-			hearts: 12,
-			inBasket: 3
-		},
-		{
-			id: 2,
-			img: bookImage,
-			name: 'История книги 2',
-			date: '20 Feb 2021',
-			price: 350,
-			type: 'Бумажные книги'
-		},
-		{
-			id: 2,
-			img: bookImage,
-			name: 'История книги 2',
-			date: '20 Feb 2021',
-			price: 350,
-			type: 'Бумажные книги',
-			hearts: 12,
-			inBasket: 3
-		},
-		{
-			id: 2,
-			img: bookImage,
-			name: 'История книги 2',
-			date: '20 Feb 2021',
-			price: 350,
-			type: 'Бумажные книги',
-			hearts: 12,
-			inBasket: 3
-		},
-		{
-			id: 2,
-			img: bookImage,
-			name: 'История книги 2',
-			date: '20 Feb 2021',
-			price: 350,
-			type: 'Бумажные книги',
-			hearts: 12,
-			inBasket: 3
-		},
-		{
-			id: 2,
-			img: bookImage,
-			name: 'История книги 2',
-			date: '20 Feb 2021',
-			price: 350,
-			type: 'Бумажные книги',
-			hearts: 12,
-			inBasket: 3
-		},
-		{
-			id: 2,
-			img: bookImage,
-			name: 'История книги 2',
-			date: '20 Feb 2021',
-			price: 350,
-			type: 'Бумажные книги',
-			hearts: 12,
-			inBasket: 3
+			id: 5,
+			sort: 'WITH_DISCOUNT',
+			sortName: 'Со скидками'
 		}
-	];
+	]);
+	const { data } = useGetAllBookVedorQuery({
+		bookOperationType: sortSelected,
+		page: 1,
+		pageSize: 12
+	});
+	const [deleteBook] = useDeleteBookMutation();
+
+	const deleteBookChange = async (id: number) => {
+		await deleteBook(id);
+	};
+
 	const [isOpenBooksType, setIsOpenBooksType] = useState(false);
-	const [selectedType, setSelectedType] = useState<string | null>(null);
 
-	const toggleTypeList = (): void => {
-		setIsOpenBooksType(!isOpenBooksType);
-	};
-
-	const handleGenreSelect = (type: string | null): void => {
-		setSelectedType(type);
-		setIsOpenBooksType(false);
-	};
-
-	const bookTypeText = selectedType ? selectedType : 'Все';
-
-	const filteredBooks: Book[] = selectedType
-		? books.filter((book) => book.type === selectedType)
-		: books;
 	return (
 		<section className={scss.VendorsBooks}>
 			<div className="container">
 				<div className={scss.content}>
 					<div className={scss.books_quantity}>
-						<p>Всего {filteredBooks.length} книг</p>
+						<p>Всего {data?.length} книг</p>
 						<div className={scss.all_books}>
 							<div className={scss.click}>
-								<p className={scss.all} onClick={toggleTypeList}>
-									<span onClick={() => handleGenreSelect(null)}>
-										{bookTypeText}
-									</span>
+								<p
+									className={scss.all}
+									onClick={() => {
+										setIsOpenBooksType(!isOpenBooksType);
+									}}
+								>
+									<span>Все</span>
 									<span>
 										{isOpenBooksType ? <UpIcon /> : <IconArrowBottom />}
 									</span>
@@ -181,13 +80,21 @@ const VendorsBooks: FC = () => {
 									<div
 										className={`${isOpenBooksType ? scss.type_list : scss.none_books_type}`}
 									>
-										<p>В избранном</p>
-										<hr />
-										<p>В корзине</p>
-										<hr />
-										<p>Со скидками</p>
-										<hr />
-										<p>Проданы</p>
+										{sortBookData.map((sort) => (
+											<>
+												<p
+													onClick={() => {
+														setIsOpenBooksType(false);
+														sort.id === 1
+															? setSortSelected('ALL')
+															: setSortSelected(sort.sort);
+													}}
+												>
+													{sort.sortName}
+												</p>
+												<hr />
+											</>
+										))}
 									</div>
 								}
 							</div>
@@ -195,15 +102,15 @@ const VendorsBooks: FC = () => {
 					</div>
 					<hr className={scss.title_hr} />
 					<div className={scss.books_content}>
-						{books.map((book) => (
+						{data?.map((book) => (
 							<div key={book.id} className={scss.book}>
 								<div className={scss.book_header}>
 									<div className={scss.hearts}>
 										<IconWhiteLike />
-										<p>{book.hearts}</p>
+										<p>({book.quantityOfFavorite})</p>
 									</div>
 									<div className={scss.in_basket}>
-										<p>В корзине ({book.inBasket})</p>
+										<p>В корзине ({book.quantityOfBasket})</p>
 									</div>
 								</div>
 								<div className={scss.extra} onClick={() => setIsOpen(!isOpen)}>
@@ -212,33 +119,38 @@ const VendorsBooks: FC = () => {
 								{isOpen && (
 									<div className={scss.is_open}>
 										<ul>
-											<li>
+											<li onClick={() => setIsOpen(false)}>
 												<span>
 													<IconPencil />
 												</span>
 												Редактировать
 											</li>
 											<hr />
-											<li onClick={() => setIsOpen(false)}>
+											<li
+												onClick={() => {
+													deleteBookChange(book.id);
+													setIsOpen(false);
+												}}
+											>
 												<span>
-													<IconX />
+													<IconDelete />
 												</span>
-												Отклонить
+												Удалить
 											</li>
 										</ul>
 									</div>
 								)}
 								<div
-									onClick={() => navigate(`vendor/${book.name}`)}
+									onClick={() => navigate(`vendor/${book.bookName}`)}
 									className={scss.book_content}
 								>
 									<div className={scss.book_img}>
-										<img src={book.img} alt={book.name} />
+										<img src={book.imageLink} alt={book.imageLink} />
 									</div>
 									<div className={scss.info_book}>
-										<h3>{book.name}</h3>
+										<h3>{book.bookName}</h3>
 										<div className={scss.date_and_price}>
-											<p>{book.date}</p>
+											<p>{book.publishedYear}</p>
 											<p className={scss.price}>{book.price} с</p>
 										</div>
 									</div>

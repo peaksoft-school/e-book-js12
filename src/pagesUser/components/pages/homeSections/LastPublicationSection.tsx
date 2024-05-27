@@ -2,10 +2,11 @@
 import { FC, useEffect, useState } from 'react';
 import scss from './LastPublication.module.scss';
 import { IconLongLine, IconShortLine } from '@/src/assets/icons';
-import history_book from '../../../../assets/booksImg/img-History-books.png';
 import { Link } from 'react-router-dom';
+import { useGetLastPublicationQuery } from '@/src/redux/api/lastPublication';
 
 const LastPublicationSection: FC = () => {
+	const { data } = useGetLastPublicationQuery();
 	const [navClicked, setNavClicked] = useState(() => {
 		const savedNavClicked = localStorage.getItem('navClicked');
 		return savedNavClicked ? JSON.parse(savedNavClicked) : false;
@@ -93,35 +94,34 @@ const LastPublicationSection: FC = () => {
 									</li>
 								</ul>
 							</div>
-							<div className={scss.main_image}>
-								<div className={scss.image_container}>
-									<IconShortLine />
-									<IconLongLine />
-									<img
-										className={scss.book_image}
-										src={history_book}
-										alt="ghjkl;"
-									/>
-									<IconLongLine />
-									<IconShortLine />
+							{data?.map((el) => (
+								<div className={scss.main_image}>
+									<div className={scss.image_container}>
+										<IconShortLine />
+										<IconLongLine />
+										<img
+											className={scss.book_image}
+											src={el.imageUrl}
+											alt="ghjkl;"
+										/>
+										<IconLongLine />
+										<IconShortLine />
+									</div>
+								</div>
+							))}
+						</div>
+						{data?.map((el) => (
+							<div className={scss.main_about}>
+								<h2 className={scss.title_book}>{el.title}</h2>
+								<p className={scss.about_book}>{el.description}</p>
+								<div className={scss.about_book_footer}>
+									<a className={scss.nav_to_all} href="#">
+										Подробнее
+									</a>
+									<p className={scss.price}>{el.price}с</p>
 								</div>
 							</div>
-						</div>
-						<div className={scss.main_about}>
-							<h2 className={scss.title_book}>ИСТОРИЯ КНИГИ</h2>
-							<p className={scss.about_book}>
-								Предлагаемый перевод является первой попыткой обращения к
-								творчеству Павла Орозия — римского христианского историка начала
-								V века, сподвижника и современника знаменитого Августина
-								Блаженн...
-							</p>
-							<div className={scss.about_book_footer}>
-								<a className={scss.nav_to_all} href="#">
-									Подробнее
-								</a>
-								<p className={scss.price}>456 с</p>
-							</div>
-						</div>
+						))}
 					</div>
 				</div>
 			</div>

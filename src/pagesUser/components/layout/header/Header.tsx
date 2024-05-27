@@ -8,45 +8,6 @@ import WhiteProfileIcon from '@/src/assets/icons/icon-whiteProfile';
 import { useNavigate } from 'react-router-dom';
 import { Modal } from 'antd';
 
-const dataGenre = [
-	{
-		category: 'Образование',
-		quantity: 1234
-	},
-	{
-		category: 'Художественная лит...',
-		quantity: 3453
-	},
-	{
-		category: 'Книги для детей',
-		quantity: 3453
-	},
-	{
-		category: 'Наука и техника',
-		quantity: 3453
-	},
-	{
-		category: 'Общество',
-		quantity: 435
-	},
-	{
-		category: 'Деловая литература',
-		quantity: 435
-	},
-	{
-		category: 'Красота. Здоровье. Спорт',
-		quantity: 435
-	},
-	{
-		category: 'Увлечения',
-		quantity: 435
-	},
-	{
-		category: 'Психология',
-		quantity: 435
-	}
-];
-
 const Header = () => {
 	const [headerScroll, setHeaderScroll] = useState<boolean>(false);
 	const [isGenre, setIsGenre] = useState<boolean>(false);
@@ -92,9 +53,12 @@ const Header = () => {
 								>
 									<LogoeBook />
 								</div>
-
 								<div className={scss.input_content}>
-									<CustomGenreInput placeholder="Искать жанр, книги, авторов, издательства... " />
+									<CustomGenreInput
+										onChange={() => {}}
+										value=""
+										placeholder="Искать жанр, книги, авторов, издательства... "
+									/>
 								</div>
 								<div className={scss.right_content}>
 									<div
@@ -122,12 +86,12 @@ const Header = () => {
 										<div
 											onClick={() => {
 												setIsGenre(!isGenre);
+												navigate('/search_book');
 											}}
 											className={scss.click_genre_container}
 										>
 											<IconBurgerMenu />
 										</div>
-
 										<div
 											onClick={() => {
 												setIsNavBar(!isNavBar);
@@ -161,6 +125,7 @@ const Header = () => {
 										<p
 											onClick={() => {
 												setIsGenre(!isGenre);
+												navigate('/search_book');
 											}}
 										>
 											Жанры
@@ -204,10 +169,12 @@ const Header = () => {
 												<li
 													onClick={() => {
 														navigate('/profile');
+														setIsUser(!isUser);
 													}}
 												>
 													Профиль
 												</li>
+
 												<hr />
 												<li
 													onClick={() => {
@@ -245,41 +212,11 @@ const Header = () => {
 								</Modal>
 							</nav>
 							<div className={scss.search_input}>
-								<CustomGenreInput placeholder="Искать жанр, книги, авторов, издательства... " />
-							</div>
-							<div className={scss.position_container}>
-								{
-									<div
-										className={
-											isGenre ? scss.genre_container : scss.close_conrtainer
-										}
-									>
-										<div className={scss.lefts_genre}>
-											{dataGenre.map((item, index) => (
-												<div className={scss.name_genre} key={index}>
-													<p>{item.category}</p>
-													<span>{item.quantity}</span>
-												</div>
-											))}
-										</div>
-										<div className={scss.center_genre}>
-											{dataGenre.map((item, index) => (
-												<div className={scss.name_genre} key={index}>
-													<p>{item.category}</p>
-													<span>{item.quantity}</span>
-												</div>
-											))}
-										</div>
-										<div className={scss.rights_genre}>
-											{dataGenre.map((item, index) => (
-												<div className={scss.name_genre} key={index}>
-													<p>{item.category}</p>
-													<span>{item.quantity}</span>
-												</div>
-											))}
-										</div>
-									</div>
-								}
+								<CustomGenreInput
+									onChange={() => {}}
+									value=""
+									placeholder="Искать жанр, книги, авторов, издательства... "
+								/>
 							</div>
 						</div>
 					</div>

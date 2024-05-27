@@ -7,6 +7,10 @@ const baseQuery = fetchBaseQuery({
 	baseUrl: import.meta.env.VITE_PUBLIC_API_URL,
 	prepareHeaders: (headers) => {
 		const token = localStorage.getItem('token');
+		const tokenVendor = localStorage.getItem('tokenVendor');
+		if (tokenVendor) {
+			headers.set('Authorization', `Bearer ${tokenVendor}`);
+		}
 		if (token) {
 			headers.set('Authorization', `Bearer ${token}`);
 		}
@@ -35,11 +39,13 @@ export const api = createApi({
 		'sort',
 		'product',
 		'favorite',
+		'basket',
+		'promo',
 		'audioBook',
 		'eBook',
 		'subscribe_api',
-		'basket',
-		'promo',
+		'clientProfile',
+		'book',
 		'update'
 	],
 

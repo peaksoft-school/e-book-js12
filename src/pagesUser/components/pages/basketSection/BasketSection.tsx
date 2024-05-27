@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import scss from './BasketPage.module.scss';
 import harryPoter from '../../../../assets/booksImg/harry-potter-chamber.png';
 import CustomPromoInput from '@/src/ui/customInpute/CustomPromoInput';
-import { IconX } from '@/src/assets/icons';
+import { IconMinusIcon, IconPlus, IconX } from '@/src/assets/icons';
 import CustomAuthButton from '@/src/ui/customButton/CustomAuthButton';
 import { Modal } from 'antd';
 interface Book {
@@ -152,11 +152,11 @@ const BasketPage: React.FC = () => {
 													</div>
 													<div className={scss.book_quantity}>
 														<button onClick={() => decrementQuantity(book.id)}>
-															-
+															<IconMinusIcon />
 														</button>
 														<span>{book.quantity}</span>
 														<button onClick={() => incrementQuantity(book.id)}>
-															+
+															<IconPlus />
 														</button>
 													</div>
 												</div>
