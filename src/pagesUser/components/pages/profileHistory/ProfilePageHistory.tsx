@@ -67,12 +67,19 @@ const ProfilePageHistory = () => {
 												</p>
 											</div>
 											<p className={scss.book_quantity}>
-												{historyItem.quantity} шт
+												{historyItem.quantity} шт.
 											</p>
-											<p className={scss.book_price}>{historyItem.price} ₽</p>
+											<p className={scss.book_price}>
+												<span>{historyItem.price} ₽</span>
+												{historyItem.priceWithDiscount} ₽
+											</p>
 											<p className={scss.book_data}>{historyItem.createdAt}</p>
 											<p className={scss.book_state}>
-												{historyItem.historyStatus}
+												{historyItem.historyStatus === 'COMPLETED' ? (
+													<>Завершен</>
+												) : (
+													<>В Прогрессe</>
+												)}
 											</p>
 										</div>
 									</div>
