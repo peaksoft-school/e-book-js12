@@ -3,7 +3,6 @@ import {
 	createApi,
 	fetchBaseQuery
 } from '@reduxjs/toolkit/query/react';
-
 const baseQuery = fetchBaseQuery({
 	baseUrl: import.meta.env.VITE_PUBLIC_API_URL,
 	prepareHeaders: (headers) => {
@@ -14,12 +13,10 @@ const baseQuery = fetchBaseQuery({
 		return headers;
 	}
 });
-
 const baseQueryExtended: BaseQueryFn = async (args, api, extraOptions) => {
 	const result = await baseQuery(args, api, extraOptions);
 	return result;
 };
-
 export const api = createApi({
 	reducerPath: 'api',
 	baseQuery: baseQueryExtended,
@@ -28,15 +25,20 @@ export const api = createApi({
 
 	tagTypes: [
 		'me',
+		'product',
+		'basket',
 		'book_info',
 		'add_to_basket',
+		'favorite',
+		'sort',
 		'add_to_favorite',
 		'sort',
 		'product',
 		'favorite',
-		'basket',
-		'clientProfile',
-		'add_book'
+		'audioBook',
+		'eBook',
+		'subscribe_api',
+		'promo'
 	],
 
 	endpoints: () => ({})

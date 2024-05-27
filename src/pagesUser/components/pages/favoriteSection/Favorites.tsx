@@ -1,11 +1,11 @@
 import { FC, useState } from 'react';
 import scss from './Favorites.module.scss';
 import { IconX } from '@/src/assets/icons';
-import { NavLink, useParams } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import {
 	useAddBookToBasketMutation,
 	useClearFavoriteMutation,
-	useDeleteFavoriteBookMutation,
+	usePostFavoriteUnFavoriteMutation,
 	useGetAllBooksInFavoriteQuery,
 	useGetCountOfBooksInFavoriteQuery
 } from '@/src/redux/api/favorite';
@@ -15,18 +15,18 @@ interface BookId {
 }
 
 const FavoritSection: FC<BookId> = () => {
-	const paramsId = useParams();
-	const bookId = Number(paramsId.id);
+	// const paramsId = useParams();
+	// const bookId = Number(paramsId.id);
 	const [expandedCards, setExpandedCards] = useState<{
 		[key: string]: boolean;
 	}>({});
 	const { data } = useGetAllBooksInFavoriteQuery();
 	const { data: count } = useGetCountOfBooksInFavoriteQuery();
 	const [clearFavorite] = useClearFavoriteMutation();
-	const [deleteFavoriteBook] = useDeleteFavoriteBookMutation();
+	const [deleteFavoriteBook] = usePostFavoriteUnFavoriteMutation();
 	const [addBookToBasket] = useAddBookToBasketMutation();
 
-	const handleClick = (id: string) => {
+	const handleClick = (id: number) => {
 		setExpandedCards((prevExpanded) => ({
 			...prevExpanded,
 			[id]: !prevExpanded[id] || false
@@ -60,7 +60,7 @@ const FavoritSection: FC<BookId> = () => {
 						<div className={scss.favorite_header}>
 							<div className={scss.favorites_title}>
 								<h1>Ваши книги</h1>
-								<p>Всего: {count}</p>
+								<p>Всего: {count?.count}</p>
 							</div>
 							<hr />
 							<button
@@ -71,7 +71,7 @@ const FavoritSection: FC<BookId> = () => {
 							</button>
 						</div>
 						<div className={scss.favorite_card_container}>
-							{data?.map((item: any) => (
+							{data?.map((item) => (
 								<>
 									<hr />
 									<div className={scss.favorite_card_content}>
