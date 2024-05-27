@@ -1,18 +1,12 @@
 import { api as index } from '..';
 
-// interface TypeTest {
-// 	bookOperationType: string;
-// 	page: number;
-// 	pageSize: number;
-// }
-
 const api = index.injectEndpoints({
 	endpoints: (build) => ({
 		getAllBookVedor: build.query<
 			PRODUCT.GetProductsResponse,
 			PRODUCT.GetProductsRequest
 		>({
-			query: ({ bookOperationType = 'ALL', page = 1, pageSize = 12 }) => ({
+			query: ({ bookOperationType, page, pageSize }) => ({
 				url: `/api/book/findVendorAllBooks`,
 				method: 'GET',
 				params: {
@@ -22,7 +16,7 @@ const api = index.injectEndpoints({
 				}
 			}),
 			providesTags: ['book']
-		})
+		}),
 		// postProduct: build.mutation<
 		// 	PRODUCT.PostProductResponse,
 		// 	PRODUCT.PostProductRequest
@@ -34,20 +28,16 @@ const api = index.injectEndpoints({
 		// 	invalidatesTags: ['book']
 		// }),
 
-		// deleteProduct: build.mutation<
-		// 	PRODUCT.DeleteProductResponse,
-		// 	PRODUCT.DeleteProductRequest
-		// >({
-		// 	query: () => ({
-		// 		url: `/products/delete/${''}`,
-		// 		method: 'DELETE'
-		// 	}),
-		// 	invalidatesTags: ['book']
-		// })
+		deleteBook: build.mutation<
+			PRODUCT.DeleteProductResponse,
+			PRODUCT.DeleteProductRequest
+		>({
+			query: (id) => ({
+				url: `/api/book/delete/${id}`,
+				method: 'DELETE'
+			}),
+			invalidatesTags: ['book']
+		})
 	})
 });
-export const {
-	useGetAllBookVedorQuery
-	// usePostProductMutation,
-	// useDeleteProductMutation
-} = api;
+export const { useGetAllBookVedorQuery, useDeleteBookMutation } = api;

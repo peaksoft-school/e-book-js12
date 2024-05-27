@@ -56,9 +56,17 @@ const Header = () => {
 			dateEnd,
 			disCount
 		};
-		await createNewPromo(newData);
+		const result = await createNewPromo(newData);
+		if ('data' in result) {
+			const data = result.data;
+			console.log(data);
+			if (data.httpStatus === 'OK') {
+				setTimeout(() => {
+					setModalSuccess(true);
+				}, 600);
+			}
+		}
 	};
-
 	return (
 		<>
 			<header className={scss.Header}>
@@ -215,9 +223,6 @@ const Header = () => {
 													onClick={() => {
 														onSubmitAddPromo();
 														setIsModalOpen(false);
-														setTimeout(() => {
-															setModalSuccess(true);
-														}, 600);
 													}}
 												>
 													Создать

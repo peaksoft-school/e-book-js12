@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import scss from './Registration.module.scss';
 import { useState } from 'react';
 import EyeSeeIcon from '@/src/assets/icons/icon-eyeSee';
@@ -19,6 +19,7 @@ interface TypeData {
 
 const Registration = () => {
 	const [isPassword, setIsPassword] = useState(false);
+	const navigate = useNavigate();
 	const [isLogPassword, setLogPassword] = useState(false);
 	const [confirmPassword, setConfirmPassword] = useState('');
 	const [postVendor] = usePostVendorRegistrationMutation();
@@ -32,9 +33,17 @@ const Registration = () => {
 	} = useForm<TypeData>();
 
 	const onSubmit: SubmitHandler<TypeData> = async (data) => {
-		await postVendor(data);
-		reset();
-		setConfirmPassword('');
+		const results = await postVendor(data);
+		if ('data' in results) {
+			const { token } = results.data;
+			localStorage.setItem('tokenVendor', token);
+			localStorage.setItem('isVendor', 'true');
+			localStorage.setItem('isAuth', 'false');
+			localStorage.removeItem('token');
+			reset();
+			navigate('/vendor/home');
+			setConfirmPassword('');
+		}
 	};
 
 	return (

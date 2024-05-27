@@ -29,8 +29,8 @@ namespace PRODUCT {
 	};
 
 	type DeleteProductResponse = {
-		success: boolean;
-		results: Results;
+		httpStatus: string;
+		message: string;
 	};
 	type DeleteProductRequest = number;
 }

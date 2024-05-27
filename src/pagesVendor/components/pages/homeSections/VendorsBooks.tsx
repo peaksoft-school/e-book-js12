@@ -7,7 +7,10 @@ import { IconArrowBottom, IconDelete, IconWhiteLike } from '@/src/assets/icons';
 import ThreeDotIcon from '@/src/assets/icons/icon-threeDot';
 import CustomSeeMoreButton from '@/src/ui/customButton/CustomSeeMoreButton';
 import UpIcon from '@/src/assets/icons/icon-upIcon';
-import { useGetAllBookVedorQuery } from '@/src/redux/api/book';
+import {
+	useDeleteBookMutation,
+	useGetAllBookVedorQuery
+} from '@/src/redux/api/book';
 
 const VendorsBooks: FC = () => {
 	const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -46,7 +49,11 @@ const VendorsBooks: FC = () => {
 		page: 1,
 		pageSize: 12
 	});
-	console.log(data);
+	const [deleteBook] = useDeleteBookMutation();
+
+	const deleteBookChange = async (id: number) => {
+		await deleteBook(id);
+	};
 
 	const [isOpenBooksType, setIsOpenBooksType] = useState(false);
 
@@ -100,7 +107,7 @@ const VendorsBooks: FC = () => {
 								<div className={scss.book_header}>
 									<div className={scss.hearts}>
 										<IconWhiteLike />
-										<p>{book.quantityOfFavorite}</p>
+										<p>({book.quantityOfFavorite})</p>
 									</div>
 									<div className={scss.in_basket}>
 										<p>В корзине ({book.quantityOfBasket})</p>
@@ -119,7 +126,12 @@ const VendorsBooks: FC = () => {
 												Редактировать
 											</li>
 											<hr />
-											<li onClick={() => setIsOpen(false)}>
+											<li
+												onClick={() => {
+													deleteBookChange(book.id);
+													setIsOpen(false);
+												}}
+											>
 												<span>
 													<IconDelete />
 												</span>
