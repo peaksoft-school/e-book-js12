@@ -38,10 +38,17 @@ const Registration = () => {
 
 	const onHandleChange: SubmitHandler<TypeData> = async (data) => {
 		if (checkPassword === data.password) {
-			await postUser(data);
-			setCheckPassword('');
-			navigate('/auth/login');
-			reset();
+			const results = await postUser(data);
+			if ('data' in results) {
+				const { token } = results.data;
+				localStorage.setItem('token', token);
+				localStorage.setItem('isAuth', 'true');
+				localStorage.removeItem('tokenVendor');
+				localStorage.setItem('isVendor', 'false');
+				reset();
+				navigate('/');
+				setCheckPassword('');
+			}
 		} else {
 			alert('confirm password ');
 		}
@@ -51,7 +58,6 @@ const Registration = () => {
 		const user = result.user;
 		const idToken = await user.getIdToken();
 		console.log(idToken);
-
 		const data = {
 			idToken: idToken
 		};

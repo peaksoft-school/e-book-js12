@@ -12,8 +12,15 @@ const api = index.injectEndpoints({
 				params: { promoCode }
 			}),
 			providesTags: ['promo']
+		}),
+		postPromoCode: build.mutation({
+			query: (newData) => ({
+				url: '/api/promoCode/creatingPromotionalCode',
+				method: 'POST',
+				body: newData
+			})
 		})
 	})
 });
 
-export const { useLazyGetPromoQuery } = api;
+export const { useLazyGetPromoQuery, usePostPromoCodeMutation } = api;
