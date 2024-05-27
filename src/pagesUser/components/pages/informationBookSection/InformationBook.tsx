@@ -45,8 +45,8 @@ const InformationBook: FC<BookIdProps> = () => {
 	const [showBookInfo, setShowBookInfo] = useState(false);
 	// const paramsId = useParams();
 	// const bookId = Number(paramsId.id);
-	const bookId = 2
-	
+	const bookId = 2;
+
 	const navigate = useNavigate();
 	const { data, isLoading } = useGetBookByIdQuery<GetResponse>(bookId);
 	const [addBookToBasket] = useAddBookToBasketMutation();
