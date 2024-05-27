@@ -1,7 +1,8 @@
-import { useState } from 'react';
-import history_img from '../../../../assets/booksImg/img-History-books.png';
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable*/
+// @ts-nocheck
+import { useEffect, useState } from 'react';
 import scss from './Section.module.scss';
-import CustomGenreInput from '@/src/ui/customInpute/CustomGenreInput';
 import WhiteSquareIcon from '@/src/assets/icons/icon-whiteSquare';
 import BlackSquareIcon from '@/src/assets/icons/icon-blackSquare';
 import {
@@ -17,10 +18,49 @@ import {
 import CustomBasketButton from '@/src/ui/customButton/CustomBasketButton';
 import { Slider, ConfigProvider } from 'antd';
 import { useNavigate } from 'react-router-dom';
+import { usePostSortBookMutation } from '@/src/redux/api/sort';
+import {
+	useAddBookToBasketMutation,
+	usePostFavoriteUnFavoriteMutation
+} from '@/src/redux/api/favorite';
+
+interface TypeDataBook {
+	id: number;
+	cover: string;
+	title: string;
+	authorFullName: string;
+	price: number;
+	discount: number;
+	isAudioBook: boolean;
+	inFavorites: boolean;
+}
+
+interface TypeResponse {
+	totalNumberOfBooks: number;
+	totalPages: number;
+	books: TypeDataBook;
+}
 
 const SearchSection = () => {
+	// 	const useDebounce = (value:number[], delay: number) => {
+	// 		const [debouncedValue, setDebouncedValue] = useState(value);
+
+	// 		useEffect(() => {
+	// 			const handler = setTimeout(() => {
+	// 				setDebouncedValue(value);
+	// 			}, delay);
+
+	// 			return () => {
+	// 				clearTimeout(handler);
+	// 			};
+	// 		}, [value, delay]);
+
+	// 		return debouncedValue;
+	// 	};
+	const [value, setValue] = useState<number[]>([100, 9990]);
+	// const debouncedValue = useDebounce(value, 1000);
+
 	const [isGenre, setIsGenre] = useState(false);
-	const [checkGenre, setCheckGenre] = useState(false);
 	const [isSort, setIsSort] = useState(false);
 	const navigate = useNavigate();
 
@@ -29,42 +69,244 @@ const SearchSection = () => {
 
 	const [priceGenre, setPriceGenre] = useState(false);
 
-	const [favoriteBook, setFavoriteBook] = useState(false);
-	const [value, setValue] = useState<number[]>([500, 10000]);
-
 	const [language, setLanguage] = useState(false);
 
 	const [menufilters, setMenuFilters] = useState(false);
-	const databook = [
+
+	const [postFillter] = usePostSortBookMutation();
+	const [addBookFavorite] = usePostFavoriteUnFavoriteMutation();
+	const [addBookToBasket] = useAddBookToBasketMutation();
+	const [jenreData, setJenreData] = useState([
+		{
+			jenreId: 1,
+			jenreName: 'ХУДОЖЕСТВЕННАЯ ЛИТЕРАТУРА',
+			englishName: 'ARTISTIC_LITERATURE',
+			isCheked: false
+		},
+		{
+			jenreId: 2,
+			jenreName: 'ОБРАЗОВАНИЕ',
+			englishName: 'EDUCATION',
+			isCheked: false
+		},
+		{
+			jenreId: 3,
+			jenreName: 'КНИГИ ДЛЯ ДЕТЕЙ',
+			englishName: 'BOOKS_FOR_CHILDREN',
+			isCheked: false
+		},
+		{
+			jenreId: 4,
+			jenreName: 'НАУКА И ТЕХНОЛОГИЯ БРАЗОВАНИЕ',
+			englishName: 'SCIENCE_AND_TECHNOLOGY',
+			isCheked: false
+		},
+		{
+			jenreId: 5,
+			jenreName: 'СООБЩЕСТВО',
+			englishName: 'COMMUNITY',
+			isCheked: false
+		},
+		{
+			jenreId: 6,
+			jenreName: 'БИЗНЕС ЛИТЕРАТУРА',
+			englishName: 'BUSINESS_LITERATURE',
+			isCheked: false
+		},
+		{
+			jenreId: 7,
+			jenreName: 'КРАСОТА ЗДОРОВЬЕ СПОРТ',
+			englishName: 'BEAUTY_HEALTH_SPORT',
+			isCheked: false
+		},
+		{
+			jenreId: 8,
+			jenreName: 'УВЛЕЧЕНИЯ',
+			englishName: 'HOBBIES',
+			isCheked: false
+		},
+		{
+			jenreId: 9,
+			jenreName: 'ПСИХОЛОГИЯ',
+			englishName: 'PSYCHOLOGY',
+			isCheked: false
+		}
+	]);
+	const [typesBookData, setTypesBookData] = useState([
+		{
+			typeId: 1,
+			typeName: 'Бумажная книга',
+			englishName: 'PAPER_BOOK',
+			isRadio: false
+		},
+		{
+			typeId: 2,
+			typeName: 'Аудиокнига',
+			englishName: 'AUDIO_BOOK',
+			isRadio: false
+		},
+		{
+			typeId: 3,
+			typeName: 'Электронная книга',
+			englishName: 'ONLINE_BOOK',
+			isRadio: false
+		}
+	]);
+
+	const [idSort, setIdSort] = useState<null | number>(null);
+	const [sortData] = useState([
 		{
 			id: 1,
-			image: history_img,
-			title: 'История Книги',
-			aftor: 'Э. Эггер, А. Бахтияров',
-			price: '33333 с'
+			nameSort: 'all',
+			englishSort: ' '
 		},
 		{
 			id: 2,
-			image: history_img,
-			title: 'История Книги',
-			aftor: 'Э. Эггер, А. Бахтияров',
-			price: '549 с'
+			nameSort: 'Новинки',
+			englishSort: 'new'
 		},
 		{
 			id: 3,
-			image: history_img,
-			title: 'История Книги',
-			aftor: 'Э. Эггер, А. Бахтияров',
-			price: '549 с'
+			nameSort: 'Бестселлеры',
+			englishSort: 'best-sellers'
+		}
+	]);
+
+	const [dataBooks, setDataBooks] = useState<TypeDataBook[] | []>([]);
+
+	const [languageBooksData, setLanguageBooksData] = useState([
+		{
+			languageId: 1,
+			languege: 'Кыргызский язык',
+			englishNameLanguage: 'KYRGYZ',
+			isCheked: false
 		},
 		{
-			id: 4,
-			image: history_img,
-			title: 'История Книги',
-			aftor: 'Э. Эггер, А. Бахтияров',
-			price: '549 с'
+			languageId: 2,
+			languege: 'Русский язык',
+			englishNameLanguage: 'RUSSIAN',
+			isCheked: false
+		},
+		{
+			languageId: 3,
+			languege: 'Английский язык',
+			englishNameLanguage: 'ENGLISH',
+			isCheked: false
 		}
-	];
+	]);
+
+	const hanleAddBookFavorite = async (id: number) => {
+		await addBookFavorite(id);
+		handleChangeFillter();
+	};
+
+	const handleAddBookToBasket = async (id: number) => {
+		await addBookToBasket(id);
+		handleChangeFillter();
+	};
+
+	const deleteIsFalseJenre = (id: number) => {
+		setJenreData((prev) =>
+			prev.map((item) =>
+				item.jenreId === id ? { ...item, isCheked: false } : item
+			)
+		);
+	};
+
+	const deleteIsRadioType = (id: number) => {
+		setTypesBookData((prev) =>
+			prev.map((item) =>
+				item.typeId === id ? { ...item, isRadio: false } : item
+			)
+		);
+	};
+
+	const deleteIsCheckLanguage = (id: number) => {
+		setLanguageBooksData((prev) =>
+			prev.map((item) =>
+				item.languageId === id ? { ...item, isCheked: false } : item
+			)
+		);
+	};
+
+	const handleLanguageFilter = (id: number) => {
+		setLanguageBooksData((prev) =>
+			prev.map((item) =>
+				item.languageId === id ? { ...item, isCheked: !item.isCheked } : item
+			)
+		);
+	};
+
+	const handleJenreCheckedFucn = (id: number) => {
+		setJenreData((prev) =>
+			prev.map((item) =>
+				item.jenreId === id ? { ...item, isCheked: !item.isCheked } : item
+			)
+		);
+	};
+
+	const typeBooksFunc = (id: number) => {
+		setTypesBookData((prev) =>
+			prev.map((item) =>
+				item.typeId === id ? { ...item, isRadio: !item.isRadio } : item
+			)
+		);
+	};
+
+	const handleChangeFillter = async () => {
+		const filterJnereName = jenreData.filter((item) => {
+			if (item.isCheked) {
+				return item.isCheked;
+			}
+		});
+
+		const englsihNameJenre = filterJnereName.map((item) => item.englishName);
+
+		const sortCheckFilter = sortData.find((item) => {
+			if (item.id === idSort) {
+				return item.englishSort;
+			}
+		});
+		const sortValue = sortCheckFilter?.englishSort
+			? sortCheckFilter.englishSort
+			: ' ';
+
+		const typesFiltredIsRadio = typesBookData.filter((item) => {
+			if (item.isRadio) {
+				return item.isRadio;
+			}
+		});
+		const typeEnglishName = typesFiltredIsRadio.map((item) => item.englishName);
+
+		const languageFilter = languageBooksData.filter((item) => {
+			if (item.isCheked) {
+				return item.englishNameLanguage;
+			}
+		});
+
+		const nameLanguageBook = languageFilter.map((item) => {
+			return item.englishNameLanguage;
+		});
+
+		const newData = {
+			genres: [...englsihNameJenre],
+			bookTypes: [...typeEnglishName],
+			languages: [...nameLanguageBook],
+			price: {
+				from: value[0],
+				to: value[1]
+			},
+			sort: sortValue
+		};
+		const result = await postFillter(newData);
+		if (result && (result as { data: TypeResponse }).data.books) {
+			const booksData = (result as { data: TypeResponse }).data.books;
+			setDataBooks(booksData);
+		}
+	};
+	useEffect(() => {
+		handleChangeFillter();
+	}, [jenreData, idSort, typesBookData, languageBooksData, value]);
 
 	return (
 		<section className={scss.SearchSection}>
@@ -84,14 +326,50 @@ const SearchSection = () => {
 							<p>Найдены 2344 книг</p>
 						</div>
 						<div className={scss.center_content}>
-							<div className={scss.selcet_filter}>
-								<p>Зарубежная литература</p>
-								<IconDeleteX />
-							</div>
-							<div className={scss.selcet_filter}>
-								<p>Русский язык</p>
-								<IconDeleteX />
-							</div>
+							{jenreData
+								.filter((fill) => fill.isCheked)
+								.map((item) => (
+									<div className={scss.selcet_filter}>
+										<p>{item.jenreName}</p>
+										<button
+											onClick={() => {
+												deleteIsFalseJenre(item.jenreId);
+											}}
+										>
+											<IconDeleteX />
+										</button>
+									</div>
+								))}
+							{typesBookData
+								.filter((fill) => fill.isRadio)
+								.map((item) => (
+									<div className={scss.selcet_filter}>
+										<p>{item.typeName}</p>
+										<button
+											onClick={() => {
+												deleteIsRadioType(item.typeId);
+											}}
+										>
+											<IconDeleteX />
+										</button>
+									</div>
+								))}
+							{languageBooksData
+								.filter((fill) => fill.isCheked)
+								.map((item) => (
+									<>
+										<div className={scss.selcet_filter}>
+											<p>{item.languege}</p>
+											<button
+												onClick={() => {
+													deleteIsCheckLanguage(item.languageId);
+												}}
+											>
+												<IconDeleteX />
+											</button>
+										</div>
+									</>
+								))}
 						</div>
 						<div className={scss.tool}></div>
 						<div
@@ -113,9 +391,19 @@ const SearchSection = () => {
 							<>
 								<div className={`${isSort ? scss.sort_drop : scss.sort_down}`}>
 									<ul>
-										<li>Новинки</li>
-										<hr />
-										<li>Бестселлеры</li>
+										{sortData.map((sort) => (
+											<>
+												<li
+													onClick={() => {
+														setIdSort(sort.id);
+														setIsSort(false);
+													}}
+												>
+													{sort.nameSort}
+												</li>
+												<hr />
+											</>
+										))}
 									</ul>
 								</div>
 							</>
@@ -151,22 +439,30 @@ const SearchSection = () => {
 							<hr />
 							<>
 								<div className={`${isGenre ? scss.fillters : scss.none}`}>
-									<CustomGenreInput placeholder="Я ищу..." />
-									<div
-										onClick={() => setCheckGenre(!checkGenre)}
-										className={scss.checkbox}
-									>
-										{checkGenre ? (
-											<>
-												<BlackSquareIcon />
-											</>
-										) : (
-											<>
-												<WhiteSquareIcon />
-											</>
-										)}
-										<p>Зарубежная литература</p>
-									</div>
+									{jenreData.map((jenre) => (
+										<>
+											<div
+												key={jenre.jenreId}
+												onClick={() => {
+													handleJenreCheckedFucn(jenre.jenreId);
+												}}
+												className={scss.checkbox}
+											>
+												<div className={scss.checkbox_jenre}>
+													{jenre.isCheked ? (
+														<>
+															<BlackSquareIcon />
+														</>
+													) : (
+														<>
+															<WhiteSquareIcon />
+														</>
+													)}
+												</div>
+												<p>{jenre.jenreName}</p>
+											</div>
+										</>
+									))}
 								</div>
 							</>
 							<div
@@ -191,18 +487,27 @@ const SearchSection = () => {
 								onClick={() => setClickRadio(!clickRadio)}
 								className={`${filterType ? scss.fillters : scss.none}`}
 							>
-								<div className={scss.checkbox}>
-									{clickRadio ? (
-										<>
-											<IconBlackCircle />
-										</>
-									) : (
-										<>
-											<IconWhiteCircle />
-										</>
-									)}
-									<p>audio</p>
-								</div>
+								{typesBookData.map((types) => (
+									<>
+										<div
+											className={scss.checkbox}
+											onClick={() => {
+												typeBooksFunc(types.typeId);
+											}}
+										>
+											{types.isRadio ? (
+												<>
+													<IconBlackCircle />
+												</>
+											) : (
+												<>
+													<IconWhiteCircle />
+												</>
+											)}
+											<p>{types.typeName}</p>
+										</div>
+									</>
+								))}
 							</div>
 							<div
 								onClick={() => {
@@ -247,7 +552,7 @@ const SearchSection = () => {
 												onChange={(event) => {
 													setValue(event);
 												}}
-												tooltipVisible={false}
+												tooltip={{ visible: false }}
 												value={value}
 												defaultValue={value}
 												className={scss.price_range}
@@ -276,62 +581,40 @@ const SearchSection = () => {
 							<hr />
 							<>
 								<div className={`${language ? scss.fillters : scss.none}`}>
-									<div
-										onClick={() => setCheckGenre(!checkGenre)}
-										className={scss.checkbox}
-									>
-										{checkGenre ? (
-											<>
-												<BlackSquareIcon />
-											</>
-										) : (
-											<>
-												<WhiteSquareIcon />
-											</>
-										)}
-										<p>Кыргызский язык</p>
-									</div>
-									<div
-										onClick={() => setCheckGenre(!checkGenre)}
-										className={scss.checkbox}
-									>
-										{checkGenre ? (
-											<>
-												<BlackSquareIcon />
-											</>
-										) : (
-											<>
-												<WhiteSquareIcon />
-											</>
-										)}
-										<p>Русский язык</p>
-									</div>
-									<div
-										onClick={() => setCheckGenre(!checkGenre)}
-										className={scss.checkbox}
-									>
-										{checkGenre ? (
-											<>
-												<BlackSquareIcon />
-											</>
-										) : (
-											<>
-												<WhiteSquareIcon />
-											</>
-										)}
-										<p>Английский язык</p>
-									</div>
+									{languageBooksData.map((long) => (
+										<>
+											<div
+												onClick={() => {
+													handleLanguageFilter(long.languageId);
+												}}
+												className={scss.checkbox}
+											>
+												{long.isCheked ? (
+													<>
+														<BlackSquareIcon />
+													</>
+												) : (
+													<>
+														<WhiteSquareIcon />
+													</>
+												)}
+												<p>{long.languege}</p>
+											</div>
+										</>
+									))}
 								</div>
 							</>
 						</div>
 						<div className={scss.container_books}>
-							{databook.map((item) => (
+							{dataBooks.map((item) => (
 								<div className={scss.card_book} key={item.id}>
 									<div
-										onClick={() => setFavoriteBook(!favoriteBook)}
+										onClick={() => {
+											hanleAddBookFavorite(item.id);
+										}}
 										className={scss.favorite_icon}
 									>
-										{favoriteBook ? (
+										{item.inFavorites ? (
 											<>
 												<IconBlackLike />
 											</>
@@ -343,7 +626,7 @@ const SearchSection = () => {
 									</div>
 									<img
 										onClick={() => navigate(`/search_book/${item.id}`)}
-										src={item.image}
+										src={item.cover}
 										alt=""
 									/>
 									<div
@@ -351,11 +634,16 @@ const SearchSection = () => {
 										className={scss.card_description}
 									>
 										<h3>{item.title}</h3>
-										<p>{item.aftor}</p>
+										<p>{item.authorFullName}</p>
 										<p>{item.price}</p>
 									</div>
 									<div className={scss.btn_basket}>
-										<CustomBasketButton nameClass="" onClick={() => {}}>
+										<CustomBasketButton
+											nameClass=""
+											onClick={() => {
+												handleAddBookToBasket(item.id);
+											}}
+										>
 											<p>Добавить в корзину</p>
 										</CustomBasketButton>
 									</div>

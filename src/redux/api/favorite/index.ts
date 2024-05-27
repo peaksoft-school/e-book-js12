@@ -1,33 +1,69 @@
 import { api as index } from '..';
 
-// const favData =
-// 	'https://api.elchocrud.pro/api/v1/4c786684007b4979907332488eb72a39/favorites';
-
 const api = index.injectEndpoints({
 	endpoints: (build) => ({
-		getProductsFavorite: build.query(
-			// FAVORITE.GetProductsResponse,
-			// FAVORITE.GetProductsRequest
-			{
-				query: () => ({
-					url: '',
-					method: 'GET'
-				}),
-				providesTags: ['favorite']
-			}
-		),
+		getAllBooksInFavorite: build.query<
+			FAVORITE.GetAllBooksInFavoriteResponse,
+			FAVORITE.GetAllBooksInFavoriteRequest
+		>({
+			query: () => ({
+				url: '/api/favorite/findAllInFavorite',
+				method: 'GET'
+			}),
+			providesTags: ['favorite']
+		}),
 
-		addProductFavorite: build.mutation<
-			FAVORITE.PatchProductResponse,
-			FAVORITE.PatchProductRequest
+		getCountOfBooksInFavorite: build.query<
+			FAVORITE.GetCountOfBooksResponse,
+			FAVORITE.GetCountOfBooksRequest
+		>({
+			query: () => ({
+				url: '/api/favorite/countOfBooksInFavorite',
+				method: 'GET'
+			}),
+			providesTags: ['favorite']
+		}),
+
+		clearFavorite: build.mutation<
+			FAVORITE.ClearFavoriteResponse,
+			FAVORITE.ClearFavoriteRequest
+		>({
+			query: (data) => ({
+				url: '/api/favorite/clearFavorites',
+				method: 'DELETE',
+				body: data
+			}),
+			invalidatesTags: ['favorite']
+		}),
+
+		postFavoriteUnFavorite: build.mutation<
+			FAVORITE.DeleteFavoriteBookResponse,
+			FAVORITE.DeleteFavoriteBookRequest
 		>({
 			query: (id) => ({
-				url: `https://api.elchocrud.pro/api/v1/4c786684007b4979907332488eb72a39/favorites/${id}`,
-				method: 'PATCH'
+				url: `/api/favorite/favoriteUnFavorite/${id}`,
+				method: 'POST'
+			}),
+			invalidatesTags: ['favorite']
+		}),
+
+		addBookToBasket: build.mutation<
+			FAVORITE.AddBookToBasketResponse,
+			FAVORITE.AddBookToBasketRequest
+		>({
+			query: (id) => ({
+				url: `/api/basket/addBookToBasket?bookId=${id}`,
+				method: 'PUT'
 			}),
 			invalidatesTags: ['favorite']
 		})
 	})
 });
-export const { useGetProductsFavoriteQuery, useAddProductFavoriteMutation } =
-	api;
+
+export const {
+	useGetAllBooksInFavoriteQuery,
+	useGetCountOfBooksInFavoriteQuery,
+	useClearFavoriteMutation,
+	usePostFavoriteUnFavoriteMutation,
+	useAddBookToBasketMutation
+} = api;

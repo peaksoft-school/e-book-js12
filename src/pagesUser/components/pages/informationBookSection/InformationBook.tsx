@@ -9,7 +9,7 @@ import {
 	useAddBookToFavoriteMutation,
 	useGetBookByIdQuery
 } from '@/src/redux/api/bookInfo';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 interface BookIdProps {
 	id: number;
@@ -45,7 +45,7 @@ const InformationBook: FC<BookIdProps> = () => {
 	const [showBookInfo, setShowBookInfo] = useState(false);
 	const paramsId = useParams();
 	const bookId = Number(paramsId.id);
-
+	const navigate = useNavigate();
 	const { data, isLoading } = useGetBookByIdQuery<GetResponse>(bookId);
 	const [addBookToBasket] = useAddBookToBasketMutation();
 	const [addBookToFavorite] = useAddBookToFavoriteMutation();
@@ -68,8 +68,17 @@ const InformationBook: FC<BookIdProps> = () => {
 					) : (
 						<>
 							<div className={scss.content_text}>
-								<p>Главная / Психология</p>
-								<h4>/ {data.title}</h4>
+								<p>
+									<span
+										onClick={() => {
+											navigate('/');
+										}}
+									>
+										Главная
+									</span>{' '}
+									/ <span>{data.genre}</span>
+								</p>
+								/ <h4> {data.title}</h4>
 							</div>
 							<div className={scss.contents_book}>
 								<div className={scss.section_about_book}>
