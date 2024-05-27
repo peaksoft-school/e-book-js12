@@ -36,7 +36,9 @@ export const api = createApi({
 		'favorite',
 		'basket',
 		'clientProfile',
-		'change'
+		'change',
+		'book_search',
+		'update',
 	],
 
 	endpoints: () => ({})
