@@ -35,11 +35,11 @@ export const api = createApi({
 		'sort',
 		'product',
 		'favorite',
+		'audioBook',
+		'eBook',
+		'subscribe_api',
 		'basket',
-		'clientProfile',
 		'promo',
-		'change',
-		'book_search',
 		'update'
 	],
 
