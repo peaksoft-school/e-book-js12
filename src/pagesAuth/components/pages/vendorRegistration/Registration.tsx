@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import scss from './Registration.module.scss';
 import { useState } from 'react';
 import EyeSeeIcon from '@/src/assets/icons/icon-eyeSee';
@@ -19,6 +19,7 @@ interface TypeData {
 
 const Registration = () => {
 	const [isPassword, setIsPassword] = useState(false);
+	const navigate = useNavigate();
 	const [isLogPassword, setLogPassword] = useState(false);
 	const [confirmPassword, setConfirmPassword] = useState('');
 	const [postVendor] = usePostVendorRegistrationMutation();
@@ -40,6 +41,7 @@ const Registration = () => {
 			localStorage.setItem('isAuth', 'false');
 			localStorage.removeItem('token');
 			reset();
+			navigate('/vendor/home');
 			setConfirmPassword('');
 		}
 	};
@@ -173,7 +175,6 @@ const Registration = () => {
 						</label>
 						<div className={scss.btn_container}>
 							<button type="submit">Создать аккаунт</button>
-							<button>Стать продавцом на eBook</button>
 						</div>
 					</form>
 				</div>
