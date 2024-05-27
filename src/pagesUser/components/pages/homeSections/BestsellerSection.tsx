@@ -1,178 +1,124 @@
-import scss from './Bestsellers.module.scss';
+import { FC, useState } from 'react';
+import Slider from 'react-slick';
+import './Bestsellers.css';
+import IconOrangeLeftArrow from '@/src/assets/icons/icon-orangeLeftArrow';
+import IconOrangeRightArrow from '@/src/assets/icons/icon-orangeRightArrow';
+import { useGetAllBestsellersQuery } from '@/src/redux/api/bestsellers';
 
-import markMeson from '../../../../assets/booksImg/img-Mark-Meson.png';
-import mayMask from '../../../../assets/booksImg/img-May-Mask.png';
-import historyBooks from '../../../../assets/booksImg/img-History-books.png';
-import remark from '../../../../assets/booksImg/Remark.png';
-import de from '../../../../assets/booksImg/De.png';
+const BestsellersSection: FC = () => {
+	const { data } = useGetAllBestsellersQuery();
+	const [expandedCards, setExpandedCards] = useState<{
+		[key: number]: boolean;
+	}>({});
 
-import { Swiper, SwiperClass, SwiperSlide } from 'swiper/react';
-import {
-	Pagination,
-	Navigation,
-	EffectCoverflow,
-	Keyboard
-} from 'swiper/modules';
+	const handleClick = (id: number) => {
+		setExpandedCards((prevExpanded) => ({
+			...prevExpanded,
+			[id]: !prevExpanded[id]
+		}));
+	};
 
-import 'swiper/css';
-import 'swiper/css/pagination';
-import 'swiper/css/navigation';
-import { useState } from 'react';
-import { IconOrangeLeftArrow, IconOrangeRightArrow } from '@/src/assets/icons';
+	const NextArrow: FC<{ onClick: () => void }> = ({ onClick }) => {
+		return (
+			<div className="arrow next" onClick={onClick}>
+				<IconOrangeRightArrow />
+			</div>
+		);
+	};
 
-const booksData = [
-	{
-		id: 1,
-		title: 'Тонкое искусство пофигизма',
-		description:
-			'Современное общество пропагандирует культ успеха: будь умнее, богаче, продуктивнее — будь лучше всех. Соцсети изобилуют историями на тему, как какой-то малец придумал. Соцсети изобилуют историями на тему, как какой-то малец придумал приложение…',
-		pages: 234,
-		image: markMeson
-	},
-	{
-		id: 2,
-		title: 'Женщина, у которой есть план',
-		image: mayMask,
-		description:
-			'71-летняя супермодель Мэй Маск – не просто красивая, но и невероятно успешная и счастливая женщина – делится мудрыми уроками, которые она усвоила за долгую жизнь. Несмотря на удары судьбы и невзгоды: развод и статус многодетной матери-одиночки в 31 год, бедность и невостребованность, Мэй никогда не опускала руки...',
-		pages: 150
-	},
-	{
-		id: 3,
-		title: 'История книги',
-		image: historyBooks,
-		description:
-			'Вниманию читателей предлагается перевод книги французского эллиниста Огюста Эмиля Эггера (1813-1885 гг.) "История книги от ее появления до наших дней" (1882 г.). Работа представляет собой очерк, рассказывающий о появлении на свет книги, ее последующем совершенствовании и умножении, а также развитии книжной торговли. ... ',
-		pages: 150
-	},
-	{
-		id: 4,
-		title: 'Земля обетованная',
-		description:
-			'«Земля обетованная» – роман, опубликованный уже после смерти великого немецкого писателя.Судьба немецких эмигрантов в Америке.Они бежали от фашизма, используя все возможные и невозможные способы и средства. Бежали к последнему бастиону свободы и независимости. ...',
-		pages: 234,
-		image: remark
-	},
-	{
-		id: 5,
-		title: "De I'ancienna France",
-		image: de,
-		description:
-			'Эта книга — репринт оригинального издания (издательство "Paris : M. de Saint-Allais", 1833 год), созданный на основе электронной копии высокого разрешения, которую очистили и обработали вручную, сохранив структуру и орфографию оригинального издания. Редкие, забытые и малоизвестные книги, изданные с петровских времен до наших дней, вновь доступны в виде печатных книг..',
-		pages: 150
-	}
-];
-
-const BestsellerSection = () => {
-	const [bookId, setBookId] = useState(1);
-
-	const handleSlideChange = (swiper: SwiperClass) => {
-		const activeIndex = swiper.activeIndex;
-		setBookId(activeIndex + 1);
+	const PrevArrow: FC<{ onClick: () => void }> = ({ onClick }) => {
+		return (
+			<div className="arrow prev" onClick={onClick}>
+				<IconOrangeLeftArrow />
+			</div>
+		);
+	};
+	const [imageIndex, setImageIndex] = useState(0);
+	const settings = {
+		infinite: true,
+		lazyLoad: 'ondemand' as const,
+		speed: 500,
+		slidesToShow: 3,
+		nextArrow: (
+			<NextArrow
+				onClick={() =>
+					setImageIndex((prev) => (prev + 1) % (data?.length ?? 1))
+				}
+			/>
+		),
+		prevArrow: (
+			<PrevArrow
+				onClick={() =>
+					setImageIndex(
+						(prev) => (prev - 1 + (data?.length ?? 1)) % (data?.length ?? 1)
+					)
+				}
+			/>
+		),
+		beforeChange: (current: number, next: number) => setImageIndex(next)
 	};
 
 	return (
-		<section className={scss.Bestsellers}>
-			<div className="container">
-				<div className={scss.content}>
-					<div className={scss.title}>
-						<h2>Бесеселлеры</h2>
-						<p>Смотреть все</p>
-					</div>
-					<div className={scss.all_about_books}>
-						<div className={scss.books}>
-							{booksData.map((book) => (
-								<div
-									key={book.id}
-									className={scss.about_books}
-									style={{ display: bookId === book.id ? 'block' : 'none' }}
-								>
-									<h3>{book.title}</h3>
-									<p className={scss.description_books}>{book.description}</p>
-									<div className={scss.paragraph}>
-										<p>Подробнее</p>
-										<p>{book.pages} c</p>
+		<div className="container">
+			<div className="title_box">
+				<h2>Бестселлеры</h2>
+				<p className='see_all'>Смотреть все</p>
+			</div>
+			<div className="containers">
+				<div>
+					{data &&
+						data.map((item, idx) => (
+							<div key={item.id} className="description-box">
+								{idx === imageIndex && (
+									<div className="content">
+										<h2 className="name">{item.title}</h2>
+										<div
+											className="favorite_card_description"
+											onClick={() => handleClick(item.id)}
+										>
+											{expandedCards[item.id] ? (
+												<p className="description">{item.description}</p>
+											) : (
+												<p>{item.description.substring(0, 250)}...</p>
+											)}
+										</div>
+										<div className="box">
+											<p className="read-more">Подробнее</p>
+											<p className="price">{item.price} c</p>
+										</div>
 									</div>
+								)}
+							</div>
+						))}
+				</div>
+				<div>
+					{data && data.length > 0 && (
+						<Slider {...settings}>
+							{data.map((item, idx) => (
+								<div
+									key={item.id}
+									className={idx === imageIndex ? 'slide activeSlide' : 'slide'}
+								>
+									<img src={item.imageUrl} alt="img" />
 								</div>
 							))}
+						</Slider>
+					)}
+				</div>
+				<div>
+					{data && (
+						<div className="scroll-line">
+							<div
+								className="active-line"
+								style={{
+									width: `${(100 / data.length) * (imageIndex + 1)}%`
+								}}
+							></div>
 						</div>
-						<div className={scss.sliders}>
-							<div className={scss.slider_container}>
-								<Swiper
-									pagination={{
-										el: 'swiper-pagination',
-										clickable: false
-									}}
-									navigation={{
-										nextEl: '.button_next',
-										prevEl: '.button_prev'
-									}}
-									effect={'coverflow'}
-									grabCursor={true}
-									centeredSlides={true}
-									loop={true}
-									slidesPerView={3}
-									spaceBetween={30}
-									max-height={'0px'}
-									coverflowEffect={{
-										rotate: 0,
-										stretch: 0
-									}}
-									modules={[Pagination, Navigation, EffectCoverflow, Keyboard]}
-									onSlideChange={(swiper) => handleSlideChange(swiper)}
-									className={scss.swiper}
-								>
-									{booksData.map((book) => (
-										<SwiperSlide
-											key={book.id}
-											className={scss.swiper_slider}
-											style={{ maxHeight: '0px' }}
-										>
-											<div className={scss.slide_item}>
-												<img
-													src={book.image}
-													alt=""
-													style={{ maxHeight: '800px' }}
-												/>
-											</div>
-										</SwiperSlide>
-									))}
-									<div className={scss.swiper_controller}>
-										<div
-											className="button_next"
-											style={{
-												marginTop: '120px',
-												position: 'absolute',
-												right: '10px',
-												top: '50%',
-												transform: 'translateY(-50%)',
-												zIndex: '100'
-											}}
-										>
-											<IconOrangeRightArrow />
-										</div>
-										<div
-											className="button_prev"
-											style={{
-												marginTop: '120px',
-												position: 'absolute',
-												left: '10px',
-												top: '50%',
-												transform: 'translateY(-50%)',
-												zIndex: '100'
-											}}
-										>
-											<IconOrangeLeftArrow />
-										</div>
-									</div>
-								</Swiper>
-							</div>
-						</div>
-					</div>
+					)}
 				</div>
 			</div>
-		</section>
+		</div>
 	);
 };
-
-export default BestsellerSection;
+export default BestsellersSection;
