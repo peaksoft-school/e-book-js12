@@ -1,12 +1,13 @@
 namespace LATESTBOOKS {
-	type GetAllLatestBooksResponse = {
+	type GetAllBooksResponse = {
 		id: number;
+		imageUrl: string;
 		title: string;
 		price: number;
+		authorsFullName: string;
+		discount: number;
+		price: number;
 		priceWithDiscount: number;
-		description: string;
-		imageUrl: string;
-		bookType: string;
 	}[];
-	type GetAllLatestBooksRequest = void;
+	type GetAllBooksRequest = void;
 }

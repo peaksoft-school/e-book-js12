@@ -10,7 +10,7 @@ import {
 	IconOrangeLeftArrow,
 	IconOrangeRightArrow
 } from '@/src/assets/icons';
-import { useGetAllLatestBooksQuery } from '@/src/redux/api/latestBooks';
+import { useGetAllBooksQuery, useGetAllLatestBooksQuery } from '@/src/redux/api/latestBooks';
 
 interface Settings {
 	className?: string;
@@ -32,7 +32,7 @@ interface Settings {
 }
 
 const LatestBookSection: FC = () => {
-	const { data } = useGetAllLatestBooksQuery();
+	const { data } = useGetAllBooksQuery();
 
 	const NextArrow: FC<{ onClick: () => void }> = ({ onClick }) => (
 		<div className={`arrow  next`} onClick={onClick}>
@@ -75,11 +75,11 @@ const LatestBookSection: FC = () => {
 											idx === imageIndex ? `slide activeSlide` : `slide`
 										}
 									>
-										<img src={item.img} alt="img" />
+										<img src={item.imageUrl} alt="img" />
 										{idx === imageIndex ? (
 											<>
-												<h1 className="name">{item.name}</h1>
-												<span className="auth">{item.auth}</span>
+												<h1 className="name">{item.title}</h1>
+												<span className="auth">{item.authorsFullName}</span>
 												<span className="price">{item.price} c</span>
 											</>
 										) : (

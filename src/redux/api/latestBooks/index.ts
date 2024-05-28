@@ -2,17 +2,17 @@ import { api as index } from '..';
 
 const api = index.injectEndpoints({
 	endpoints: (build) => ({
-		getAllLatestBooks: build.query<
-			LATESTBOOKS.GetAllLatestBooksResponse,
-			LATESTBOOKS.GetAllLatestBooksRequest
+		getAllBooks: build.query<
+			LATESTBOOKS.GetAllBooksResponse,
+			LATESTBOOKS.GetAllBooksRequest
 		>({
 			query: () => ({
-				url: '/api/book/getAllLastPublicationBooks',
+				url: '/api/book/getAllBooks',
 				method: 'GET'
 			}),
-			providesTags: ['latest_books']
+			providesTags: ['book']
 		})
 	})
 });
 
-export const { useGetAllLatestBooksQuery } = api;
+export const { useGetAllBooksQuery } = api;

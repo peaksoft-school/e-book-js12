@@ -10,7 +10,7 @@ const api = index.injectEndpoints({
 				url: '/api/book/getAllBestSellers',
 				method: 'GET'
 			}),
-			providesTags: ['bestsellers']
+			providesTags: ['book']
 		})
 	})
 });

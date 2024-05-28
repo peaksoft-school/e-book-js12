@@ -8,5 +8,9 @@ namespace LASTPUBLICATION {
 		imageUrl: string;
 		bookType: string;
 	}[];
-	type GetLastPublicationRequest = void;
+	type GetLastPublicationRequest = {
+		page: number;
+		size: number;
+		genre: string;
+	}
 }
