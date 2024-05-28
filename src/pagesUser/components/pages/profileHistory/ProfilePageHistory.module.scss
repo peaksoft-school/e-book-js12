@@ -50,7 +50,7 @@
 				color: #545454;
 			}
 
-			.info_tes_two {
+			.info_text_two {
 				width: 78%;
 				display: flex;
 				justify-content: space-between;
@@ -143,6 +143,9 @@
 					justify-content: space-between;
 					align-items: center;
 					padding: 20px 0;
+					img {
+						max-width: 82px;
+					}
 					@media (max-width: 700px) {
 						display: inline-block;
 						padding: 40px;
@@ -184,6 +187,9 @@
 						}
 					}
 					.book_price {
+						display: flex;
+						gap: 13px;
+						align-items: center;
 						font-family: Open Sans;
 						font-size: 20px;
 						font-weight: 400;
@@ -192,6 +198,16 @@
 
 						@media (max-width: 900px) {
 							margin-top: 10px;
+						}
+						span {
+							color: rgb(150, 150, 150);
+							font-family: Open Sans;
+							font-size: 16px;
+							font-weight: 400;
+							line-height: 130%;
+							letter-spacing: 0px;
+							text-align: left;
+							text-decoration-line: line-through;
 						}
 					}
 					.book_data {
@@ -206,11 +222,12 @@
 						}
 					}
 					.book_state {
+						color: rgb(34, 34, 34);
 						font-family: Open Sans;
 						font-size: 16px;
 						font-weight: 400;
-						line-height: 20.8px;
-						text-align: left;
+						line-height: 130%;
+						letter-spacing: 0px;
 
 						@media (max-width: 900px) {
 							margin-top: 10px;
