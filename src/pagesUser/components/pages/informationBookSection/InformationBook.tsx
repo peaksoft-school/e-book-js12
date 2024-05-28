@@ -9,7 +9,7 @@ import {
 	useAddBookToFavoriteMutation,
 	useGetBookByIdQuery
 } from '@/src/redux/api/bookInfo';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 interface BookIdProps {
 	id: number;
@@ -43,8 +43,10 @@ interface BookData {
 
 const InformationBook: FC<BookIdProps> = () => {
 	const [showBookInfo, setShowBookInfo] = useState(false);
-	const paramsId = useParams();
-	const bookId = Number(paramsId.id);
+	// const paramsId = useParams();
+	// const bookId = Number(paramsId.id);
+	const bookId = 2
+	
 	const navigate = useNavigate();
 	const { data, isLoading } = useGetBookByIdQuery<GetResponse>(bookId);
 	const [addBookToBasket] = useAddBookToBasketMutation();
