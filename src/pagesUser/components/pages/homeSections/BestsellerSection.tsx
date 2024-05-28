@@ -4,6 +4,7 @@ import './Bestsellers.css';
 import IconOrangeLeftArrow from '@/src/assets/icons/icon-orangeLeftArrow';
 import IconOrangeRightArrow from '@/src/assets/icons/icon-orangeRightArrow';
 import { useGetAllBestsellersQuery } from '@/src/redux/api/bestsellers';
+import { Link } from 'react-router-dom';
 
 const BestsellersSection: FC = () => {
 	const { data } = useGetAllBestsellersQuery();
@@ -62,7 +63,7 @@ const BestsellersSection: FC = () => {
 		<div className="container">
 			<div className="title_box">
 				<h2>Бестселлеры</h2>
-				<p className="see_all">Смотреть все</p>
+				<Link to={'/search_book'} className="see_all">Смотреть все</Link>
 			</div>
 			<div className="containers">
 				<div>
