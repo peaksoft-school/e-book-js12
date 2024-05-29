@@ -1,4 +1,4 @@
-import scss from './InnerPage.module.scss';
+import scss from './UserAbout.module.scss';
 import { Modal } from 'antd';
 import { useState } from 'react';
 import { Link, useLocation, useParams } from 'react-router-dom';
@@ -12,7 +12,7 @@ interface Users {
 	date: string;
 }
 
-const InnerPageUser: React.FC = () => {
+const UserAboutSection: React.FC = () => {
 	const [profile, setProfile] = useState(true);
 	const [isModalOpen, setIsModalOpen] = useState(false);
 	const { fullName } = useParams<{ fullName: string }>();
@@ -122,15 +122,30 @@ const InnerPageUser: React.FC = () => {
 								</button>
 							</div>
 							<Modal
-								visible={isModalOpen}
+								open={isModalOpen}
 								onOk={handleOk}
 								onCancel={handleCancel}
-								okText="Удалить"
-								cancelText="Отменить"
+								footer={false}
 							>
-								<p className={scss.inner_delete_profile}>
-									Вы уверены, что хотите удалить профиль?
-								</p>
+								<div className={scss.delete_modal}>
+									<p>Вы уверены, что хотите удалить профиль?</p>
+									<div className={scss.buttons_modal}>
+										<button
+											onClick={() => {
+												setIsModalOpen(false);
+											}}
+										>
+											Отменить
+										</button>
+										<button
+											onClick={() => {
+												setIsModalOpen(false);
+											}}
+										>
+											Удалить
+										</button>
+									</div>
+								</div>
 							</Modal>
 						</div>
 					</div>
@@ -142,4 +157,4 @@ const InnerPageUser: React.FC = () => {
 	);
 };
 
-export default InnerPageUser;
+export default UserAboutSection;

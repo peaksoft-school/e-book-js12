@@ -12,7 +12,6 @@ interface User {
 
 const UserSection = () => {
 	const navigate = useNavigate();
-	const [selectVendor, setSelectVendor] = useState<User | null>(null);
 	const [isModalOpen, setIsModalOpen] = useState(false);
 
 	const users: User[] = [
@@ -33,19 +32,12 @@ const UserSection = () => {
 		}
 	];
 
-	const showModal = (user: User) => {
-		setSelectVendor(user);
+	const showModal = () => {
 		setIsModalOpen(true);
-	};
-
-	const handleOk = () => {
-		setIsModalOpen(false);
-		setSelectVendor(null);
 	};
 
 	const handleCancel = () => {
 		setIsModalOpen(false);
-		setSelectVendor(null);
 	};
 
 	return (
@@ -56,11 +48,8 @@ const UserSection = () => {
 						<thead>
 							<tr>
 								<th>№</th>
-								<td></td>
 								<td>ФИО</td>
 								<td>Почта</td>
-								<th></th>
-								<th></th>
 							</tr>
 						</thead>
 					</table>
@@ -75,10 +64,8 @@ const UserSection = () => {
 								<td onClick={() => navigate(`/admin/users/${user.fullName}`)}>
 									{user.gmail}
 								</td>
-								<tr></tr>
-								<td></td>
 								<td className={scss.button_as}>
-									<button onClick={() => showModal(user)}>
+									<button onClick={() => showModal()}>
 										<DeleteIcon />
 									</button>
 								</td>
@@ -87,16 +74,26 @@ const UserSection = () => {
 					</tbody>
 				</div>
 			</div>
-			<Modal
-				visible={isModalOpen}
-				onOk={handleOk}
-				onCancel={handleCancel}
-				okText="Удалить"
-				cancelText="Отменить"
-			>
-				<p>
-					Вы уверены, что хотите удалить <span>{selectVendor?.fullName}</span>?
-				</p>
+			<Modal open={isModalOpen} onCancel={handleCancel} footer={false}>
+				<div className={scss.delete_modal}>
+					<p>Вы уверены, что хотите удалить профиль?</p>
+					<div className={scss.buttons_modal}>
+						<button
+							onClick={() => {
+								setIsModalOpen(false);
+							}}
+						>
+							Отменить
+						</button>
+						<button
+							onClick={() => {
+								setIsModalOpen(false);
+							}}
+						>
+							Удалить
+						</button>
+					</div>
+				</div>
 			</Modal>
 		</section>
 	);

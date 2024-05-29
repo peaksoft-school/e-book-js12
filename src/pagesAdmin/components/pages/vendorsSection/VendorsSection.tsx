@@ -130,12 +130,17 @@ const VendorsSection = () => {
 				visible={isModalOpen}
 				onOk={handleOk}
 				onCancel={handleCancel}
-				okText="Удалить"
-				cancelText="Отменить"
+				footer={false}
 			>
-				<p>
-					Вы уверены, что хотите удалить <span>{selectedVendor?.name}</span>?
-				</p>
+				<div className={scss.delete_modal}>
+					<p>
+						Вы уверены, что хотите удалить <span>{selectedVendor?.name}</span>?
+					</p>
+					<div className={scss.btns_modal}>
+						<button>Отменить</button>
+						<button>Удалить</button>
+					</div>
+				</div>
 			</Modal>
 		</section>
 	);

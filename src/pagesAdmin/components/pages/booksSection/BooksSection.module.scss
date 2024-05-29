@@ -511,6 +511,7 @@
 				ul {
 					display: flex;
 					flex-direction: column;
+					align-items: start;
 					gap: 10px;
 					width: 100%;
 					li {
@@ -525,7 +526,13 @@
 						line-height: 130%;
 						letter-spacing: 0px;
 						text-align: left;
-
+						border-bottom: 0.5px solid rgb(196, 196, 196);
+						&:last-child {
+							border: none;
+						}
+						&:first-child {
+							padding-bottom: 10px;
+						}
 						@media (max-width: 830px) {
 							font-size: 8px;
 							gap: 5px;
@@ -576,6 +583,7 @@
 				ul {
 					display: flex;
 					flex-direction: column;
+					align-items: start;
 					gap: 10px;
 					width: 100%;
 					li {
@@ -590,6 +598,13 @@
 						line-height: 130%;
 						letter-spacing: 0px;
 						text-align: left;
+						border-bottom: 0.5px solid rgb(196, 196, 196);
+						&:last-child {
+							border: none;
+						}
+						&:first-child {
+							padding-bottom: 10px;
+						}
 					}
 				}
 			}

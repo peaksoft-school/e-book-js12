@@ -14,12 +14,13 @@ import { Modal, Select, Space } from 'antd';
 import CustomBasketButton from '@/src/ui/customButton/CustomBasketButton';
 import CustomAudioDownloadInput from '@/src/ui/customAudioInput/CustomAudioDownloadInput';
 import CustomPDFDownloadInput from '@/src/ui/customPDFInput/CustomPDFDownloadInput';
+import { useForm } from 'react-hook-form';
 const AddBookSection = () => {
 	const [clickRadio, setClickRadio] = useState(false);
 	const [audioBook, setAudioBook] = useState(false);
 	const [ebook, setEBook] = useState(false);
 	const [modal, setModal] = useState(false);
-
+	const { register, reset, handleSubmit } = useForm();
 	const [value, setValue] = useState('');
 	console.log(value);
 	const handleChange = (value: any) => {
@@ -177,19 +178,35 @@ const AddBookSection = () => {
 									<div className={scss.left_inputs}>
 										<label>
 											Название книги
-											<CustomUserNameInput placeholder="Напишите полное название книги" />
+											<CustomUserNameInput
+												register={register}
+												registerName="name"
+												placeholder="Напишите полное название книги"
+											/>
 										</label>
 										<label>
 											ФИО автора
-											<CustomUserNameInput placeholder="Напишите ФИО автора" />
+											<CustomUserNameInput
+												register={register}
+												registerName="name"
+												placeholder="Напишите ФИО автора"
+											/>
 										</label>
 										<label>
 											Выберите жанр
-											<CustomUserNameInput placeholder="Литература, роман, стихи..." />
+											<CustomUserNameInput
+												register={register}
+												registerName="name"
+												placeholder="Литература, роман, стихи..."
+											/>
 										</label>
 										<label>
 											Издательство
-											<CustomUserNameInput placeholder="Напишите название издательства" />
+											<CustomUserNameInput
+												register={register}
+												registerName="name"
+												placeholder="Напишите название издательства"
+											/>
 										</label>
 										{}
 										<label>
@@ -302,19 +319,35 @@ const AddBookSection = () => {
 									<div className={scss.left_inputs}>
 										<label>
 											Название книги
-											<CustomUserNameInput placeholder="Напишите полное название книги" />
+											<CustomUserNameInput
+												register={register}
+												registerName="name"
+												placeholder="Напишите полное название книги"
+											/>
 										</label>
 										<label>
 											ФИО автора
-											<CustomUserNameInput placeholder="Напишите ФИО автора" />
+											<CustomUserNameInput
+												register={register}
+												registerName="name"
+												placeholder="Напишите ФИО автора"
+											/>
 										</label>
 										<label>
 											Выберите жанр
-											<CustomUserNameInput placeholder="Литература, роман, стихи..." />
+											<CustomUserNameInput
+												register={register}
+												registerName="name"
+												placeholder="Литература, роман, стихи..."
+											/>
 										</label>
 										<label>
 											Издательство
-											<CustomUserNameInput placeholder="Напишите название издательства" />
+											<CustomUserNameInput
+												register={register}
+												registerName="name"
+												placeholder="Напишите название издательства"
+											/>
 										</label>
 										{}
 										<label>
@@ -426,15 +459,27 @@ const AddBookSection = () => {
 									<div className={scss.left_inputs}>
 										<label>
 											Название книги
-											<CustomUserNameInput placeholder="Напишите полное название книги" />
+											<CustomUserNameInput
+												register={register}
+												registerName="name"
+												placeholder="Напишите полное название книги"
+											/>
 										</label>
 										<label>
 											ФИО автора
-											<CustomUserNameInput placeholder="Напишите ФИО автора" />
+											<CustomUserNameInput
+												register={register}
+												registerName="name"
+												placeholder="Напишите ФИО автора"
+											/>
 										</label>
 										<label>
 											Выберите жанр
-											<CustomUserNameInput placeholder="Литература, роман, стихи..." />
+											<CustomUserNameInput
+												register={register}
+												registerName="name"
+												placeholder="Литература, роман, стихи..."
+											/>
 										</label>
 
 										{}
@@ -564,19 +609,35 @@ const AddBookSection = () => {
 									<div className={scss.left_inputs}>
 										<label>
 											Название книги
-											<CustomUserNameInput placeholder="Напишите полное название книги" />
+											<CustomUserNameInput
+												register={register}
+												registerName="name"
+												placeholder="Напишите полное название книги"
+											/>
 										</label>
 										<label>
 											ФИО автора
-											<CustomUserNameInput placeholder="Напишите ФИО автора" />
+											<CustomUserNameInput
+												register={register}
+												registerName="name"
+												placeholder="Напишите ФИО автора"
+											/>
 										</label>
 										<label>
 											Выберите жанр
-											<CustomUserNameInput placeholder="Литература, роман, стихи..." />
+											<CustomUserNameInput
+												register={register}
+												registerName="name"
+												placeholder="Литература, роман, стихи..."
+											/>
 										</label>
 										<label>
 											Издательство
-											<CustomUserNameInput placeholder="Напишите название издательства" />
+											<CustomUserNameInput
+												register={register}
+												registerName="name"
+												placeholder="Напишите название издательства"
+											/>
 										</label>
 										{}
 										<label>
@@ -697,7 +758,7 @@ const AddBookSection = () => {
 							<CustomBasketButton
 								nameClass={scss.button}
 								onClick={() => {
-									setModal(!modal);
+									// setModal(!modal);
 								}}
 							>
 								Добавить

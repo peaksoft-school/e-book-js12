@@ -8,6 +8,7 @@ import { IconPencil, IconX } from '@tabler/icons-react';
 const InnerSection = () => {
 	const navigate = useNavigate();
 	const [isOpen, setIsOpen] = useState(false);
+	const [idBook, setIdBook] = useState<null | number>(null);
 
 	const books = [
 		{
@@ -80,10 +81,16 @@ const InnerSection = () => {
 				<div className={scss.content}>
 					{books.map((book) => (
 						<div key={book.id} className={scss.book}>
-							<div className={scss.extra} onClick={() => setIsOpen(!isOpen)}>
+							<div
+								className={scss.extra}
+								onClick={() => {
+									setIsOpen(!isOpen);
+									setIdBook(book.id);
+								}}
+							>
 								<ThreeDotIcon />
 							</div>
-							{
+							{idBook === book.id ? (
 								<div className={isOpen ? scss.is_open : scss.on_close}>
 									<ul>
 										<li>
@@ -101,7 +108,7 @@ const InnerSection = () => {
 										</li>
 									</ul>
 								</div>
-							}
+							) : null}
 							<div
 								onClick={() => navigate(`/admin/inner/${book.id}`)}
 								className={scss.book_content}
