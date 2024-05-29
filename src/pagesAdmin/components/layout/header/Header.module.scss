@@ -142,3 +142,47 @@
 		}
 	}
 }
+.modal_exit_content {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	.modal_text {
+		p {
+			margin: 0px;
+		}
+	}
+	.modal_btn {
+		display: flex;
+		justify-content: space-between;
+		max-width: 264px;
+		margin-top: 24px;
+		width: 100%;
+		button {
+			border: none;
+			outline: none;
+			padding: 10px 24px;
+			font-family: Open Sans;
+			font-size: 16px;
+			font-weight: 600;
+			line-height: 22px;
+			letter-spacing: 0px;
+			background-color: transparent;
+			max-width: 130px;
+			width: 100%;
+			color: #a3a3a3;
+			&:last-child {
+				max-width: 102px;
+				width: 100%;
+				color: white;
+				background-color: #000;
+			}
+		}
+	}
+}
+:global {
+	.ant-modal-content {
+		.ant-modal-footer {
+			margin-top: 0px !important;
+		}
+	}
+}

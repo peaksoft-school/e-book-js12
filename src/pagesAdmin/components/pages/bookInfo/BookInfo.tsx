@@ -6,28 +6,12 @@ import CustomPersonalAreaButton from '@/src/ui/customButton/CustomPersonalArea';
 import bookList from '../../../../assets/booksImg/info-book.png';
 import harry_pooter from '../../../../assets/booksImg/harrry-potter.png';
 import { Modal } from 'antd';
+import { IconSuccess } from '@/src/assets/icons';
 
 const BookInfo = () => {
 	const [showBookInfo, setShowBookInfo] = useState(false);
-
-	const [modal, contextHolder] = Modal.useModal();
-
-	const countDown = () => {
-		let secondsToGo = 2;
-
-		const instance = modal.success({
-			title: '"Гарри Поттер и Тайная комната"',
-			content: `был успешно принять! `
-		});
-
-		const timer = setInterval(() => {
-			secondsToGo -= 1;
-		}, 1000);
-		setTimeout(() => {
-			clearInterval(timer);
-			instance.destroy();
-		}, secondsToGo * 1000);
-	};
+	const [modalSuccess, setModalSuccess] = useState(false);
+	const [devationModal, setDevationModal] = useState(false);
 
 	return (
 		<>
@@ -73,17 +57,56 @@ const BookInfo = () => {
 								<div className={scss.section_book}>
 									<CustomPersonalAreaButton
 										nameClass={`${scss.favorite_btn}`}
-										onClick={() => {}}
+										onClick={() => {
+											setDevationModal(true);
+										}}
 									>
 										<p className={scss.boot1}>Отклонить</p>
 									</CustomPersonalAreaButton>
+									<Modal
+										open={devationModal}
+										footer={false}
+										onCancel={() => {
+											setDevationModal(false);
+										}}
+									>
+										<div className={scss.modal_devation}>
+											<p className={scss.text_devation}>
+												Причина вашего отклонения
+											</p>
+											<input
+												className={scss.input_devatoin}
+												type="text"
+												placeholder="Причина вашего отклонения"
+											/>
+											<button className={scss.btn_devation}>Отправить</button>
+										</div>
+									</Modal>
 									<CustomBasketButton
 										nameClass={scss.basket_btn}
-										onClick={countDown}
+										onClick={() => {
+											setModalSuccess(true);
+										}}
 									>
 										<p className={scss.boot1}>Принять</p>
 									</CustomBasketButton>
-									{contextHolder}
+									<Modal
+										open={modalSuccess}
+										footer={false}
+										onCancel={() => {
+											setModalSuccess(false);
+										}}
+									>
+										<div className={scss.modal_container}>
+											<IconSuccess />
+											<div className={scss.info_text}>
+												<p>
+													<span>“Гарри Поттер и Тайная комната”</span> <br />
+													успешно добавлен!
+												</p>
+											</div>
+										</div>
+									</Modal>
 								</div>
 							</div>
 						</div>

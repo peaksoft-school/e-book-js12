@@ -26,6 +26,7 @@ const AboutVendorsBooks = () => {
 	const [selectedType, setSelectedType] = useState<string | null>(null);
 	const [isModalOpen, setIsModalOpen] = useState(false);
 	const [selectedVendor, setSelectedVendor] = useState<Vendor | null>(null);
+	const [idBook, setIdBook] = useState<null | number>(null);
 
 	const books: Book[] = [
 		{
@@ -49,7 +50,7 @@ const AboutVendorsBooks = () => {
 			inBasket: 3
 		},
 		{
-			id: 2,
+			id: 3,
 			img: bookImage,
 			name: 'История книги 2',
 			date: '20 Feb 2021',
@@ -59,7 +60,7 @@ const AboutVendorsBooks = () => {
 			inBasket: 3
 		},
 		{
-			id: 2,
+			id: 4,
 			img: bookImage,
 			name: 'История книги 2',
 			date: '20 Feb 2021',
@@ -69,7 +70,7 @@ const AboutVendorsBooks = () => {
 			inBasket: 3
 		},
 		{
-			id: 2,
+			id: 5,
 			img: bookImage,
 			name: 'История книги 2',
 			date: '20 Feb 2021',
@@ -79,7 +80,7 @@ const AboutVendorsBooks = () => {
 			inBasket: 3
 		},
 		{
-			id: 2,
+			id: 6,
 			img: bookImage,
 			name: 'История книги 2',
 			date: '20 Feb 2021',
@@ -89,7 +90,7 @@ const AboutVendorsBooks = () => {
 			inBasket: 3
 		},
 		{
-			id: 2,
+			id: 7,
 			img: bookImage,
 			name: 'История книги 2',
 			date: '20 Feb 2021',
@@ -97,7 +98,7 @@ const AboutVendorsBooks = () => {
 			type: 'Бумажные книги'
 		},
 		{
-			id: 2,
+			id: 8,
 			img: bookImage,
 			name: 'История книги 2',
 			date: '20 Feb 2021',
@@ -111,11 +112,6 @@ const AboutVendorsBooks = () => {
 	const showModal = (vendor: Vendor) => {
 		setSelectedVendor(vendor);
 		setIsModalOpen(true);
-	};
-
-	const handleOk = () => {
-		setIsModalOpen(false);
-		setSelectedVendor(null);
 	};
 
 	const handleCancel = () => {
@@ -145,25 +141,21 @@ const AboutVendorsBooks = () => {
 					<p>Всего: {filteredBooks.length} книг</p>
 					<div className={scss.click}>
 						<p onClick={toggleTypeList}>
-							<span onClick={() => handleGenreSelect(null)}>
-								{bookTypeText}
-							</span>
+							<span onClick={() => {}}>{bookTypeText}</span>
 							{isOpenBooksType ? <UpIcon /> : <IconArrowBottom />}
 						</p>
 
 						<div
 							className={`${isOpenBooksType ? scss.type_list : scss.none_books_type}`}
 						>
+							<p onClick={() => handleGenreSelect('Все')}>Все</p>
 							<p onClick={() => handleGenreSelect('В избранном')}>
 								В избранном
 							</p>
-							<hr />
 							<p onClick={() => handleGenreSelect('В корзине')}>В корзине</p>
-							<hr />
 							<p onClick={() => handleGenreSelect('	Со скидками')}>
 								Со скидками
 							</p>
-							<hr />
 							<p onClick={() => handleGenreSelect('Проданы')}>Проданы</p>
 						</div>
 					</div>
@@ -181,10 +173,16 @@ const AboutVendorsBooks = () => {
 									<p>В карзине ({book.inBasket})</p>
 								</div>
 							</div>
-							<div className={scss.extra} onClick={() => setIsOpen(!isOpen)}>
+							<div
+								className={scss.extra}
+								onClick={() => {
+									setIsOpen(!isOpen);
+									setIdBook(book.id);
+								}}
+							>
 								<ThreeDotIcon />
 							</div>
-							{
+							{book.id === idBook ? (
 								<div className={isOpen ? scss.is_open : scss.on_close}>
 									<ul>
 										<li>
@@ -194,7 +192,11 @@ const AboutVendorsBooks = () => {
 											Редактировать
 										</li>
 										<hr />
-										<li onClick={() => setIsOpen(false)}>
+										<li
+											onClick={() => {
+												setIsOpen(false);
+											}}
+										>
 											<span>
 												<IconX />
 											</span>
@@ -202,7 +204,7 @@ const AboutVendorsBooks = () => {
 										</li>
 									</ul>
 								</div>
-							}
+							) : null}
 							<div className={scss.book_content}>
 								<div className={scss.book_img}>
 									<img src={book.img} alt="" />
@@ -226,14 +228,14 @@ const AboutVendorsBooks = () => {
 						Удалить профиль
 					</button>
 				</div>
-				<Modal
-					visible={isModalOpen}
-					onOk={handleOk}
-					onCancel={handleCancel}
-					okText="Удалить"
-					cancelText="Отменить"
-				>
-					<p>Вы уверены, что хотите удалить профиль?</p>
+				<Modal footer={false} onCancel={handleCancel} open={isModalOpen}>
+					<div className={scss.delete_modal}>
+						<p>Вы уверены, что хотите удалить профиль?</p>
+						<div className={scss.buttons_modal}>
+							<button>Отменить</button>
+							<button>Удалить</button>
+						</div>
+					</div>
 				</Modal>
 			</div>
 		</section>
