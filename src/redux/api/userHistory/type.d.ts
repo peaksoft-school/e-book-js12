@@ -1,6 +1,10 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 namespace USERHISTORY {
-	type UserHistoryResponse = {
+	export type UserHistoryResponse = {
+		data: UserHistory[];
+	};
+
+	export type UserHistory = {
 		id: number;
 		title: string;
 		authorsFullName: string;
@@ -11,6 +15,7 @@ namespace USERHISTORY {
 		priceWithDiscount: number;
 		createdAt: string;
 		historyStatus: string;
-	}[];
-	type UserHistoryRequest = UserHistory;
+	};
+
+	export type UserHistoryRequest = number;
 }

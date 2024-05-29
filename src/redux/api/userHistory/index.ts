@@ -2,13 +2,11 @@ import { api as index } from '..';
 
 const api = index.injectEndpoints({
 	endpoints: (build) => ({
-		clientProfileHistory: build.query<
-			USERHISTORY.UserHistoryResponse,
-			USERHISTORY.UserHistoryRequest
-		>({
-			query: (id) => ({
-				url: `/api/historyAction/getAllHistoryAction/${id}`,
-				method: 'PUT'
+		clientProfileHistory: build.query<USERHISTORY.UserHistoryResponse, number>({
+			query: (clientId) => ({
+				url: `/api/historyAction/getAllHistoryAction`,
+				method: 'GET',
+				params: { clientId }
 			}),
 			providesTags: ['clientProfile']
 		})
