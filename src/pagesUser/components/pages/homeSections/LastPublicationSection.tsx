@@ -6,7 +6,16 @@ import { Link } from 'react-router-dom';
 import { useGetLastPublicationQuery } from '@/src/redux/api/book';
 
 const LastPublicationSection: FC = () => {
-	const { data } = useGetLastPublicationQuery();
+	const [state, setState] = useState('');
+	const [expandedCards, setExpandedCards] = useState<{
+		[key: number]: boolean;
+	}>({});
+	const { data } = useGetLastPublicationQuery({
+		page: 1,
+		size: 1,
+		genre: state
+	});
+	console.log(data);
 	const [navClicked, setNavClicked] = useState(() => {
 		const savedNavClicked = localStorage.getItem('navClicked');
 		return savedNavClicked ? JSON.parse(savedNavClicked) : false;
@@ -18,6 +27,13 @@ const LastPublicationSection: FC = () => {
 
 	const handleClick = () => {
 		setNavClicked((prevNavClicked: any) => !prevNavClicked);
+	};
+
+	const handleShowFullText = (id: number) => {
+		setExpandedCards((prevExpanded) => ({
+			...prevExpanded,
+			[id]: !prevExpanded[id]
+		}));
 	};
 
 	return (
@@ -36,7 +52,10 @@ const LastPublicationSection: FC = () => {
 								<ul>
 									<li>
 										<button
-											onClick={handleClick}
+											onClick={() => {
+												handleClick();
+												setState('BUSINESS_LITERATURE');
+											}}
 											className={navClicked ? 'active' : ''}
 										>
 											Бизнес-литература
@@ -46,7 +65,10 @@ const LastPublicationSection: FC = () => {
 								<ul>
 									<li>
 										<button
-											onClick={handleClick}
+											onClick={() => {
+												handleClick();
+												setState('BOOKS_FOR_CHILDREN');
+											}}
 											className={navClicked ? 'active' : ''}
 										>
 											Детские книги
@@ -56,7 +78,10 @@ const LastPublicationSection: FC = () => {
 								<ul>
 									<li>
 										<button
-											onClick={handleClick}
+											onClick={() => {
+												handleClick();
+												setState('HOBBIES');
+											}}
 											className={navClicked ? 'active' : ''}
 										>
 											Хобби и досуг
@@ -66,30 +91,39 @@ const LastPublicationSection: FC = () => {
 								<ul>
 									<li>
 										<button
-											onClick={handleClick}
+											onClick={() => {
+												handleClick();
+												setState('COMMUNITY');
+											}}
 											className={navClicked ? 'active' : ''}
 										>
-											Публицистика
+											Сообщество
 										</button>
 									</li>
 								</ul>
 								<ul>
 									<li>
 										<button
-											onClick={handleClick}
+											onClick={() => {
+												handleClick();
+												setState('ARTISTIC_LITERATURE');
+											}}
 											className={navClicked ? 'active' : ''}
 										>
-											Учебная литература
+											Художественная литература
 										</button>
 									</li>
 								</ul>
 								<ul>
 									<li>
 										<button
-											onClick={handleClick}
+											onClick={() => {
+												handleClick();
+												setState('EDUCATION');
+											}}
 											className={navClicked ? 'active' : ''}
 										>
-											Поэзия
+											Образование
 										</button>
 									</li>
 								</ul>
@@ -113,7 +147,18 @@ const LastPublicationSection: FC = () => {
 						{data?.map((el) => (
 							<div className={scss.main_about}>
 								<h2 className={scss.title_book}>{el.title}</h2>
-								<p className={scss.about_book}>{el.description}</p>
+								<div
+									className={scss.about_book}
+									onClick={() => {
+										handleShowFullText(el.id);
+									}}
+								>
+									{expandedCards[el.id] ? (
+										<p className="description">{el.description}</p>
+									) : (
+										<p>{el.description.substring(0, 285)}...</p>
+									)}
+								</div>
 								<div className={scss.about_book_footer}>
 									<a className={scss.nav_to_all} href="#">
 										Подробнее
