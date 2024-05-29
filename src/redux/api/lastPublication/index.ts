@@ -6,11 +6,11 @@ const api = index.injectEndpoints({
 			LASTPUBLICATION.GetLastPublicationResponse,
 			LASTPUBLICATION.GetLastPublicationRequest
 		>({
-			query: ({ page, size, genre }) => ({ 
+			query: ({ page, size, genre }) => ({
 				url: '/api/book/getAllLastPublicationBooks',
 				method: 'GET',
 				params: {
-					page,   
+					page,
 					size,
 					genre
 				}

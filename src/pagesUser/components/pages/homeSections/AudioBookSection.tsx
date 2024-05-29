@@ -1,6 +1,6 @@
+import { useGetAudioBookQuery } from '@/src/redux/api/book';
 import scss from './AudioBooks.module.scss';
 import { IconNewIcon } from '@/src/assets/icons';
-import { useGetAudioBookQuery } from '@/src/redux/api/eBook';
 
 const AudioBookSection = () => {
 	const { data } = useGetAudioBookQuery();

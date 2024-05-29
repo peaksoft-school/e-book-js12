@@ -12,5 +12,5 @@ namespace LASTPUBLICATION {
 		page: number;
 		size: number;
 		genre: string;
-	}
+	};
 }

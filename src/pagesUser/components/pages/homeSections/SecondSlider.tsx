@@ -3,7 +3,7 @@ import Slider from 'react-slick';
 import './SeconsdSlider.css';
 import IconOrangeLeftArrow from '@/src/assets/icons/icon-orangeLeftArrow';
 import IconOrangeRightArrow from '@/src/assets/icons/icon-orangeRightArrow';
-import { useGetEBookQuery } from '@/src/redux/api/elBooks';
+import { useGetEBookQuery } from '@/src/redux/api/book';
 
 const SecondSlider: FC = () => {
 	const { data } = useGetEBookQuery();

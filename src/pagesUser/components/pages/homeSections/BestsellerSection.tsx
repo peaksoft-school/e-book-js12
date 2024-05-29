@@ -63,7 +63,9 @@ const BestsellersSection: FC = () => {
 		<div className="container">
 			<div className="title_box">
 				<h2>Бестселлеры</h2>
-				<Link to={'/search_book'} className="see_all">Смотреть все</Link>
+				<Link to={'/search_book'} className="see_all">
+					Смотреть все
+				</Link>
 			</div>
 			<div className="containers">
 				<div>

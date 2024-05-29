@@ -3,7 +3,7 @@ import { FC, useEffect, useState } from 'react';
 import scss from './LastPublication.module.scss';
 import { IconLongLine, IconShortLine } from '@/src/assets/icons';
 import { Link } from 'react-router-dom';
-import { useGetLastPublicationQuery } from '@/src/redux/api/lastPublication';
+import { useGetLastPublicationQuery } from '@/src/redux/api/book';
 
 const LastPublicationSection: FC = () => {
 	const [state, setState] = useState('');
