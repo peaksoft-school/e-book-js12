@@ -81,7 +81,7 @@ const BookAddSection = () => {
 			price: book.price,
 			bestseller: book.bestseller
 		};
-		// await addBookVendor(newBook);
+		await addBookVendor(newBook);
 		reset();
 		console.log(newBook);
 	};
