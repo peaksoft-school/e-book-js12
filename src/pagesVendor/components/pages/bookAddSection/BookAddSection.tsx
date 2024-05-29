@@ -1,6 +1,5 @@
-import scss from './BookAddSection.module.scss';
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import CustomAddPhoto from '@/src/ui/customAddPhoto/CustomAddPhoto';
+import scss from './BookAddSection.module.scss';
 
 import {
 	IconBlackCircle,
@@ -9,7 +8,7 @@ import {
 	IconWhiteCircle,
 	IconWhiteSquare
 } from '@/src/assets/icons';
-import { useState } from 'react';
+import { ChangeEvent, useState } from 'react';
 import CustomUserNameInput from '@/src/ui/customInpute/CustomUserNameInput';
 import { Modal, Select, Space } from 'antd';
 import CustomBasketButton from '@/src/ui/customButton/CustomBasketButton';
@@ -18,6 +17,7 @@ import CustomPDFDownloadInput from '@/src/ui/customPDFInput/CustomPDFDownloadInp
 import { Link } from 'react-router-dom';
 import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
 import { useAddBookVendorMutation } from '@/src/redux/api/addBookVendor';
+import CustomAddPhoto from '@/src/ui/customAddPhoto/CustomAddPhoto';
 
 const BookAddSection = () => {
 	const [clickRadio, setClickRadio] = useState(false);
@@ -59,6 +59,12 @@ const BookAddSection = () => {
 		}
 	];
 
+	interface PhotosState {
+		main: File | null;
+		second: File | null;
+		third: File | null;
+	}
+
 	const [addBookVendor] = useAddBookVendorMutation();
 
 	const onSubmit: SubmitHandler<FieldValues> = async (book) => {
@@ -75,10 +81,34 @@ const BookAddSection = () => {
 			price: book.price,
 			bestseller: book.bestseller
 		};
-		await addBookVendor(newBook);
+		// await addBookVendor(newBook);
 		reset();
 		console.log(newBook);
 	};
+
+	const [pdfFile, setPdfFile] = useState<File | null>(null);
+	console.log(pdfFile);
+
+	const handleFileChange = (file: File) => {
+		setPdfFile(file);
+	};
+
+	const [photos, setPhotos] = useState<PhotosState>({
+		main: null,
+		second: null,
+		third: null
+	});
+	const handlePhotoChange = (
+		e: ChangeEvent<HTMLInputElement>,
+		position: keyof PhotosState
+	) => {
+		const file = e.target.files ? e.target.files[0] : null;
+		setPhotos((prevPhotos) => ({
+			...prevPhotos,
+			[position]: file
+		}));
+	};
+	console.log(photos);
 
 	return (
 		<section className={scss.AddBookSection}>
@@ -107,18 +137,25 @@ const BookAddSection = () => {
 						</div>
 						<div className={scss.photos_container}>
 							<div className={scss.card_first}>
-								<CustomAddPhoto />
-								<p>Главное фото</p>
+								<CustomAddPhoto
+									onChange={(e) => handlePhotoChange(e, 'main')}
+									label="Главное фото"
+								/>
 							</div>
 							<div className={scss.card_second}>
-								<div className={scss.card}>
-									{/* <img src='' alt="" /> */}
-									<p></p>
-								</div>
+								<CustomAddPhoto
+									onChange={(e) => handlePhotoChange(e, 'second')}
+									label="Фото 2"
+								/>
+
 								<p>2</p>
 							</div>
 							<div className={scss.card_last}>
-								<CustomAddPhoto />
+								<CustomAddPhoto
+									onChange={(e) => handlePhotoChange(e, 'third')}
+									label="Фото 3"
+								/>
+
 								<p>3</p>
 							</div>
 							<div className={scss.warning_card}>
@@ -137,7 +174,7 @@ const BookAddSection = () => {
 											</p>
 										</li>
 										<li>
-											<p> Фото обязательно должно быть цветным</p>
+											<p>Фото обязательно должно быть цветным</p>
 										</li>
 										<li>
 											<span>Фото</span>
@@ -349,9 +386,7 @@ const BookAddSection = () => {
 									</div>
 								</div>
 							</>
-						) : (
-							<></>
-						)}
+						) : null}
 
 						{clickRadio === true && audioBook === false && ebook === false ? (
 							<>
@@ -377,7 +412,7 @@ const BookAddSection = () => {
 											Выберите жанр
 											<CustomUserNameInput
 												placeholder="Литература, роман, стихи..."
-												registerName="title"
+												registerName="genre"
 												register={register}
 											/>
 										</label>
@@ -439,14 +474,14 @@ const BookAddSection = () => {
 												Объем
 												<div className={scss.input}>
 													<span>стр.</span>
-													<input type="text" />
+													<input type="text" {...register('volume')} />
 												</div>
 											</label>
 											<label>
 												Стоимость
 												<div className={scss.input}>
 													<span>сом</span>
-													<input type="text" />
+													<input type="text" {...register('price')} />
 												</div>
 											</label>
 											<label onClick={() => setClickRadio(!clickRadio)}>
@@ -661,7 +696,7 @@ const BookAddSection = () => {
 											Выберите жанр
 											<CustomUserNameInput
 												placeholder="Литература, роман, стихи..."
-												registerName="title"
+												registerName="genre"
 												register={register}
 											/>
 										</label>
@@ -673,12 +708,11 @@ const BookAddSection = () => {
 												register={register}
 											/>
 										</label>
-										{}
 										<label>
 											О книге
 											<textarea
-												rows={636}
-												cols={264}
+												rows={6}
+												cols={40}
 												maxLength={1234}
 												placeholder="Напишите о книге"
 												onChange={(e) => setDescription(e.target.value)}
@@ -688,8 +722,8 @@ const BookAddSection = () => {
 										<label>
 											Фрагмент книги
 											<textarea
-												rows={636}
-												cols={264}
+												rows={6}
+												cols={40}
 												maxLength={1234}
 												placeholder="Напишите фрагмент книги"
 												onChange={(e) => setFragment(e.target.value)}
@@ -704,9 +738,7 @@ const BookAddSection = () => {
 													<p className={scss.language}>Язык</p>
 													<Select
 														mode="multiple"
-														style={{
-															width: '100%'
-														}}
+														style={{ width: '100%' }}
 														defaultValue={['china']}
 														onChange={handleChange}
 														options={options}
@@ -724,7 +756,7 @@ const BookAddSection = () => {
 													Год выпуска
 													<div className={scss.input}>
 														<span>гг</span>
-														<input type="text" />
+														<input type="text" {...register('publishedYear')} />
 													</div>
 												</label>
 											</div>
@@ -733,10 +765,9 @@ const BookAddSection = () => {
 													Объем
 													<div className={scss.input}>
 														<span>стр.</span>
-														<input type="text" />
+														<input type="text" {...register('volume')} />
 													</div>
 												</label>
-
 												<label
 													onClick={() => {
 														setClickRadio(!clickRadio);
@@ -746,13 +777,9 @@ const BookAddSection = () => {
 												>
 													<div className={scss.checkbox}>
 														{clickRadio ? (
-															<>
-																<IconBlackSquare />
-															</>
+															<IconBlackSquare />
 														) : (
-															<>
-																<IconWhiteSquare />
-															</>
+															<IconWhiteSquare />
 														)}
 														<p>Бестселлер</p>
 													</div>
@@ -775,19 +802,18 @@ const BookAddSection = () => {
 												</label>
 											</div>
 											<div className={scss.box_last}>
-												<label>
-													<p>Загрузите книгу</p>
-													<CustomPDFDownloadInput
-														accept=""
-														onChange={() => {}}
-													/>
-												</label>
+												<CustomPDFDownloadInput
+													onChange={handleFileChange}
+													accept="application/pdf"
+												/>
+												{pdfFile && <p>Выбранный файл: {pdfFile.name}</p>}
 											</div>
 										</div>
 									</div>
 								</div>
 							</>
 						) : null}
+
 						<div className={scss.btn_content}>
 							<CustomBasketButton
 								nameClass={scss.button}
