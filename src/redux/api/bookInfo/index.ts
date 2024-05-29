@@ -2,19 +2,6 @@ import { api as index } from '..';
 
 const api = index.injectEndpoints({
 	endpoints: (build) => ({
-		getBookById: build.query<
-			GETBOOKBYID.GetBookByIdResponse,
-			GETBOOKBYID.GetBookByIdRequest
-		>({
-			query: (id) => (
-				console.log(id, 'idinner'),
-				{
-					url: `/api/book/${id}`,
-					method: 'GET'
-				}
-			),
-			providesTags: ['book_info']
-		}),
 		addBookToBasket: build.mutation<
 			GETBOOKBYID.PutBookByIdResponse,
 			GETBOOKBYID.PutBookByIdRequest
@@ -38,8 +25,4 @@ const api = index.injectEndpoints({
 	})
 });
 
-export const {
-	useGetBookByIdQuery,
-	useAddBookToBasketMutation,
-	useAddBookToFavoriteMutation
-} = api;
+export const { useAddBookToBasketMutation, useAddBookToFavoriteMutation } = api;

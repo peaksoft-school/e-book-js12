@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-namespace PRODUCT {
+namespace BOOK {
 	type GetProductsResponse = {
 		id: number;
 		imageLink: string;
@@ -33,4 +33,115 @@ namespace PRODUCT {
 		message: string;
 	};
 	type DeleteProductRequest = number;
+
+	type GetBookByIdResponse = {
+		id?: number;
+		image: string;
+		bookType: string;
+		title: string;
+		authorsFullName: string;
+		genre: string;
+		publishingHouse: string;
+		description: string;
+		fragment: string;
+		language: string;
+		publishedYear: number;
+		volume: number;
+		discount: number;
+		price: number;
+		fragmentAudUrl: string;
+		duration: string;
+		statusBook: string;
+	}[];
+
+	type GetBookByIdRequest = number;
+
+	type PutBookByIdResponse = {
+		id?: number;
+		image: string;
+		bookType: string;
+		title: string;
+		authorsFullName: string;
+		genre: string;
+		publishingHouse: string;
+		description: string;
+		fragment: string;
+		language: string;
+		publishedYear: number;
+		volume: number;
+		discount: number;
+		price: number;
+		fragmentAudUrl: string;
+		duration: string;
+		statusBook: string;
+	}[];
+
+	type PutBookByIdRequest = number;
+
+	type PostBookByIdResponse = {
+		id?: number;
+		image: string;
+		bookType: string;
+		title: string;
+		authorsFullName: string;
+		genre: string;
+		publishingHouse: string;
+		description: string;
+		fragment: string;
+		language: string;
+		publishedYear: number;
+		volume: number;
+		discount: number;
+		price: number;
+		fragmentAudUrl: string;
+		duration: string;
+		statusBook: string;
+	}[];
+
+	type PostBookByIdRequest = number;
+
+	type GetAudioBookResponse = {
+		id: number;
+		imageUrl: string;
+		title: string;
+		price: number;
+		priceWithDiscount: number;
+		authFullName: string;
+		duration: string;
+		anew: boolean;
+	}[];
+	type GetAudioBookRequest = void;
+
+	type GetEBookResponse = {
+		id: number;
+		title: string;
+		price: number;
+		priceWithDiscount: number;
+		description: string;
+		imageUrl: string;
+		bookType: string;
+	}[];
+	type GetEBookRequest = void;
+
+	type GetLastPublicationResponse = {
+		id: number;
+		title: string;
+		price: number;
+		priceWithDiscount: number;
+		description: string;
+		imageUrl: string;
+		bookType: string;
+	}[];
+	type GetLastPublicationRequest = void;
+
+	type GetAllLatestBooksResponse = {
+		id: number;
+		title: string;
+		price: number;
+		priceWithDiscount: number;
+		description: string;
+		imageUrl: string;
+		bookType: string;
+	}[];
+	type GetAllLatestBooksRequest = void;
 }
