@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 //@ts-nocheck
 import { FC, useState } from 'react';
 import './LatestBooksSection.module.scss';
@@ -10,7 +12,7 @@ import {
 	IconOrangeLeftArrow,
 	IconOrangeRightArrow
 } from '@/src/assets/icons';
-import { useGetAllLatestBooksQuery } from '@/src/redux/api/latestBooks';
+import { useGetAllLatestBooksQuery } from '@/src/redux/api/book';
 
 interface Settings {
 	className?: string;

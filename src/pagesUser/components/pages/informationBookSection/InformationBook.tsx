@@ -6,10 +6,10 @@ import CustomBasketButton from '@/src/ui/customButton/CustomBasketButton';
 import CustomPersonalAreaButton from '@/src/ui/customButton/CustomPersonalArea';
 import {
 	useAddBookToBasketMutation,
-	useAddBookToFavoriteMutation,
-	useGetBookByIdQuery
+	useAddBookToFavoriteMutation
 } from '@/src/redux/api/bookInfo';
 import { useNavigate } from 'react-router-dom';
+import { useGetBookByIdQuery } from '@/src/redux/api/book';
 
 interface BookIdProps {
 	id: number;

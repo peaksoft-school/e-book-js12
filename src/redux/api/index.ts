@@ -46,6 +46,9 @@ export const api = createApi({
 		'subscribe_api',
 		'clientProfile',
 		'book',
+		'last_publication',
+		'latest_books',
+		'book_search',
 		'update'
 	],
 
