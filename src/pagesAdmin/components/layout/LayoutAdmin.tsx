@@ -20,7 +20,7 @@ const LayoutAdmin = () => {
 					<Header />
 					<Routes>
 						<Route path="/" element={<InnerPage />} />
-						<Route path="/inner/:bookInfo" element={<BookInfoPage />} />
+						<Route path="/inner/:id" element={<BookInfoPage />} />
 						<Route path="/vendors" element={<VendorsPage />} />
 						<Route path="/users" element={<UserPage />} />
 						<Route path="/users/:fullName" element={<UserAboutSection />} />

@@ -1,17 +1,52 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable no-irregular-whitespace */
 import scss from './BookInfo.module.scss';
-import { useState } from 'react';
+import { FC, useState } from 'react';
 import CustomBasketButton from '@/src/ui/customButton/CustomBasketButton';
 import CustomPersonalAreaButton from '@/src/ui/customButton/CustomPersonalArea';
-import bookList from '../../../../assets/booksImg/info-book.png';
-import harry_pooter from '../../../../assets/booksImg/harrry-potter.png';
 import { Modal } from 'antd';
 import { IconSuccess } from '@/src/assets/icons';
+import { useGetBookByIdQuery } from '@/src/redux/api/book';
 
-const BookInfo = () => {
+interface BookIdProps {
+	id: number;
+}
+
+interface GetResponse {
+	data: BookData;
+	isLoading: boolean;
+	error: any;
+}
+
+interface BookData {
+	id?: number;
+	image: string;
+	bookType: string;
+	title: string;
+	authorsFullName: string;
+	genre: string;
+	publishingHouse: string;
+	description: string;
+	fragment: string;
+	language: string;
+	publishedYear: number;
+	volume: number;
+	discount: number;
+	price: number;
+	fragmentAudUrl: string;
+	duration: string;
+	statusBook: string;
+}
+
+const BookInfo: FC<BookIdProps> = ({ id }) => {
 	const [showBookInfo, setShowBookInfo] = useState(false);
 	const [modalSuccess, setModalSuccess] = useState(false);
-	const [devationModal, setDevationModal] = useState(false);
+	const [deviationModal, setDeviationModal] = useState(false);
+
+	const { data: book, isLoading } = useGetBookByIdQuery<GetResponse>(id);
+
+	if (isLoading) return <p>Загрузка...</p>;
+	if (!book) return <p>Ошибка загрузки данных книги</p>;
 
 	return (
 		<>
@@ -20,20 +55,27 @@ const BookInfo = () => {
 					<div className={scss.content}>
 						<div className={scss.content_text}>
 							<p>Заявки </p>
-							<h4>/ Гарри Потер. Дары смерти</h4>
+							<h4>/ {book.title}</h4>
 						</div>
 						<div className={scss.contents_book}>
 							<div className={scss.section_about_book}>
 								<div className={scss.woman_book}>
-									<img src={harry_pooter} alt="#" />
+									<img src={book.image} alt={book.title} />
 								</div>
 							</div>
 							<div className={scss.section_content_text}>
 								<div className={scss.section_title}>
-									<h3>Гарри Поттер и Тайная комната </h3>
+									<h3>{book.title}</h3>
 								</div>
 								<div className={scss.section_mony}>
-									<p>365 c</p>
+									<p>{book.price} $</p>
+									{book.bookType === 'AUDIO_BOOK' && (
+										<div>
+											<audio id="audioPlayer" controls>
+												<source src={book.fragmentAudUrl} type="audio/mpeg" />
+											</audio>
+										</div>
+									)}
 								</div>
 								<div className={scss.section_info}>
 									<div className={scss.section_info_name}>
@@ -42,15 +84,23 @@ const BookInfo = () => {
 										<p>Язык</p>
 										<p>Издательство</p>
 										<p>Год выпуска</p>
-										<p>Обьем</p>
+										{book.bookType === 'AUDIO_BOOK' ? (
+											<p>Длительность</p>
+										) : (
+											<p>Объем</p>
+										)}
 									</div>
 									<div className={scss.section_info_two}>
-										<p>Роулинг Джоан Кэтлин</p>
-										<p>Зарубежное фэнтези</p>
-										<p>Русский </p>
-										<p>МКС</p>
-										<p>2021</p>
-										<p>360 стр</p>
+										<p>{book.authorsFullName}</p>
+										<p>{book.genre}</p>
+										<p>{book.language}</p>
+										<p>{book.publishingHouse}</p>
+										<p>{book.publishedYear}</p>
+										{book.bookType === 'AUDIO_BOOK' ? (
+											<p>{book.duration}</p>
+										) : (
+											<p>{book.volume}</p>
+										)}
 									</div>
 								</div>
 
@@ -58,28 +108,28 @@ const BookInfo = () => {
 									<CustomPersonalAreaButton
 										nameClass={`${scss.favorite_btn}`}
 										onClick={() => {
-											setDevationModal(true);
+											setDeviationModal(true);
 										}}
 									>
 										<p className={scss.boot1}>Отклонить</p>
 									</CustomPersonalAreaButton>
 									<Modal
-										open={devationModal}
+										open={deviationModal}
 										footer={false}
 										onCancel={() => {
-											setDevationModal(false);
+											setDeviationModal(false);
 										}}
 									>
-										<div className={scss.modal_devation}>
-											<p className={scss.text_devation}>
+										<div className={scss.modal_deviation}>
+											<p className={scss.text_deviation}>
 												Причина вашего отклонения
 											</p>
 											<input
-												className={scss.input_devatoin}
+												className={scss.input_deviation}
 												type="text"
 												placeholder="Причина вашего отклонения"
 											/>
-											<button className={scss.btn_devation}>Отправить</button>
+											<button className={scss.btn_deviation}>Отправить</button>
 										</div>
 									</Modal>
 									<CustomBasketButton
@@ -101,7 +151,7 @@ const BookInfo = () => {
 											<IconSuccess />
 											<div className={scss.info_text}>
 												<p>
-													<span>“Гарри Поттер и Тайная комната”</span> <br />
+													<span>“{book.title}”</span> <br />
 													успешно добавлен!
 												</p>
 											</div>
@@ -113,88 +163,27 @@ const BookInfo = () => {
 						<div className={scss.section_text_books}>
 							<div className={scss.section_show_info}>
 								<div className={scss.show_info_book}>
+									{book.bookType === 'PAPER_BOOK' && (
+										<p
+											className={showBookInfo ? '' : scss.color_text}
+											onClick={() => setShowBookInfo(true)}
+										>
+											Читать фрагмент
+										</p>
+									)}
 									<p
-										className={`${showBookInfo ? '' : scss.color_text}`}
-										onClick={() => {
-											setShowBookInfo(false);
-										}}
+										className={showBookInfo ? scss.color_text : ''}
+										onClick={() => setShowBookInfo(false)}
 									>
-										O книге
-									</p>
-									<p
-										className={`${showBookInfo ? scss.color_text : ''}`}
-										onClick={() => {
-											setShowBookInfo(true);
-										}}
-									>
-										Читать фрагмент
+										О книге
 									</p>
 								</div>
-								{showBookInfo ? (
-									<p className={scss.book_info}>
-										«Заговор, Гарри Поттер. Заговор — в этом году в Хогвартсе,
-										школе колдовства и ведьминских искусств, произойдут
-										ужаснейшие события».
-										<br />
-										<br />
-										Лето у Гарри Поттера состояло из самого ужасного дня
-										рождения в жизни, мрачных предупреждений от домового эльфа
-										по имени Добби и спасения от Дурслеев, когда его друг Рон
-										Уизли прибыл за ним на волшебной летающей машине! Вернувшись
-										в школу колдовства и ведьминских искусств «Хогварц» на
-										второй курс, Гарри слышит странный шепот, который эхом
-										раздается в пустых коридорах. А потом начинаются нападения.
-										Студентов находят будто превращенными в камень… Кажется, что
-										зловещие предсказания Добби начинают сбываться.
-										<br />
-										<br />
-										«Заговор, Гарри Поттер. Заговор — в этом году в Хогвартсе,
-										школе колдовства и ведьминских искусств, произойдут
-										ужаснейшие события».
-										<br />
-										<br /> Лето у Гарри Поттера состояло из самого ужасного дня
-										рождения в жизни, мрачных предупреждений от домового эльфа
-										по имени Добби и спасения от Дурслеев, когда его друг Рон
-										Уизли прибыл за ним на волшебной летающей машине! Вернувшись
-										в школу колдовства и ведьминских искусств «Хогварц» на
-										второй курс, Гарри слышит странный шепот, который эхом
-										раздается в пустых коридорах. А потом начинаются нападения.
-										Студентов находят будто превращенными в камень… Кажется, что
-										зловещие предсказания Добби начинают сбываться.
-										<br />
-										<br />
-										Лето у Гарри Поттера состояло из самого ужасного дня
-										рождения в жизни, мрачных предупреждений от домового эльфа
-										по имени Добби и спасения от Дурслеев, когда его друг Рон
-										Уизли прибыл за ним на волшебной летающей машине! Вернувшись
-										в школу колдовства и ведьминских искусств «Хогварц» на
-										второй курс, Гарри слышит странный шепот, который эхом
-										раздается в пустых коридорах. А потом начинаются нападения.
-										Студентов находят будто превращенными в камень… Кажется, что
-										зловещие предсказания Добби начинают сбываться. <br />
-										<br />
-									</p>
-								) : (
-									<p className={scss.book_info}>
-										«Заговор, Гарри Поттер. Заговор — в этом году в Хогвартсе,
-										школе колдовства и ведьминских искусств, произойдут
-										ужаснейшие события».
-										<br />
-										<br />
-										Лето у Гарри Поттера состояло из самого ужасного дня
-										рождения в жизни, мрачных предупреждений от домового эльфа
-										по имени Добби и спасения от Дурслеев, когда его друг Рон
-										Уизли прибыл за ним на волшебной летающей машине! Вернувшись
-										в школу колдовства и ведьминских искусств «Хогварц» на
-										второй курс, Гарри слышит странный шепот, который эхом
-										раздается в пустых коридорах. А потом начинаются нападения.
-										Студентов находят будто превращенными в камень… Кажется, что
-										зловещие предсказания Добби начинают сбываться.
-									</p>
-								)}
+								<p className={scss.book_info}>
+									{showBookInfo ? book.fragment : book.description}
+								</p>
 							</div>
 							<div className={scss.info_img}>
-								<img src={bookList} alt="#" />
+								<img src={book.image} alt="Book List" />
 							</div>
 						</div>
 					</div>
