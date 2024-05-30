@@ -3,13 +3,14 @@ import ThreeDotIcon from '@/src/assets/icons/icon-threeDot';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { IconPencil, IconX } from '@tabler/icons-react';
-import { useGetAllBooksQuery } from '@/src/redux/api/innerPage';
+import { useGetReceiptRequestedBooksQuery } from '@/src/redux/api/innerPage';
 
 const InnerSection = () => {
 	const navigate = useNavigate();
 	const [isOpen, setIsOpen] = useState(false);
 	const [idBook, setIdBook] = useState<null | number>(null);
-	const { data: books, refetch } = useGetAllBooksQuery();
+	const { data: books, refetch } = useGetReceiptRequestedBooksQuery();
+	console.log(books);
 
 	const handleBookClick = (id: number) => {
 		navigate(`/admin/inner/${id}`);
@@ -20,16 +21,16 @@ const InnerSection = () => {
 		<section className={scss.InnerSection}>
 			<div className={scss.container}>
 				<div className={scss.total_quantity}>
-					<p>Всего: {books?.length || 0}</p>
+					<p>Всего: {books?.books.length || 0}</p>
 					<p>
 						Непросмотренные:
 						<span>
-							{books?.filter((book) => !book.numberOfUnViewed).length || 0}
+							{/* {books?.filter((book) => !book.numberOfUnViewed).length || 0} */}
 						</span>
 					</p>
 				</div>
 				<div className={scss.content}>
-					{books?.map((book) => (
+					{books?.books.map((book) => (
 						<div
 							key={book.id}
 							className={`${scss.book} ${book.isViewed ? '' : scss.unviewed}`}

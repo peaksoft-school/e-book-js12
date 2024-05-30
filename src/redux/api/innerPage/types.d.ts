@@ -7,6 +7,12 @@ namespace ALLBOOKS {
 	};
 
 	type GetAllBooksResponse = {
+		totalNumberOfBooks: number;
+		numberOfUnViewed: number;
+		books: books[];
+	};
+
+	type books = {
 		id: number;
 		title: string;
 		createdAt: string;
@@ -15,7 +21,7 @@ namespace ALLBOOKS {
 		isViewed: boolean;
 		totalNumberOfBooks: number;
 		numberOfUnViewed: number;
-	}[];
+	};
 
 	type GetAllBooksRequest = void;
 }

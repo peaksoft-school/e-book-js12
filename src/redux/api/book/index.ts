@@ -75,6 +75,26 @@ const api = index.injectEndpoints({
 				method: 'GET'
 			}),
 			providesTags: ['book']
+		}),
+		approveBook: build.mutation<
+			BOOK.ApproveBookResponse,
+			BOOK.ApproveBookRequest
+		>({
+			query: (id) => ({
+				url: `/api/book/requests/approve/${id}`,
+				method: 'PATCH'
+			}),
+			invalidatesTags: ['book']
+		}),
+		rejectBook: build.mutation<
+			BOOK.ApproveBookResponse,
+			BOOK.ApproveBookRequest
+		>({
+			query: (id) => ({
+				url: `/api/book/requests/reject/${id}`,
+				method: 'PATCH'
+			}),
+			invalidatesTags: ['book']
 		})
 	})
 });
@@ -85,5 +105,7 @@ export const {
 	useGetAudioBookQuery,
 	useGetEBookQuery,
 	useGetLastPublicationQuery,
-	useGetAllLatestBooksQuery
+	useGetAllLatestBooksQuery,
+	useApproveBookMutation,
+	useRejectBookMutation
 } = api;

@@ -1,7 +1,7 @@
 import { api as index } from '..';
 const api = index.injectEndpoints({
 	endpoints: (build) => ({
-		getAllBooks: build.query<
+		GetReceiptRequestedBooks: build.query<
 			ALLBOOKS.GetAllBooksResponse,
 			ALLBOOKS.GetAllBooksRequest
 		>({
@@ -13,4 +13,4 @@ const api = index.injectEndpoints({
 		})
 	})
 });
-export const { useGetAllBooksQuery } = api;
+export const { useGetReceiptRequestedBooksQuery } = api;

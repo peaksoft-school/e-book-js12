@@ -6,7 +6,12 @@ import CustomBasketButton from '@/src/ui/customButton/CustomBasketButton';
 import CustomPersonalAreaButton from '@/src/ui/customButton/CustomPersonalArea';
 import { Modal } from 'antd';
 import { IconSuccess } from '@/src/assets/icons';
-import { useGetBookByIdQuery } from '@/src/redux/api/book';
+import {
+	useApproveBookMutation,
+	useGetBookByIdQuery,
+	useRejectBookMutation
+} from '@/src/redux/api/book';
+import { useParams } from 'react-router-dom';
 
 interface BookIdProps {
 	id: number;
@@ -20,7 +25,8 @@ interface GetResponse {
 
 interface BookData {
 	id?: number;
-	image: string;
+	imageUrlFirst: string;
+	imageUrlLast: string;
 	bookType: string;
 	title: string;
 	authorsFullName: string;
@@ -38,12 +44,25 @@ interface BookData {
 	statusBook: string;
 }
 
-const BookInfo: FC<BookIdProps> = ({ id }) => {
+const BookInfo: FC<BookIdProps> = () => {
 	const [showBookInfo, setShowBookInfo] = useState(false);
 	const [modalSuccess, setModalSuccess] = useState(false);
 	const [deviationModal, setDeviationModal] = useState(false);
+	const { id } = useParams();
+	const bookId = Number(id);
+	const { data: book, isLoading } = useGetBookByIdQuery<GetResponse>(bookId);
+	const [approveBook] = useApproveBookMutation();
+	const [rejectBook] = useRejectBookMutation();
 
-	const { data: book, isLoading } = useGetBookByIdQuery<GetResponse>(id);
+	const handleApproveBook = async (id: number) => {
+		await approveBook(id);
+		setModalSuccess(true);
+	};
+
+	const handleRejectBook = async (id: number) => {
+		await rejectBook(id);
+		setDeviationModal(false);
+	};
 
 	if (isLoading) return <p>Загрузка...</p>;
 	if (!book) return <p>Ошибка загрузки данных книги</p>;
@@ -60,7 +79,7 @@ const BookInfo: FC<BookIdProps> = ({ id }) => {
 						<div className={scss.contents_book}>
 							<div className={scss.section_about_book}>
 								<div className={scss.woman_book}>
-									<img src={book.image} alt={book.title} />
+									<img src={book.imageUrlFirst} alt={book.title} />
 								</div>
 							</div>
 							<div className={scss.section_content_text}>
@@ -129,13 +148,18 @@ const BookInfo: FC<BookIdProps> = ({ id }) => {
 												type="text"
 												placeholder="Причина вашего отклонения"
 											/>
-											<button className={scss.btn_deviation}>Отправить</button>
+											<button
+												onClick={() => handleRejectBook(bookId)}
+												className={scss.btn_deviation}
+											>
+												Отправить
+											</button>
 										</div>
 									</Modal>
 									<CustomBasketButton
 										nameClass={scss.basket_btn}
 										onClick={() => {
-											setModalSuccess(true);
+											handleApproveBook(bookId);
 										}}
 									>
 										<p className={scss.boot1}>Принять</p>
@@ -183,7 +207,7 @@ const BookInfo: FC<BookIdProps> = ({ id }) => {
 								</p>
 							</div>
 							<div className={scss.info_img}>
-								<img src={book.image} alt="Book List" />
+								<img src={book.imageUrlLast} alt="Book List" />
 							</div>
 						</div>
 					</div>
