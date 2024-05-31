@@ -39,7 +39,7 @@ const ProfileClient: React.FC = () => {
 
 	const onSubmit: SubmitHandler<FieldValues> = async (data) => {
 		console.log(data);
-		
+
 		try {
 			if (isEditMode) {
 				const newData = {

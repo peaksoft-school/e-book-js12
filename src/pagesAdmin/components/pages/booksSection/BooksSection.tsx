@@ -21,7 +21,7 @@ const BooksSection: React.FC = () => {
 	const [openStates, setOpenStates] = useState<{ [key: number]: boolean }>({});
 
 	const [isOpenBooksType, setIsOpenBooksType] = useState<boolean>(false);
-	const [selectedType, setSelectedType] = useState<string | null>(null);
+	const [selectedType, setSelectedType] = useState<string | null>('Все');
 	const [isOpenBooksGenre, setIsOpenBooksGenre] = useState<boolean>(false);
 	const navigate = useNavigate();
 
@@ -93,9 +93,10 @@ const BooksSection: React.FC = () => {
 
 	const bookTypeText = selectedType ? selectedType : 'Все';
 
-	const filteredBooks: Book[] = selectedType
-		? books.filter((book) => book.type === selectedType)
-		: books;
+	const filteredBooks: Book[] =
+		selectedType === 'Все'
+			? books
+			: books.filter((book) => book.type === selectedType);
 	const toggleBookOptions = (id: number) => {
 		setOpenStates((prevStates) => ({
 			...prevStates,
@@ -163,9 +164,7 @@ const BooksSection: React.FC = () => {
 						</div>
 						<div className={scss.click}>
 							<p onClick={toggleTypeList}>
-								<span onClick={() => handleGenreSelect(null)}>
-									{bookTypeText}
-								</span>
+								<span onClick={() => {}}>{bookTypeText}</span>
 
 								{isOpenBooksType ? <UpIcon /> : <IconArrowBottom />}
 							</p>
@@ -175,6 +174,12 @@ const BooksSection: React.FC = () => {
 										isOpenBooksType ? scss.type_list : scss.none_books_type
 									}
 								>
+									{selectedType !== 'Все' ? (
+										<>
+											<p onClick={() => handleGenreSelect('Все')}>Все</p>
+											<hr />
+										</>
+									) : null}
 									<p onClick={() => handleGenreSelect('Электронные книги')}>
 										Электронные книги
 									</p>
@@ -194,7 +199,7 @@ const BooksSection: React.FC = () => {
 						<CustomAddBookButton
 							children={'+  Добавить книгу'}
 							onClick={() => {
-								navigate('/admin/books/book_adding');
+								navigate('/admin/add_book');
 							}}
 						/>
 					</div>
@@ -221,7 +226,6 @@ const BooksSection: React.FC = () => {
 										</span>
 										Редактировать
 									</li>
-									<hr />
 									<li onClick={() => toggleBookOptions(book.id)}>
 										<span>
 											<IconX />

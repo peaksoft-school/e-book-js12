@@ -25,8 +25,8 @@ namespace PASS {
 	};
 
 	type UpdatePasswordUserRequest = {
-		currentVendorPassword: string
-		password: string
-		confirmPassword: string
+		currentVendorPassword: string;
+		password: string;
+		confirmPassword: string;
 	};
 }

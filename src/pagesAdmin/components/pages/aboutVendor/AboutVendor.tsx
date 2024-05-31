@@ -64,10 +64,6 @@ const AboutVendor: React.FC = () => {
 		setIsModalOpen(true);
 	};
 
-	const handleOk = () => {
-		setIsModalOpen(false);
-	};
-
 	const handleCancel = () => {
 		setIsModalOpen(false);
 	};
@@ -146,16 +142,26 @@ const AboutVendor: React.FC = () => {
 									Удалить профиль
 								</button>
 							</div>
-							<Modal
-								visible={isModalOpen}
-								onOk={handleOk}
-								onCancel={handleCancel}
-								okText="Удалить"
-								cancelText="Отменить"
-							>
-								<p className={scss.delete_profile}>
-									Вы уверены, что хотите удалить профиль?
-								</p>
+							<Modal onCancel={handleCancel} footer={false} open={isModalOpen}>
+								<div className={scss.delete_modal}>
+									<p>Вы уверены, что хотите удалить профиль?</p>
+									<div className={scss.buttons_modal}>
+										<button
+											onClick={() => {
+												setIsModalOpen(false);
+											}}
+										>
+											Отменить
+										</button>
+										<button
+											onClick={() => {
+												setIsModalOpen(false);
+											}}
+										>
+											Удалить
+										</button>
+									</div>
+								</div>
 							</Modal>
 						</div>
 					) : (

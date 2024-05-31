@@ -1,89 +1,50 @@
 import scss from './innerSection.module.scss';
-import bookImage from '../../../../assets/booksImg/harrry-potter.png';
 import ThreeDotIcon from '@/src/assets/icons/icon-threeDot';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { IconPencil, IconX } from '@tabler/icons-react';
+import { useGetReceiptRequestedBooksQuery } from '@/src/redux/api/innerPage';
 
 const InnerSection = () => {
 	const navigate = useNavigate();
 	const [isOpen, setIsOpen] = useState(false);
+	const [idBook, setIdBook] = useState<null | number>(null);
+	const { data: books, refetch } = useGetReceiptRequestedBooksQuery();
+	console.log(books);
 
-	const books = [
-		{
-			id: 1,
-			img: bookImage,
-			name: 'История книги',
-			date: '20 Feb 2021',
-			price: 350
-		},
-		{
-			id: 2,
-			img: bookImage,
-			name: 'История книги',
-			date: '20 Feb 2021',
-			price: 350
-		},
-		{
-			id: 3,
-			img: bookImage,
-			name: 'История книги',
-			date: '20 Feb 2021',
-			price: 350
-		},
-		{
-			id: 4,
-			img: bookImage,
-			name: 'История книги',
-			date: '20 Feb 2021',
-			price: 350
-		},
-		{
-			id: 5,
-			img: bookImage,
-			name: 'История книги',
-			date: '20 Feb 2021',
-			price: 350
-		},
-		{
-			id: 6,
-			img: bookImage,
-			name: 'История книги',
-			date: '20 Feb 2021',
-			price: 350
-		},
-		{
-			id: 7,
-			img: bookImage,
-			name: 'История книги',
-			date: '20 Feb 2021',
-			price: 350
-		},
-		{
-			id: 8,
-			img: bookImage,
-			name: 'История книги',
-			date: '20 Feb 2021',
-			price: 350
-		}
-	];
+	const handleBookClick = (id: number) => {
+		navigate(`/admin/inner/${id}`);
+		refetch();
+	};
 
 	return (
 		<section className={scss.InnerSection}>
 			<div className={scss.container}>
 				<div className={scss.total_quantity}>
-					<p>Всего: {books.length}</p>
+					<p>Всего: {books?.books.length || 0}</p>
 					<p>
-						Непросмотренные: <span>4</span>
+						Непросмотренные:
+						<span>
+							{books?.books.filter((book) => book.numberOfUnViewed).length || 0}
+						</span>
 					</p>
 				</div>
 				<div className={scss.content}>
-					{books.map((book) => (
-						<div key={book.id} className={scss.book}>
-							<div className={scss.extra} onClick={() => setIsOpen(!isOpen)}>
+					{books?.books.map((book) => (
+						<div
+							key={book.id}
+							className={`${scss.book} ${book.isViewed ? '' : scss.unviewed}`}
+						>
+							<div
+								className={scss.extra}
+								onClick={() => {
+									setIsOpen(!isOpen);
+									setIdBook(book.id);
+								}}
+							>
 								<ThreeDotIcon />
 							</div>
-							{
+							{idBook === book.id ? (
 								<div className={isOpen ? scss.is_open : scss.on_close}>
 									<ul>
 										<li>
@@ -101,18 +62,18 @@ const InnerSection = () => {
 										</li>
 									</ul>
 								</div>
-							}
+							) : null}
 							<div
-								onClick={() => navigate(`/admin/inner/${book.id}`)}
+								onClick={() => handleBookClick(book.id)}
 								className={scss.book_content}
 							>
 								<div className={scss.book_img}>
-									<img src={book.img} alt="" />
+									<img src={book.imageUrl1} alt="" />
 								</div>
 								<div className={scss.info_book}>
-									<h3>{book.name}</h3>
+									<h3>{book.title}</h3>
 									<div className={scss.date_and_price}>
-										<p>{book.date}</p>
+										<p>{book.createdAt}</p>
 										<p className={scss.price}>{book.price} c</p>
 									</div>
 								</div>

@@ -2,7 +2,12 @@ import React, { ChangeEvent, useRef, useState } from 'react';
 import scss from './CustomAddPhoto.module.scss';
 import { IconAddPhoto } from '@/src/assets/icons';
 
-const CustomAddPhoto: React.FC = () => {
+interface CustomAddPhotoProps {
+	onChange: (event: ChangeEvent<HTMLInputElement>) => void;
+	label: string;
+}
+
+const CustomAddPhoto: React.FC<CustomAddPhotoProps> = ({ onChange, label }) => {
 	const [image, setImage] = useState<string>('');
 	const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -22,8 +27,10 @@ const CustomAddPhoto: React.FC = () => {
 				}
 			};
 			reader.readAsDataURL(file);
+			onChange(event);
 		}
 	};
+
 	return (
 		<div
 			className={scss.input_container}
@@ -55,7 +62,7 @@ const CustomAddPhoto: React.FC = () => {
 				</div>
 			) : (
 				<>
-					<p>Нажмите на иконку чтобы загрузить или перетащите фото</p>
+					<p>{label}</p>
 				</>
 			)}
 		</div>
