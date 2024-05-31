@@ -88,11 +88,14 @@ const api = index.injectEndpoints({
 		}),
 		rejectBook: build.mutation<
 			BOOK.ApproveBookResponse,
-			BOOK.ApproveBookRequest
+			BOOK.RejectBookRequest
 		>({
-			query: (id) => ({
+			query: ({ newData, id }) => ({
 				url: `/api/book/requests/reject/${id}`,
-				method: 'PATCH'
+				method: 'PATCH',
+				params: {
+					...newData
+				}
 			}),
 			invalidatesTags: ['book']
 		})

@@ -17,7 +17,7 @@ namespace ALLBOOKS {
 		title: string;
 		createdAt: string;
 		price: number;
-		imageUrl: string;
+		imageUrl1: string;
 		isViewed: boolean;
 		totalNumberOfBooks: number;
 		numberOfUnViewed: number;

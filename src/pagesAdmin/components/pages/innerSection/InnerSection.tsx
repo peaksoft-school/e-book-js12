@@ -25,7 +25,7 @@ const InnerSection = () => {
 					<p>
 						Непросмотренные:
 						<span>
-							{/* {books?.filter((book) => !book.numberOfUnViewed).length || 0} */}
+							{books?.books.filter((book) => book.numberOfUnViewed).length || 0}
 						</span>
 					</p>
 				</div>
@@ -68,7 +68,7 @@ const InnerSection = () => {
 								className={scss.book_content}
 							>
 								<div className={scss.book_img}>
-									<img src={book.imageUrl} alt="" />
+									<img src={book.imageUrl1} alt="" />
 								</div>
 								<div className={scss.info_book}>
 									<h3>{book.title}</h3>

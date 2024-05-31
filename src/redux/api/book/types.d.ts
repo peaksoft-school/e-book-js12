@@ -151,5 +151,12 @@ namespace BOOK {
 		message: string;
 	};
 
+	type RejectBookRequest = {
+		newData: {
+			rejectReason: string;
+		};
+		id: number;
+	};
+
 	type ApproveBookRequest = number;
 }

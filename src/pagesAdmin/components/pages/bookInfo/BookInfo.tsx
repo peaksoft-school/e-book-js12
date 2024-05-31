@@ -48,6 +48,7 @@ const BookInfo: FC<BookIdProps> = () => {
 	const [showBookInfo, setShowBookInfo] = useState(false);
 	const [modalSuccess, setModalSuccess] = useState(false);
 	const [deviationModal, setDeviationModal] = useState(false);
+	const [value, setValue] = useState('');
 	const { id } = useParams();
 	const bookId = Number(id);
 	const { data: book, isLoading } = useGetBookByIdQuery<GetResponse>(bookId);
@@ -60,7 +61,10 @@ const BookInfo: FC<BookIdProps> = () => {
 	};
 
 	const handleRejectBook = async (id: number) => {
-		await rejectBook(id);
+		const newData = {
+			rejectReason: value
+		};
+		await rejectBook({ newData, id });
 		setDeviationModal(false);
 	};
 
@@ -147,6 +151,10 @@ const BookInfo: FC<BookIdProps> = () => {
 												className={scss.input_deviation}
 												type="text"
 												placeholder="Причина вашего отклонения"
+												value={value}
+												onChange={(e) => {
+													setValue(e.target.value);
+												}}
 											/>
 											<button
 												onClick={() => handleRejectBook(bookId)}
@@ -156,11 +164,11 @@ const BookInfo: FC<BookIdProps> = () => {
 											</button>
 										</div>
 									</Modal>
+
 									<CustomBasketButton
 										nameClass={scss.basket_btn}
-										onClick={() => {
-											handleApproveBook(bookId);
-										}}
+										onClick={() => handleApproveBook(bookId)}
+										type="button"
 									>
 										<p className={scss.boot1}>Принять</p>
 									</CustomBasketButton>
