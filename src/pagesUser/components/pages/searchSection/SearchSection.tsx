@@ -153,12 +153,15 @@ const SearchSection = () => {
 		}
 	]);
 
+	const [selected, setSelected] = useState<string |null>('Сортировать')
 	const [idSort, setIdSort] = useState<null | number>(null);
+
 	const [sortData] = useState([
 		{
 			id: 1,
 			nameSort: 'all',
-			englishSort: ' '
+			englishSort: ' ',
+			
 		},
 		{
 			id: 2,
@@ -171,6 +174,12 @@ const SearchSection = () => {
 			englishSort: 'best-sellers'
 		}
 	]);
+
+const bookText = selected ? selected : 'Сортировать'
+
+const filterBooks = selected === 'Сортировать'
+? sortData
+: sortData.filter((book) => book.id === selected)
 
 	const [dataBooks, setDataBooks] = useState<TypeDataBook[] | []>([]);
 
@@ -376,6 +385,11 @@ const SearchSection = () => {
 							className={scss.right_content}
 							onClick={() => setIsSort(!isSort)}
 						>
+							{selected !== 'Сортировать' ? (
+								<>
+<p></p>
+								</>
+							): null}
 							<p>Сортировать</p>
 							{isSort ? (
 								<>
