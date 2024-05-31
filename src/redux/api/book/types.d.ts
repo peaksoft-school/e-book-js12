@@ -17,6 +17,24 @@ namespace BOOK {
 		pageSize: number;
 	};
 
+	type GetAllVendorBooksResponse = {
+		id: number;
+		imageLink: string;
+		bookName: string;
+		publishedYear: number;
+		price: number;
+		quantityOfFavorite: number;
+		quantityOfBasket: number;
+		discount: number;
+		priceWithDiscount: number;
+	}[];
+	type GetAllVendorBooksRequest = {
+		vendorId: number | null
+		operationType: string;
+		page: number;
+		pageSize: number;
+	};
+
 	type PostProductResponse = {
 		success: boolean;
 		results: Results;

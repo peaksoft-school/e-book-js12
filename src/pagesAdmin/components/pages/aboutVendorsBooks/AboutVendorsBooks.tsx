@@ -1,118 +1,59 @@
 import { useState } from 'react';
 import { Modal } from 'antd';
 import scss from './AboutVendorsBooks.module.scss';
-import bookImage from '../../../../assets/booksImg/harrry-potter.png';
 import ThreeDotIcon from '@/src/assets/icons/icon-threeDot';
 import UpIcon from '@/src/assets/icons/icon-upIcon';
 import { IconArrowBottom, IconWhiteLike } from '@/src/assets/icons';
 import { IconPencil, IconX } from '@tabler/icons-react';
+import {
+	useGetAllVendorBooksQuery,
+	
+} from '@/src/redux/api/book';
+import { useDeleteVendorProfileMutation } from '@/src/redux/api/vendors';
 
 interface Book {
 	id: number;
-	img: string;
-	name: string;
-	date: string;
+	imageLink: string;
+	bookName: string;
+	publishedYear: number;
 	price: number;
-	type?: string;
-	hearts?: number;
-	inBasket?: number;
+	quantityOfFavorite: number;
+	quantityOfBasket: number;
+	discount: number;
+	priceWithDiscount: number;
 }
 
-interface Vendor {}
+interface Vendor {
+	id: number;
+}
 
 const AboutVendorsBooks = () => {
 	const [isOpen, setIsOpen] = useState<boolean>(false);
+	const [operationType, setOperationType] = useState('');
 	const [isOpenBooksType, setIsOpenBooksType] = useState(false);
-	const [selectedType, setSelectedType] = useState<string | null>(null);
 	const [isModalOpen, setIsModalOpen] = useState(false);
-	const [selectedVendor, setSelectedVendor] = useState<Vendor | null>(null);
+	const [selectedVendor, setSelectedVendor] = useState<number | null>(null);
 	const [idBook, setIdBook] = useState<null | number>(null);
+	const { data: books = [] } = useGetAllVendorBooksQuery(
+		{
+			vendorId: selectedVendor,
+			operationType: operationType,
+			page: 1,
+			pageSize: 100
+		},
+		{ skip: !selectedVendor }
+	);
+	const [deleteVendorProfile] = useDeleteVendorProfileMutation();
 
-	const books: Book[] = [
-		{
-			id: 1,
-			img: bookImage,
-			name: 'История книги 1',
-			date: '20 Feb 2021',
-			price: 350,
-			type: 'Электронные книги',
-			hearts: 12,
-			inBasket: 3
-		},
-		{
-			id: 2,
-			img: bookImage,
-			name: 'История книги 2',
-			date: '20 Feb 2021',
-			price: 350,
-			type: 'Бумажные книги',
-			hearts: 12,
-			inBasket: 3
-		},
-		{
-			id: 3,
-			img: bookImage,
-			name: 'История книги 2',
-			date: '20 Feb 2021',
-			price: 350,
-			type: 'Бумажные книги',
-			hearts: 12,
-			inBasket: 3
-		},
-		{
-			id: 4,
-			img: bookImage,
-			name: 'История книги 2',
-			date: '20 Feb 2021',
-			price: 350,
-			type: 'Бумажные книги',
-			hearts: 12,
-			inBasket: 3
-		},
-		{
-			id: 5,
-			img: bookImage,
-			name: 'История книги 2',
-			date: '20 Feb 2021',
-			price: 350,
-			type: 'Бумажные книги',
-			hearts: 12,
-			inBasket: 3
-		},
-		{
-			id: 6,
-			img: bookImage,
-			name: 'История книги 2',
-			date: '20 Feb 2021',
-			price: 350,
-			type: 'Бумажные книги',
-			hearts: 12,
-			inBasket: 3
-		},
-		{
-			id: 7,
-			img: bookImage,
-			name: 'История книги 2',
-			date: '20 Feb 2021',
-			price: 350,
-			type: 'Бумажные книги'
-		},
-		{
-			id: 8,
-			img: bookImage,
-			name: 'История книги 2',
-			date: '20 Feb 2021',
-			price: 350,
-			type: 'Бумажные книги',
-			hearts: 12,
-			inBasket: 3
-		}
-	];
-
-	const showModal = (vendor: Vendor) => {
+	const showModal = (vendor: number) => {
 		setSelectedVendor(vendor);
 		setIsModalOpen(true);
 	};
+
+	const handleDeleteVendorProfile = async () => {
+		await deleteVendorProfile();
+
+	}
 
 	const handleCancel = () => {
 		setIsModalOpen(false);
@@ -123,15 +64,18 @@ const AboutVendorsBooks = () => {
 		setIsOpenBooksType(!isOpenBooksType);
 	};
 
-	const handleGenreSelect = (type: string | null): void => {
-		setSelectedType(type);
-		setIsOpenBooksType(false);
-	};
+	const bookTypeText = operationType ? operationType : 'ALL';
 
-	const bookTypeText = selectedType ? selectedType : 'Все';
-
-	const filteredBooks: Book[] = selectedType
-		? books.filter((book) => book.type === selectedType)
+	const filteredBooks: Book[] = operationType
+		? books.filter((book) => {
+				if (operationType === 'ALL') return true;
+				if (operationType === 'IN_FAVORITE') return book.quantityOfFavorite > 0;
+				if (operationType === 'IN_BASKET') return book.quantityOfBasket > 0;
+				if (operationType === 'WITH_DISCOUNT') return book.discount > 0;
+				if (operationType === 'SOLD')
+					return book.quantityOfBasket === 0 && book.quantityOfFavorite === 0;
+				return true;
+			})
 		: books;
 
 	return (
@@ -141,22 +85,20 @@ const AboutVendorsBooks = () => {
 					<p>Всего: {filteredBooks.length} книг</p>
 					<div className={scss.click}>
 						<p onClick={toggleTypeList}>
-							<span onClick={() => {}}>{bookTypeText}</span>
+							<span>{bookTypeText}</span>
 							{isOpenBooksType ? <UpIcon /> : <IconArrowBottom />}
 						</p>
 
 						<div
 							className={`${isOpenBooksType ? scss.type_list : scss.none_books_type}`}
 						>
-							<p onClick={() => handleGenreSelect('Все')}>Все</p>
-							<p onClick={() => handleGenreSelect('В избранном')}>
-								В избранном
-							</p>
-							<p onClick={() => handleGenreSelect('В корзине')}>В корзине</p>
-							<p onClick={() => handleGenreSelect('	Со скидками')}>
+							<p onClick={() => setOperationType('ALL')}>Все</p>
+							<p onClick={() => setOperationType('IN_FAVORITE')}>В избранном</p>
+							<p onClick={() => setOperationType('IN_BASKET')}>В корзине</p>
+							<p onClick={() => setOperationType('WITH_DISCOUNT')}>
 								Со скидками
 							</p>
-							<p onClick={() => handleGenreSelect('Проданы')}>Проданы</p>
+							<p onClick={() => setOperationType('SOLD')}>Проданы</p>
 						</div>
 					</div>
 				</div>
@@ -167,10 +109,10 @@ const AboutVendorsBooks = () => {
 							<div className={scss.book_header}>
 								<div className={scss.hearts}>
 									<IconWhiteLike />
-									<p>{book.hearts}</p>
+									<p>{book.quantityOfFavorite}</p>
 								</div>
 								<div className={scss.in_basket}>
-									<p>В карзине ({book.inBasket})</p>
+									<p>В корзине ({book.quantityOfBasket})</p>
 								</div>
 							</div>
 							<div
@@ -182,8 +124,8 @@ const AboutVendorsBooks = () => {
 							>
 								<ThreeDotIcon />
 							</div>
-							{book.id === idBook ? (
-								<div className={isOpen ? scss.is_open : scss.on_close}>
+							{book.id === idBook && isOpen ? (
+								<div className={scss.is_open}>
 									<ul>
 										<li>
 											<span>
@@ -207,12 +149,12 @@ const AboutVendorsBooks = () => {
 							) : null}
 							<div className={scss.book_content}>
 								<div className={scss.book_img}>
-									<img src={book.img} alt="" />
+									<img src={book.imageLink} alt="" />
 								</div>
 								<div className={scss.info_book}>
-									<h3>{book.name}</h3>
+									<h3>{book.bookName}</h3>
 									<div className={scss.date_and_price}>
-										<p>{book.date}</p>
+										<p>{book.publishedYear}</p>
 										<p className={scss.price}>{book.price} c</p>
 									</div>
 								</div>
@@ -223,7 +165,7 @@ const AboutVendorsBooks = () => {
 				<div className={scss.div_delete}>
 					<button
 						className={scss.delete_profile}
-						onClick={() => showModal(selectedVendor!)}
+						onClick={() => selectedVendor && showModal(selectedVendor)}
 					>
 						Удалить профиль
 					</button>
@@ -232,8 +174,15 @@ const AboutVendorsBooks = () => {
 					<div className={scss.delete_modal}>
 						<p>Вы уверены, что хотите удалить профиль?</p>
 						<div className={scss.buttons_modal}>
-							<button>Отменить</button>
-							<button>Удалить</button>
+							<button onClick={handleCancel}>Отменить</button>
+							<button
+								onClick={() => {
+									selectedVendor && handleDeleteVendorProfile();
+									handleCancel();
+								}}
+							>
+								Удалить
+							</button>
 						</div>
 					</div>
 				</Modal>
