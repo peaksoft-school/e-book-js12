@@ -60,7 +60,7 @@ const BooksSection: React.FC = () => {
 		},
 
 		{
-			id: 7,
+			id: 5,
 			img: bookImage,
 			name: 'История книги',
 			date: '20 Feb 2021',
@@ -68,7 +68,7 @@ const BooksSection: React.FC = () => {
 			type: 'Аудиокниги'
 		},
 		{
-			id: 10,
+			id: 6,
 			img: bookImage,
 			name: 'История книги',
 			date: '20 Feb 2021',
