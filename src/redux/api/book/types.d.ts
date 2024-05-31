@@ -36,7 +36,8 @@ namespace BOOK {
 
 	type GetBookByIdResponse = {
 		id?: number;
-		image: string;
+		imageUrlFirst: string;
+		imageUrlLast: string;
 		bookType: string;
 		title: string;
 		authorsFullName: string;
@@ -144,4 +145,18 @@ namespace BOOK {
 		bookType: string;
 	}[];
 	type GetAllLatestBooksRequest = void;
+
+	type ApproveBookResponse = {
+		httpStatus: string;
+		message: string;
+	};
+
+	type RejectBookRequest = {
+		newData: {
+			rejectReason: string;
+		};
+		id: number;
+	};
+
+	type ApproveBookRequest = number;
 }

@@ -5,14 +5,14 @@ interface CustomBasketProps {
 	children: ReactNode;
 	onClick: () => void;
 	nameClass: string;
-	type: React.ButtonHTMLAttributes<HTMLButtonElement>['type'];
+	type?: React.ButtonHTMLAttributes<HTMLButtonElement>['type'];
 }
 
 const CustomBasketButton: FC<CustomBasketProps> = ({
 	children,
 	onClick,
 	nameClass,
-	type
+	type = 'button'
 }) => {
 	return (
 		<button
