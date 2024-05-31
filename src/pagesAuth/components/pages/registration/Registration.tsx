@@ -57,19 +57,12 @@ const Registration = () => {
 		const result = await signInWithPopup(auth, provider);
 		const user = result.user;
 		const idToken = await user.getIdToken();
-		console.log(idToken);
+
 		const data = {
 			idToken: idToken
 		};
 		postGoogleToken(data);
 
-		// aaaaaa
-		// await signInWithPopup(auth, provider).then(({ user }) => {
-		// 	const data = {
-		// 		idToken: user.accessToken
-		// 	};
-		// 	postGoogleToken(data);
-		// });
 	};
 
 	return (
