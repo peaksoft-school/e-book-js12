@@ -8,14 +8,14 @@ import {
 	useAddBookToBasketMutation,
 	useAddBookToFavoriteMutation
 } from '@/src/redux/api/bookInfo';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useGetBookByIdQuery } from '@/src/redux/api/book';
 
 interface BookIdProps {
 	id: number;
 }
 
-interface GetResponse {
+interface TypeGetById {
 	data: BookData;
 	isLoading: boolean;
 	error: any;
@@ -23,7 +23,8 @@ interface GetResponse {
 
 interface BookData {
 	id?: number;
-	image: string;
+	imageUrlFirst: string;
+	imageUrlLast: string;
 	bookType: string;
 	title: string;
 	authorsFullName: string;
@@ -43,12 +44,11 @@ interface BookData {
 
 const InformationBook: FC<BookIdProps> = () => {
 	const [showBookInfo, setShowBookInfo] = useState(false);
-	// const paramsId = useParams();
-	// const bookId = Number(paramsId.id);
-	const bookId = 2;
+	const { id } = useParams();
+	const bookId = Number(id);
 
 	const navigate = useNavigate();
-	const { data, isLoading } = useGetBookByIdQuery<GetResponse>(bookId);
+	const { data, isLoading } = useGetBookByIdQuery<TypeGetById>(bookId);
 	const [addBookToBasket] = useAddBookToBasketMutation();
 	const [addBookToFavorite] = useAddBookToFavoriteMutation();
 
@@ -85,7 +85,7 @@ const InformationBook: FC<BookIdProps> = () => {
 							<div className={scss.contents_book}>
 								<div className={scss.section_about_book}>
 									<div className={scss.woman_book}>
-										<img src={data.image} alt="Harry Potter" />
+										<img src={data.imageUrlFirst} alt="Harry Potter" />
 									</div>
 								</div>
 								<div className={scss.section_content_text}>
@@ -198,7 +198,7 @@ const InformationBook: FC<BookIdProps> = () => {
 									</p>
 								</div>
 								<div className={scss.info_img}>
-									<img src={data.image} alt="Book List" />
+									<img src={data.imageUrlLast} alt="Book List" />
 								</div>
 							</div>
 						</>
