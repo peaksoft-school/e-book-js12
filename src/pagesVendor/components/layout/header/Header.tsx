@@ -194,7 +194,7 @@ const Header = () => {
 										<CustomAddBookButton
 											children="+ Добавить книгу"
 											onClick={() => {
-												navigate('vendor/addBook');
+												navigate('/vendor/addBook');
 											}}
 										/>
 									</div>
