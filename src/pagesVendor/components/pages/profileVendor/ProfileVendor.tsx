@@ -1,40 +1,62 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import CustomUserNameInput from '@/src/ui/customInpute/CustomUserNameInput';
 import CustomPasswordInput from '@/src/ui/customInpute/CustomPasswordInput';
 import scss from './ProfileVendor.module.scss';
-import { SubmitHandler, useForm } from 'react-hook-form';
-
-interface MyForm {
-	firstName: string;
-	lastName: string;
-	phoneNumber: string;
-	email: string;
-	currentPassword: string;
-	newPassword: string;
-	confirmPassword: string;
-}
+import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
+import {
+	useUpdatePasswordMutation,
+	useGetProfileQuery,
+	useUpdateProfileMutation
+} from '@/src/redux/api/updateProfile';
 
 const ProfileVendor: React.FC = () => {
-	const { register, handleSubmit } = useForm<MyForm>({
-		defaultValues: {
-			firstName: 'Айбек',
-			lastName: 'Хайрулла уулу',
-			phoneNumber: '500815251',
-			email: 'aibekxairullauulu@gmail.com',
-			currentPassword: '',
-			newPassword: '',
-			confirmPassword: ''
-		}
-	});
-
+	const { register, handleSubmit, reset, setValue } = useForm();
 	const [isEditMode, setIsEditMode] = useState(false);
+	const [isPasswordMode, setIsPasswordMode] = useState(false);
+	const [updateProfile] = useUpdateProfileMutation();
+	const { data: profileData, refetch } = useGetProfileQuery();
+	const [updatePassword] = useUpdatePasswordMutation();
+
+	useEffect(() => {
+		if (profileData) {
+			setValue('firstName', profileData.firstName);
+			setValue('lastName', profileData.lastName);
+			setValue('phoneNumber', profileData.phoneNumber);
+			setValue('email', profileData.email);
+		}
+	}, [profileData, setValue]);
 
 	const toggleEditMode = () => {
 		setIsEditMode(!isEditMode);
+		setIsPasswordMode(false);
 	};
 
-	const onSubmit: SubmitHandler<MyForm> = (data) => {
-		console.log(data);
+	const togglePasswordMode = () => {
+		setIsPasswordMode(!isPasswordMode);
+		setIsEditMode(false);
+	};
+
+	const onSubmit: SubmitHandler<FieldValues> = async (data) => {
+		if (isEditMode) {
+			const newData = {
+				firstName: data.firstName,
+				lastName: data.lastName,
+				phoneNumber: data.phoneNumber,
+				email: data.email
+			};
+			await updateProfile(newData);
+		} else if (isPasswordMode) {
+			const passwordData = {
+				currentVendorPassword: data.currentPassword,
+				password: data.newPassword,
+				confirmPassword: data.confirmPassword
+			};
+			await updatePassword(passwordData);
+		}
+		reset();
+		refetch();
+		setIsEditMode(false);
+		setIsPasswordMode(false);
 	};
 
 	return (
@@ -54,7 +76,7 @@ const ProfileVendor: React.FC = () => {
 											registerName="firstName"
 										/>
 									) : (
-										<p>Айбек</p>
+										<p>{profileData?.firstName}</p>
 									)}
 								</div>
 								<div className={scss.input_sor_name_info}>
@@ -66,7 +88,7 @@ const ProfileVendor: React.FC = () => {
 											registerName="lastName"
 										/>
 									) : (
-										<p>Хайрулла уулу</p>
+										<p>{profileData?.lastName}</p>
 									)}
 								</div>
 								<div className={scss.input_phone_info}>
@@ -78,7 +100,7 @@ const ProfileVendor: React.FC = () => {
 											registerName="phoneNumber"
 										/>
 									) : (
-										<p>500815251</p>
+										<p>{profileData?.phoneNumber}</p>
 									)}
 								</div>
 								<div>
@@ -90,16 +112,13 @@ const ProfileVendor: React.FC = () => {
 											registerName="email"
 										/>
 									) : (
-										<p>aibekxairullauulu@gmail.com</p>
+										<p>{profileData?.email}</p>
 									)}
 								</div>
-								<p className={scss.tex}>Удалить профиль?</p>
 							</div>
-							{isEditMode && (
+							{isPasswordMode && (
 								<div className={scss.section_new_password}>
-									<div>
-										<h4 className={scss.change_password}>Изменить пароль</h4>
-									</div>
+									<h4 className={scss.change_password}>Изменить пароль</h4>
 									<div className={scss.new_password}>
 										<div className={scss.input_new_password}>
 											<p className={scss.current_password}>Текущий пароль</p>
@@ -135,17 +154,51 @@ const ProfileVendor: React.FC = () => {
 							)}
 						</div>
 						<div className={scss.button_section}>
-							<div className={scss.button_note}>
-								<button
-									type="button"
-									className={scss.custom_white_button}
-									onClick={toggleEditMode}
-								>
-									{isEditMode ? 'Отменить' : 'Изменить'}
-								</button>
-							</div>
+							{!isEditMode && !isPasswordMode && (
+								<>
+									<div className={scss.button_note}>
+										<button
+											type="button"
+											className={scss.custom_white_button}
+											onClick={toggleEditMode}
+										>
+											Изменить профиль
+										</button>
+									</div>
+									<div className={scss.button_note}>
+										<button
+											type="button"
+											className={scss.custom_white_button}
+											onClick={togglePasswordMode}
+										>
+											Изменить пароль
+										</button>
+									</div>
+								</>
+							)}
 							{isEditMode && (
 								<div>
+									<button
+										type="button"
+										className={scss.custom_white_button}
+										onClick={toggleEditMode}
+									>
+										Отменить
+									</button>
+									<button type="submit" className={scss.custom_black_button}>
+										Сохранить
+									</button>
+								</div>
+							)}
+							{isPasswordMode && (
+								<div>
+									<button
+										type="button"
+										className={scss.custom_white_button}
+										onClick={togglePasswordMode}
+									>
+										Отменить
+									</button>
 									<button type="submit" className={scss.custom_black_button}>
 										Сохранить
 									</button>

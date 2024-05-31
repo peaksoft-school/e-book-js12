@@ -5,10 +5,28 @@ namespace USERPROFILE {
 		id: number;
 		email: string;
 	};
-	type UserProfileRequest = {
+	export type UserProfileRequest = {
 		firstName: string;
 		email: string;
-		oldPassword: string;
-		newPassword: string;
+	};
+}
+
+namespace PROFILE {
+	type UserGetProfileResponse = {
+		email: string;
+		name: string;
+	};
+}
+
+namespace PASS {
+	type UpdatePasswordUserResponse = {
+		success: boolean;
+		message: string;
+	};
+
+	type UpdatePasswordUserRequest = {
+		currentVendorPassword: string
+		password: string
+		confirmPassword: string
 	};
 }
