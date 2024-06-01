@@ -5,11 +5,9 @@ import ThreeDotIcon from '@/src/assets/icons/icon-threeDot';
 import UpIcon from '@/src/assets/icons/icon-upIcon';
 import { IconArrowBottom, IconWhiteLike } from '@/src/assets/icons';
 import { IconPencil, IconX } from '@tabler/icons-react';
-import {
-	useGetAllVendorBooksQuery,
-	
-} from '@/src/redux/api/book';
+import { useGetAllVendorBooksQuery } from '@/src/redux/api/book';
 import { useDeleteVendorProfileMutation } from '@/src/redux/api/vendors';
+import { useNavigate, useParams } from 'react-router-dom';
 
 interface Book {
 	id: number;
@@ -22,7 +20,6 @@ interface Book {
 	discount: number;
 	priceWithDiscount: number;
 }
-
 interface Vendor {
 	id: number;
 }
@@ -34,26 +31,28 @@ const AboutVendorsBooks = () => {
 	const [isModalOpen, setIsModalOpen] = useState(false);
 	const [selectedVendor, setSelectedVendor] = useState<number | null>(null);
 	const [idBook, setIdBook] = useState<null | number>(null);
-	const { data: books = [] } = useGetAllVendorBooksQuery(
-		{
-			vendorId: selectedVendor,
-			operationType: operationType,
-			page: 1,
-			pageSize: 100
-		},
-		{ skip: !selectedVendor }
-	);
+	const navigate = useNavigate();
+	const { name } = useParams();
+	const vendorId = Number(name);
+
+	const { data } = useGetAllVendorBooksQuery({
+		vendorId: vendorId,
+		operationType: operationType,
+		page: 1,
+		pageSize: 100
+	});
+
 	const [deleteVendorProfile] = useDeleteVendorProfileMutation();
 
-	const showModal = (vendor: number) => {
+	const showModal = (vendor: number | null) => {
 		setSelectedVendor(vendor);
 		setIsModalOpen(true);
 	};
 
-	const handleDeleteVendorProfile = async () => {
-		await deleteVendorProfile();
-
-	}
+	const handleDeleteVendorProfile = async (vendorId: any) => {
+		await deleteVendorProfile(vendorId);
+		navigate('/admin/vendors');
+	};
 
 	const handleCancel = () => {
 		setIsModalOpen(false);
@@ -64,10 +63,10 @@ const AboutVendorsBooks = () => {
 		setIsOpenBooksType(!isOpenBooksType);
 	};
 
-	const bookTypeText = operationType ? operationType : 'ALL';
+	const bookTypeText = operationType ? operationType : 'BOOK TYPES';
 
-	const filteredBooks: Book[] = operationType
-		? books.filter((book) => {
+	const filteredBooks = operationType
+		? data?.filter((book) => {
 				if (operationType === 'ALL') return true;
 				if (operationType === 'IN_FAVORITE') return book.quantityOfFavorite > 0;
 				if (operationType === 'IN_BASKET') return book.quantityOfBasket > 0;
@@ -76,13 +75,13 @@ const AboutVendorsBooks = () => {
 					return book.quantityOfBasket === 0 && book.quantityOfFavorite === 0;
 				return true;
 			})
-		: books;
+		: data;
 
 	return (
 		<section className={scss.AboutVendorsBooks}>
 			<div className={scss.container}>
 				<div className={scss.total_quantity}>
-					<p>Всего: {filteredBooks.length} книг</p>
+					<p>Всего: {filteredBooks?.length} книг</p>
 					<div className={scss.click}>
 						<p onClick={toggleTypeList}>
 							<span>{bookTypeText}</span>
@@ -104,7 +103,7 @@ const AboutVendorsBooks = () => {
 				</div>
 				<hr />
 				<div className={scss.content}>
-					{filteredBooks.map((book) => (
+					{filteredBooks?.map((book) => (
 						<div key={book.id} className={scss.book}>
 							<div className={scss.book_header}>
 								<div className={scss.hearts}>
@@ -165,20 +164,26 @@ const AboutVendorsBooks = () => {
 				<div className={scss.div_delete}>
 					<button
 						className={scss.delete_profile}
-						onClick={() => selectedVendor && showModal(selectedVendor)}
+						onClick={() => showModal(selectedVendor)}
 					>
 						Удалить профиль
 					</button>
 				</div>
-				<Modal footer={false} onCancel={handleCancel} open={isModalOpen}>
+				<Modal onCancel={handleCancel} footer={false} open={isModalOpen}>
 					<div className={scss.delete_modal}>
 						<p>Вы уверены, что хотите удалить профиль?</p>
 						<div className={scss.buttons_modal}>
-							<button onClick={handleCancel}>Отменить</button>
 							<button
 								onClick={() => {
-									selectedVendor && handleDeleteVendorProfile();
-									handleCancel();
+									setIsModalOpen(false);
+								}}
+							>
+								Отменить
+							</button>
+							<button
+								onClick={() => {
+									setIsModalOpen(false);
+									handleDeleteVendorProfile(vendorId);
 								}}
 							>
 								Удалить

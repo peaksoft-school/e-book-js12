@@ -39,8 +39,8 @@ const api = index.injectEndpoints({
         VENDORS.DeleteVendorProfileResponse,
         VENDORS.DeleteVendorProfileRequest
         >({
-            query: () => ({
-                url: '/api/user/deleteVendorProfile',
+            query: (vendorID) => ({
+                url: `/api/user/${vendorID}`,
                 method: 'DELETE'
             }),
             invalidatesTags: ['vendors']

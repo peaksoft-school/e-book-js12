@@ -1,27 +1,23 @@
 import React, { useState } from 'react';
-import { Link, useParams, useLocation } from 'react-router-dom';
+import { Link, useParams, useLocation, useNavigate } from 'react-router-dom';
 import { Modal } from 'antd';
 import scss from './AboutVendor.module.scss';
 import AboutVendorsBooks from '../aboutVendorsBooks/AboutVendorsBooks';
-import { useDeleteVendorMutation, useGetVendorByIdQuery } from '@/src/redux/api/vendors';
-
-interface Vendor {
-	vendorId: number;
-	firstName: string;
-	lastName: string;
-	phoneNumber: string;
-	email: string;
-	dataOfRegistration: string;
-}
+import {
+	useDeleteVendorProfileMutation,
+	useGetVendorByIdQuery
+} from '@/src/redux/api/vendors';
 
 const AboutVendor: React.FC = () => {
 	const [displayProfile, setDisplayProfile] = useState(true);
 	const [isModalOpen, setIsModalOpen] = useState(false);
+	const navigate = useNavigate();
 	const location = useLocation();
-	const test = useParams();
-	const vendorId = Number(test.name);
+	const { name } = useParams<{ name: string }>();
+	const vendorId = Number(name);
+
 	const { data } = useGetVendorByIdQuery(vendorId);
-	const [deleteVendorProfile] = useDeleteVendorMutation();
+	const [deleteVendorProfile] = useDeleteVendorProfileMutation();
 
 	const showModal = () => {
 		setIsModalOpen(true);
@@ -31,9 +27,10 @@ const AboutVendor: React.FC = () => {
 		setIsModalOpen(false);
 	};
 
-	const handleDeleteVendorProfile = async () => {
-		await deleteVendorProfile();
-	}
+	const handleDeleteVendorProfile = async (vendorId: number) => {
+		await deleteVendorProfile(vendorId);
+		navigate('/admin/vendors');
+	};
 
 	return (
 		<div className={scss.AboutVendor}>
@@ -54,17 +51,13 @@ const AboutVendor: React.FC = () => {
 					</div>
 					<div className={scss.navigates}>
 						<h4
-							className={`${scss.navigate_user_profile} ${
-								displayProfile ? scss.navigate_user_profile_active : ''
-							} `}
+							className={`${scss.navigate_user_profile} ${displayProfile ? scss.navigate_user_profile_active : ''}`}
 							onClick={() => setDisplayProfile(true)}
 						>
 							Профиль
 						</h4>
 						<h4
-							className={`${scss.navigate_user_books} ${
-								!displayProfile ? scss.navigate_user_books_active : ''
-							} `}
+							className={`${scss.navigate_user_books} ${!displayProfile ? scss.navigate_user_books_active : ''}`}
 							onClick={() => setDisplayProfile(false)}
 						>
 							Книги
@@ -120,7 +113,7 @@ const AboutVendor: React.FC = () => {
 										<button
 											onClick={() => {
 												setIsModalOpen(false);
-												handleDeleteVendorProfile();
+												handleDeleteVendorProfile(vendorId);
 											}}
 										>
 											Удалить

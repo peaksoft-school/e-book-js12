@@ -56,6 +56,6 @@ namespace VENDORS {
 	type DeleteVendorProfileResponse = {
 		httpStatus: string;
 		message: string;
-	};
-	type DeleteVendorProfileRequest = void;
+	}[];
+	type DeleteVendorProfileRequest = number;
 };
