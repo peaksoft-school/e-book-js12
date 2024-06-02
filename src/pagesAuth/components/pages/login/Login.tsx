@@ -16,13 +16,33 @@ const Login = () => {
 	const onSubmit: SubmitHandler<IFormInput> = async (data) => {
 		const results = await postLogin(data);
 		if ('data' in results) {
-			const { token } = results.data;
-			localStorage.setItem('token', token);
-			localStorage.setItem('isAuth', 'true');
-			localStorage.removeItem('tokenVendor');
-			localStorage.setItem('isVendor', 'false');
-			reset();
-			navigate('/');
+			if (results.data.role === 'CLIENT') {
+				const { token } = results.data;
+				const { firstName} = results.data
+				localStorage.setItem('NameClient', firstName);
+				localStorage.setItem('token', token);
+				localStorage.setItem('isAuth', 'true');
+				localStorage.setItem('vendor', 'false');
+				localStorage.setItem('admin', 'false');
+				reset();
+				navigate('/');
+			} else if (results.data.role === 'VENDOR') {
+				const { token } = results.data;
+				localStorage.setItem('token', token);
+				localStorage.setItem('isAuth', 'false');
+				localStorage.setItem('isVendor', 'true');
+				localStorage.setItem('isAdmin', 'false');
+				reset();
+				navigate('/vendor/home');
+			} else if (results.data.role === 'ADMIN') {
+				const { token } = results.data;
+				localStorage.setItem('token', token);
+				localStorage.setItem('isAuth', 'false');
+				localStorage.setItem('isVendor', 'false');
+				localStorage.setItem('isAdmin', 'true');
+				reset();
+				navigate('/admin/');
+			}
 		}
 	};
 

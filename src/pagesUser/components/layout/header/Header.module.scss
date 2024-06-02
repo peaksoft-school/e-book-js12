@@ -36,6 +36,14 @@
 			@media (max-width: 470px) {
 				justify-content: space-between;
 			}
+			.search_container {
+				position: absolute;
+				top: 76px;
+				left: 194px;
+				background-color: #f8f8f8;
+				max-width: 859px;
+				width: 100%;
+			}
 			.logo_content {
 				cursor: pointer;
 			}
@@ -408,6 +416,17 @@
 							}
 						}
 					}
+				}
+				.sign_btn {
+					color: rgb(255, 255, 255);
+					font-family: Open Sans;
+					font-size: 16px;
+					font-weight: 600;
+					line-height: 22px;
+					letter-spacing: 0px;
+					text-align: left;
+					background-color: rgb(28, 28, 28);
+					padding: 10px 24px;
 				}
 			}
 			.user_down {

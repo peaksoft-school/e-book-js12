@@ -17,7 +17,7 @@ interface TypeData {
 }
 [];
 
-const Registration = () => {
+const VendorRegistration = () => {
 	const [isPassword, setIsPassword] = useState(false);
 	const navigate = useNavigate();
 	const [isLogPassword, setLogPassword] = useState(false);
@@ -36,10 +36,10 @@ const Registration = () => {
 		const results = await postVendor(data);
 		if ('data' in results) {
 			const { token } = results.data;
-			localStorage.setItem('tokenVendor', token);
-			localStorage.setItem('isVendor', 'true');
+			localStorage.setItem('token', token);
 			localStorage.setItem('isAuth', 'false');
-			localStorage.removeItem('token');
+			localStorage.setItem('isVendor', 'true');
+			localStorage.setItem('isAdmin', 'false');
 			reset();
 			navigate('/vendor/home');
 			setConfirmPassword('');
@@ -51,8 +51,8 @@ const Registration = () => {
 			<div className="container">
 				<div className={scss.content}>
 					<div className={scss.headline}>
-						<Link to="/vendor/login">Войти</Link>
-						<Link to="/vendor/registration">Регистрация</Link>
+						<Link to="/auth/login">Войти</Link>
+						<Link to="/auth/registration">Регистрация</Link>
 					</div>
 					<form className={scss.form_container}>
 						<label>
@@ -183,4 +183,4 @@ const Registration = () => {
 	);
 };
 
-export default Registration;
+export default VendorRegistration;

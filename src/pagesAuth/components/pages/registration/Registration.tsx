@@ -41,28 +41,34 @@ const Registration = () => {
 			const results = await postUser(data);
 			if ('data' in results) {
 				const { token } = results.data;
+				const { firstName } = results.data;
+				localStorage.setItem('NameClient', firstName);
 				localStorage.setItem('token', token);
 				localStorage.setItem('isAuth', 'true');
-				localStorage.removeItem('tokenVendor');
-				localStorage.setItem('isVendor', 'false');
+				localStorage.setItem('vendor', 'false');
+				localStorage.setItem('admin', 'false');
 				reset();
 				navigate('/');
 				setCheckPassword('');
 			}
-		} else {
-			alert('confirm password ');
 		}
 	};
 	const signInWithGoogleHandler = async () => {
 		const result = await signInWithPopup(auth, provider);
 		const user = result.user;
 		const idToken = await user.getIdToken();
-
 		const data = {
 			idToken: idToken
 		};
-		postGoogleToken(data);
-
+		const results = await postGoogleToken(data);
+		if ('data' in results) {
+			const { token } = results.data;
+			localStorage.setItem('token', token);
+			localStorage.setItem('isAuth', 'true');
+			localStorage.setItem('vendor', 'false');
+			localStorage.setItem('admin', 'false');
+			navigate('/');
+		}
 	};
 
 	return (
@@ -181,7 +187,7 @@ const Registration = () => {
 					<div className={scss.vendor_btn}>
 						<button
 							onClick={() => {
-								navigate('/vendor/registration');
+								navigate('/auth/vendor/registration');
 							}}
 						>
 							Стать продавцом на eBook

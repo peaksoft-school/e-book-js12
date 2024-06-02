@@ -7,6 +7,7 @@ import LogoeBook from '@/src/ui/logoeBook/LogoeBook';
 import WhiteProfileIcon from '@/src/assets/icons/icon-whiteProfile';
 import { useNavigate } from 'react-router-dom';
 import { Modal } from 'antd';
+import { useSearchBooksQuery } from '@/src/redux/api/search';
 
 const Header = () => {
 	const [headerScroll, setHeaderScroll] = useState<boolean>(false);
@@ -14,9 +15,14 @@ const Header = () => {
 	const [isNavBar, setIsNavBar] = useState<boolean>(false);
 	const [isUser, setIsUser] = useState<boolean>(false);
 	const [userExit, setUserExit] = useState<boolean>(false);
+	const [searchTerm, setInputValue] = useState('');
+	const localName = localStorage.getItem('NameClient');
+	const localAuth = localStorage.getItem('isAuth');
+	console.log(searchTerm);
+
+	const { data } = useSearchBooksQuery({ searchTerm }, { skip: !searchTerm });
 
 	const navigate = useNavigate();
-
 	useEffect(() => {
 		const changeHeader = () => {
 			if (window.scrollY >= 10) {
@@ -25,15 +31,12 @@ const Header = () => {
 				setHeaderScroll(false);
 			}
 		};
-
 		changeHeader();
 		window.addEventListener('scroll', changeHeader);
-
 		return () => {
 			window.removeEventListener('scroll', changeHeader);
 		};
 	}, []);
-
 	return (
 		<>
 			<header className={scss.Header}>
@@ -45,6 +48,13 @@ const Header = () => {
 					<div className="container">
 						<div className={scss.content}>
 							<div className={scss.header_content}>
+								<div className={scss.search_container}>
+									<>
+										{data &&
+											data.length > 0 &&
+											data.map((item) => <p key={item.id}>{item.title}</p>)}
+									</>
+								</div>
 								<div
 									className={scss.logo_content}
 									onClick={() => {
@@ -55,8 +65,10 @@ const Header = () => {
 								</div>
 								<div className={scss.input_content}>
 									<CustomGenreInput
-										onChange={() => {}}
-										value=""
+										onChange={(e) => {
+											setInputValue(e.target.value);
+										}}
+										value={searchTerm}
 										placeholder="Искать жанр, книги, авторов, издательства... "
 									/>
 								</div>
@@ -153,12 +165,27 @@ const Header = () => {
 									</div>
 								</div>
 								<div className={scss.right_nav_content}>
-									<button onClick={() => setIsUser(!isUser)}>
-										<p>
-											<WhiteProfileIcon />
-										</p>
-										Ибра
-									</button>
+									{localAuth ? (
+										<>
+											<button onClick={() => setIsUser(!isUser)}>
+												<p>
+													<WhiteProfileIcon />
+												</p>
+												{localName}
+											</button>
+										</>
+									) : (
+										<>
+											<button
+												className={scss.sign_btn}
+												onClick={() => {
+													navigate('/auth/login');
+												}}
+											>
+												Войти
+											</button>
+										</>
+									)}
 								</div>
 								{
 									<>
@@ -174,7 +201,6 @@ const Header = () => {
 												>
 													Профиль
 												</li>
-
 												<hr />
 												<li
 													onClick={() => {

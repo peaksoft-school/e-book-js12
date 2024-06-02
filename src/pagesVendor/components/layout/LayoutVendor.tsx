@@ -3,8 +3,6 @@ import { Routes, Route, useLocation } from 'react-router-dom';
 import Header from './header/Header';
 import Footer from './footer/Footer';
 import HomePage from '../pages/HomePage';
-import Login from '@/src/pagesAuth/components/pages/vendorLogin/Login';
-import Registration from '@/src/pagesAuth/components/pages/vendorRegistration/Registration';
 import AboutBook from '../pages/aboutBook/AboutBook';
 import BookAddSection from '../pages/bookAddSection/BookAddSection';
 import ProfileVendor from '../pages/profileVendor/ProfileVendor';
@@ -30,8 +28,6 @@ const LayoutVendor = () => {
 						<Route path="/:id" element={<AboutBook />} />
 						<Route path="/addBook" element={<BookAddSection />} />
 						<Route path="/profile" element={<ProfileVendor />} />
-						<Route path="/login" element={<Login />} />
-						<Route path="/registration" element={<Registration />} />
 					</Routes>
 				</main>
 				{location.pathname === '/vendor/registration' ||

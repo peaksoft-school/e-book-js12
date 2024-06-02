@@ -11,6 +11,7 @@ import {
 	IconBlackLike,
 	IconBurgerMenu,
 	IconDeleteX,
+	IconHeadphoneOrange,
 	IconUpIcon,
 	IconWhiteCircle,
 	IconWhiteLike
@@ -623,6 +624,15 @@ const SearchSection = () => {
 												<IconWhiteLike />
 											</>
 										)}
+									</div>
+									<div className={scss.audio_icon}>
+										{
+											item.isAudioBook ? (
+												<>
+												<IconHeadphoneOrange/>
+												</>
+											) : null
+										}
 									</div>
 									<img
 										onClick={() => navigate(`/search_book/${item.id}`)}

@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import scss from './BookAddSection.module.scss';
-
 import {
 	IconBlackCircle,
 	IconBlackSquare,
@@ -12,7 +11,7 @@ import {
 } from '@/src/assets/icons';
 import { ChangeEvent, useState } from 'react';
 import CustomUserNameInput from '@/src/ui/customInpute/CustomUserNameInput';
-import { Modal, Select, Space } from 'antd';
+import { Modal } from 'antd';
 import CustomBasketButton from '@/src/ui/customButton/CustomBasketButton';
 import CustomAudioDownloadInput from '@/src/ui/customAudioInput/CustomAudioDownloadInput';
 import CustomPDFDownloadInput from '@/src/ui/customPDFInput/CustomPDFDownloadInput';
@@ -44,9 +43,8 @@ const BookAddSection = () => {
 	const [ebook, setEBook] = useState(false);
 	const [modal, setModal] = useState(false);
 	const [iconjenre, setIconJenre] = useState(false);
-
 	const [testFile, setTestFile] = useState<string>();
-	const [secondTest, setSecondTest] = useState<string>()
+	const [secondTest, setSecondTest] = useState<string>();
 
 	const [selectLanguage, setSelectLanguage] = useState(false);
 
@@ -76,12 +74,8 @@ const BookAddSection = () => {
 	const [addBookVendor] = useAddBookVendorMutation();
 
 	const [photos, setPhotos] = useState([]);
-	console.log('j', testFile);
 
-	// console.log(value);
-	const handleChange = (value: any) => {
-		console.log(`selected ${value}`);
-	};
+	console.log(photos);
 
 	const jenreData = [
 		{
@@ -161,7 +155,7 @@ const BookAddSection = () => {
 		console.log(book);
 
 		const newBook = {
-			multipartFiles: [photos],
+			multipartFiles: [testFile, secondTest],
 			title: book.title,
 			authorsFullName: book.authorsFullName,
 			publishingHouse: book.publishingHouse,
@@ -176,34 +170,30 @@ const BookAddSection = () => {
 		};
 		console.log(newBook);
 
-		// const formData = new FormData();
-		// formData.append('title', newBook.title);
-		// formData.append('authorsFullName', newBook.authorsFullName);
-		// formData.append('publishingHouse', newBook.publishingHouse);
-		// formData.append('description', newBook.description);
-		// formData.append('fragment', newBook.fragment);
-		// formData.append('publishedYear', newBook.publishedYear.toString());
-		// formData.append('volume', newBook.volume.toString());
-		// formData.append('amountOfBook', newBook.amountOfBook.toString());
-		// formData.append('discount', newBook.discount.toString());
-		// formData.append('price', newBook.price.toString());
-		// formData.append('bestseller', newBook.bestseller.toString());
+		const formData = new FormData();
+
+		formData.append('title', book.title);
+		formData.append('authorsFullName', book.authorsFullName);
+		formData.append('publishingHouse', book.publishingHouse);
+		formData.append('description', description);
+		formData.append('fragment', fragment);
+		formData.append('publishedYear', book.publishedYear);
+		formData.append('volume', book.volume);
+		formData.append('amountOfBook', book.amountOfBook);
+		formData.append('discount', book.discount);
+		formData.append('price', book.price);
+		formData.append('bestseller', newBook.bestseller);
+
+		formData.append('multipartFiles', testFile!);
+		formData.append('multipartFiles', secondTest!);
 
 		await addBookVendor({
-			newBook,
+			formData,
 			genre: selectDataJenre?.englishName,
 			language: languageSeleced?.language,
 			bookType: bookType
 		}).unwrap();
 		reset();
-
-		// await addBookVendor({
-		// 	newBook,
-		// 	genre: selectDataJenre?.englishName,
-		// 	language: languageSeleced?.language,
-		// 	bookType: bookType
-		// }).unwrap();
-		// reset();
 	};
 
 	const handleFileChange = (file: File) => {
@@ -213,7 +203,6 @@ const BookAddSection = () => {
 	const handlePhotoChange = (
 		e: ChangeEvent<HTMLInputElement>,
 		position: keyof PhotosState
-		// setPhotos: React.Dispatch<React.SetStateAction<PhotosState>>
 	) => {
 		const file = e.target.files ? e.target.files[0] : null;
 
@@ -230,7 +219,6 @@ const BookAddSection = () => {
 	const handleSecondPhotoChange = (
 		e: ChangeEvent<HTMLInputElement>,
 		position: keyof PhotosState
-		// setPhotos: React.Dispatch<React.SetStateAction<PhotosState>>
 	) => {
 		const file = e.target.files ? e.target.files[0] : null;
 
@@ -242,7 +230,7 @@ const BookAddSection = () => {
 				[position]: photoURL
 			}));
 
-			setTestFile(photoURL);
+			setSecondTest(photoURL);
 		}
 	};
 
@@ -302,7 +290,6 @@ const BookAddSection = () => {
 									<p>2</p>
 								</div>
 							</div>
-							{/* <div className={scss.card_last}></div> */}
 							<div className={scss.warning_card}>
 								<div className={scss.warning_title}>
 									<p>
@@ -691,22 +678,47 @@ const BookAddSection = () => {
 									<div className={scss.box_first}>
 										<label>
 											<p className={scss.language}>Язык</p>
-											<Select
-												placeholder="Русский язык"
-												mode="multiple"
-												style={{ width: '100%' }}
-												defaultValue={['china']}
-												onChange={handleChange}
-												options={options}
-												optionRender={(option) => (
-													<Space>
-														<span role="img" aria-label={option.data.label}>
-															{option.data.emoji}
-														</span>
-														{option.data.desc}
-													</Space>
+											<div
+												onClick={() => {
+													setSelectLanguage(!selectLanguage);
+												}}
+												className={scss.language_content}
+											>
+												<p>{languageSeleced?.languageName}</p>
+												{selectLanguage ? (
+													<div className={scss.icon_language}>
+														<IconUpIcon />
+													</div>
+												) : (
+													<div className={scss.icon_language}>
+														<IconDownIcon />
+													</div>
 												)}
-											/>
+												<div
+													className={
+														selectLanguage
+															? scss.options_container
+															: scss.close_container
+													}
+												>
+													{options.map((item) => (
+														<>
+															<div
+																onClick={() => {
+																	if (selectLanguage) {
+																		setLanguageSelected(undefined);
+																		selectedOptionLanguage(item.id);
+																	}
+																}}
+																key={item.id}
+																className={scss.option_language}
+															>
+																<p>{item.languageName}</p>
+															</div>
+														</>
+													))}
+												</div>
+											</div>
 										</label>
 										<label>
 											Год выпуска
@@ -898,21 +910,47 @@ const BookAddSection = () => {
 											<div className={scss.box_first}>
 												<label>
 													<p className={scss.language}>Язык</p>
-													<Select
-														mode="multiple"
-														style={{ width: '100%' }}
-														defaultValue={['china']}
-														onChange={handleChange}
-														options={options}
-														optionRender={(option) => (
-															<Space>
-																<span role="img" aria-label={option.data.label}>
-																	{option.data.emoji}
-																</span>
-																{option.data.desc}
-															</Space>
+													<div
+														onClick={() => {
+															setSelectLanguage(!selectLanguage);
+														}}
+														className={scss.language_content}
+													>
+														<p>{languageSeleced?.languageName}</p>
+														{selectLanguage ? (
+															<div className={scss.icon_language}>
+																<IconUpIcon />
+															</div>
+														) : (
+															<div className={scss.icon_language}>
+																<IconDownIcon />
+															</div>
 														)}
-													/>
+														<div
+															className={
+																selectLanguage
+																	? scss.options_container
+																	: scss.close_container
+															}
+														>
+															{options.map((item) => (
+																<>
+																	<div
+																		onClick={() => {
+																			if (selectLanguage) {
+																				setLanguageSelected(undefined);
+																				selectedOptionLanguage(item.id);
+																			}
+																		}}
+																		key={item.id}
+																		className={scss.option_language}
+																	>
+																		<p>{item.languageName}</p>
+																	</div>
+																</>
+															))}
+														</div>
+													</div>
 												</label>
 												<label>
 													Год выпуска

@@ -49,11 +49,8 @@ export const api = createApi({
 		'last_publication',
 		'latest_books',
 		'book_search',
-<<<<<<< HEAD
-		'add_book'
-=======
+		'add_book',
 		'books'
->>>>>>> dev
 	],
 
 	endpoints: () => ({})
