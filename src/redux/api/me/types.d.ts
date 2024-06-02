@@ -4,7 +4,7 @@ namespace AUTHORIZATION {
 	type RegistrationResponse = {
 		token: string;
 		simpleResponse: SimpleResponse;
-		firstName:string
+		firstName: string;
 	};
 	type SimpleResponse = {
 		httpStatus: string;

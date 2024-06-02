@@ -18,7 +18,7 @@ const Login = () => {
 		if ('data' in results) {
 			if (results.data.role === 'CLIENT') {
 				const { token } = results.data;
-				const { firstName} = results.data
+				const { firstName } = results.data;
 				localStorage.setItem('NameClient', firstName);
 				localStorage.setItem('token', token);
 				localStorage.setItem('isAuth', 'true');

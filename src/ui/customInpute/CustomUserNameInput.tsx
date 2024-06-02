@@ -14,13 +14,12 @@ const CustomUserNameInput: FC<TypeProps> = ({
 	register
 }) => {
 	return (
-		<>
-			<input
-				placeholder={placeholder}
-				className={scss.user_name_input}
-				{...register(`${registerName}`)}
-			/>
-		</>
+		<input
+			type="text"
+			placeholder={placeholder}
+			className={scss.user_name_input}
+			{...register(registerName)}
+		/>
 	);
 };
 

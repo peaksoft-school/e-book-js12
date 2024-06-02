@@ -626,13 +626,11 @@ const SearchSection = () => {
 										)}
 									</div>
 									<div className={scss.audio_icon}>
-										{
-											item.isAudioBook ? (
-												<>
-												<IconHeadphoneOrange/>
-												</>
-											) : null
-										}
+										{item.isAudioBook ? (
+											<>
+												<IconHeadphoneOrange />
+											</>
+										) : null}
 									</div>
 									<img
 										onClick={() => navigate(`/search_book/${item.id}`)}

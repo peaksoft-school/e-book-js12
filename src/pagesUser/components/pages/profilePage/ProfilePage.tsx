@@ -1,103 +1,198 @@
+import React, { useState, useEffect } from 'react';
 import CustomUserNameInput from '@/src/ui/customInpute/CustomUserNameInput';
-import scss from './ProfilePage.module.scss';
-
 import CustomPasswordInput from '@/src/ui/customInpute/CustomPasswordInput';
+import scss from './ProfilePage.module.scss';
 import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
-import { useClientProfileMutation } from '@/src/redux/api/userProfile';
+import {
+	useUpdatePasswordUserMutation,
+	useClientGetProfileQuery,
+	useClientProfileMutation
+} from '@/src/redux/api/userProfile';
 
-const ProfilePage = () => {
-	const [func] = useClientProfileMutation();
+const ProfileClient: React.FC = () => {
+	const { register, handleSubmit, reset, setValue } = useForm();
+	const [isEditMode, setIsEditMode] = useState(false);
+	const [isPasswordMode, setIsPasswordMode] = useState(false);
+	const [updateProfile] = useClientProfileMutation();
+	const { data: profileData, refetch } = useClientGetProfileQuery();
+	const [updatePassword] = useUpdatePasswordUserMutation();
 
-	const { register, handleSubmit, reset } = useForm();
+	useEffect(() => {
+		if (profileData) {
+			setValue('firstName', profileData.name);
+			setValue('email', profileData.email);
+			setValue('oldPassword', '');
+			setValue('newPassword', '');
+			setValue('confirmPassword', '');
+		}
+	}, [profileData, setValue]);
+
+	const toggleEditMode = () => {
+		setIsEditMode(!isEditMode);
+		setIsPasswordMode(false);
+	};
+
+	const togglePasswordMode = () => {
+		setIsPasswordMode(!isPasswordMode);
+		setIsEditMode(false);
+	};
 
 	const onSubmit: SubmitHandler<FieldValues> = async (data) => {
-		const newData = {
-			firstName: data.firstName,
-			email: data.email,
-			oldPassword: data.oldPassword,
-			newPassword: data.newPassword
-		};
-		console.log(newData);
-		await func(newData);
-		reset();
+		console.log(data);
+
+		try {
+			if (isEditMode) {
+				const newData = {
+					firstName: data.firstName,
+					email: data.email
+				};
+				await updateProfile(newData);
+			} else if (isPasswordMode) {
+				const passwordData = {
+					currentVendorPassword: data.currentVendorPassword,
+					password: data.Password,
+					confirmPassword: data.confirmPassword
+				};
+				console.log(passwordData);
+
+				await updatePassword(passwordData);
+			}
+			reset();
+			refetch();
+			setIsEditMode(false);
+			setIsPasswordMode(false);
+		} catch (error) {
+			console.error('Error updating profile:', error);
+		}
 	};
+
 	return (
 		<div className="container">
-			<div className={scss.section_profile}>
-				<form
-					onSubmit={handleSubmit(onSubmit)}
-					className={scss.profile_info_name}
-				>
-					<div className={scss.profile_box}>
-						<div className={scss.profile_name}>
-							<h4 className={scss.text_tree}>Личная информация</h4>
-							<div className={scss.input_name_info}>
-								<p className={scss.name_info_text}>Мое имя</p>
-								<CustomUserNameInput
-									placeholder="Напишите ваше имя"
-									registerName="firstName"
-									register={register}
-								/>
+			<form onSubmit={handleSubmit(onSubmit)}>
+				<div className={scss.section_profile}>
+					<div className={scss.profile_info_name}>
+						<div className={scss.profile_box}>
+							<div className={scss.profile_name}>
+								<h4 className={scss.text_tree}>Личная информация</h4>
+								<div className={scss.input_name_info}>
+									<p className={scss.name_info_text}>Мое имя</p>
+									{isEditMode ? (
+										<CustomUserNameInput
+											placeholder="Напишите ваше имя"
+											register={register}
+											registerName="firstName"
+										/>
+									) : (
+										<p>{profileData?.name}</p>
+									)}
+								</div>
+								<div>
+									<p className={scss.email_text}>Email</p>
+									{isEditMode ? (
+										<CustomUserNameInput
+											placeholder="Напишите ваш Email"
+											register={register}
+											registerName="email"
+										/>
+									) : (
+										<p>{profileData?.email}</p>
+									)}
+								</div>
 							</div>
-							<div>
-								<p className={scss.email_text}>Email</p>
-								<CustomUserNameInput
-									placeholder="Напишите ваш Email"
-									registerName="email"
-									register={register}
-								/>
-							</div>
-							<p className={scss.tex}>Удалить профиль?</p>
+							{isPasswordMode && (
+								<div className={scss.section_new_password}>
+									<h4 className={scss.change_password}>Изменить пароль</h4>
+									<div className={scss.new_password}>
+										<div className={scss.input_new_password}>
+											<p className={scss.current_password}>Текущий пароль</p>
+											<CustomPasswordInput
+												type="password"
+												placeholder="Напишите текущий пароль"
+												register={register}
+												registerName="currentVendorPassword"
+											/>
+										</div>
+										<div className={scss.input_new_password}>
+											<p className={scss.dowland_new_password}>Новый пароль</p>
+											<CustomPasswordInput
+												type="password"
+												placeholder="Напишите новый пароль"
+												register={register}
+												registerName="Password"
+											/>
+										</div>
+										<div className={scss.input_new_password}>
+											<p className={scss.confirm_password}>
+												Подтвердите пароль
+											</p>
+											<CustomPasswordInput
+												type="password"
+												placeholder="Подтвердите пароль"
+												register={register}
+												registerName="confirmPassword"
+											/>
+										</div>
+									</div>
+								</div>
+							)}
 						</div>
-						<div className={scss.section_new_password}>
-							<div>
-								<h4 className={scss.change_password}>Изменить пароль</h4>
-							</div>
-							<div className={scss.new_password}>
-								<div className={scss.input_new_password}>
-									<p className={scss.current_password}>Текущий пароль</p>
-									<CustomPasswordInput
-										register={register}
-										registerName="oldPassword"
-										type="password"
-										placeholder="Напишите текущий пароль"
-									/>
+						<div className={scss.button_section}>
+							{!isEditMode && !isPasswordMode && (
+								<>
+									<div className={scss.button_note}>
+										<button
+											type="button"
+											className={scss.custom_white_button}
+											onClick={toggleEditMode}
+										>
+											Изменить профиль
+										</button>
+									</div>
+									<div className={scss.button_note}>
+										<button
+											type="button"
+											className={scss.custom_white_button}
+											onClick={togglePasswordMode}
+										>
+											Изменить пароль
+										</button>
+									</div>
+								</>
+							)}
+							{isEditMode && (
+								<div>
+									<button
+										type="button"
+										className={scss.custom_white_button}
+										onClick={toggleEditMode}
+									>
+										Отменить
+									</button>
+									<button type="submit" className={scss.custom_black_button}>
+										Сохранить
+									</button>
 								</div>
-								<div className={scss.input_new_password}>
-									<p className={scss.dowland_new_password}>Новый пароль</p>
-									<CustomPasswordInput
-										type="password"
-										placeholder="Напишите новый пароль"
-										register={register}
-										registerName="newPassword"
-									/>
+							)}
+							{isPasswordMode && (
+								<div>
+									<button
+										type="button"
+										className={scss.custom_white_button}
+										onClick={togglePasswordMode}
+									>
+										Отменить
+									</button>
+									<button type="submit" className={scss.custom_black_button}>
+										Сохранить
+									</button>
 								</div>
-								<div className={scss.input_new_password}>
-									<p className={scss.confirm_password}>Подтвердите пароль</p>
-									<CustomPasswordInput
-										register={register}
-										registerName="confirmPassword"
-										type="password"
-										placeholder="Подтвердите пароль"
-									/>
-								</div>
-							</div>
+							)}
 						</div>
 					</div>
-					<div className={scss.button_section}>
-						<div className={scss.button_note}>
-							<button className={scss.custom_white_button}>Отменить</button>
-						</div>
-						<div>
-							<button type="submit" className={scss.custom_black_button}>
-								Сохранить
-							</button>
-						</div>
-					</div>
-				</form>
-			</div>
+				</div>
+			</form>
 		</div>
 	);
 };
 
-export default ProfilePage;
+export default ProfileClient;
