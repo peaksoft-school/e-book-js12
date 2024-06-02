@@ -58,4 +58,4 @@ namespace VENDORS {
 		message: string;
 	}[];
 	type DeleteVendorProfileRequest = number;
-};
+}

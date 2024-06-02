@@ -29,7 +29,7 @@ namespace BOOK {
 		priceWithDiscount: number;
 	}[];
 	type GetAllVendorBooksRequest = {
-		vendorId: number | null
+		vendorId: number | null;
 		operationType: string;
 		page: number;
 		pageSize: number;

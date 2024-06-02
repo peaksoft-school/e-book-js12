@@ -19,10 +19,10 @@ const api = index.injectEndpoints({
 		}),
 
 		getAllVendorBooks: build.query<
-		BOOK.GetAllVendorBooksResponse,
-		BOOK.GetAllVendorBooksRequest
+			BOOK.GetAllVendorBooksResponse,
+			BOOK.GetAllVendorBooksRequest
 		>({
-			query: ({vendorId, operationType, page, pageSize}) => ({
+			query: ({ vendorId, operationType, page, pageSize }) => ({
 				url: `/api/book/getAllVendorBooks/${vendorId}`,
 				method: 'GET',
 				params: {
