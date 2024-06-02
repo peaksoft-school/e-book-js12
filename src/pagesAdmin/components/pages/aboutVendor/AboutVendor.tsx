@@ -1,64 +1,23 @@
 import React, { useState } from 'react';
-import { Link, useParams, useLocation } from 'react-router-dom';
+import { Link, useParams, useLocation, useNavigate } from 'react-router-dom';
 import { Modal } from 'antd';
 import scss from './AboutVendor.module.scss';
 import AboutVendorsBooks from '../aboutVendorsBooks/AboutVendorsBooks';
-
-interface Vendor {
-	id: number;
-	name: string;
-	surname: string;
-	phone: string;
-	email: string;
-	date: string;
-}
+import {
+	useDeleteVendorProfileMutation,
+	useGetVendorByIdQuery
+} from '@/src/redux/api/vendors';
 
 const AboutVendor: React.FC = () => {
 	const [displayProfile, setDisplayProfile] = useState(true);
 	const [isModalOpen, setIsModalOpen] = useState(false);
-	const { name } = useParams<{ name: string }>();
+	const navigate = useNavigate();
 	const location = useLocation();
+	const { name } = useParams<{ name: string }>();
+	const vendorId = Number(name);
 
-	const vendors: Vendor[] = [
-		{
-			id: 1,
-			name: 'Arslana',
-			surname: 'Smith',
-			phone: '+380999999999',
-			email: 'arslana@gmail.com',
-			date: '3.04.2024'
-		},
-		{
-			id: 2,
-			name: 'Arsal',
-			surname: 'Johnson',
-			phone: '+380999999999',
-			email: 'arsal@gmail.com',
-			date: '3.04.2024'
-		},
-		{
-			id: 3,
-			name: 'John',
-			surname: 'Williams',
-			phone: '+380999999999',
-			email: 'john@gmail.com',
-			date: '3.04.2024'
-		},
-		{
-			id: 4,
-			name: 'Doe',
-			surname: 'Davis',
-			phone: '+380999999999',
-			email: 'doe@gmail.com',
-			date: '3.04.2024'
-		}
-	];
-
-	const selectedVendor = vendors.find((vendor) => vendor.name === name);
-
-	if (!selectedVendor) {
-		return <p>Вендор с именем {name} не найден.</p>;
-	}
+	const { data } = useGetVendorByIdQuery(vendorId);
+	const [deleteVendorProfile] = useDeleteVendorProfileMutation();
 
 	const showModal = () => {
 		setIsModalOpen(true);
@@ -66,6 +25,11 @@ const AboutVendor: React.FC = () => {
 
 	const handleCancel = () => {
 		setIsModalOpen(false);
+	};
+
+	const handleDeleteVendorProfile = async (vendorId: number) => {
+		await deleteVendorProfile(vendorId);
+		navigate('/admin/vendors');
 	};
 
 	return (
@@ -83,24 +47,17 @@ const AboutVendor: React.FC = () => {
 						>
 							Продавцы
 						</Link>
-						/
-						<span className={scss.link_to_vendor_page}>
-							{selectedVendor.name}
-						</span>
+						/<span className={scss.link_to_vendor_page}>{data?.firstName}</span>
 					</div>
 					<div className={scss.navigates}>
 						<h4
-							className={`${scss.navigate_user_profile} ${
-								displayProfile ? scss.navigate_user_profile_active : ''
-							} `}
+							className={`${scss.navigate_user_profile} ${displayProfile ? scss.navigate_user_profile_active : ''}`}
 							onClick={() => setDisplayProfile(true)}
 						>
 							Профиль
 						</h4>
 						<h4
-							className={`${scss.navigate_user_books} ${
-								!displayProfile ? scss.navigate_user_books_active : ''
-							} `}
+							className={`${scss.navigate_user_books} ${!displayProfile ? scss.navigate_user_books_active : ''}`}
 							onClick={() => setDisplayProfile(false)}
 						>
 							Книги
@@ -111,30 +68,30 @@ const AboutVendor: React.FC = () => {
 							<div className={scss.test}>
 								<div className={scss.name}>
 									<p>
-										<strong>Имя:</strong> {selectedVendor.name}
+										<strong>Имя:</strong> {data?.firstName}
 									</p>
 								</div>
 								<div className={scss.surname}>
 									<p>
-										<strong>Фамилия:</strong> {selectedVendor.surname}
+										<strong>Фамилия:</strong> {data?.lastName}
 									</p>
 								</div>
 							</div>
 							<div className={scss.test}>
 								<div className={scss.phone}>
 									<p>
-										<strong>Номер телефона:</strong> {selectedVendor.phone}
+										<strong>Номер телефона:</strong> {data?.phoneNumber}
 									</p>
 								</div>
 								<div className={scss.email}>
 									<p>
-										<strong>Почта:</strong> {selectedVendor.email}
+										<strong>Почта:</strong> {data?.email}
 									</p>
 								</div>
 							</div>
 							<div className={scss.date}>
 								<p>
-									<strong>Дата регистрации:</strong> {selectedVendor.date}
+									<strong>Дата регистрации:</strong> {data?.dateOfRegistration}
 								</p>
 							</div>
 							<div className={scss.div_delete}>
@@ -156,6 +113,7 @@ const AboutVendor: React.FC = () => {
 										<button
 											onClick={() => {
 												setIsModalOpen(false);
+												handleDeleteVendorProfile(vendorId);
 											}}
 										>
 											Удалить
