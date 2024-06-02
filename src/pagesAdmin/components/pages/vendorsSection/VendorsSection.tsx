@@ -1,82 +1,35 @@
-import { IconDelete } from '@/src/assets/icons';
+import { useState } from 'react';
 import scss from './VendorsSection.module.scss';
 import { useNavigate } from 'react-router-dom';
+import { IconDelete } from '@/src/assets/icons';
 import { Modal } from 'antd';
-import { useState } from 'react';
-
-interface Vendor {
-	id: number;
-	name: string;
-	phone: string;
-	email: string;
-	quantity_books: number;
-}
+import {
+	useDeleteVendorMutation,
+	useGetAllVendorsQuery
+} from '@/src/redux/api/vendors';
 
 const VendorsSection = () => {
 	const navigate = useNavigate();
-	const [selectedVendor, setSelectedVendor] = useState<Vendor | null>(null);
 	const [isModalOpen, setIsModalOpen] = useState(false);
+	const [selectedVendor, setSelectedVendor] = useState<Vendor | null>(null);
+	const { data } = useGetAllVendorsQuery();
+	const [handleDeleteVendor] = useDeleteVendorMutation();
 
-	const vendors: Vendor[] = [
-		{
-			id: 1,
-			name: 'Arslana',
-			phone: '+380999999999',
-			email: 'arslana@gmail.com',
-			quantity_books: 134
-		},
-		{
-			id: 2,
-			name: 'Arsal',
-			phone: '+380999999999',
-			email: 'arsal@gmail.com',
-			quantity_books: 189
-		},
-		{
-			id: 3,
-			name: 'John',
-			phone: '+380999999999',
-			email: 'john@gmail.com',
-			quantity_books: 87
-		},
-		{
-			id: 4,
-			name: 'Doe',
-			phone: '+380999999999',
-			email: 'doe@gmail.com',
-			quantity_books: 55
-		},
-		{
-			id: 5,
-			name: 'Doe',
-			phone: '+380999999999',
-			email: 'doe@gmail.com',
-			quantity_books: 55
-		},
-		{
-			id: 6,
-			name: 'Doe',
-			phone: '+380999999999',
-			email: 'doe@gmail.com',
-			quantity_books: 55
-		},
-		{
-			id: 7,
-			name: 'Doe',
-			phone: '+380999999999',
-			email: 'doe@gmail.com',
-			quantity_books: 55
-		}
-	];
+	interface Vendor {
+		id: number;
+		fullName: string;
+		email: string;
+		phoneNumber: string;
+		amountOfBook: number;
+	}
 
 	const showModal = (vendor: Vendor) => {
 		setSelectedVendor(vendor);
 		setIsModalOpen(true);
 	};
-
 	const handleOk = () => {
-		setIsModalOpen(false);
 		setSelectedVendor(null);
+		setIsModalOpen(false);
 	};
 
 	const handleCancel = () => {
@@ -98,31 +51,34 @@ const VendorsSection = () => {
 								<th>Количество книг</th>
 								<th></th>
 							</tr>
-						</thead>
-						<tbody>
-							{vendors.map((vendor) => (
-								<tr key={vendor.id} className={scss.vendors}>
-									<td>{vendor.id}</td>
-									<td onClick={() => navigate(`/admin/vendors/${vendor.name}`)}>
-										{vendor.name}
+							{data?.content.map((item) => (
+								<tr key={item.id} className={scss.vendors}>
+									<td>{item.id}</td>
+									<td onClick={() => navigate(`/admin/vendors/${item.id}`)}>
+										{item.fullName}
 									</td>
-									<td onClick={() => navigate(`/admin/vendors/${vendor.name}`)}>
-										{vendor.phone}
+									<td onClick={() => navigate(`/admin/vendors/${item.id}`)}>
+										{item.phoneNumber}
 									</td>
-									<td onClick={() => navigate(`/admin/vendors/${vendor.name}`)}>
-										{vendor.email}
+									<td onClick={() => navigate(`/admin/vendors/${item.id}`)}>
+										{item.email}
 									</td>
-									<td onClick={() => navigate(`/admin/vendors/${vendor.name}`)}>
-										{vendor.quantity_books}
+									<td onClick={() => navigate(`/admin/vendors/${item.id}`)}>
+										{item.amountOfBook}
 									</td>
 									<td>
-										<button onClick={() => showModal(vendor)}>
+										<button
+											onClick={() => {
+												showModal(item);
+											}}
+										>
 											<IconDelete />
 										</button>
 									</td>
 								</tr>
 							))}
-						</tbody>
+						</thead>
+						<tbody></tbody>
 					</table>
 				</div>
 			</div>
@@ -134,11 +90,21 @@ const VendorsSection = () => {
 			>
 				<div className={scss.delete_modal}>
 					<p>
-						Вы уверены, что хотите удалить <span>{selectedVendor?.name}</span>?
+						Вы уверены, что хотите удалить{' '}
+						<span>{selectedVendor?.fullName}</span>?
 					</p>
 					<div className={scss.btns_modal}>
-						<button>Отменить</button>
-						<button>Удалить</button>
+						<button onClick={handleCancel}>Отменить</button>
+						<button
+							onClick={() => {
+								if (selectedVendor) {
+									handleDeleteVendor(selectedVendor?.id);
+									handleOk();
+								}
+							}}
+						>
+							Удалить
+						</button>
 					</div>
 				</div>
 			</Modal>

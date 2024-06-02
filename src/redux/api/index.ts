@@ -50,6 +50,7 @@ export const api = createApi({
 		'latest_books',
 		'book_search',
 		'add_book',
+		'vendors',
 		'books',
 		'update'
 	],
