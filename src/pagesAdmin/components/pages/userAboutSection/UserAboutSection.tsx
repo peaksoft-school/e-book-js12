@@ -3,6 +3,7 @@ import { Modal } from 'antd';
 import { useState } from 'react';
 import { Link, useLocation, useParams } from 'react-router-dom';
 import ProfileHistory from '../profileHistory/ProfileHistory';
+import { useGetUserProfileQuery } from '@/src/redux/api/users';
 
 interface Users {
 	id: number;
@@ -17,6 +18,8 @@ const UserAboutSection: React.FC = () => {
 	const [isModalOpen, setIsModalOpen] = useState(false);
 	const { fullName } = useParams<{ fullName: string }>();
 	const location = useLocation();
+	const { data } = useGetUserProfileQuery();
+	console.log(data);
 
 	const users: Users[] = [
 		{
