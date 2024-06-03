@@ -75,8 +75,6 @@ const BookAddSection = () => {
 
 	const [photos, setPhotos] = useState([]);
 
-	console.log(photos);
-
 	const jenreData = [
 		{
 			jenreId: 1,
@@ -188,7 +186,7 @@ const BookAddSection = () => {
 		formData.append('multipartFiles', secondTest!);
 
 		await addBookVendor({
-			formData,
+			newBook,
 			genre: selectDataJenre?.englishName,
 			language: languageSeleced?.language,
 			bookType: bookType
@@ -205,15 +203,14 @@ const BookAddSection = () => {
 		position: keyof PhotosState
 	) => {
 		const file = e.target.files ? e.target.files[0] : null;
-
+		setTestFile(file);
 		if (file) {
 			const photoURL = URL.createObjectURL(file);
-
 			setPhotos((prevPhotos) => ({
 				...prevPhotos,
 				[position]: photoURL
 			}));
-			setTestFile(photoURL);
+			// setTestFile(photoURL);
 		}
 	};
 	const handleSecondPhotoChange = (
@@ -224,13 +221,13 @@ const BookAddSection = () => {
 
 		if (file) {
 			const photoURL = URL.createObjectURL(file);
-
+			setSecondTest(file);
 			setPhotos((prevPhotos) => ({
 				...prevPhotos,
 				[position]: photoURL
 			}));
 
-			setSecondTest(photoURL);
+			// setSecondTest(photoURL);
 		}
 	};
 

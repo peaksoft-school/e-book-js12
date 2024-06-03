@@ -5,23 +5,38 @@ import WhiteLikeIcon from '@/src/assets/icons/icon-whiteLike';
 import { IconBurgerMenu, IconRedDot } from '@/src/assets/icons';
 import LogoeBook from '@/src/ui/logoeBook/LogoeBook';
 import WhiteProfileIcon from '@/src/assets/icons/icon-whiteProfile';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { Modal } from 'antd';
 import { useSearchBooksQuery } from '@/src/redux/api/search';
+import BlackLikeIcon from '@/src/assets/icons/icon-blackLike';
+import { useGetCountInBasketQuery } from '@/src/redux/api/basket';
 
 const Header = () => {
 	const [headerScroll, setHeaderScroll] = useState<boolean>(false);
 	const [isGenre, setIsGenre] = useState<boolean>(false);
 	const [isNavBar, setIsNavBar] = useState<boolean>(false);
 	const [isUser, setIsUser] = useState<boolean>(false);
+	const [test, setTest] = useState('');
 	const [userExit, setUserExit] = useState<boolean>(false);
 	const [searchTerm, setInputValue] = useState('');
 	const localName = localStorage.getItem('NameClient');
 	const localAuth = localStorage.getItem('isAuth');
-	console.log(searchTerm);
+	const location = useLocation();
+	const { data: countBasket } = useGetCountInBasketQuery();
 
+	const scrollToSection = () => {
+		const element = document.getElementById(test);
+		if (element) {
+			window.scrollTo({
+				top: element.offsetTop,
+				behavior: 'smooth'
+			});
+			if (test.length > 0) {
+				setTest('');
+			}
+		}
+	};
 	const { data } = useSearchBooksQuery({ searchTerm }, { skip: !searchTerm });
-
 	const navigate = useNavigate();
 	useEffect(() => {
 		const changeHeader = () => {
@@ -37,6 +52,7 @@ const Header = () => {
 			window.removeEventListener('scroll', changeHeader);
 		};
 	}, []);
+
 	return (
 		<>
 			<header className={scss.Header}>
@@ -77,18 +93,29 @@ const Header = () => {
 										className={scss.favorite_icon}
 										onClick={() => navigate('/favorite')}
 									>
-										<span>
-											<WhiteLikeIcon />
-										</span>
-										<span>
-											<IconRedDot />
-										</span>
+										{location.pathname === '/favorite' ? (
+											<>
+												<span style={{ color: 'red' }}>
+													<BlackLikeIcon />
+												</span>
+												<span></span>
+											</>
+										) : (
+											<>
+												<span>
+													<WhiteLikeIcon />
+												</span>
+												<span>
+													<IconRedDot />
+												</span>
+											</>
+										)}
 									</div>
 									<div
 										className={scss.basket}
 										onClick={() => navigate('/basket')}
 									>
-										<p>Корзина (3)</p>
+										<p>Корзина ({countBasket?.totalNumberOfBooks})</p>
 									</div>
 								</div>
 							</div>
@@ -116,8 +143,38 @@ const Header = () => {
 											className={`${isNavBar ? scss.navbar_menu : scss.navbar_none}`}
 										>
 											<ul>
-												<li>Электронные книги</li>
-												<li>Audio books</li>
+												<li
+													onClick={() => {
+														scrollToSection();
+														setTest('Ebook');
+														if (location.pathname !== '/') {
+															navigate('/');
+															if (location.pathname === '/') {
+																setTimeout(() => {
+																	setTest('Ebook');
+																}, 300);
+															}
+														}
+													}}
+												>
+													Электронные книги
+												</li>
+												<li
+													onClick={() => {
+														scrollToSection();
+														setTest('audioBook');
+														if (location.pathname !== '/') {
+															navigate('/');
+															if (location.pathname === '/') {
+																setTimeout(() => {
+																	setTest('audioBook');
+																}, 300);
+															}
+														}
+													}}
+												>
+													Audio books
+												</li>
 												<li
 													onClick={() => {
 														navigate('/promo_page');
@@ -145,8 +202,38 @@ const Header = () => {
 									</div>
 									<div className={scss.center_nav_content}>
 										<ul>
-											<li>Электронные книги</li>
-											<li>Audio books</li>
+											<li
+												onClick={() => {
+													scrollToSection();
+													setTest('Ebook');
+													if (location.pathname !== '/') {
+														navigate('/');
+														if (location.pathname === '/') {
+															setTimeout(() => {
+																setTest('Ebook');
+															}, 300);
+														}
+													}
+												}}
+											>
+												Электронные книги
+											</li>
+											<li
+												onClick={() => {
+													scrollToSection();
+													setTest('audioBook');
+													if (location.pathname !== '/') {
+														navigate('/');
+														setTimeout(() => {
+															setTest('audioBook');
+														}, 300);
+														// if (location.pathname === '/') {
+														// }
+													}
+												}}
+											>
+												Audio books
+											</li>
 											<li
 												onClick={() => {
 													navigate('/promo_page');

@@ -1,27 +1,19 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-interface Results {
-	id: number;
-	title: string;
-	photo: string;
-	price: number;
-	quantity: number;
-	isBasket: boolean;
-	isFavorite: boolean;
-	vendor: Vendor;
-	createdAt: string;
-	updatedAt: string;
-}
-
-interface Vendor {
-	name: string;
-	login: string;
-	photo: string;
-}
-
 namespace BASKET {
 	type GetProductsResponse = {
-		success: boolean;
-		results: Results[];
+		totalNumberOfBooks: number;
+		books: Book[];
+	};
+	type Book = {
+		id: number;
+		title: string;
+		cover: string;
+		authorsFullName: string;
+		amount: number;
+		discountFromPromoCode: number;
+		bookDisCount: number;
+		amountOfBook: number;
+		price: number;
 	};
 	type GetProductsRequest = void;
 
