@@ -48,11 +48,11 @@ const UserSection = () => {
 						{data?.clients.map((item) => (
 							<tr key={item.clientId} className={scss.users}>
 								<td>{item.clientId}</td>
-								<td onClick={() => navigate(`/admin/users/${item.firstName}`)}>
+								<td onClick={() => navigate(`/admin/users/${item.clientId}`)}>
 									{item.firstName}
 								</td>
 								<tr></tr>
-								<td onClick={() => navigate(`/admin/users/${item.firstName}`)}>
+								<td onClick={() => navigate(`/admin/users/${item.clientId}`)}>
 									{item.email}
 								</td>
 								<td className={scss.button_as}>
@@ -83,7 +83,7 @@ const UserSection = () => {
 							onClick={() => {
 								setIsModalOpen(false);
 								if (selectedUser) {
-									deleteUser();
+									deleteUser(selectedUser?.clientId);
 									handleCancel();
 								}
 							}}

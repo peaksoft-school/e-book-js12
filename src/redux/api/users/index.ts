@@ -17,16 +17,16 @@ const api = index.injectEndpoints({
 			USERS.GetUserProfileResponse,
 			USERS.GetUserProfileRequest
 		>({
-			query: () => ({
-				url: '/api/client/getProfile',
+			query: (userId) => ({
+				url: `/api/client/getProfileById/${userId}`,
 				method: 'GET'
 			}),
 			providesTags: ['users']
 		}),
 
 		deleteUserById: build.mutation<
-			USERS.GetAllUsersResponse,
-			USERS.GetAllUsersRequest
+			USERS.DeleteUserByIdResponse,
+			USERS.DeleteUserByIdRequest
 		>({
 			query: (clientId) => ({
 				url: `/api/client/removeClint/${clientId}`,

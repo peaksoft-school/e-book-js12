@@ -15,8 +15,9 @@ namespace USERS {
 	type GetUserProfileResponse = {
 		email: string;
 		name: string;
-	}[];
-	type GetUserProfileRequest = void;
+		dataOfRegistration: string;
+	}
+	type GetUserProfileRequest = number;
 
 	type DeleteUserByIdResponse = {
 		httpStatus: string;

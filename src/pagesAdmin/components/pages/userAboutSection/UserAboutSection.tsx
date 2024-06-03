@@ -1,54 +1,23 @@
 import scss from './UserAbout.module.scss';
 import { Modal } from 'antd';
 import { useState } from 'react';
-import { Link, useLocation, useParams } from 'react-router-dom';
+import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
 import ProfileHistory from '../profileHistory/ProfileHistory';
-import { useGetUserProfileQuery } from '@/src/redux/api/users';
-
-interface Users {
-	id: number;
-	fullName: string;
-	name: string;
-	gmail: string;
-	date: string;
-}
+import {
+	useDeleteUserByIdMutation,
+	useGetUserProfileQuery
+} from '@/src/redux/api/users';
 
 const UserAboutSection: React.FC = () => {
 	const [profile, setProfile] = useState(true);
 	const [isModalOpen, setIsModalOpen] = useState(false);
-	const { fullName } = useParams<{ fullName: string }>();
+	const navigate = useNavigate();
 	const location = useLocation();
-	const { data } = useGetUserProfileQuery();
-	console.log(data);
+	const { fullName } = useParams<{ fullName: string }>();
+	const userId = Number(fullName);
+	const { data } = useGetUserProfileQuery(userId);
+	const [deleteUserProfile] = useDeleteUserByIdMutation();
 
-	const users: Users[] = [
-		{
-			id: 1,
-			fullName: 'Мыктыбек Мыктыбеков',
-			name: 'Мыктыбек',
-			gmail: 'myktybek@gmail.com',
-			date: '10.04.2025'
-		},
-		{
-			id: 2,
-			fullName: 'Aibek Hairulla uulu',
-			name: 'Aibek',
-			gmail: 'aibek@gmail.com',
-			date: '10.04.2025'
-		},
-		{
-			id: 3,
-			fullName: 'joomart Joomartov',
-			name: 'Joomart',
-			gmail: 'jomart@gmail.com',
-			date: '10.04.2025'
-		}
-	];
-	const selectVendor = users.find((user) => user.fullName === fullName);
-
-	if (!selectVendor) {
-		return <p>Вендор с именем {fullName} не найден</p>;
-	}
 	const showModal = () => {
 		setIsModalOpen(true);
 	};
@@ -59,6 +28,11 @@ const UserAboutSection: React.FC = () => {
 
 	const handleCancel = () => {
 		setIsModalOpen(false);
+	};
+
+	const handleDeleteUserProfile = async (userId: number) => {
+		await deleteUserProfile(userId);
+		navigate('/admin/users');
 	};
 
 	return (
@@ -73,8 +47,7 @@ const UserAboutSection: React.FC = () => {
 					>
 						Продавцы
 					</Link>
-					/
-					<span className={scss.link_vendor_page}>{selectVendor.fullName}</span>
+					/<span className={scss.link_vendor_page}>{data?.name}</span>
 				</div>
 				<div className={scss.navigate}>
 					<h4
@@ -100,20 +73,23 @@ const UserAboutSection: React.FC = () => {
 							<div className={scss.inner_test}>
 								<div className={scss.inner_name}>
 									<p>
-										<strong>Имя:</strong> {selectVendor.name}
+										<strong>Имя:</strong>
+										{data?.name}
 									</p>
 								</div>
 								<div className={scss.inner_test}>
 									<div className={scss.inner_email}>
 										<p>
-											<strong>Почта:</strong> {selectVendor.gmail}
+											<strong>Почта:</strong>
+											{data?.email}
 										</p>
 									</div>
 								</div>
 							</div>
 							<div className={scss.inner_date}>
 								<p>
-									<strong>Дата регистрации:</strong> {selectVendor.date}
+									<strong>Дата регистрации:</strong>
+									{data?.dataOfRegistration}
 								</p>
 							</div>
 							<div className={scss.inner_div_delete}>
@@ -143,6 +119,7 @@ const UserAboutSection: React.FC = () => {
 										<button
 											onClick={() => {
 												setIsModalOpen(false);
+												handleDeleteUserProfile(userId);
 											}}
 										>
 											Удалить
