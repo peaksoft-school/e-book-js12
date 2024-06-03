@@ -17,6 +17,24 @@ const api = index.injectEndpoints({
 			}),
 			providesTags: ['book']
 		}),
+
+		getAllVendorBooks: build.query<
+			BOOK.GetAllVendorBooksResponse,
+			BOOK.GetAllVendorBooksRequest
+		>({
+			query: ({ vendorId, operationType, page, pageSize }) => ({
+				url: `/api/book/getAllVendorBooks/${vendorId}`,
+				method: 'GET',
+				params: {
+					vendorId,
+					operationType,
+					page,
+					pageSize
+				}
+			}),
+			providesTags: ['book']
+		}),
+
 		deleteBook: build.mutation<
 			BOOK.DeleteProductResponse,
 			BOOK.DeleteProductRequest
@@ -114,6 +132,7 @@ const api = index.injectEndpoints({
 });
 export const {
 	useGetAllBookVedorQuery,
+	useGetAllVendorBooksQuery,
 	useDeleteBookMutation,
 	useGetBookByIdQuery,
 	useGetAudioBookQuery,
