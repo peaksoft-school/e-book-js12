@@ -16,7 +16,7 @@ namespace USERS {
 		email: string;
 		name: string;
 		dataOfRegistration: string;
-	}
+	};
 	type GetUserProfileRequest = number;
 
 	type DeleteUserByIdResponse = {
