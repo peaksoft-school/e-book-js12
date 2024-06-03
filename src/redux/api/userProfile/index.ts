@@ -12,8 +12,33 @@ const api = index.injectEndpoints({
 				body: newData
 			}),
 			invalidatesTags: ['clientProfile']
+		}),
+		clientGetProfile: build.query<PROFILE.UserGetProfileResponse, void>({
+			query: () => ({
+				url: '/api/client/getProfile',
+				method: 'GET'
+			}),
+			providesTags: ['clientProfile']
+		}),
+		updatePasswordUser: build.mutation<
+			PASS.UpdatePasswordUserResponse,
+			PASS.UpdatePasswordUserRequest
+		>({
+			query: (passwordData) => (
+				console.log(passwordData),
+				{
+					url: '/api/user/updatePassword',
+					method: 'PUT',
+					body: passwordData
+				}
+			),
+			invalidatesTags: ['clientProfile']
 		})
 	})
 });
 
-export const { useClientProfileMutation } = api;
+export const {
+	useClientProfileMutation,
+	useClientGetProfileQuery,
+	useUpdatePasswordUserMutation
+} = api;
