@@ -211,7 +211,7 @@ const BooksSection: React.FC = () => {
 						<CustomAddBookButton
 							children={'+  Добавить книгу'}
 							onClick={() => {
-								navigate('/admin/add_book');
+								navigate('/admin/books/add_book');
 							}}
 						/>
 					</div>
