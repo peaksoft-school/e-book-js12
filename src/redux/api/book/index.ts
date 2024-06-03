@@ -98,6 +98,17 @@ const api = index.injectEndpoints({
 				}
 			}),
 			invalidatesTags: ['book']
+		}),
+		filterBooks: build.mutation<
+			BOOK.FilterBooksAdminResponse,
+			BOOK.FilterBooksAdminRequest
+		>({
+			query: (filters) => ({
+				url: `/api/book/getAllBookFilter`,
+				method: 'POST',
+				body: filters
+			}),
+			invalidatesTags: ['book']
 		})
 	})
 });
@@ -110,5 +121,6 @@ export const {
 	useGetLastPublicationQuery,
 	useGetAllLatestBooksQuery,
 	useApproveBookMutation,
-	useRejectBookMutation
+	useRejectBookMutation,
+	useFilterBooksMutation
 } = api;
