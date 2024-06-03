@@ -6,10 +6,13 @@ import CustomAddBookButton from '@/src/ui/customButton/CustomAddBook';
 import ThreeDotIcon from '@/src/assets/icons/icon-threeDot';
 import { IconArrowBottom } from '@/src/assets/icons';
 import UpIcon from '@/src/assets/icons/icon-upIcon';
-import { useFilterBooksMutation } from '@/src/redux/api/book';
+import {
+	useDeleteBookMutation,
+	useFilterBooksMutation
+} from '@/src/redux/api/book';
 
 type Book = {
-	id: number;
+	bookId: number;
 	imageUrl: string;
 	title: string;
 	dataOfDate: number;
@@ -19,24 +22,21 @@ type Book = {
 };
 
 const BooksSection: React.FC = () => {
-	const [openStates, setOpenStates] = useState<{ [key: number]: boolean }>({});
+	const [openState, setOpenState] = useState(false);
 	const [isOpenBooksType, setIsOpenBooksType] = useState<boolean>(false);
 	const [selectedType, setSelectedType] = useState<string | null>(null);
 	const [isOpenBooksGenre, setIsOpenBooksGenre] = useState<boolean>(false);
 	const [selectedGenre, setSelectedGenre] = useState<string[]>([]);
-	const [books] = useState<Book[]>([]);
+	const [books, setBooks] = useState<Book[]>([]);
 	const navigate = useNavigate();
 	const [filterBooks] = useFilterBooksMutation();
+	const [idBook, setIdBook] = useState<null | number>(null);
 
-	// const handlePostRequest = async () => {
-	// 	const filters = {
-	// 		genres: [...selectedGenre],
-	// 		bookTypes: [selectedType]
-	// 	};
-	// 	console.log(filters);
+	const [deleteBookById] = useDeleteBookMutation();
 
-	// 	await filterBooks(filters);
-	// };
+	const handleDeleteBook = (id: number) => {
+		deleteBookById(id);
+	};
 
 	const handlePostRequest = async () => {
 		const filteredBookTypes = selectedType !== null ? [selectedType] : [];
@@ -46,7 +46,11 @@ const BooksSection: React.FC = () => {
 		};
 		console.log(filters);
 
-		await filterBooks(filters);
+		const result = await filterBooks(filters);
+		if (result && result.data) {
+			const { books } = result.data;
+			setBooks(books);
+		}
 	};
 
 	useEffect(() => {
@@ -82,13 +86,6 @@ const BooksSection: React.FC = () => {
 	};
 
 	const bookTypeText = selectedType ? selectedType : 'все';
-
-	const toggleBookOptions = (id: number) => {
-		setOpenStates((prevStates) => ({
-			...prevStates,
-			[id]: !prevStates[id]
-		}));
-	};
 
 	return (
 		<section className={scss.BooksSection}>
@@ -221,31 +218,35 @@ const BooksSection: React.FC = () => {
 				</div>
 				<div className={scss.content}>
 					{books.map((book) => (
-						<div key={book.id} className={scss.book}>
+						<div key={book.bookId} className={scss.book}>
 							<div
 								className={scss.extra}
-								onClick={() => toggleBookOptions(book.id)}
+								onClick={() => {
+									setOpenState(!openState);
+									setIdBook(book.bookId);
+									console.log(book.bookId);
+								}}
 							>
 								<ThreeDotIcon />
 							</div>
-							<div
-								className={openStates[book.id] ? scss.is_open : scss.on_close}
-							>
-								<ul>
-									<li>
-										<span>
-											<IconPencil />
-										</span>
-										Редактировать
-									</li>
-									<li onClick={() => toggleBookOptions(book.id)}>
-										<span>
-											<IconX />
-										</span>
-										Отклонить
-									</li>
-								</ul>
-							</div>
+							{idBook === book.bookId ? (
+								<div className={openState ? scss.is_open : scss.on_close}>
+									<ul>
+										<li>
+											<span>
+												<IconPencil />
+											</span>
+											Редактировать
+										</li>
+										<li onClick={() => handleDeleteBook(book.bookId)}>
+											<span>
+												<IconX />
+											</span>
+											Удалить
+										</li>
+									</ul>
+								</div>
+							) : null}
 							<div className={scss.book_content}>
 								<div className={scss.book_img}>
 									<img src={book.imageUrl} alt="" />
