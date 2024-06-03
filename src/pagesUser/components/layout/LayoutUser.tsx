@@ -13,7 +13,7 @@ const LayoutUser = () => {
 	return (
 		<>
 			<div className={scss.layout}>
-				<Header/>
+				<Header />
 				<main>
 					<Routes>
 						<Route path="/" element={<HomePage />} />

@@ -49,10 +49,11 @@ export const api = createApi({
 		'last_publication',
 		'latest_books',
 		'book_search',
-		'add_book',
 		'vendors',
+		'update',
+		'users',
 		'books',
-		'update'
+		'add_book'
 	],
 
 	endpoints: () => ({})

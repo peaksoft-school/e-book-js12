@@ -62,7 +62,7 @@ const SecondSlider: FC = () => {
 	};
 
 	return (
-		<div id='Ebook' className="container">
+		<div id="Ebook" className="container">
 			<div className="title">
 				<h2>Электронные книги</h2>
 				<p className="see_orange">Смотреть все</p>

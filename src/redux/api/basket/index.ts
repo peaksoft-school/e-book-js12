@@ -10,7 +10,7 @@ const api = index.injectEndpoints({
 				url: '/api/basket/books',
 				method: 'GET'
 			}),
-      providesTags:['basket']
+			providesTags: ['basket']
 		})
 	})
 });
