@@ -8,6 +8,8 @@ import { useGetEBookQuery } from '@/src/redux/api/book';
 const SecondSlider: FC = () => {
 	const { data } = useGetEBookQuery();
 
+	
+
 	const [expandedCards, setExpandedCards] = useState<{
 		[key: number]: boolean;
 	}>({});
@@ -58,7 +60,7 @@ const SecondSlider: FC = () => {
 				}
 			/>
 		),
-		beforeChange: (current: number, next: number) => setImageIndex(next)
+		beforeChange: ( next: number) => setImageIndex(next)
 	};
 
 	return (

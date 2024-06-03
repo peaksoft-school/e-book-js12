@@ -115,10 +115,12 @@
 	z-index: 1;
 }
 .next {
+	width: 10%;
 	left: -25%;
 	top: 90%;
 }
 .prev {
+	width: 10%;
 	left: -40%;
 	top: 90%;
 }

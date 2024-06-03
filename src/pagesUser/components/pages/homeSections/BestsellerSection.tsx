@@ -8,6 +8,8 @@ import { Link } from 'react-router-dom';
 
 const BestsellersSection: FC = () => {
 	const { data } = useGetAllBestsellersQuery();
+
+	
 	const [expandedCards, setExpandedCards] = useState<{
 		[key: number]: boolean;
 	}>({});
@@ -56,7 +58,7 @@ const BestsellersSection: FC = () => {
 				}
 			/>
 		),
-		beforeChange: (current: number, next: number) => setImageIndex(next)
+		beforeChange: ( next: number) => setImageIndex(next)
 	};
 
 	return (

@@ -91,7 +91,9 @@
 				}
 			}
 			.tool {
-				display: block;
+
+				display: flex;
+				justify-content: end;
 				@media (max-width: 1000px) {
 					display: none;
 				}
