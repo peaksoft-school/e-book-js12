@@ -4,20 +4,56 @@ import { Modal } from 'antd';
 import scss from './AboutBook.module.scss';
 import CustomBasketButton from '@/src/ui/customButton/CustomBasketButton';
 import CustomPersonalAreaButton from '@/src/ui/customButton/CustomPersonalArea';
-import bookList from '../../../../assets/booksImg/info-book.png';
 import harryPotterImg from '../../../../assets/booksImg/harry-potter-chamber.png';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { IconWhiteLike } from '@/src/assets/icons';
+import { useGetBookByIdQuery } from '@/src/redux/api/book';
+
+interface GetResponse {
+	data: BookData;
+	isLoading: boolean;
+	error: any;
+}
+
+interface BookData {
+	id?: number;
+	imageUrlFirst: string;
+	imageUrlLast: string;
+	bookType: string;
+	title: string;
+	authorsFullName: string;
+	genre: string;
+	publishingHouse: string;
+	description: string;
+	fragment: string;
+	language: string;
+	publishedYear: number;
+	volume: number;
+	discount: number;
+	price: number;
+	fragmentAudUrl: string;
+	duration: string;
+	statusBook: string;
+	quantityOfFavorite: number;
+	quantityOfBasket: number;
+}
 
 const AboutBook = () => {
 	const [isModalOpen, setIsModalOpen] = useState(false);
 	const [aboutBook, setAboutBook] = useState(false);
 	const [, setSelectedVendor] = useState(null);
 
+	const { id } = useParams();
+	const bookId = Number(id);
+	const { data: book, isLoading } = useGetBookByIdQuery<GetResponse>(bookId);
+
 	const showModal = (book: any) => {
 		setSelectedVendor(book);
 		setIsModalOpen(true);
 	};
+
+	if (isLoading) return <p>Загрузка...</p>;
+	if (!book) return <p>Ошибка загрузки данных книги</p>;
 
 	return (
 		<section className={scss.AboutBook}>
@@ -32,10 +68,7 @@ const AboutBook = () => {
 						>
 							Главная
 						</Link>
-						/
-						<span className={scss.link_to_vendor_page}>
-							Гарри Поттер и Тайная комната
-						</span>
+						/<span className={scss.link_to_vendor_page}>{book.title}</span>
 					</div>
 					<div className={scss.contents_book}>
 						<div className={scss.section_about_book}>
@@ -51,13 +84,13 @@ const AboutBook = () => {
 								<div className={scss.book_header}>
 									<div className={scss.hearts}>
 										<IconWhiteLike />
-										<p>(23)</p>
+										<p>({book.quantityOfFavorite})</p>
 									</div>
 									<div className={scss.in_basket}>
-										<p>В корзине(8)</p>
+										<p>В корзине({book.quantityOfBasket})</p>
 									</div>
 								</div>
-								<h3>Гарри Поттер и Тайная комната</h3>
+								<h3>{book.title}</h3>
 							</div>
 							<div className={scss.section_mony}>
 								<p>365 c</p>
@@ -72,12 +105,12 @@ const AboutBook = () => {
 									<p>Обьем</p>
 								</div>
 								<div className={scss.section_info_two}>
-									<p>Роулинг Джоан Кэтлин</p>
-									<p>Зарубежное фэнтези</p>
-									<p>Русский</p>
-									<p>МКС</p>
-									<p>2021</p>
-									<p>360 стр</p>
+									<p>{book.authorsFullName}</p>
+									<p>{book.genre}</p>
+									<p>{book.language}</p>
+									<p>{book.publishingHouse}</p>
+									<p>{book.publishedYear}</p>
+									<p>{book.volume}</p>
 								</div>
 							</div>
 							<div className={scss.section_book}>
@@ -152,46 +185,16 @@ const AboutBook = () => {
 							</div>
 							{aboutBook ? (
 								<>
-									<p className={scss.book_info}>
-										«Заговор, Гарри Поттер. Заговор — в этом году в Хогвартсе,
-										школе колдовства и ведьминских искусств, произойдут
-										ужаснейшие события». <br /> «Заговор, Гарри Поттер. Заговор
-										— в этом году в Хогвартсе, школе колдовства и ведьминских
-										искусств, произойдут ужаснейшие события». «Заговор, Гарри
-										Поттер. Заговор — в этом году в Хогвартсе, школе колдовства
-										и ведьминских искусств, произойдут ужаснейшие события».
-									</p>
+									<p className={scss.book_info}>{book.description}</p>
 								</>
 							) : (
 								<>
-									<p className={scss.book_info}>
-										«Заговор, Гарри Поттер. Заговор — в этом году в Хогвартсе,
-										школе колдовства и ведьминских искусств, произойдут
-										ужаснейшие события». «Заговор, Гарри Поттер. Заговор — в
-										этом году в Хогвартсе, школе колдовства и ведьминских
-										искусств, произойдут ужаснейшие события». «Заговор, Гарри
-										Поттер. Заговор — в этом году в Хогвартсе, школе колдовства
-										и ведьминских искусств, произойдут ужаснейшие события».
-										«Заговор, Гарри Поттер. Заговор — в этом году в Хогвартсе,
-										школе колдовства и ведьминских искусств, произойдут
-										ужаснейшие события». «Заговор, Гарри Поттер. Заговор — в
-										этом году в Хогвартсе, школе колдовства и ведьминских
-										искусств, произойдут ужаснейшие события». «Заговор, Гарри
-										Поттер. Заговор — в этом году в Хогвартсе, школе колдовства
-										и ведьминских искусств, произойдут ужаснейшие события».
-										Гарри Поттер. Заговор — в этом году в Хогвартсе, школе
-										колдовства и ведьминских искусств, произойдут ужаснейшие
-										события». Гарри Поттер. Заговор — в этом году в Хогвартсе,
-										школе колдовства и ведьминских искусств, произойдут
-										ужаснейшие события». Гарри Поттер. Заговор — в этом году в
-										Хогвартсе, школе колдовства и ведьминских искусств,
-										произойдут ужаснейшие события».
-									</p>
+									<p className={scss.book_info}>{book.fragment}</p>
 								</>
 							)}
 						</div>
 						<div className={scss.info_img}>
-							<img src={bookList} alt="Book List" />
+							<img src={book.imageUrlLast} alt="Book List" />
 						</div>
 					</div>
 				</div>

@@ -59,7 +59,7 @@ const Welcome: FC = () => {
 						<div className={scss.button_content}>
 							<CustomPersonalAreaButton
 								children="Личный кабинет"
-								onClick={function (): void {}}
+								onClick={() => navigate('/profile')}
 								nameClass={scss.custom_button_personal}
 							/>
 						</div>

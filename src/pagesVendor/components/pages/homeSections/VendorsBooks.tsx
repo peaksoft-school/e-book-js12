@@ -49,6 +49,7 @@ const VendorsBooks: FC = () => {
 		page: 1,
 		pageSize: 12
 	});
+
 	const [deleteBook] = useDeleteBookMutation();
 
 	const deleteBookChange = async (id: number) => {
@@ -141,7 +142,7 @@ const VendorsBooks: FC = () => {
 									</div>
 								)}
 								<div
-									onClick={() => navigate(`vendor/${book.bookName}`)}
+									onClick={() => navigate(`${book.id}`)}
 									className={scss.book_content}
 								>
 									<div className={scss.book_img}>

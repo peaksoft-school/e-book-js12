@@ -71,6 +71,8 @@ namespace BOOK {
 		fragmentAudUrl: string;
 		duration: string;
 		statusBook: string;
+		quantityOfFavorite: string;
+		quantityOfBasket: string;
 	}[];
 
 	type GetBookByIdRequest = number;
