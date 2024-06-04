@@ -63,7 +63,7 @@ const LatestBookSection: FC = () => {
 	};
 
 	return (
-		<section className="LatestBookSection">
+		<section className="Latest_book_section">
 			<div className="container">
 				<div className="content">
 					<div className="background_line">

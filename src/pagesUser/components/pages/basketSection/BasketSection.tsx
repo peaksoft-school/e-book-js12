@@ -98,132 +98,138 @@ const BasketPage: React.FC = () => {
 	const discount = 456;
 	const overallTotal = totalSum - discount;
 	return (
-		<div className={scss.basket_page}>
+		<section className={scss.Basket_page}>
 			<div className="container">
-				<div className={scss.links}>
-					<Link
-						to={'/'}
-						className={`${scss.link_to_home} ${location.pathname === '/' ? scss.link_to_home_active : ''}`}
-					>
-						Главная
-					</Link>
-					/
-					<Link
-						to={'/basket'}
-						className={`${scss.link_to_basket} ${location.pathname === 'basket' ? scss.link_to_basket_active : ''}`}
-					>
-						Корзина
-					</Link>
-				</div>
 				<div className={scss.content}>
-					<div className={scss.left_content}>
-						<div className={scss.title}>
-							<h2>Ваши книги</h2>
-							<p>Всего: {totalQuantity} шт</p>
-						</div>
-						<hr />
-						<div className={scss.delete_all}>Очистить корзину</div>
-						<div className={scss.all_books_in_basket}>
-							{booksData.map((book) => (
-								<>
-									<hr />
-									<div className={scss.card_container}>
-										<div className={scss.delete_x}>
-											<IconX />
-										</div>
-										<div className={scss.book} key={book.id}>
-											<div className={scss.book_img}>
-												<img src={book.image} alt={book.bookName} />
+					<div className={scss.links}>
+						<Link
+							to={'/'}
+							className={`${scss.link_to_home} ${location.pathname === '/' ? scss.link_to_home_active : ''}`}
+						>
+							Главная
+						</Link>
+						/
+						<Link
+							to={'/basket'}
+							className={`${scss.link_to_basket} ${location.pathname === 'basket' ? scss.link_to_basket_active : ''}`}
+						>
+							Корзина
+						</Link>
+					</div>
+					<div className={scss.content}>
+						<div className={scss.left_content}>
+							<div className={scss.title}>
+								<h2>Ваши книги</h2>
+								<p>Всего: {totalQuantity} шт</p>
+							</div>
+							<hr />
+							<div className={scss.delete_all}>Очистить корзину</div>
+							<div className={scss.all_books_in_basket}>
+								{booksData.map((book) => (
+									<>
+										<hr />
+										<div className={scss.card_container}>
+											<div className={scss.delete_x}>
+												<IconX />
 											</div>
-											<div className={scss.more_info_book}>
-												<div className={scss.book_info}>
-													<h3>{book.bookName}</h3>
-													<p>{book.author}</p>
-													<div className={scss.prices}>
-														<p>{book.promoCode}</p>
-														<div className={scss.prices_with_sale}>
-															<p className={scss.first_price}>
-																{book.firstPrice} c
-															</p>
-															<p className={scss.sale_price}>
-																{calculateTotalPrice(book)} c
-															</p>
+											<div className={scss.book} key={book.id}>
+												<div className={scss.book_img}>
+													<img src={book.image} alt={book.bookName} />
+												</div>
+												<div className={scss.more_info_book}>
+													<div className={scss.book_info}>
+														<h3>{book.bookName}</h3>
+														<p>{book.author}</p>
+														<div className={scss.prices}>
+															<p>{book.promoCode}</p>
+															<div className={scss.prices_with_sale}>
+																<p className={scss.first_price}>
+																	{book.firstPrice} c
+																</p>
+																<p className={scss.sale_price}>
+																	{calculateTotalPrice(book)} c
+																</p>
+															</div>
 														</div>
-													</div>
-													<div className={scss.book_quantity}>
-														<button onClick={() => decrementQuantity(book.id)}>
-															<IconMinusIcon />
-														</button>
-														<span>{book.quantity}</span>
-														<button onClick={() => incrementQuantity(book.id)}>
-															<IconPlus />
-														</button>
+														<div className={scss.book_quantity}>
+															<button
+																onClick={() => decrementQuantity(book.id)}
+															>
+																<IconMinusIcon />
+															</button>
+															<span>{book.quantity}</span>
+															<button
+																onClick={() => incrementQuantity(book.id)}
+															>
+																<IconPlus />
+															</button>
+														</div>
 													</div>
 												</div>
 											</div>
-										</div>
-										<div className={scss.add_to_basket}>
-											<p onClick={() => setIsPromo(!isPromo)}>промокод</p>
-											<p>Добавить в избранное</p>
-										</div>
-										<Modal
-											open={isPromo}
-											onOk={() => {
-												setIsPromo(false);
-												successPromo();
-											}}
-											onCancel={() => {
-												setIsPromo(false);
-											}}
-											cancelText={'отмена'}
-											okText={'Активировать'}
-										>
-											<div className={scss.modal_container}>
-												<p>promocode is 1 book</p>
-												<CustomPromoInput placeholder="Введите промокод" />
+											<div className={scss.add_to_basket}>
+												<p onClick={() => setIsPromo(!isPromo)}>промокод</p>
+												<p>Добавить в избранное</p>
 											</div>
-										</Modal>
+											<Modal
+												open={isPromo}
+												onOk={() => {
+													setIsPromo(false);
+													successPromo();
+												}}
+												onCancel={() => {
+													setIsPromo(false);
+												}}
+												cancelText={'отмена'}
+												okText={'Активировать'}
+											>
+												<div className={scss.modal_container}>
+													<p>promocode is 1 book</p>
+													<CustomPromoInput placeholder="Введите промокод" />
+												</div>
+											</Modal>
+										</div>
+									</>
+								))}
+							</div>
+						</div>
+						<div className={scss.right_content}>
+							<div className={scss.total_price_content}>
+								<p className={scss.title}>Общая стоимость</p>
+								<div className={scss.purchases}>
+									<div className={scss.purchase}>
+										<p>Количество книг:</p>
+										<p>{totalQuantity} шт</p>
 									</div>
-								</>
-							))}
+									<div className={scss.purchase}>
+										<p>Скидка:</p>
+										<p>{discount} с</p>
+									</div>
+									<div className={scss.purchase}>
+										<p>Сумма:</p>
+										<p>{totalSum} с</p>
+									</div>
+								</div>
+								<div className={scss.promo_input}>
+									{/* <CustomPromoInput placeholder={'Введите промокод'} /> */}
+								</div>
+								<div className={scss.total_price}>
+									<p>Итого:</p>
+									<p>{overallTotal} с</p>
+								</div>
+							</div>
+							<CustomAuthButton
+								onClick={() => {
+									success();
+								}}
+							>
+								Оформить заказ
+							</CustomAuthButton>
 						</div>
-					</div>
-					<div className={scss.right_content}>
-						<div className={scss.total_price_content}>
-							<p className={scss.title}>Общая стоимость</p>
-							<div className={scss.purchases}>
-								<div className={scss.purchase}>
-									<p>Количество книг:</p>
-									<p>{totalQuantity} шт</p>
-								</div>
-								<div className={scss.purchase}>
-									<p>Скидка:</p>
-									<p>{discount} с</p>
-								</div>
-								<div className={scss.purchase}>
-									<p>Сумма:</p>
-									<p>{totalSum} с</p>
-								</div>
-							</div>
-							<div className={scss.promo_input}>
-								{/* <CustomPromoInput placeholder={'Введите промокод'} /> */}
-							</div>
-							<div className={scss.total_price}>
-								<p>Итого:</p>
-								<p>{overallTotal} с</p>
-							</div>
-						</div>
-						<CustomAuthButton
-							onClick={() => {
-								success();
-							}}
-						>
-							Оформить заказ
-						</CustomAuthButton>
 					</div>
 				</div>
 			</div>
-		</div>
+		</section>
 	);
 };
 export default BasketPage;

@@ -9,10 +9,13 @@
 	margin-bottom: 126.5px;
 }
 .content {
-	width: 80%;
+	display: flex;
+	justify-content: space-between;
+	margin-bottom: 50px;
+	margin-top: 126.5px;
 }
 
-.see_all {
+.see_orange {
 	color: #ff4c00;
 }
 
@@ -102,11 +105,9 @@
 }
 
 .title_box {
-	display: flex;
-	justify-content: space-between;
-	margin-bottom: 50px;
-	margin-top: 126.5px;
+	width: 80%;
 }
+
 .active-line {
 	position: absolute;
 	left: 0;

@@ -309,7 +309,7 @@ const SearchSection = () => {
 	}, [jenreData, idSort, typesBookData, languageBooksData, value]);
 
 	return (
-		<section className={scss.SearchSection}>
+		<section className={scss.Search_section}>
 			<div className="container">
 				<div className={scss.content}>
 					<div className={scss.title_navigate}>

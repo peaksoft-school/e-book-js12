@@ -50,7 +50,7 @@ const PromoSection = () => {
 	};
 
 	return (
-		<section className={scss.PromoSection}>
+		<section className={scss.Promo_section}>
 			<div className="container">
 				<div className={scss.content}>
 					<div className={scss.promo_content}>

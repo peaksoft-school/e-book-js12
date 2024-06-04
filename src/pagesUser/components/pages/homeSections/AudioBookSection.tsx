@@ -7,7 +7,7 @@ const AudioBookSection = () => {
 	console.log(data);
 
 	return (
-		<section className={scss.AudioBooks}>
+		<section className={scss.Audio_books}>
 			<div className="container">
 				{data?.map((index) => (
 					<>

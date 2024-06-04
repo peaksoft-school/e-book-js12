@@ -37,7 +37,7 @@ const LastPublicationSection: FC = () => {
 	};
 
 	return (
-		<section className={scss.last_publication}>
+		<section className={scss.Last_publication}>
 			<div className="container">
 				<div className={scss.content}>
 					<div className={scss.section_header}>
