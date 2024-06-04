@@ -3,40 +3,31 @@ import scss from './UsersSection.module.scss';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { Modal } from 'antd';
-
-interface User {
-	id: number;
-	fullName: string;
-	gmail: string;
-}
+import {
+	useDeleteUserByIdMutation,
+	useGetAllUsersQuery
+} from '@/src/redux/api/users';
 
 const UserSection = () => {
 	const navigate = useNavigate();
 	const [isModalOpen, setIsModalOpen] = useState(false);
+	const [selectedUser, setSelectedUser] = useState<User | null>(null);
+	const { data } = useGetAllUsersQuery();
+	const [deleteUser] = useDeleteUserByIdMutation();
 
-	const users: User[] = [
-		{
-			id: 1,
-			fullName: 'Мыктыбек Мыктыбеков',
-			gmail: 'myktybek@gmail.com'
-		},
-		{
-			id: 2,
-			fullName: 'Aibek Hairulla uulu',
-			gmail: 'aibek@gmail.com'
-		},
-		{
-			id: 3,
-			fullName: 'joomart Joomartov',
-			gmail: 'jomart@gmail.com'
-		}
-	];
+	interface User {
+		clientId: number;
+		firstName: string;
+		email: string;
+	}
 
-	const showModal = () => {
+	const showModal = (user: User) => {
+		setSelectedUser(user);
 		setIsModalOpen(true);
 	};
 
 	const handleCancel = () => {
+		setSelectedUser(null);
 		setIsModalOpen(false);
 	};
 
@@ -54,18 +45,18 @@ const UserSection = () => {
 						</thead>
 					</table>
 					<tbody>
-						{users.map((user) => (
-							<tr key={user.id} className={scss.users}>
-								<td>{user.id}</td>
-								<td onClick={() => navigate(`/admin/users/${user.fullName}`)}>
-									{user.fullName}
+						{data?.clients.map((item) => (
+							<tr key={item.clientId} className={scss.users}>
+								<td>{item.clientId}</td>
+								<td onClick={() => navigate(`/admin/users/${item.clientId}`)}>
+									{item.firstName}
 								</td>
 								<tr></tr>
-								<td onClick={() => navigate(`/admin/users/${user.fullName}`)}>
-									{user.gmail}
+								<td onClick={() => navigate(`/admin/users/${item.clientId}`)}>
+									{item.email}
 								</td>
 								<td className={scss.button_as}>
-									<button onClick={() => showModal()}>
+									<button onClick={() => showModal(item)}>
 										<DeleteIcon />
 									</button>
 								</td>
@@ -76,7 +67,10 @@ const UserSection = () => {
 			</div>
 			<Modal open={isModalOpen} onCancel={handleCancel} footer={false}>
 				<div className={scss.delete_modal}>
-					<p>Вы уверены, что хотите удалить профиль?</p>
+					<p>
+						Вы уверены, что хотите удалить {''}
+						<span>{selectedUser?.firstName}</span>
+					</p>
 					<div className={scss.buttons_modal}>
 						<button
 							onClick={() => {
@@ -88,6 +82,10 @@ const UserSection = () => {
 						<button
 							onClick={() => {
 								setIsModalOpen(false);
+								if (selectedUser) {
+									deleteUser(selectedUser?.clientId);
+									handleCancel();
+								}
 							}}
 						>
 							Удалить
