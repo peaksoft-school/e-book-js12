@@ -4,15 +4,12 @@ import './SeconsdSlider.css';
 import IconOrangeLeftArrow from '@/src/assets/icons/icon-orangeLeftArrow';
 import IconOrangeRightArrow from '@/src/assets/icons/icon-orangeRightArrow';
 import { useGetEBookQuery } from '@/src/redux/api/book';
+import { Link } from 'react-router-dom';
 
 const SecondSlider: FC = () => {
 	const { data } = useGetEBookQuery();
 
-	
-
-	const [expandedCards, setExpandedCards] = useState<{
-		[key: number]: boolean;
-	}>({});
+	const [expandedCards, setExpandedCards] = useState<{ [key: number]: boolean }>({});
 
 	const handleClick = (id: number) => {
 		setExpandedCards((prevExpanded) => ({
@@ -21,21 +18,17 @@ const SecondSlider: FC = () => {
 		}));
 	};
 
-	const NextArrow: FC<{ onClick: () => void }> = ({ onClick }) => {
-		return (
-			<div className="arrow next" onClick={onClick}>
-				<IconOrangeRightArrow />
-			</div>
-		);
-	};
+	const NextArrow: FC<{ onClick: () => void }> = ({ onClick }) => (
+		<div className="arrow next" onClick={onClick}>
+			<IconOrangeRightArrow />
+		</div>
+	);
 
-	const PrevArrow: FC<{ onClick: () => void }> = ({ onClick }) => {
-		return (
-			<div className="arrow prev" onClick={onClick}>
-				<IconOrangeLeftArrow />
-			</div>
-		);
-	};
+	const PrevArrow: FC<{ onClick: () => void }> = ({ onClick }) => (
+		<div className="arrow prev" onClick={onClick}>
+			<IconOrangeLeftArrow />
+		</div>
+	);
 
 	const [imageIndex, setImageIndex] = useState(0);
 
@@ -44,30 +37,19 @@ const SecondSlider: FC = () => {
 		lazyLoad: 'ondemand' as const,
 		speed: 500,
 		slidesToShow: 3,
-		nextArrow: (
-			<NextArrow
-				onClick={() =>
-					setImageIndex((prev) => (prev + 1) % (data?.length ?? 1))
-				}
-			/>
-		),
-		prevArrow: (
-			<PrevArrow
-				onClick={() =>
-					setImageIndex(
-						(prev) => (prev - 1 + (data?.length ?? 1)) % (data?.length ?? 1)
-					)
-				}
-			/>
-		),
-		beforeChange: ( next: number) => setImageIndex(next)
+		slidesToScroll: 1,
+		nextArrow: <NextArrow onClick={() => setImageIndex((prev) => (prev + 1) % (data?.length ?? 1))} />,
+		prevArrow: <PrevArrow onClick={() => setImageIndex((prev) => (prev - 1 + (data?.length ?? 1)) % (data?.length ?? 1))} />,
+		beforeChange: (_current: number, next: number) => setImageIndex(next),
 	};
 
 	return (
 		<div className="container">
 			<div className="title">
 				<h2>Электронные книги</h2>
-				<p className="see_orange">Смотреть все</p>
+				<Link to={'/search_book'} className="see_orange">
+					Смотреть все
+				</Link>
 			</div>
 			<div className="containers">
 				<div>
@@ -77,10 +59,7 @@ const SecondSlider: FC = () => {
 								{idx === imageIndex && (
 									<div className="content">
 										<h2 className="name">{item.title}</h2>
-										<div
-											className="favorite_card_descriptions"
-											onClick={() => handleClick(item.id)}
-										>
+										<div className="favorite_card_descriptions" onClick={() => handleClick(item.id)}>
 											{expandedCards[item.id] ? (
 												<p className="description">{item.description}</p>
 											) : (
@@ -96,32 +75,25 @@ const SecondSlider: FC = () => {
 							</div>
 						))}
 				</div>
-				<div>
-					{data && data.length > 0 && (
-						<Slider {...settings}>
-							{data.map((item, idx) => (
-								<div
-									key={item.id}
-									className={idx === imageIndex ? 'slide activeSlide' : 'slide'}
-								>
-									<img src={item.imageUrl} alt="img" />
-								</div>
-							))}
-						</Slider>
-					)}
-				</div>
-				<div>
-					{data && (
-						<div className="scroll-line">
-							<div
-								className="active-line"
-								style={{
-									width: `${(100 / data.length) * (imageIndex + 1)}%`
-								}}
-							></div>
-						</div>
-					)}
-				</div>
+
+				{data && data.length > 0 && (
+					<Slider {...settings}>
+						{data.map((item, idx) => (
+							<div key={item.id} className={idx === imageIndex ? 'slide activeSlide' : 'slide'}>
+								<img src={item.imageUrl} alt="img" />
+							</div>
+						))}
+					</Slider>
+				)}
+
+				{data && (
+					<div className="scroll-line">
+						<div
+							className="active-line"
+							style={{ width: `${(100 / data.length) * (imageIndex + 1)}%` }}
+						></div>
+					</div>
+				)}
 			</div>
 		</div>
 	);

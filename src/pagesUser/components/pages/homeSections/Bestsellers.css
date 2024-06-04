@@ -73,7 +73,7 @@
 .slide {
 	transform: scale(0.79);
 	transition: transform 300ms;
-	width: 300px;
+	width: 200px;
 	position: relative;
 	opacity: 0.8;
 }
