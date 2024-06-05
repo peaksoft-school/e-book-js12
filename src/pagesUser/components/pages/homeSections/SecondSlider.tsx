@@ -34,9 +34,12 @@ const SecondSlider: FC = () => {
 
 	const settings = {
 		infinite: true,
+		
+		className: "center",
 		lazyLoad: 'ondemand' as const,
 		speed: 500,
 		slidesToShow: 3,
+		centerPadding: "30px",
 		slidesToScroll: 1,
 		nextArrow: <NextArrow onClick={() => setImageIndex((prev) => (prev + 1) % (data?.length ?? 1))} />,
 		prevArrow: <PrevArrow onClick={() => setImageIndex((prev) => (prev - 1 + (data?.length ?? 1)) % (data?.length ?? 1))} />,

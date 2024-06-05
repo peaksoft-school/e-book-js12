@@ -2,7 +2,7 @@
 @import 'slick-carousel/slick/slick-theme.css';
 .containers {
 	width: 100%;
-	height: 100vh;
+	height: 80vh;
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
@@ -22,18 +22,6 @@
 .slick-list {
 	width: 54rem;
 	padding-left: -3rem;
-}
-@media screen and (max-width: 1350px) {
-	.containers {
-		display: inline-block;
-	}
-	.content {
-		width: 100%;
-	}
-
-	.box {
-		width: 30%;
-	}
 }
 .slide img {
 	width: 300px;
@@ -71,14 +59,15 @@
 }
 
 .slide {
-	transform: scale(0.79);
+	transform: scale(0.59);
 	transition: transform 300ms;
+	
 	width: 300px;
 	position: relative;
 	opacity: 0.8;
-
-
-
+	
+	
+	
 }
 
 .activeSlide {
@@ -137,6 +126,21 @@
 }
 
 @media screen and (max-width: 1350px) {
+	.containers {
+		display: inline-block;
+		
+	}
+
+	.activeSlide{
+		transform: scale(0.8);
+	}
+	.content {
+		width: 100%;
+	}
+	
+	.box {
+		width: 30%;
+	}
 	.slide img {
 		width: 260px;
 		height: 408px;
@@ -274,6 +278,9 @@
 		width: 28rem;
 	}
 
+.slide{
+	height: 100px;
+}
 	.slide .price {
 		top: 362px;
 		font-size: 10px;

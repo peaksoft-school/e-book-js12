@@ -56,7 +56,7 @@ const LatestBookSection: FC = () => {
 		speed: 500,
 		slidesToShow: 3,
 		centerMode: true,
-		centerPadding: 0,
+		centerPadding: 1,
 		nextArrow: <NextArrow />,
 		prevArrow: <PrevArrow />,
 		beforeChange: (current, next) => setImageIndex(next)
@@ -80,11 +80,11 @@ const LatestBookSection: FC = () => {
 									>
 										<img src={item.imageUrl} alt="img" />
 										{idx === imageIndex ? (
-											<>
-												<h1 className="name">{item.title}</h1>
-												<span className="auth">{item.authorsFullName}</span>
-												<span className="price">{item.price} c</span>
-											</>
+											<div className="sli">
+												<h1 className="names">{item.title}</h1>
+												<p className="auth">{item.authorsFullName}</p>
+												<p className="pri">{item.price} c</p>
+											</div>
 										) : (
 											''
 										)}
