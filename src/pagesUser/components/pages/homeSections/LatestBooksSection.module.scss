@@ -1,7 +1,7 @@
 @import '/node_modules/slick-carousel/slick/slick.scss';
 @import '/node_modules/slick-carousel/slick/slick-theme.scss';
 :global {
-	.LatestBookSection {
+	.LatestBooksSection {
 		background-color: #1c1c1c;
 	}
 	.content {
@@ -111,7 +111,7 @@
 		top: 40%;
 	}
 
-	.sli{
+	.sli {
 		width: 100%;
 	}
 	@media screen and (max-width: 1200px) {
@@ -124,7 +124,6 @@
 		}
 		.slide .pri {
 			top: 480px;
-
 		}
 	}
 	@media screen and (max-width: 1000px) {
@@ -237,7 +236,7 @@
 		.slide .name {
 			font-size: 8px;
 		}
-		.content{
+		.content {
 			height: 400px;
 		}
 		.slide .auth {

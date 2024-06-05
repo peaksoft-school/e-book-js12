@@ -9,7 +9,10 @@
 }
 
 .content {
-	width: 80%;
+	display: flex;
+	justify-content: space-between;
+	margin-bottom: 50px;
+	margin-top: 126.5px;
 }
 
 .box {
@@ -61,13 +64,10 @@
 .slide {
 	transform: scale(0.59);
 	transition: transform 300ms;
-	
+
 	width: 300px;
 	position: relative;
 	opacity: 0.8;
-	
-	
-	
 }
 
 .activeSlide {
@@ -97,10 +97,7 @@
 }
 
 .title {
-	display: flex;
-	justify-content: space-between;
-	margin-bottom: 50px;
-	margin-top: 126.5px;
+	width: 80%;
 }
 
 .see_orange {
@@ -128,16 +125,15 @@
 @media screen and (max-width: 1350px) {
 	.containers {
 		display: inline-block;
-		
 	}
 
-	.activeSlide{
+	.activeSlide {
 		transform: scale(0.8);
 	}
 	.content {
 		width: 100%;
 	}
-	
+
 	.box {
 		width: 30%;
 	}
@@ -214,9 +210,9 @@
 		width: 230px;
 		height: 358px;
 	}
-.scroll-line{
-	display: none;
-}
+	.scroll-line {
+		display: none;
+	}
 	.slick-list {
 		width: 40rem;
 	}
@@ -278,9 +274,9 @@
 		width: 28rem;
 	}
 
-.slide{
-	height: 100px;
-}
+	.slide {
+		height: 100px;
+	}
 	.slide .price {
 		top: 362px;
 		font-size: 10px;
@@ -359,7 +355,7 @@
 	.slide .auth {
 		font-size: 4px;
 	}
-	.activeSlide{
+	.activeSlide {
 		height: 10px;
 	}
 
