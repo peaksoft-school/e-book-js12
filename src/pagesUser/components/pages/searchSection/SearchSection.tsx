@@ -153,12 +153,13 @@ const SearchSection = () => {
 		}
 	]);
 
+	const [selected, setSelected] = useState('Сортировать');
 	const [idSort, setIdSort] = useState<null | number>(null);
 	const [sortData] = useState([
 		{
 			id: 1,
-			nameSort: 'all',
-			englishSort: ' '
+			nameSort: 'все',
+			englishSort: 'all'
 		},
 		{
 			id: 2,
@@ -171,6 +172,10 @@ const SearchSection = () => {
 			englishSort: 'best-sellers'
 		}
 	]);
+	const filterBooks =
+		selected === 'Сортировать'
+			? sortData
+			: sortData.filter((book) => book.id === selected);
 
 	const [dataBooks, setDataBooks] = useState<TypeDataBook[] | []>([]);
 
@@ -371,35 +376,37 @@ const SearchSection = () => {
 									</>
 								))}
 						</div>
-						<div className={scss.tool}></div>
-						<div
-							className={scss.right_content}
-							onClick={() => setIsSort(!isSort)}
-						>
-							<p>Сортировать</p>
-							{isSort ? (
-								<>
-									<IconUpIcon />
-								</>
-							) : (
-								<>
-									<IconArrowBottom />
-								</>
-							)}
+						<div className={scss.right_content}>
+							<div className={scss.iconText}>
+								{selected === 'все'
+									? 'все'
+									: selected === 'Новинки'
+										? 'Новинки'
+										: selected === 'Бестселлеры'
+											? 'Бестселлеры'
+											: 'Сортировать'}
+							</div>
+							<div className={scss.rightIcon}>
+								<div onClick={() => setIsSort(!isSort)}>
+									{isSort ? <IconUpIcon /> : <IconArrowBottom />}
+								</div>
+							</div>
 						</div>
-						{
+						{isSort && (
 							<>
 								<div className={`${isSort ? scss.sort_drop : scss.sort_down}`}>
 									<ul>
-										{sortData.map((sort) => (
+										{sortData.map((item) => (
 											<>
 												<li
+													key={item.id}
 													onClick={() => {
-														setIdSort(sort.id);
+														setIdSort(item.id);
+														setSelected(item.nameSort);
 														setIsSort(false);
 													}}
 												>
-													{sort.nameSort}
+													{item.nameSort}
 												</li>
 												<hr />
 											</>
@@ -407,8 +414,9 @@ const SearchSection = () => {
 									</ul>
 								</div>
 							</>
-						}
+						)}
 					</div>
+
 					<div className={scss.container}>
 						<div
 							onClick={() => setMenuFilters(!menufilters)}

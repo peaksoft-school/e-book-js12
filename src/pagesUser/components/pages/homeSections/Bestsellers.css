@@ -9,10 +9,13 @@
 	margin-bottom: 126.5px;
 }
 .content {
-	width: 80%;
+	display: flex;
+	justify-content: space-between;
+	margin-bottom: 50px;
+	margin-top: 126.5px;
 }
 
-.see_all {
+.see_orange {
 	color: #ff4c00;
 }
 
@@ -73,7 +76,7 @@
 .slide {
 	transform: scale(0.79);
 	transition: transform 300ms;
-	width: 300px;
+	width: 200px;
 	position: relative;
 	opacity: 0.8;
 }
@@ -102,11 +105,9 @@
 }
 
 .title_box {
-	display: flex;
-	justify-content: space-between;
-	margin-bottom: 50px;
-	margin-top: 126.5px;
+	width: 80%;
 }
+
 .active-line {
 	position: absolute;
 	left: 0;
@@ -115,10 +116,12 @@
 	z-index: 1;
 }
 .next {
+	width: 10%;
 	left: -25%;
 	top: 90%;
 }
 .prev {
+	width: 10%;
 	left: -40%;
 	top: 90%;
 }
