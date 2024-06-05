@@ -294,6 +294,8 @@ const Header = () => {
 														setUserExit(!userExit);
 														localStorage.removeItem('token');
 														localStorage.setItem('isAuth', 'false');
+														localStorage.setItem('isVendor', 'false');
+														localStorage.setItem('admin', 'false');
 													}}
 												>
 													Выйти
@@ -302,25 +304,24 @@ const Header = () => {
 										</div>
 									</>
 								}
-								<Modal
-									open={userExit}
-									className={scss.modal_exit}
-									closable={false}
-									footer={false}
-								>
-									<div className={scss.modal_text}>
-										<p>Вы уверены, что хотите выйти?</p>
-									</div>
-									<div className={scss.footer_modal}>
-										<button onClick={() => setUserExit(false)}>Отменить</button>
-										<button
-											onClick={() => {
-												setUserExit(false);
-												navigate('/auth/login');
-											}}
-										>
-											Выйти
-										</button>
+								<Modal open={userExit} closable={false} footer={false}>
+									<div className={scss.modal_exit}>
+										<div className={scss.modal_text}>
+											<p>Вы уверены, что хотите выйти?</p>
+										</div>
+										<div className={scss.footer_modal}>
+											<button onClick={() => setUserExit(false)}>
+												Отменить
+											</button>
+											<button
+												onClick={() => {
+													setUserExit(false);
+													navigate('/auth/login');
+												}}
+											>
+												Выйти
+											</button>
+										</div>
 									</div>
 								</Modal>
 							</nav>

@@ -74,6 +74,7 @@ const BookAddSection = () => {
 	const [addBookVendor] = useAddBookVendorMutation();
 
 	const [photos, setPhotos] = useState([]);
+	const song = JSON.stringify(photos);
 
 	const jenreData = [
 		{
@@ -152,8 +153,26 @@ const BookAddSection = () => {
 	const onSubmit: SubmitHandler<FieldValues> = async (book) => {
 		console.log(book);
 
-		const newBook = {
-			multipartFiles: [testFile, secondTest],
+		// const newBook = {
+		// 	multipartFiles: [testFile, secondTest],
+		// 	title: book.title,
+		// 	authorsFullName: book.authorsFullName,
+		// 	publishingHouse: book.publishingHouse,
+		// 	description: description,
+		// 	fragment: fragment,
+		// 	publishedYear: book.publishedYear,
+		// 	volume: book.volume,
+		// 	amountOfBook: book.amountOfBook,
+		// 	discount: book.discount,
+		// 	price: book.price,
+		// 	bestseller: clickBestseller
+		// };
+		const newUpDateBook = {
+			imageUrls: [song],
+			fragmentAudUrl: '',
+			fullAudUrl: '',
+			pdfUrl: '',
+			duration: 0,
 			title: book.title,
 			authorsFullName: book.authorsFullName,
 			publishingHouse: book.publishingHouse,
@@ -166,27 +185,10 @@ const BookAddSection = () => {
 			price: book.price,
 			bestseller: clickBestseller
 		};
-		console.log(newBook);
-
-		const formData = new FormData();
-
-		formData.append('title', book.title);
-		formData.append('authorsFullName', book.authorsFullName);
-		formData.append('publishingHouse', book.publishingHouse);
-		formData.append('description', description);
-		formData.append('fragment', fragment);
-		formData.append('publishedYear', book.publishedYear);
-		formData.append('volume', book.volume);
-		formData.append('amountOfBook', book.amountOfBook);
-		formData.append('discount', book.discount);
-		formData.append('price', book.price);
-		formData.append('bestseller', newBook.bestseller);
-
-		formData.append('multipartFiles', testFile!);
-		formData.append('multipartFiles', secondTest!);
+		console.log(newUpDateBook);
 
 		await addBookVendor({
-			newBook,
+			newUpDateBook,
 			genre: selectDataJenre?.englishName,
 			language: languageSeleced?.language,
 			bookType: bookType

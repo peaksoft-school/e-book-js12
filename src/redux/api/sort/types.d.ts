@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
-namespace SORT {
+export namespace SORT {
 	type GetSortsResponse = {
 		id: number;
 		imageLink: string;
@@ -17,7 +17,7 @@ namespace SORT {
 	type PostSortResponse = {
 		totalNumberOfBooks: number;
 		totalPages: number;
-		books: TypeDataBook;
+		books: TypeDataBook[]
 	};
 	type TypeDataBook = {
 		id: number;
@@ -28,7 +28,7 @@ namespace SORT {
 		discount: number;
 		isAudioBook: boolean;
 		inFavorites: boolean;
-	};
+	}
 	type PostSortRequest = {
 		genres: string[];
 		bookTypes: string[];
