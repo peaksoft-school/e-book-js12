@@ -8,7 +8,10 @@
 }
 
 .content {
-	width: 80%;
+	display: flex;
+	justify-content: space-between;
+	margin-bottom: 50px;
+	margin-top: 126.5px;
 }
 
 .box {
@@ -104,10 +107,7 @@
 }
 
 .title {
-	display: flex;
-	justify-content: space-between;
-	margin-bottom: 50px;
-	margin-top: 126.5px;
+	width: 80%;
 }
 
 .see_orange {
