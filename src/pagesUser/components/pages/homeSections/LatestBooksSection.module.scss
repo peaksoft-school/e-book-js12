@@ -31,24 +31,23 @@
 		height: 468px;
 		opacity: 0px;
 	}
-	.slide .name {
+	.slide .names {
 		font-family: Open Sans;
 		font-size: 16px;
 		margin-top: 4%;
-		margin-bottom: 0;
 		font-weight: 400;
 		text-align: left;
 		color: white;
 	}
 	.slide .auth {
 		font-family: Open Sans;
-		margin-top: 4px;
+		margin-bottom: 20px;
 		font-size: 14px;
 		font-weight: 400;
 		text-align: left;
 		color: #8c8c8c;
 	}
-	.slide .price {
+	.slide .pri {
 		font-family: Open Sans;
 		font-size: 16px;
 		font-weight: 600;
@@ -91,21 +90,29 @@
 		align-items: center;
 	}
 	.arrow {
+		display: none;
 		position: absolute;
 		cursor: pointer;
 		z-index: 10;
 	}
 	.arrow svg {
+		display: none;
 		width: 5rem;
 		height: 5rem;
 	}
 	.next {
+		display: none;
 		right: -20%;
 		top: 40%;
 	}
 	.prev {
+		display: none;
 		left: -18%;
 		top: 40%;
+	}
+
+	.sli {
+		width: 100%;
 	}
 	@media screen and (max-width: 1200px) {
 		.slide img {
@@ -115,14 +122,8 @@
 		.slick-list {
 			width: 48rem;
 		}
-		.slide .price {
+		.slide .pri {
 			top: 480px;
-		}
-		.next {
-			right: -12%;
-		}
-		.prev {
-			left: -10%;
 		}
 	}
 	@media screen and (max-width: 1000px) {
@@ -133,7 +134,7 @@
 		.slick-list {
 			width: 44rem;
 		}
-		.slide .price {
+		.slide .pri {
 			top: 460px;
 		}
 		.next {
@@ -143,6 +144,7 @@
 			left: -8%;
 		}
 		.arrow svg {
+			display: none;
 			width: 3rem;
 			height: 3rem;
 		}
@@ -158,7 +160,7 @@
 		.slide {
 			padding-bottom: 13rem;
 		}
-		.slide .price {
+		.slide .pri {
 			top: 440px;
 			right: 0rem;
 		}
@@ -175,10 +177,10 @@
 			width: 37rem;
 		}
 		.slide {
-			padding-bottom: 20rem;
+			padding-bottom: 24rem;
 		}
-		.slide .price {
-			top: 370px;
+		.slide .pri {
+			top: 300px;
 			font-size: 14px;
 		}
 		.slide .name {
@@ -199,8 +201,8 @@
 		.slick-list {
 			width: 28rem;
 		}
-		.slide .price {
-			top: 322px;
+		.slide .pri {
+			top: 260px;
 			font-size: 10px;
 		}
 		.slide {
@@ -227,12 +229,15 @@
 		.slide {
 			padding-bottom: 31rem;
 		}
-		.slide .price {
-			top: 258px;
+		.slide .pri {
+			top: 248px;
 			font-size: 8px;
 		}
 		.slide .name {
 			font-size: 8px;
+		}
+		.content {
+			height: 400px;
 		}
 		.slide .auth {
 			font-size: 6px;
@@ -252,7 +257,7 @@
 		.slide {
 			padding-bottom: 32rem;
 		}
-		.slide .price {
+		.slide .pri {
 			top: 238px;
 			font-size: 6px;
 		}

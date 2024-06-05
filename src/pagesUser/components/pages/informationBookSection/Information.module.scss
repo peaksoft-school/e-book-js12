@@ -214,6 +214,10 @@
 					width: 100%;
 					gap: 20px;
 					margin-top: 76px;
+
+					.boot_one {
+						cursor: pointer;
+					}
 					@media (max-width: 650px) {
 						margin-top: 50px;
 					}

@@ -4,6 +4,7 @@ import './SeconsdSlider.css';
 import IconOrangeLeftArrow from '@/src/assets/icons/icon-orangeLeftArrow';
 import IconOrangeRightArrow from '@/src/assets/icons/icon-orangeRightArrow';
 import { useGetEBookQuery } from '@/src/redux/api/book';
+import { Link } from 'react-router-dom';
 
 const SecondSlider: FC = () => {
 	const { data } = useGetEBookQuery();
@@ -19,29 +20,28 @@ const SecondSlider: FC = () => {
 		}));
 	};
 
-	const NextArrow: FC<{ onClick: () => void }> = ({ onClick }) => {
-		return (
-			<div className="arrow next" onClick={onClick}>
-				<IconOrangeRightArrow />
-			</div>
-		);
-	};
+	const NextArrow: FC<{ onClick: () => void }> = ({ onClick }) => (
+		<div className="arrow next" onClick={onClick}>
+			<IconOrangeRightArrow />
+		</div>
+	);
 
-	const PrevArrow: FC<{ onClick: () => void }> = ({ onClick }) => {
-		return (
-			<div className="arrow prev" onClick={onClick}>
-				<IconOrangeLeftArrow />
-			</div>
-		);
-	};
+	const PrevArrow: FC<{ onClick: () => void }> = ({ onClick }) => (
+		<div className="arrow prev" onClick={onClick}>
+			<IconOrangeLeftArrow />
+		</div>
+	);
 
 	const [imageIndex, setImageIndex] = useState(0);
 
 	const settings = {
 		infinite: true,
+		className: 'center',
 		lazyLoad: 'ondemand' as const,
 		speed: 500,
 		slidesToShow: 3,
+		centerPadding: '30px',
+		slidesToScroll: 1,
 		nextArrow: (
 			<NextArrow
 				onClick={() =>
@@ -58,7 +58,7 @@ const SecondSlider: FC = () => {
 				}
 			/>
 		),
-		beforeChange: (current: number, next: number) => setImageIndex(next)
+		beforeChange: (_current: number, next: number) => setImageIndex(next)
 	};
 
 	return (
@@ -66,7 +66,9 @@ const SecondSlider: FC = () => {
 			<div className="container">
 				<div className="content">
 					<h2>Электронные книги</h2>
-					<p className="see_orange">Смотреть все</p>
+					<Link to="/search_book" className="see_orange">
+						Смотреть все
+					</Link>
 				</div>
 				<div className="containers">
 					<div>

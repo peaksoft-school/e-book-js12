@@ -33,7 +33,6 @@ const AudioBookSection = () => {
 										<div className={scss.new_book_container}>
 											<IconNewIcon />
 										</div>
-
 										<img src={index.imageUrl} alt={index.title} />
 										<div className={scss.about_book}>
 											<h5>{index.title}</h5>

@@ -2,6 +2,7 @@
 @import 'slick-carousel/slick/slick-theme.css';
 .containers {
 	width: 100%;
+	height: 80vh;
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
@@ -24,18 +25,6 @@
 .slick-list {
 	width: 54rem;
 	padding-left: -3rem;
-}
-@media screen and (max-width: 1350px) {
-	.containers {
-		display: inline-block;
-	}
-	.content {
-		width: 100%;
-	}
-
-	.box {
-		width: 30%;
-	}
 }
 .slide img {
 	width: 300px;
@@ -73,15 +62,16 @@
 }
 
 .slide {
-	transform: scale(0.79);
+	transform: scale(0.59);
 	transition: transform 300ms;
+
 	width: 300px;
 	position: relative;
 	opacity: 0.8;
 }
 
 .activeSlide {
-	transform: scale(1);
+	transform: scale(0.9);
 	width: 300px;
 	height: 600px;
 	position: relative;
@@ -97,7 +87,7 @@
 
 .scroll-line {
 	position: absolute;
-	margin-top: 20%;
+	margin-top: 40%;
 	left: 70%;
 	transform: translateX(-50%);
 	width: calc(50% - 20px);
@@ -133,6 +123,20 @@
 }
 
 @media screen and (max-width: 1350px) {
+	.containers {
+		display: inline-block;
+	}
+
+	.activeSlide {
+		transform: scale(0.8);
+	}
+	.content {
+		width: 100%;
+	}
+
+	.box {
+		width: 30%;
+	}
 	.slide img {
 		width: 260px;
 		height: 408px;
@@ -177,15 +181,40 @@
 		height: 3rem;
 	}
 }
+@media screen and (max-width: 900px) {
+	.slide img {
+		width: 260px;
+		height: 428px;
+	}
+
+	.slick-list {
+		width: 46rem;
+	}
+
+	.slide .price {
+		top: 460px;
+	}
+
+	.prev {
+		left: -8%;
+	}
+
+	.arrow svg {
+		width: 3rem;
+		height: 3rem;
+	}
+}
 
 @media screen and (max-width: 800px) {
 	.slide img {
 		width: 230px;
 		height: 358px;
 	}
-
+	.scroll-line {
+		display: none;
+	}
 	.slick-list {
-		width: 44rem;
+		width: 40rem;
 	}
 
 	.slide .price {
@@ -245,6 +274,9 @@
 		width: 28rem;
 	}
 
+	.slide {
+		height: 100px;
+	}
 	.slide .price {
 		top: 362px;
 		font-size: 10px;
@@ -322,6 +354,9 @@
 	}
 	.slide .auth {
 		font-size: 4px;
+	}
+	.activeSlide {
+		height: 10px;
 	}
 
 	.arrow {

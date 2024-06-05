@@ -155,7 +155,7 @@ const InformationBook: FC<BookIdProps> = () => {
 												handleAddBookToFavorite(bookId);
 											}}
 										>
-											<p className={scss.boot1}>В избранное</p>
+											<p className={scss.boot_one}>В избранное</p>
 										</CustomPersonalAreaButton>
 										<CustomBasketButton
 											nameClass={scss.basket_btn}
@@ -163,7 +163,7 @@ const InformationBook: FC<BookIdProps> = () => {
 												handleAddBookToBasket(bookId);
 											}}
 										>
-											<p className={scss.boot1}>Добавить в корзину</p>
+											<p className={scss.boot_one}>Добавить в корзину</p>
 										</CustomBasketButton>
 									</div>
 								</div>

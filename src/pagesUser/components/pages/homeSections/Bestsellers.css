@@ -76,7 +76,7 @@
 .slide {
 	transform: scale(0.79);
 	transition: transform 300ms;
-	width: 300px;
+	width: 200px;
 	position: relative;
 	opacity: 0.8;
 }
@@ -116,10 +116,12 @@
 	z-index: 1;
 }
 .next {
+	width: 10%;
 	left: -25%;
 	top: 90%;
 }
 .prev {
+	width: 10%;
 	left: -40%;
 	top: 90%;
 }
