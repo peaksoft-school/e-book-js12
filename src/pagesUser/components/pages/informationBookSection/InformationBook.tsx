@@ -60,7 +60,7 @@ const InformationBook: FC<BookIdProps> = () => {
 	};
 
 	return (
-		<section className={scss.Book_info}>
+		<section className={scss.InformationBookSection}>
 			<div className="container">
 				<div className={scss.content}>
 					{isLoading ? (

@@ -17,7 +17,7 @@ const SubscribeSection: React.FC = () => {
 	};
 
 	return (
-		<section className={scss.Subscribe_page}>
+		<section className={scss.SubscribePageSection}>
 			<div className="container">
 				<div className={scss.content}>
 					<div className={scss.title}>

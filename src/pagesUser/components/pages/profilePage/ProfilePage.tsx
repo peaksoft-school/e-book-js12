@@ -67,7 +67,7 @@ const ProfileClient: React.FC = () => {
 	};
 
 	return (
-		<section className={scss.Profile_page}>
+		<section className={scss.ProfileSection}>
 			<div className="container">
 				<div className={scss.content}>
 					<form onSubmit={handleSubmit(onSubmit)}>

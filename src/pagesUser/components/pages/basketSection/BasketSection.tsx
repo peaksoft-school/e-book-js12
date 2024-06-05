@@ -98,7 +98,7 @@ const BasketPage: React.FC = () => {
 	const discount = 456;
 	const overallTotal = totalSum - discount;
 	return (
-		<section className={scss.Basket_page}>
+		<section className={scss.BasketSection}>
 			<div className="container">
 				<div className={scss.content}>
 					<div className={scss.links}>

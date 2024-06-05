@@ -60,7 +60,7 @@ const BestsellersSection: FC = () => {
 	};
 
 	return (
-		<section className="Bestsellers_page">
+		<section className="BestsellersSection">
 			<div className="container">
 				<div className="content">
 					<h2>Бестселлеры</h2>

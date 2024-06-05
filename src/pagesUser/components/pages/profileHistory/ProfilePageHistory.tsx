@@ -24,7 +24,7 @@ const ProfilePageHistory = () => {
 	const { data } = useClientProfileHistoryQuery<GetResponse>(clientId);
 
 	return (
-		<section className={scss.Profile_history}>
+		<section className={scss.ProfileHistorySection}>
 			<div className="container">
 				<div className={scss.content}>
 					<div className={scss.info_text}>

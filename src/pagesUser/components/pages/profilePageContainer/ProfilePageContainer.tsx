@@ -12,7 +12,7 @@ const ProfilePageContainer = () => {
 	};
 
 	return (
-		<section className={scss.Profile_page_container}>
+		<section className={scss.ProfileSectionContainer}>
 			<div className="container">
 				<div className={scss.content}>
 					<div className={scss.test}>
