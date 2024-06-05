@@ -49,6 +49,7 @@ const VendorsBooks: FC = () => {
 		page: 1,
 		pageSize: 12
 	});
+	console.log(data);
 
 	const [deleteBook] = useDeleteBookMutation();
 
@@ -152,7 +153,7 @@ const VendorsBooks: FC = () => {
 										<h3>{book.bookName}</h3>
 										<div className={scss.date_and_price}>
 											<p>{book.publishedYear}</p>
-											<p className={scss.price}>{book.price} с</p>
+											<p className={scss.price}>{book.price} $</p>
 										</div>
 									</div>
 								</div>
