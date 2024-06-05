@@ -9,7 +9,8 @@ import {
 	useGetAllBooksInFavoriteQuery,
 	useGetCountOfBooksInFavoriteQuery
 } from '@/src/redux/api/favorite';
-
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 interface BookId {
 	id: number;
 }
@@ -33,16 +34,43 @@ const FavoritSection: FC<BookId> = () => {
 		}));
 	};
 
-	const handleClearFavorite = () => {
-		clearFavorite();
+	const handleClearFavorite = async () => {
+		await clearFavorite();
 	};
 
-	const handleDeleteFavoriteBook = async (id: number) => {
+	const handleAddFavoriteBook = async (id: number) => {
 		await deleteFavoriteBook(id);
 	};
 
 	const handleAddToBasket = async (id: number) => {
-		await addBookToBasket(id);
+		const result = await addBookToBasket(id);
+		if ('data' in result) {
+			console.log(result);
+			const { httpStatus } = result.data;
+			if (httpStatus === 'OK') {
+				toast.success('Успешно добавили в корзину!', {
+					position: 'top-right',
+					autoClose: 5000,
+					hideProgressBar: false,
+					closeOnClick: true,
+					pauseOnHover: true,
+					draggable: true,
+					progress: undefined,
+					theme: 'light'
+				});
+			} else if (httpStatus === 'ALREADY_REPORTED') {
+				toast('Вы уже добавили эту книгу в корзину!', {
+					position: 'top-right',
+					autoClose: 5000,
+					hideProgressBar: false,
+					closeOnClick: true,
+					pauseOnHover: true,
+					draggable: true,
+					progress: undefined,
+					theme: 'light'
+				});
+			}
+		}
 	};
 
 	return (
@@ -60,7 +88,7 @@ const FavoritSection: FC<BookId> = () => {
 						<div className={scss.favorite_header}>
 							<div className={scss.favorites_title}>
 								<h1>Ваши книги</h1>
-								<p>Всего: {count?.count}</p>
+								<p>Всего: {count}</p>
 							</div>
 							<hr />
 							<button
@@ -69,6 +97,7 @@ const FavoritSection: FC<BookId> = () => {
 							>
 								Очистить избранные
 							</button>
+							<ToastContainer />
 						</div>
 						<div className={scss.favorite_card_container}>
 							{data?.map((item) => (
@@ -79,7 +108,7 @@ const FavoritSection: FC<BookId> = () => {
 											<button
 												className={scss.close_button}
 												onClick={() => {
-													handleDeleteFavoriteBook(item.id);
+													handleAddFavoriteBook(item.id);
 												}}
 											>
 												<IconX />

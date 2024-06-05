@@ -1,16 +1,16 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-/* eslint-disable*/
-// @ts-nocheck
 import { useEffect, useState } from 'react';
 import scss from './Section.module.scss';
 import WhiteSquareIcon from '@/src/assets/icons/icon-whiteSquare';
 import BlackSquareIcon from '@/src/assets/icons/icon-blackSquare';
+import 'react-toastify/dist/ReactToastify.css';
 import {
 	IconArrowBottom,
 	IconBlackCircle,
 	IconBlackLike,
 	IconBurgerMenu,
 	IconDeleteX,
+	IconHeadphoneOrange,
 	IconUpIcon,
 	IconWhiteCircle,
 	IconWhiteLike
@@ -23,23 +23,8 @@ import {
 	useAddBookToBasketMutation,
 	usePostFavoriteUnFavoriteMutation
 } from '@/src/redux/api/favorite';
-
-interface TypeDataBook {
-	id: number;
-	cover: string;
-	title: string;
-	authorFullName: string;
-	price: number;
-	discount: number;
-	isAudioBook: boolean;
-	inFavorites: boolean;
-}
-
-interface TypeResponse {
-	totalNumberOfBooks: number;
-	totalPages: number;
-	books: TypeDataBook;
-}
+import { ToastContainer, toast } from 'react-toastify';
+import { SORT } from '@/src/redux/api/sort/types';
 
 const SearchSection = () => {
 	// 	const useDebounce = (value:number[], delay: number) => {
@@ -177,7 +162,7 @@ const SearchSection = () => {
 			? sortData
 			: sortData.filter((book) => book.id === selected);
 
-	const [dataBooks, setDataBooks] = useState<TypeDataBook[] | []>([]);
+	const [dataBooks, setDataBooks] = useState<SORT.TypeDataBook[]>([]);
 
 	const [languageBooksData, setLanguageBooksData] = useState([
 		{
@@ -206,7 +191,33 @@ const SearchSection = () => {
 	};
 
 	const handleAddBookToBasket = async (id: number) => {
-		await addBookToBasket(id);
+		const result = await addBookToBasket(id);
+		if ('data' in result) {
+			const { httpStatus } = result.data;
+			if (httpStatus === 'OK') {
+				toast.success('Успешно добавили в корзину!', {
+					position: 'top-right',
+					autoClose: 5000,
+					hideProgressBar: false,
+					closeOnClick: true,
+					pauseOnHover: true,
+					draggable: true,
+					progress: undefined,
+					theme: 'light'
+				});
+			} else if (httpStatus === 'ALREADY_REPORTED') {
+				toast('Вы уже добавили эту книгу в корзину!', {
+					position: 'top-right',
+					autoClose: 5000,
+					hideProgressBar: false,
+					closeOnClick: true,
+					pauseOnHover: true,
+					draggable: true,
+					progress: undefined,
+					theme: 'light'
+				});
+			}
+		}
 		handleChangeFillter();
 	};
 
@@ -304,11 +315,17 @@ const SearchSection = () => {
 			sort: sortValue
 		};
 		const result = await postFillter(newData);
-		if (result && (result as { data: TypeResponse }).data.books) {
-			const booksData = (result as { data: TypeResponse }).data.books;
+		// if (result && (result as { data: TypeResponse }).data.books) {
+		// const booksData = (result as { data: TypeResponse }).data.books;
+		if ('data' in result) {
+			const booksData = result.data.books;
+			console.log(booksData);
 			setDataBooks(booksData);
 		}
+		// }
 	};
+	console.log(dataBooks);
+
 	useEffect(() => {
 		handleChangeFillter();
 	}, [jenreData, idSort, typesBookData, languageBooksData, value]);
@@ -317,6 +334,7 @@ const SearchSection = () => {
 		<section className={scss.SearchSection}>
 			<div className="container">
 				<div className={scss.content}>
+					<ToastContainer />
 					<div className={scss.title_navigate}>
 						<p
 							onClick={() => {
@@ -631,6 +649,13 @@ const SearchSection = () => {
 												<IconWhiteLike />
 											</>
 										)}
+									</div>
+									<div className={scss.audio_icon}>
+										{item.isAudioBook ? (
+											<>
+												<IconHeadphoneOrange />
+											</>
+										) : null}
 									</div>
 									<img
 										onClick={() => navigate(`/search_book/${item.id}`)}

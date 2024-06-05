@@ -425,7 +425,26 @@
 							opacity: 100%;
 							transition: 0.4s;
 						}
+						.audio_icon {
+							position: absolute;
+							top: 20px;
+							left: 20px;
+							user-select: none;
+							opacity: 100;
+							z-index: 1;
+							transition: 0.4s;
+						}
 					}
+					.audio_icon {
+						position: absolute;
+						top: 0px;
+						left: 20px;
+						z-index: -2;
+						opacity: 0;
+						user-select: none;
+						transition: 0.4s;
+					}
+
 					img {
 						max-width: 224px;
 						width: 100%;
@@ -534,4 +553,8 @@
 			}
 		}
 	}
+}
+
+.Toastify__progress-bar--anim {
+	background-color: #f34901;
 }

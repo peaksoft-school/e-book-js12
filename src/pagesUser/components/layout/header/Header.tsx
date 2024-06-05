@@ -5,18 +5,39 @@ import WhiteLikeIcon from '@/src/assets/icons/icon-whiteLike';
 import { IconBurgerMenu, IconRedDot } from '@/src/assets/icons';
 import LogoeBook from '@/src/ui/logoeBook/LogoeBook';
 import WhiteProfileIcon from '@/src/assets/icons/icon-whiteProfile';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { Modal } from 'antd';
+import { useSearchBooksQuery } from '@/src/redux/api/search';
+import BlackLikeIcon from '@/src/assets/icons/icon-blackLike';
+import { useGetCountInBasketQuery } from '@/src/redux/api/basket';
 
 const Header = () => {
 	const [headerScroll, setHeaderScroll] = useState<boolean>(false);
 	const [isGenre, setIsGenre] = useState<boolean>(false);
 	const [isNavBar, setIsNavBar] = useState<boolean>(false);
 	const [isUser, setIsUser] = useState<boolean>(false);
+	const [test, setTest] = useState('');
 	const [userExit, setUserExit] = useState<boolean>(false);
+	const [searchTerm, setInputValue] = useState('');
+	const localName = localStorage.getItem('NameClient');
+	const localAuth = localStorage.getItem('isAuth');
+	const location = useLocation();
+	const { data: countBasket } = useGetCountInBasketQuery();
 
+	const scrollToSection = () => {
+		const element = document.getElementById(test);
+		if (element) {
+			window.scrollTo({
+				top: element.offsetTop,
+				behavior: 'smooth'
+			});
+			if (test.length > 0) {
+				setTest('');
+			}
+		}
+	};
+	const { data } = useSearchBooksQuery({ searchTerm }, { skip: !searchTerm });
 	const navigate = useNavigate();
-
 	useEffect(() => {
 		const changeHeader = () => {
 			if (window.scrollY >= 10) {
@@ -25,10 +46,8 @@ const Header = () => {
 				setHeaderScroll(false);
 			}
 		};
-
 		changeHeader();
 		window.addEventListener('scroll', changeHeader);
-
 		return () => {
 			window.removeEventListener('scroll', changeHeader);
 		};
@@ -45,6 +64,13 @@ const Header = () => {
 					<div className="container">
 						<div className={scss.content}>
 							<div className={scss.header_content}>
+								<div className={scss.search_container}>
+									<>
+										{data &&
+											data.length > 0 &&
+											data.map((item) => <p key={item.id}>{item.title}</p>)}
+									</>
+								</div>
 								<div
 									className={scss.logo_content}
 									onClick={() => {
@@ -55,8 +81,10 @@ const Header = () => {
 								</div>
 								<div className={scss.input_content}>
 									<CustomGenreInput
-										onChange={() => {}}
-										value=""
+										onChange={(e) => {
+											setInputValue(e.target.value);
+										}}
+										value={searchTerm}
 										placeholder="Искать жанр, книги, авторов, издательства... "
 									/>
 								</div>
@@ -65,18 +93,29 @@ const Header = () => {
 										className={scss.favorite_icon}
 										onClick={() => navigate('/favorite')}
 									>
-										<span>
-											<WhiteLikeIcon />
-										</span>
-										<span>
-											<IconRedDot />
-										</span>
+										{location.pathname === '/favorite' ? (
+											<>
+												<span style={{ color: 'red' }}>
+													<BlackLikeIcon />
+												</span>
+												<span></span>
+											</>
+										) : (
+											<>
+												<span>
+													<WhiteLikeIcon />
+												</span>
+												<span>
+													<IconRedDot />
+												</span>
+											</>
+										)}
 									</div>
 									<div
 										className={scss.basket}
 										onClick={() => navigate('/basket')}
 									>
-										<p>Корзина (3)</p>
+										<p>Корзина ({countBasket?.totalNumberOfBooks})</p>
 									</div>
 								</div>
 							</div>
@@ -104,8 +143,38 @@ const Header = () => {
 											className={`${isNavBar ? scss.navbar_menu : scss.navbar_none}`}
 										>
 											<ul>
-												<li>Электронные книги</li>
-												<li>Audio books</li>
+												<li
+													onClick={() => {
+														scrollToSection();
+														setTest('Ebook');
+														if (location.pathname !== '/') {
+															navigate('/');
+															if (location.pathname === '/') {
+																setTimeout(() => {
+																	setTest('Ebook');
+																}, 300);
+															}
+														}
+													}}
+												>
+													Электронные книги
+												</li>
+												<li
+													onClick={() => {
+														scrollToSection();
+														setTest('audioBook');
+														if (location.pathname !== '/') {
+															navigate('/');
+															if (location.pathname === '/') {
+																setTimeout(() => {
+																	setTest('audioBook');
+																}, 300);
+															}
+														}
+													}}
+												>
+													Audio books
+												</li>
 												<li
 													onClick={() => {
 														navigate('/promo_page');
@@ -133,8 +202,38 @@ const Header = () => {
 									</div>
 									<div className={scss.center_nav_content}>
 										<ul>
-											<li>Электронные книги</li>
-											<li>Audio books</li>
+											<li
+												onClick={() => {
+													scrollToSection();
+													setTest('Ebook');
+													if (location.pathname !== '/') {
+														navigate('/');
+														if (location.pathname === '/') {
+															setTimeout(() => {
+																setTest('Ebook');
+															}, 300);
+														}
+													}
+												}}
+											>
+												Электронные книги
+											</li>
+											<li
+												onClick={() => {
+													scrollToSection();
+													setTest('audioBook');
+													if (location.pathname !== '/') {
+														navigate('/');
+														setTimeout(() => {
+															setTest('audioBook');
+														}, 300);
+														// if (location.pathname === '/') {
+														// }
+													}
+												}}
+											>
+												Audio books
+											</li>
 											<li
 												onClick={() => {
 													navigate('/promo_page');
@@ -153,12 +252,27 @@ const Header = () => {
 									</div>
 								</div>
 								<div className={scss.right_nav_content}>
-									<button onClick={() => setIsUser(!isUser)}>
-										<p>
-											<WhiteProfileIcon />
-										</p>
-										Ибра
-									</button>
+									{localAuth ? (
+										<>
+											<button onClick={() => setIsUser(!isUser)}>
+												<p>
+													<WhiteProfileIcon />
+												</p>
+												{localName}
+											</button>
+										</>
+									) : (
+										<>
+											<button
+												className={scss.sign_btn}
+												onClick={() => {
+													navigate('/auth/login');
+												}}
+											>
+												Войти
+											</button>
+										</>
+									)}
 								</div>
 								{
 									<>
@@ -174,13 +288,14 @@ const Header = () => {
 												>
 													Профиль
 												</li>
-
 												<hr />
 												<li
 													onClick={() => {
 														setUserExit(!userExit);
 														localStorage.removeItem('token');
 														localStorage.setItem('isAuth', 'false');
+														localStorage.setItem('isVendor', 'false');
+														localStorage.setItem('admin', 'false');
 													}}
 												>
 													Выйти
@@ -189,25 +304,24 @@ const Header = () => {
 										</div>
 									</>
 								}
-								<Modal
-									open={userExit}
-									className={scss.modal_exit}
-									closable={false}
-									footer={false}
-								>
-									<div className={scss.modal_text}>
-										<p>Вы уверены, что хотите выйти?</p>
-									</div>
-									<div className={scss.footer_modal}>
-										<button onClick={() => setUserExit(false)}>Отменить</button>
-										<button
-											onClick={() => {
-												setUserExit(false);
-												navigate('/auth/login');
-											}}
-										>
-											Выйти
-										</button>
+								<Modal open={userExit} closable={false} footer={false}>
+									<div className={scss.modal_exit}>
+										<div className={scss.modal_text}>
+											<p>Вы уверены, что хотите выйти?</p>
+										</div>
+										<div className={scss.footer_modal}>
+											<button onClick={() => setUserExit(false)}>
+												Отменить
+											</button>
+											<button
+												onClick={() => {
+													setUserExit(false);
+													navigate('/auth/login');
+												}}
+											>
+												Выйти
+											</button>
+										</div>
 									</div>
 								</Modal>
 							</nav>

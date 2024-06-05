@@ -72,7 +72,7 @@ const Welcome: FC = () => {
 									<p>Начните продавать свои книги на eBook</p>
 									<button
 										onClick={() => {
-											navigate('registration');
+											navigate('/auth/login');
 										}}
 									>
 										Стать продавцом

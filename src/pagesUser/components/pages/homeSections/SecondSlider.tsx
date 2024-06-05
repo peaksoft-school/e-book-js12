@@ -62,7 +62,7 @@ const SecondSlider: FC = () => {
 	};
 
 	return (
-		<section className="SecondSliderSection">
+		<section id="Ebook" className="SecondSliderSection">
 			<div className="container">
 				<div className="content">
 					<h2>Электронные книги</h2>
