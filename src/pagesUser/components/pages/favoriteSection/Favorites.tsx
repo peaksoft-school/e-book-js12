@@ -72,11 +72,10 @@ const FavoritSection: FC<BookId> = () => {
 			}
 		}
 	};
-	
 
 	return (
 		<>
-			<section className={scss.FavoritePage}>
+			<section className={scss.FavoritesSection}>
 				<div className="container">
 					<div className={scss.content}>
 						<div className={scss.favorite_nav_link}>

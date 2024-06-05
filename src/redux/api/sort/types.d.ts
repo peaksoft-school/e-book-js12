@@ -17,7 +17,7 @@ export namespace SORT {
 	type PostSortResponse = {
 		totalNumberOfBooks: number;
 		totalPages: number;
-		books: TypeDataBook[]
+		books: TypeDataBook[];
 	};
 	type TypeDataBook = {
 		id: number;
@@ -28,7 +28,7 @@ export namespace SORT {
 		discount: number;
 		isAudioBook: boolean;
 		inFavorites: boolean;
-	}
+	};
 	type PostSortRequest = {
 		genres: string[];
 		bookTypes: string[];

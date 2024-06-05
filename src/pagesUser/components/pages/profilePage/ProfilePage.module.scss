@@ -1,210 +1,214 @@
-.section_profile {
-	justify-content: center;
-	align-items: center;
-	width: 100%;
-	margin-top: 10px;
-	padding-bottom: 100px;
-
-	.section_new_password {
-		@media (max-width: 700px) {
-			margin-top: 100px;
-		}
-
-		.new_password {
-			max-width: 600px;
+.ProfileSection {
+	.content {
+		.section_profile {
+			justify-content: center;
+			align-items: center;
 			width: 100%;
+			margin-top: 10px;
+			padding-bottom: 100px;
 
-			height: 164px;
-			top: 391px;
-			left: 80px;
-			gap: 0px;
-			border: 1px 0px 0px 0px;
-			opacity: 0px;
-
-			.input_new_password {
-				padding-bottom: 20px;
-				width: 514px;
-
-				@media (max-width: 1048px) {
-					width: 400px;
-				}
-				@media (max-width: 848px) {
-					width: 340px;
-				}
-				@media (max-width: 758px) {
-					width: 270px;
-				}
-
+			.section_new_password {
 				@media (max-width: 700px) {
+					margin-top: 100px;
+				}
+
+				.new_password {
+					max-width: 600px;
+					width: 100%;
+
+					height: 164px;
+					top: 391px;
+					left: 80px;
+					gap: 0px;
+					border: 1px 0px 0px 0px;
+					opacity: 0px;
+
+					.input_new_password {
+						padding-bottom: 20px;
+						width: 514px;
+
+						@media (max-width: 1048px) {
+							width: 400px;
+						}
+						@media (max-width: 848px) {
+							width: 340px;
+						}
+						@media (max-width: 758px) {
+							width: 270px;
+						}
+
+						@media (max-width: 700px) {
+						}
+					}
+
+					.current_password {
+						margin-bottom: 8px;
+						font-family: Open Sans;
+						font-size: 16px;
+						font-weight: 400;
+						line-height: 20.8px;
+						text-align: left;
+
+						color: #969696;
+					}
+					.dowland_new_password {
+						margin-bottom: 8px;
+						font-family: Open Sans;
+						font-size: 16px;
+						font-weight: 400;
+						line-height: 20.8px;
+						text-align: left;
+
+						color: #969696;
+					}
+					.confirm_password {
+						margin-bottom: 8px;
+						font-family: Open Sans;
+						font-size: 16px;
+						font-weight: 400;
+						line-height: 20.8px;
+						text-align: left;
+
+						color: #969696;
+					}
+				}
+
+				.change_password {
+					font-family: Open Sans;
+					font-size: 18px;
+					font-weight: 600;
+					line-height: 24.51px;
+					text-align: left;
+					padding-bottom: 30px;
 				}
 			}
 
-			.current_password {
-				margin-bottom: 8px;
-				font-family: Open Sans;
-				font-size: 16px;
-				font-weight: 400;
-				line-height: 20.8px;
-				text-align: left;
+			.profile_info_name {
+				max-width: 1200px;
+				@media (max-width: 655px) {
+					flex-direction: column;
+				}
 
-				color: #969696;
-			}
-			.dowland_new_password {
-				margin-bottom: 8px;
-				font-family: Open Sans;
-				font-size: 16px;
-				font-weight: 400;
-				line-height: 20.8px;
-				text-align: left;
+				.profile_box {
+					display: flex;
+					justify-content: space-between;
 
-				color: #969696;
-			}
-			.confirm_password {
-				margin-bottom: 8px;
-				font-family: Open Sans;
-				font-size: 16px;
-				font-weight: 400;
-				line-height: 20.8px;
-				text-align: left;
+					@media (max-width: 700px) {
+						display: inline-block;
+					}
+					@media (max-width: 700px) {
+						justify-content: center;
+					}
+				}
 
-				color: #969696;
-			}
-		}
+				.profile_name {
+					width: 600px;
 
-		.change_password {
-			font-family: Open Sans;
-			font-size: 18px;
-			font-weight: 600;
-			line-height: 24.51px;
-			text-align: left;
-			padding-bottom: 30px;
-		}
-	}
+					@media (max-width: 1056px) {
+						width: 400px;
+					}
+					@media (max-width: 905px) {
+						width: 300px;
+					}
+					@media (max-width: 566px) {
+						width: 100%;
+					}
 
-	.profile_info_name {
-		max-width: 1200px;
-		@media (max-width: 655px) {
-			flex-direction: column;
-		}
+					.text_tree {
+						padding-bottom: 30px;
+						font-family: Open Sans;
+						font-size: 18px;
+						font-weight: 600;
+						line-height: 24.51px;
+						text-align: left;
+					}
 
-		.profile_box {
-			display: flex;
-			justify-content: space-between;
+					.name_info_text {
+						margin-bottom: 8px;
+						font-family: Open Sans;
+						font-size: 16px;
+						font-weight: 400;
+						line-height: 20.8px;
+						text-align: left;
 
-			@media (max-width: 700px) {
-				display: inline-block;
-			}
-			@media (max-width: 700px) {
-				justify-content: center;
-			}
-		}
+						color: #969696;
+					}
 
-		.profile_name {
-			width: 600px;
+					.email_text {
+						margin-bottom: 8px;
+						font-family: Open Sans;
+						font-size: 16px;
+						font-weight: 400;
+						line-height: 20.8px;
+						text-align: left;
 
-			@media (max-width: 1056px) {
-				width: 400px;
-			}
-			@media (max-width: 905px) {
-				width: 300px;
-			}
-			@media (max-width: 566px) {
-				width: 100%;
-			}
+						color: #969696;
+					}
+					.tex {
+						margin-top: 50px;
+						font-family: Open Sans;
+						font-size: 16px;
+						font-weight: 400;
+						line-height: 20.8px;
+						text-align: left;
 
-			.text_tree {
-				padding-bottom: 30px;
-				font-family: Open Sans;
-				font-size: 18px;
-				font-weight: 600;
-				line-height: 24.51px;
-				text-align: left;
+						color: #f10000;
+						cursor: pointer;
+					}
+
+					.input_name_info {
+						padding-bottom: 20px;
+					}
+				}
 			}
 
-			.name_info_text {
-				margin-bottom: 8px;
-				font-family: Open Sans;
-				font-size: 16px;
-				font-weight: 400;
-				line-height: 20.8px;
-				text-align: left;
+			.button_section {
+				display: flex;
+				justify-content: end;
 
-				color: #969696;
-			}
+				margin-top: 200px;
+				.custom_white_button {
+					width: 130px;
+					height: 42px;
+					left: 1055px;
+					right: 255px;
+					top: 721px;
+					bottom: 363px;
 
-			.email_text {
-				margin-bottom: 8px;
-				font-family: Open Sans;
-				font-size: 16px;
-				font-weight: 400;
-				line-height: 20.8px;
-				text-align: left;
+					border: none;
+					color: rgb(34, 34, 34);
+					font-size: 16px;
+					cursor: pointer;
+					background-color: rgb(248, 248, 248);
+					&:focus {
+						outline: none;
+					}
+				}
+				.custom_black_button {
+					width: 136px;
+					height: 42px;
+					left: 1225px;
+					right: 79px;
+					top: 721px;
+					bottom: 363px;
 
-				color: #969696;
-			}
-			.tex {
-				margin-top: 50px;
-				font-family: Open Sans;
-				font-size: 16px;
-				font-weight: 400;
-				line-height: 20.8px;
-				text-align: left;
+					font-weight: 600;
+					border: none;
+					color: rgb(255, 255, 255);
+					font-family: Open Sans;
+					font-size: 16px;
+					font-weight: 600;
+					line-height: 22px;
+					cursor: pointer;
+					background: rgb(28, 28, 28);
+				}
 
-				color: #f10000;
-				cursor: pointer;
-			}
-
-			.input_name_info {
-				padding-bottom: 20px;
-			}
-		}
-	}
-
-	.button_section {
-		display: flex;
-		justify-content: end;
-
-		margin-top: 200px;
-		.custom_white_button {
-			width: 130px;
-			height: 42px;
-			left: 1055px;
-			right: 255px;
-			top: 721px;
-			bottom: 363px;
-
-			border: none;
-			color: rgb(34, 34, 34);
-			font-size: 16px;
-			cursor: pointer;
-			background-color: rgb(248, 248, 248);
-			&:focus {
-				outline: none;
-			}
-		}
-		.custom_black_button {
-			width: 136px;
-			height: 42px;
-			left: 1225px;
-			right: 79px;
-			top: 721px;
-			bottom: 363px;
-
-			font-weight: 600;
-			border: none;
-			color: rgb(255, 255, 255);
-			font-family: Open Sans;
-			font-size: 16px;
-			font-weight: 600;
-			line-height: 22px;
-			cursor: pointer;
-			background: rgb(28, 28, 28);
-		}
-
-		.button_note {
-			margin-right: 30px;
-			@media (max-width: 400px) {
-				margin-right: 10px;
+				.button_note {
+					margin-right: 30px;
+					@media (max-width: 400px) {
+						margin-right: 10px;
+					}
+				}
 			}
 		}
 	}

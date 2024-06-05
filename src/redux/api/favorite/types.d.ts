@@ -9,7 +9,7 @@ namespace FAVORITE {
 	}[];
 	type GetAllBooksInFavoriteRequest = void;
 
-	type GetCountOfBooksResponse = number
+	type GetCountOfBooksResponse = number;
 	type GetCountOfBooksRequest = void;
 
 	type ClearFavoriteResponse = {

@@ -16,7 +16,7 @@ const LayoutVendor = () => {
 			<div className={scss.layout}>
 				{location.pathname === '/vendor/registration' ||
 				location.pathname === '/vendor/login' ||
-				location.pathname === '/vendor/' ? null : (
+				location.pathname === '/vendor' ? null : (
 					<>
 						<Header />
 					</>
@@ -25,7 +25,7 @@ const LayoutVendor = () => {
 					<Routes>
 						<Route path="/" element={<HomePage />} />
 						<Route path="/home" element={<VendorsBooks />} />
-						<Route path="/:id" element={<AboutBook />} />
+						<Route path="/home/:id" element={<AboutBook />} />
 						<Route path="/addBook" element={<BookAddSection />} />
 						<Route path="/profile" element={<ProfileVendor />} />
 					</Routes>
