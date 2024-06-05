@@ -218,6 +218,7 @@ const Header = () => {
 											}}
 											footer={[
 												<button
+													className={scss.button_add_promo}
 													type="submit"
 													key="submit"
 													onClick={() => {
