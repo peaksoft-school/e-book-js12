@@ -124,9 +124,7 @@ const VendorsBooks: FC = () => {
 									<ThreeDotIcon />
 								</div>
 								{bookoId === book.id ? (
-									<div
-										className={` ${isOpen ? scss.is_open : scss.close}`}
-									>
+									<div className={` ${isOpen ? scss.is_open : scss.close}`}>
 										<ul>
 											<li onClick={() => setIsOpen(false)}>
 												<span>

@@ -11,7 +11,7 @@ interface CustomAudioDownloadInputProps {
 const CustomAudioDownloadInput: FC<CustomAudioDownloadInputProps> = ({
 	accept,
 	onChange,
-	setDuration,
+	setDuration
 }) => {
 	const [isFileUploaded, setIsFileUploaded] = useState(false);
 	const inputRef = useRef<HTMLInputElement>(null);

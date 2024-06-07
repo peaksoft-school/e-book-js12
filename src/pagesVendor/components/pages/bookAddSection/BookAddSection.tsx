@@ -265,15 +265,14 @@ const BookAddSection = () => {
 		setMinutsValue(minutes.toFixed());
 		setSecondValue(seconds.toFixed());
 	};
-		if (modal === true) {
-			setTimeout(() => {
-				setModal(false);
-			}, 3000);
-		}
+	if (modal === true) {
+		setTimeout(() => {
+			setModal(false);
+		}, 3000);
+	}
 
 	useEffect(() => {
 		convertSecondsToHoursMinutesAndSeconds(duration);
-	
 	}, [duration]);
 
 	return (
