@@ -5,17 +5,27 @@ import { IconDownload, IconDownloaded } from '@/src/assets/icons';
 interface CustomAudioDownloadInputProps {
 	accept: string;
 	onChange: (file: File) => void;
+	setDuration: React.Dispatch<React.SetStateAction<number>>;
 }
 
 const CustomAudioDownloadInput: FC<CustomAudioDownloadInputProps> = ({
 	accept,
-	onChange
+	onChange,
+	setDuration,
 }) => {
 	const [isFileUploaded, setIsFileUploaded] = useState(false);
 	const inputRef = useRef<HTMLInputElement>(null);
 
 	const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
 		const file = event.target.files && event.target.files[0];
+		console.log(file, 'input');
+		console.log(file);
+		if (file) {
+			const audio = new Audio(URL.createObjectURL(file));
+			audio.addEventListener('loadedmetadata', () => {
+				setDuration(audio.duration);
+			});
+		}
 		if (file) {
 			onChange(file);
 			setIsFileUploaded(true);

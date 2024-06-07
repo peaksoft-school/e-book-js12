@@ -9,7 +9,7 @@ import {
 	IconWhiteCircle,
 	IconWhiteSquare
 } from '@/src/assets/icons';
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
 import CustomUserNameInput from '@/src/ui/customInpute/CustomUserNameInput';
 import { Modal } from 'antd';
 import CustomBasketButton from '@/src/ui/customButton/CustomBasketButton';
@@ -17,7 +17,10 @@ import CustomAudioDownloadInput from '@/src/ui/customAudioInput/CustomAudioDownl
 import CustomPDFDownloadInput from '@/src/ui/customPDFInput/CustomPDFDownloadInput';
 import { Link } from 'react-router-dom';
 import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
-import { useAddBookVendorMutation } from '@/src/redux/api/addBookVendor';
+import {
+	useAddBookVendorMutation,
+	usePostFileMutation
+} from '@/src/redux/api/addBookVendor';
 import CustomAddPhoto from '@/src/ui/customAddPhoto/CustomAddPhoto';
 interface TypeJenre {
 	jenreId: number;
@@ -31,20 +34,24 @@ interface TypeLanguage {
 	language: string;
 	languageName: string;
 }
-interface PhotosState {
-	main: File | null;
-	second: File | null;
-	third: File | null;
-}
 
 const BookAddSection = () => {
 	const [clickRadio, setClickRadio] = useState(true);
 	const [audioBook, setAudioBook] = useState(false);
 	const [ebook, setEBook] = useState(false);
 	const [modal, setModal] = useState(false);
+	const [delPhoto, setDelPhoto] = useState(false);
 	const [iconjenre, setIconJenre] = useState(false);
-	const [testFile, setTestFile] = useState<string>();
-	const [secondTest, setSecondTest] = useState<string>();
+	const [firstPhoto, setFirstPhoto] = useState<string>('');
+	const [secondPhoto, setSecondPhoto] = useState<string>('');
+	const [audioFileFragment, setAudioFileFragment] = useState('');
+	const [audioFile, setAudioFile] = useState('');
+	const [duration, setDuration] = useState(0);
+	const [hourValue, setHourValue] = useState('');
+	const [minutsValue, setMinutsValue] = useState('');
+	const [secondValue, setSecondValue] = useState('');
+	const [pdfFileName, setPdfFileName] = useState<File>();
+	const [postFile] = usePostFileMutation();
 
 	const [selectLanguage, setSelectLanguage] = useState(false);
 
@@ -56,8 +63,7 @@ const BookAddSection = () => {
 		languageName: 'Русский язык'
 	});
 
-	const [bookType, setBookType] = useState('');
-	console.log(bookType);
+	const [bookType, setBookType] = useState('PAPER_BOOK');
 
 	const [clickBestseller, setClickBestseller] = useState(false);
 
@@ -65,16 +71,12 @@ const BookAddSection = () => {
 
 	const [description, setDescription] = useState('');
 
-	const [pdfFile, setPdfFile] = useState<File | null>(null);
-	console.log(pdfFile);
+	const [pdfFile, setPdfFile] = useState(' ');
 	const { register, handleSubmit, reset } = useForm();
 
-	const [fragment, setFragment] = useState('');
+	const [fragment, setFragment] = useState(' ');
 
 	const [addBookVendor] = useAddBookVendorMutation();
-
-	const [photos, setPhotos] = useState([]);
-	const song = JSON.stringify(photos);
 
 	const jenreData = [
 		{
@@ -151,85 +153,74 @@ const BookAddSection = () => {
 	];
 
 	const onSubmit: SubmitHandler<FieldValues> = async (book) => {
-		console.log(book);
-
-		// const newBook = {
-		// 	multipartFiles: [testFile, secondTest],
-		// 	title: book.title,
-		// 	authorsFullName: book.authorsFullName,
-		// 	publishingHouse: book.publishingHouse,
-		// 	description: description,
-		// 	fragment: fragment,
-		// 	publishedYear: book.publishedYear,
-		// 	volume: book.volume,
-		// 	amountOfBook: book.amountOfBook,
-		// 	discount: book.discount,
-		// 	price: book.price,
-		// 	bestseller: clickBestseller
-		// };
 		const newUpDateBook = {
-			imageUrls: [song],
-			fragmentAudUrl: '',
-			fullAudUrl: '',
-			pdfUrl: '',
-			duration: 0,
+			imageUrls: [firstPhoto, secondPhoto],
+			fragmentAudUrl: audioFileFragment,
+			fullAudUrl: audioFile,
+			pdfUrl: pdfFile,
+			duration: duration,
 			title: book.title,
 			authorsFullName: book.authorsFullName,
-			publishingHouse: book.publishingHouse,
+			publishingHouse: book.publishingHouse !== '' ? book.publishingHouse : ' ',
 			description: description,
 			fragment: fragment,
 			publishedYear: book.publishedYear,
-			volume: book.volume,
+			volume: book.volume !== '' ? book.volume : 0,
 			amountOfBook: book.amountOfBook,
 			discount: book.discount,
 			price: book.price,
 			bestseller: clickBestseller
 		};
-		console.log(newUpDateBook);
 
-		await addBookVendor({
+		const result = await addBookVendor({
 			newUpDateBook,
-			genre: selectDataJenre?.englishName,
-			language: languageSeleced?.language,
+			genre: selectDataJenre!.englishName,
+			language: languageSeleced!.language,
 			bookType: bookType
 		}).unwrap();
-		reset();
-	};
 
-	const handleFileChange = (file: File) => {
-		setPdfFile(file);
-	};
-
-	const handlePhotoChange = (
-		e: ChangeEvent<HTMLInputElement>,
-		position: keyof PhotosState
-	) => {
-		const file = e.target.files ? e.target.files[0] : null;
-		setTestFile(file);
-		if (file) {
-			const photoURL = URL.createObjectURL(file);
-			setPhotos((prevPhotos) => ({
-				...prevPhotos,
-				[position]: photoURL
-			}));
-			// setTestFile(photoURL);
+		if (result.httpStatus === 'OK') {
+			setModal(true);
+			reset();
+			setClickBestseller(false);
+			setFragment('');
+			setDescription('');
+			setPdfFile('');
+			setAudioFile('');
+			setAudioFileFragment('');
+			setFirstPhoto('');
+			setSecondPhoto('');
+			setDelPhoto(false);
 		}
 	};
-	const handleSecondPhotoChange = (
-		e: ChangeEvent<HTMLInputElement>,
-		position: keyof PhotosState
-	) => {
+
+	const handleFileChange = async (file: File) => {
+		setPdfFileName(file);
+		const result = await postFile(file);
+		if ('data' in result) {
+			const status = result.data.httpStatus;
+			if (status === 'OK') {
+				setPdfFile(result.data.message);
+			}
+		}
+	};
+
+	const handlePhotoChange = async (e: ChangeEvent<HTMLInputElement>) => {
 		const file = e.target.files ? e.target.files[0] : null;
-
-		if (file) {
-			const photoURL = URL.createObjectURL(file);
-			setSecondTest(file);
-			setPhotos((prevPhotos) => ({
-				...prevPhotos,
-				[position]: photoURL
-			}));
-
-			// setSecondTest(photoURL);
+		const result = await postFile(file!);
+		if ('data' in result) {
+			if (result.data.httpStatus === 'OK') {
+				setFirstPhoto(result.data.message);
+			}
+		}
+	};
+	const handleSecondPhotoChange = async (e: ChangeEvent<HTMLInputElement>) => {
+		const file = e.target.files ? e.target.files[0] : null;
+		const result = await postFile(file!);
+		if ('data' in result) {
+			if (result.data.httpStatus === 'OK') {
+				setSecondPhoto(result.data.message);
+			}
 		}
 	};
 
@@ -247,20 +238,58 @@ const BookAddSection = () => {
 		setLanguageSelected(findData);
 	};
 
+	const handleAudioFragmetChange = async (e: File) => {
+		const result = await postFile(e);
+		if ('data' in result) {
+			if (result.data.httpStatus === 'OK') {
+				setAudioFileFragment(result.data.message);
+			}
+		}
+	};
+
+	const handleAudioChange = async (e: File) => {
+		const result = await postFile(e);
+		if ('data' in result) {
+			if (result.data.httpStatus === 'OK') {
+				setAudioFile(result.data.message);
+			}
+		}
+	};
+
+	const convertSecondsToHoursMinutesAndSeconds = (totalSeconds: number) => {
+		const hours = Math.floor(totalSeconds / 3600);
+		totalSeconds %= 3600;
+		const minutes = Math.floor(totalSeconds / 60);
+		const seconds = totalSeconds % 60;
+		setHourValue(hours.toFixed());
+		setMinutsValue(minutes.toFixed());
+		setSecondValue(seconds.toFixed());
+	};
+		if (modal === true) {
+			setTimeout(() => {
+				setModal(false);
+			}, 3000);
+		}
+
+	useEffect(() => {
+		convertSecondsToHoursMinutesAndSeconds(duration);
+	
+	}, [duration]);
+
 	return (
 		<section className={scss.AddBookSection}>
 			<div className={scss.container}>
 				<form onSubmit={handleSubmit(onSubmit)} className={scss.content}>
 					<div className={scss.links}>
 						<Link
-							to={'/vendor'}
+							to={'/vendor/home'}
 							className={`${scss.link_to_home} ${location.pathname === '/vendor' ? scss.link_to_home_active : ''}`}
 						>
 							Главная
 						</Link>
 						/
 						<Link
-							to={'vendor/addBook'}
+							to={'/vendor/addBook'}
 							className={`${scss.link_to_addBook} ${location.pathname === '/addBook' ? scss.link_to_addBook_active : ''}`}
 						>
 							Добавить книгу
@@ -276,16 +305,20 @@ const BookAddSection = () => {
 							<div className={scss.container_add_photo}>
 								<div className={scss.card_first}>
 									<CustomAddPhoto
-										onChange={(e) => handlePhotoChange(e, 'main')}
+										onChange={(e) => handlePhotoChange(e)}
 										label="Главное фото"
+										setDelPhoto={setDelPhoto}
+										delPhoto={delPhoto}
 									/>
+									<p>Главное фото</p>
 								</div>
 								<div className={scss.card_second}>
 									<CustomAddPhoto
-										onChange={(e) => handleSecondPhotoChange(e, 'second')}
+										onChange={(e) => handleSecondPhotoChange(e)}
 										label="Фото 2"
+										delPhoto={delPhoto}
+										setDelPhoto={setDelPhoto}
 									/>
-
 									<p>2</p>
 								</div>
 							</div>
@@ -733,15 +766,15 @@ const BookAddSection = () => {
 											<div className={scss.duration}>
 												<div className={scss.input}>
 													<span>ч</span>
-													<input type="text" {...register('durationHours')} />
+													<input type="text" value={hourValue} readOnly />
 												</div>
 												<div className={scss.input}>
 													<span>мин</span>
-													<input type="text" {...register('durationMinutes')} />
+													<input type="text" value={minutsValue} readOnly />
 												</div>
 												<div className={scss.input}>
 													<span>сек</span>
-													<input type="text" {...register('durationSeconds')} />
+													<input type="text" value={secondValue} readOnly />
 												</div>
 											</div>
 										</label>
@@ -783,8 +816,11 @@ const BookAddSection = () => {
 											Загрузите фрагмент аудиозаписи
 											<div className={scss.audio_input}>
 												<CustomAudioDownloadInput
+													setDuration={() => {}}
 													accept="audio/*"
-													onChange={() => {}}
+													onChange={(e) => {
+														handleAudioFragmetChange(e);
+													}}
 												/>
 												<span>максимум 10 мин.</span>
 											</div>
@@ -793,8 +829,11 @@ const BookAddSection = () => {
 											Загрузите аудиозапись
 											<div className={scss.audio_input}>
 												<CustomAudioDownloadInput
+													setDuration={setDuration}
 													accept="audio/*"
-													onChange={() => {}}
+													onChange={(e) => {
+														handleAudioChange(e);
+													}}
 												/>
 											</div>
 										</label>
@@ -970,6 +1009,7 @@ const BookAddSection = () => {
 												<label
 													onClick={() => {
 														setClickBestseller(!clickBestseller);
+														setModal(true);
 													}}
 												>
 													<div className={scss.checkbox}>
@@ -1003,7 +1043,9 @@ const BookAddSection = () => {
 													onChange={handleFileChange}
 													accept="application/pdf"
 												/>
-												{pdfFile && <p>Выбранный файл: {pdfFile.name}</p>}
+												{pdfFileName && (
+													<p>Выбранный файл: {pdfFileName.name}</p>
+												)}
 											</div>
 										</div>
 									</div>
@@ -1013,23 +1055,15 @@ const BookAddSection = () => {
 
 						<div className={scss.btn_content}>
 							<CustomBasketButton
+								children={'Отправить'}
+								onClick={() => {}}
 								nameClass={scss.button}
 								type="submit"
-								onClick={() => {
-									// setModal(!modal);
-								}}
-							>
-								Отправить
-							</CustomBasketButton>
+							/>
 							{<></>}
 							<Modal
 								className={scss.modal_succes}
 								open={modal}
-								afterClose={() => {
-									setTimeout(() => {
-										setModal(false);
-									}, 4000);
-								}}
 								footer={false}
 								onCancel={() => setModal(false)}
 							>

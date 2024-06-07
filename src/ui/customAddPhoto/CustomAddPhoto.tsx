@@ -1,13 +1,20 @@
-import React, { ChangeEvent, useRef, useState } from 'react';
+import React, { ChangeEvent, useEffect, useRef, useState } from 'react';
 import scss from './CustomAddPhoto.module.scss';
 import { IconAddPhoto } from '@/src/assets/icons';
 
 interface CustomAddPhotoProps {
 	onChange: (event: ChangeEvent<HTMLInputElement>) => void;
 	label: string;
+	setDelPhoto: React.Dispatch<React.SetStateAction<boolean>>;
+	delPhoto: boolean;
 }
 
-const CustomAddPhoto: React.FC<CustomAddPhotoProps> = ({ onChange, label }) => {
+const CustomAddPhoto: React.FC<CustomAddPhotoProps> = ({
+	onChange,
+	label,
+	setDelPhoto,
+	delPhoto
+}) => {
 	const [image, setImage] = useState<string>('');
 	const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -24,6 +31,7 @@ const CustomAddPhoto: React.FC<CustomAddPhotoProps> = ({ onChange, label }) => {
 			reader.onload = (e) => {
 				if (e.target) {
 					setImage(e.target.result as string);
+					setDelPhoto(true);
 				}
 			};
 			reader.readAsDataURL(file);
@@ -31,8 +39,15 @@ const CustomAddPhoto: React.FC<CustomAddPhotoProps> = ({ onChange, label }) => {
 		}
 	};
 
+	useEffect(() => {
+		if (!delPhoto) {
+			setImage('');
+		}
+	}, [delPhoto]);
+
 	return (
 		<div
+			onClick={handleButtonClick}
 			className={scss.input_container}
 			style={{ backgroundImage: `url(${image})` }}
 		>
@@ -44,7 +59,7 @@ const CustomAddPhoto: React.FC<CustomAddPhotoProps> = ({ onChange, label }) => {
 			/>
 			{image ? null : (
 				<>
-					<div className={scss.img_container} onClick={handleButtonClick}>
+					<div className={scss.img_container}>
 						<IconAddPhoto />
 					</div>
 				</>
