@@ -67,6 +67,14 @@ const Header = () => {
 			}
 		}
 	};
+
+	const HandleExitVendor = () => {
+		setUserExit(!userExit);
+		localStorage.setItem('isVendor', 'false');
+		localStorage.setItem('isAdmin', 'false');
+		localStorage.setItem('isAuth', 'false');
+		localStorage.removeItem('token');
+	};
 	return (
 		<>
 			<header className={scss.Header}>
@@ -123,7 +131,7 @@ const Header = () => {
 													<hr />
 													<li
 														onClick={() => {
-															setUserExit(!userExit);
+															HandleExitVendor();
 															setIsUser(false);
 														}}
 													>
@@ -149,7 +157,7 @@ const Header = () => {
 											<button
 												onClick={() => {
 													setUserExit(false);
-													navigate('/vendor/login');
+													navigate('/auth/login');
 												}}
 											>
 												Выйти

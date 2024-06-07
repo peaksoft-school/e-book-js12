@@ -5,6 +5,12 @@ namespace ADDBOOKVENDOR {
 		message: string;
 	};
 	type AddBookVendorRequest = {
+		newUpDateBook: dataBook;
+		genre: string;
+		language: string;
+		bookType: string;
+	};
+	type dataBook = {
 		imageUrls: string[];
 		fragmentAudUrl: string;
 		fullAudUrl: string;
@@ -22,4 +28,11 @@ namespace ADDBOOKVENDOR {
 		price: number;
 		bestseller: boolean;
 	};
+
+	type PostFileResponse = {
+		httpStatus: string;
+		message: string;
+	};
+
+	type PostFileRequest = File;
 }
