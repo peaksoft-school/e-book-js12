@@ -41,7 +41,7 @@ const Login = () => {
 				localStorage.setItem('isVendor', 'false');
 				localStorage.setItem('isAdmin', 'true');
 				reset();
-				navigate('/admin/');
+				navigate('/admin');
 			}
 		}
 	};

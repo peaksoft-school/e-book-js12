@@ -2,6 +2,7 @@
 	.container {
 		padding-inline: 20px;
 		margin: 0px auto;
+		margin-bottom: 50px;
 		.total_quantity {
 			display: flex;
 			gap: 22px;
@@ -120,6 +121,8 @@
 					gap: 7px;
 
 					h3 {
+						max-width: 160px;
+						width: 100%;
 						color: rgb(34, 34, 34);
 						font-family: 'Open Sans', sans-serif;
 						font-size: 14px;
@@ -127,6 +130,8 @@
 						line-height: 120%;
 						text-align: left;
 						text-transform: uppercase;
+						word-wrap: break-word;
+						white-space: pre-wrap;
 
 						@media (max-width: 830px) {
 							font-size: 8px;
@@ -140,9 +145,12 @@
 					}
 
 					.date_and_price {
+						max-width: 200px;
+						width: 100%;
 						display: flex;
 						align-items: center;
 						justify-content: space-between;
+						gap: 15px;
 						max-width: 197px;
 						width: 100%;
 
@@ -153,6 +161,9 @@
 							font-weight: 400;
 							line-height: 120%;
 							text-align: left;
+
+							word-wrap: break-word;
+							white-space: pre-wrap;
 
 							@media (max-width: 830px) {
 								font-size: 10px;
@@ -167,6 +178,8 @@
 						}
 
 						.price {
+							max-width: 90px;
+							width: 100%;
 							color: rgb(255, 76, 0);
 							font-family: 'Open Sans', sans-serif;
 							font-size: 16px;

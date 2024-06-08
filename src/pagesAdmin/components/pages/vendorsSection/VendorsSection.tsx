@@ -27,6 +27,7 @@ const VendorsSection = () => {
 		setSelectedVendor(vendor);
 		setIsModalOpen(true);
 	};
+
 	const handleOk = () => {
 		setSelectedVendor(null);
 		setIsModalOpen(false);
@@ -51,9 +52,11 @@ const VendorsSection = () => {
 								<th>Количество книг</th>
 								<th></th>
 							</tr>
-							{data?.content.map((item) => (
+						</thead>
+						<tbody>
+							{data?.content.map((item, index) => (
 								<tr key={item.id} className={scss.vendors}>
-									<td>{item.id}</td>
+									<td>{index + 1}</td>
 									<td onClick={() => navigate(`/admin/vendors/${item.id}`)}>
 										{item.fullName}
 									</td>
@@ -77,8 +80,7 @@ const VendorsSection = () => {
 									</td>
 								</tr>
 							))}
-						</thead>
-						<tbody></tbody>
+						</tbody>
 					</table>
 				</div>
 			</div>

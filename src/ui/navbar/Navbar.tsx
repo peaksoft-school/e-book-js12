@@ -24,7 +24,7 @@ const Navbar = () => {
 						className={`${scss.links} ${location.pathname === '/admin' || location.pathname.startsWith('/admin/inner') ? scss.links_active : ''}`}
 					>
 						<li
-							className={`${scss.li} ${location.pathname === '/admin' || location.pathname.startsWith('/admin/inner') ? scss.li_active : ''}`}
+							className={`${scss.li} ${location.pathname === '/admin' || location.pathname === '/admin/' || location.pathname.startsWith('/admin/inner') ? scss.li_active : ''}`}
 						>
 							<IconWhiteApplicationsIcon />
 							<p> Заявки</p>

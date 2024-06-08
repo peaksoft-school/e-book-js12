@@ -11,7 +11,7 @@ import {
 	useGetBookByIdQuery,
 	useRejectBookMutation
 } from '@/src/redux/api/book';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 interface BookIdProps {
 	id: number;
@@ -54,6 +54,7 @@ const BookInfo: FC<BookIdProps> = () => {
 	const { data: book, isLoading } = useGetBookByIdQuery<GetResponse>(bookId);
 	const [approveBook] = useApproveBookMutation();
 	const [rejectBook] = useRejectBookMutation();
+	const navigate = useNavigate();
 
 	const handleApproveBook = async (id: number) => {
 		await approveBook(id);
@@ -77,7 +78,7 @@ const BookInfo: FC<BookIdProps> = () => {
 				<div className="container">
 					<div className={scss.content}>
 						<div className={scss.content_text}>
-							<p>Заявки </p>
+							<p onClick={() => navigate('/admin')}>Заявки </p>
 							<h4>/ {book.title}</h4>
 						</div>
 						<div className={scss.contents_book}>

@@ -183,7 +183,7 @@ const BooksSection: React.FC = () => {
 										isOpenBooksType ? scss.type_list : scss.none_books_type
 									}
 								>
-									{selectedType !== '' ? (
+									{selectedType !== ' ' ? (
 										<>
 											<p onClick={() => handleGenreSelect(null)}>Все</p>
 											<hr />

@@ -4,17 +4,38 @@ import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { IconPencil, IconX } from '@tabler/icons-react';
 import { useGetReceiptRequestedBooksQuery } from '@/src/redux/api/innerPage';
+import { useRejectBookMutation } from '@/src/redux/api/book';
 
 const InnerSection = () => {
 	const navigate = useNavigate();
 	const [isOpen, setIsOpen] = useState(false);
 	const [idBook, setIdBook] = useState<null | number>(null);
 	const { data: books, refetch } = useGetReceiptRequestedBooksQuery();
+	// const [dataSplint, setDataSplint] = useState<string>();
+	const [rejectBookById] = useRejectBookMutation();
+
 	console.log(books);
+	// const func = () => {
+	// 	if (dataSplint !== null) {
+	// 		const dataBook = dataSplint!.split('T')[0];
+	// 		console.log(dataBook);
+	// 	}
+	// };
+
+	// useEffect(() => {
+	// 	func();
+	// }, []);
 
 	const handleBookClick = (id: number) => {
 		navigate(`/admin/inner/${id}`);
 		refetch();
+	};
+
+	const handleRejectBook = async (id: number) => {
+		const newData = {
+			rejectReason: ''
+		};
+		await rejectBookById({ newData, id });
 	};
 
 	return (
@@ -31,6 +52,7 @@ const InnerSection = () => {
 				</div>
 				<div className={scss.content}>
 					{books?.books.map((book) => (
+						// setDataSplint(book.createdAt),
 						<div
 							key={book.id}
 							className={`${scss.book} ${book.isViewed ? '' : scss.unviewed}`}
@@ -54,7 +76,12 @@ const InnerSection = () => {
 											Редактировать
 										</li>
 										<hr />
-										<li onClick={() => setIsOpen(false)}>
+										<li
+											onClick={() => {
+												setIsOpen(false);
+												handleRejectBook(book.id);
+											}}
+										>
 											<span>
 												<IconX />
 											</span>
@@ -73,8 +100,8 @@ const InnerSection = () => {
 								<div className={scss.info_book}>
 									<h3>{book.title}</h3>
 									<div className={scss.date_and_price}>
-										<p>{book.createdAt}</p>
-										<p className={scss.price}>{book.price} c</p>
+										<p>s</p>
+										<p className={scss.price}>{book.price} $</p>
 									</div>
 								</div>
 							</div>

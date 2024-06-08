@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState } from 'react';
 import { Modal } from 'antd';
 import scss from './AboutVendorsBooks.module.scss';
@@ -8,21 +9,6 @@ import { IconPencil, IconX } from '@tabler/icons-react';
 import { useGetAllVendorBooksQuery } from '@/src/redux/api/book';
 import { useDeleteVendorProfileMutation } from '@/src/redux/api/vendors';
 import { useNavigate, useParams } from 'react-router-dom';
-
-interface Book {
-	id: number;
-	imageLink: string;
-	bookName: string;
-	publishedYear: number;
-	price: number;
-	quantityOfFavorite: number;
-	quantityOfBasket: number;
-	discount: number;
-	priceWithDiscount: number;
-}
-interface Vendor {
-	id: number;
-}
 
 const AboutVendorsBooks = () => {
 	const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -85,7 +71,7 @@ const AboutVendorsBooks = () => {
 					<div className={scss.click}>
 						<p onClick={toggleTypeList}>
 							<span>{bookTypeText}</span>
-							{isOpenBooksType ? <UpIcon /> : <IconArrowBottom />}
+							<span>{isOpenBooksType ? <UpIcon /> : <IconArrowBottom />}</span>
 						</p>
 
 						<div
