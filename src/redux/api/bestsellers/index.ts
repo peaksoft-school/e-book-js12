@@ -11,8 +11,15 @@ const api = index.injectEndpoints({
 				method: 'GET'
 			}),
 			providesTags: ['book']
-		})
+		}),
+		getEBook: build.query<EBOOK.GetEBookResponse, EBOOK.GetEBookRequest>({
+			query: () => ({
+				url: '/api/book/getAllElectronicBooks',
+				method: 'GET'
+			}),
+			providesTags: ['book']
+		}),
 	})
 });
 
-export const { useGetAllBestsellersQuery } = api;
+export const { useGetAllBestsellersQuery ,	useGetEBookQuery, } = api;

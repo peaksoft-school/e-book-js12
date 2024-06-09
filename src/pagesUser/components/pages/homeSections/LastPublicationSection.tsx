@@ -14,7 +14,7 @@ const LastPublicationSection: FC = () => {
 		page: 1,
 		size: 1,
 		genre: state
-	});
+	})
 	console.log(data);
 	const [navClicked, setNavClicked] = useState(() => {
 		const savedNavClicked = localStorage.getItem('navClicked');

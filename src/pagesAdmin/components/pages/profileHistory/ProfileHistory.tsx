@@ -1,40 +1,20 @@
 import scss from './ProfileHistory.module.scss';
-import book from '../../../../assets/booksImg/book.png';
-
-const infos = [
-	{
-		id: 1,
-		image: book,
-		nameBook: 'Гарри Поттер и тайна...',
-		name: 'Роулинг Джоан Кэтлин',
-		quantity: '1шт',
-		price: '255c',
-		data: '12.12.21',
-		state: 'Завершен'
-	},
-	{
-		id: 1,
-		image: book,
-		nameBook: 'Гарри Поттер и тайна...',
-		name: 'Роулинг Джоан Кэтлин',
-		quantity: '1шт',
-		price: '255c',
-		data: '12.12.21',
-		state: 'Завершен'
-	},
-	{
-		id: 1,
-		image: book,
-		nameBook: 'Гарри Поттер и тайна...',
-		name: 'Роулинг Джоан Кэтлин',
-		quantity: '1шт',
-		price: '255c',
-		data: '12.12.21',
-		state: 'Завершен'
-	}
-];
+import {
+	useGetAllFavoriteQuery,
+	useGetAllHistoryActionQuery,
+	useGetBooksInBasketQuery
+} from '@/src/redux/api/userHistory';
+import { useState } from 'react';
+import { useParams } from 'react-router-dom';
 
 const ProfileHistory = () => {
+	const params = useParams();
+	const locationId = Number(params.fullName);
+	const [activeTab, setActiveTab] = useState('history');
+	const { data: historyData } = useGetAllHistoryActionQuery(locationId);
+	const { data: favoriteData } = useGetAllFavoriteQuery(locationId);
+	const { data: basketData } = useGetBooksInBasketQuery(locationId);
+
 	return (
 		<div className={scss.profile_history}>
 			<div className="container">
@@ -59,33 +39,152 @@ const ProfileHistory = () => {
 					<div className={scss.prof_info_history}>
 						<div className={scss.prof_line_prof}>
 							<div className={scss.text_book}>
-								<p>Купленные (123 книг)</p>
-								<p>В избранном (12 книг)</p>
-								<p>В корзине (3 книг)</p>
+								<p
+									onClick={() => setActiveTab('history')}
+									className={`${scss.navigate_books_history} ${activeTab === 'history' ? scss.navigate_books_active_history : ''}`}
+								>
+									История({historyData?.length} книг)
+								</p>
+								<p
+									onClick={() => setActiveTab('favorites')}
+									className={`${scss.navigate_books} ${activeTab === 'favorites' ? scss.navigate_books_active : ''}`}
+								>
+									В избранном ({favoriteData?.length} книг)
+								</p>
+								<p
+									onClick={() => setActiveTab('cart')}
+									className={`${scss.navigate_books_cor} ${activeTab === 'cart' ? scss.navigate_books_active_cor : ''}`}
+								>
+									В корзине ({basketData?.length} книг)
+								</p>
 							</div>
 						</div>
 						<div className={scss.prof_map_section}>
-							{infos.map((item) => (
-								<div className={scss.line}>
-									<div className={scss.book_map_info}>
-										<img className={scss.book_image} src={item.image} alt="#" />
-										<div className={scss.book_flex}>
-											<div className={scss.flex_book}>
-												<div className={scss.book_name_end}>
-													<p>{item.nameBook}</p>
-													<p className={scss.book_name_people}>{item.name}</p>
+							{activeTab === 'history' && (
+								<div>
+									{historyData?.map((item) => (
+										<div key={item.id} className={scss.line}>
+											<div className={scss.book_map_info}>
+												<img
+													className={scss.book_image}
+													src={item.imageUrl}
+													alt="book"
+												/>
+												<div className={scss.book_flex}>
+													<div className={scss.flex_book}>
+														<div className={scss.book_name_end}>
+															<p>{item.title}</p>
+															<p className={scss.book_name_people}>
+																{item.authorsFullName}
+															</p>
+														</div>
+													</div>
+													<div className={scss.flex_book}>
+														<p className={scss.book_quantity}>
+															{item.quantity}
+														</p>
+														<div className={scss.scitd_one}>
+															<p className={scss.pprom}>
+																Промокод {item.discount}%
+															</p>
+															<div className={scss.scitd}>
+																<p>(-{item.priceWithDiscount})</p>
+																<p className={scss.book_price}>{item.price}</p>
+															</div>
+														</div>
+														<p className={scss.book_data}>{item.createdAt}</p>
+														<p className={scss.book_state}>
+														Завершен
+														</p>
+													</div>
 												</div>
 											</div>
-											<div className={scss.flex_book}>
-												<p className={scss.book_quantity}>{item.quantity}</p>
-												<p className={scss.book_price}>{item.price}</p>
-												<p className={scss.book_data}>{item.data}</p>
-												<p className={scss.book_state}>{item.state}</p>
+										</div>
+									))}
+								</div>
+							)}
+							{activeTab === 'favorites' && (
+								<div>
+									{favoriteData?.map((item) => (
+										<div key={item.id} className={scss.line}>
+											<div className={scss.book_map_info}>
+												<img
+													className={scss.book_image}
+													src={item.imageUrl}
+													alt="book"
+												/>
+												<div className={scss.book_flex}>
+													<div className={scss.flex_book}>
+														<div className={scss.book_name_end}>
+															<p>{item.title}</p>
+															<p className={scss.book_name_people}>
+																{item.authorsFullName}
+															</p>
+														</div>
+													</div>
+													<div className={scss.flex_book}>
+														<p className={scss.book_quantity}>
+															{item.quantity}
+														</p>
+														<div className={scss.scitd_one}>
+															<p className={scss.pprom}>
+																Промокод {item.discount}%
+															</p>
+															<div className={scss.scitd}>
+																<p>(-{item.priceWithDiscount})</p>
+																<p className={scss.book_price}>{item.price}</p>
+															</div>
+														</div>
+														<p className={scss.book_data}>{item.createdAt}</p>
+														<p className={scss.book_state}></p>
+													</div>
+												</div>
 											</div>
 										</div>
-									</div>
+									))}
 								</div>
-							))}
+							)}
+							{activeTab === 'cart' && (
+								<div>
+									{basketData?.map((item) => (
+										<div key={item.id} className={scss.line}>
+											<div className={scss.book_map_info}>
+												<img
+													className={scss.book_image}
+													src={item.imageUrl}
+													alt="book"
+												/>
+												<div className={scss.book_flex}>
+													<div className={scss.flex_book}>
+														<div className={scss.book_name_end}>
+															<p>{item.title}</p>
+															<p className={scss.book_name_people}>
+																{item.authorsFullName}
+															</p>
+														</div>
+													</div>
+													<div className={scss.flex_book}>
+														<p className={scss.book_quantity}>
+															{item.quantity}
+														</p>
+														<div className={scss.scitd_one}>
+															<p className={scss.pprom}>
+																Промокод {item.discount}%
+															</p>
+															<div className={scss.scitd}>
+																<p>(-{item.priceWithDiscount})</p>
+																<p className={scss.book_price}>{item.price}</p>
+															</div>
+														</div>
+														<p className={scss.book_data}>{item.createdAt}</p>
+														<p className={scss.book_state}></p>
+													</div>
+												</div>
+											</div>
+										</div>
+									))}
+								</div>
+							)}
 						</div>
 					</div>
 				</div>

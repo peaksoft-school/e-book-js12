@@ -2,7 +2,6 @@
 @import 'slick-carousel/slick/slick-theme.css';
 .containers {
 	width: 100%;
-	height: 80vh;
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
@@ -33,9 +32,10 @@
 }
 
 .description-box .description {
-	margin-bottom: 10px;
+
 	width: 100%;
 	font-size: 11px;
+	overflow-wrap: break-word;
 }
 
 .box .price {
@@ -57,7 +57,6 @@
 }
 
 .description-box {
-	margin-bottom: 10px;
 	width: 100%;
 }
 
@@ -87,7 +86,7 @@
 
 .scroll-line {
 	position: absolute;
-	margin-top: 40%;
+	margin-top: 30%;
 	left: 70%;
 	transform: translateX(-50%);
 	width: calc(50% - 20px);
@@ -126,12 +125,15 @@
 	.containers {
 		display: inline-block;
 	}
-
+.slide{
+	top: 80px;
+}
 	.activeSlide {
 		transform: scale(0.8);
 	}
 	.content {
 		width: 100%;
+		height: 100%;
 	}
 
 	.box {
@@ -154,7 +156,7 @@
 		width: 60%;
 	}
 	.scroll-line {
-		margin-top: 0;
+		display: none;
 	}
 }
 
@@ -248,7 +250,7 @@
 		font-size: 14px;
 	}
 	.slide .name {
-		margin-bottom: 50px;
+		/* margin-bottom: 50px; */
 		font-size: 11px;
 	}
 	.slide .auth {
@@ -266,15 +268,16 @@
 
 @media screen and (max-width: 600px) {
 	.slide img {
-		width: 130px;
-		height: 208px;
+		width: 200px;
+		height: 300px;
 	}
 
 	.slick-list {
-		width: 28rem;
+		width: 30rem;
 	}
 
 	.slide {
+		top: 50px;
 		height: 100px;
 	}
 	.slide .price {
@@ -306,14 +309,14 @@
 		justify-content: center;
 	}
 }
-@media screen and (max-width: 450px) {
+@media screen and (max-width: 500px) {
 	.slide img {
-		width: 120px;
-		height: 200px;
+		width: 150px;
+		height: 250px;
 	}
 
 	.slick-list {
-		width: 24rem;
+		width: 27rem;
 	}
 
 	.slide .price {
