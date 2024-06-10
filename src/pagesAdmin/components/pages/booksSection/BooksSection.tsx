@@ -113,6 +113,10 @@ const BooksSection: React.FC = () => {
 		deleteBookById(id);
 	};
 
+	const handleBookClick = (id: number) => {
+		navigate(`/admin/books/${id}`);
+	};
+
 	const handlePostRequest = async () => {
 		const filteredBookTypes = selectedType !== null ? [selectedType] : [];
 		const filters = {
@@ -273,7 +277,10 @@ const BooksSection: React.FC = () => {
 									</ul>
 								</div>
 							) : null}
-							<div className={scss.book_content}>
+							<div
+								className={scss.book_content}
+								onClick={() => handleBookClick(book.bookId)}
+							>
 								<div className={scss.book_img}>
 									<img src={book.imageUrl} alt="" />
 								</div>

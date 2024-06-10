@@ -193,32 +193,24 @@ const AboutBook = () => {
 					<div className={scss.section_text_books}>
 						<div className={scss.section_show_info}>
 							<div className={scss.show_info_book}>
+								{book.bookType === 'PAPER_BOOK' && (
+									<p
+										className={!aboutBook ? scss.color_text : ''}
+										onClick={() => setAboutBook(false)}
+									>
+										О книге
+									</p>
+								)}
 								<p
-									className={`${aboutBook ? '' : scss.color_text}`}
-									onClick={() => {
-										setAboutBook(false);
-									}}
-								>
-									O книге
-								</p>
-								<p
-									className={`${aboutBook ? scss.color_text : ''}`}
-									onClick={() => {
-										setAboutBook(true);
-									}}
+									className={aboutBook ? scss.color_text : ''}
+									onClick={() => setAboutBook(true)}
 								>
 									Читать фрагмент
 								</p>
 							</div>
-							{aboutBook ? (
-								<>
-									<p className={scss.book_info}>{book.description}</p>
-								</>
-							) : (
-								<>
-									<p className={scss.book_info}>{book.fragment}</p>
-								</>
-							)}
+							<p className={scss.book_info}>
+								{aboutBook ? book.fragment || '' : book.description}
+							</p>
 						</div>
 						<div className={scss.info_img}>
 							<img src={book.imageUrlLast} alt="Book List" />

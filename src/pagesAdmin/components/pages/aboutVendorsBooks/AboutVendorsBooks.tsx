@@ -12,14 +12,22 @@ import { useNavigate, useParams } from 'react-router-dom';
 
 const AboutVendorsBooks = () => {
 	const [isOpen, setIsOpen] = useState<boolean>(false);
-	const [operationType, setOperationType] = useState('');
-	const [isOpenBooksType, setIsOpenBooksType] = useState(false);
-	const [isModalOpen, setIsModalOpen] = useState(false);
+	const [operationType, setOperationType] = useState<string>('ALL');
+	const [isOpenBooksType, setIsOpenBooksType] = useState<boolean>(false);
+	const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 	const [selectedVendor, setSelectedVendor] = useState<number | null>(null);
 	const [idBook, setIdBook] = useState<null | number>(null);
 	const navigate = useNavigate();
-	const { name } = useParams();
+	const { name } = useParams<{ name: string }>();
 	const vendorId = Number(name);
+
+	const filterBooks = [
+		{ id: 1, label: 'ALL', type: 'Все' },
+		{ id: 2, label: 'IN_BASKET', type: 'В корзине' },
+		{ id: 3, label: 'IN_FAVORITE', type: 'В избранном' },
+		{ id: 4, label: 'WITH_DISCOUNT', type: 'Со скидками' },
+		{ id: 5, label: 'SOLD', type: 'Проданы' }
+	];
 
 	const { data } = useGetAllVendorBooksQuery({
 		vendorId: vendorId,
@@ -49,7 +57,10 @@ const AboutVendorsBooks = () => {
 		setIsOpenBooksType(!isOpenBooksType);
 	};
 
-	const bookTypeText = operationType ? operationType : 'BOOK TYPES';
+	const getBookTypeText = (operationType: string) => {
+		const filter = filterBooks.find((item) => item.label === operationType);
+		return filter ? filter.type : 'Все';
+	};
 
 	const filteredBooks = operationType
 		? data?.filter((book) => {
@@ -63,6 +74,10 @@ const AboutVendorsBooks = () => {
 			})
 		: data;
 
+	const handleBookClick = (id: number) => {
+		navigate(`/admin/vendors/${id}`);
+	};
+
 	return (
 		<section className={scss.AboutVendorsBooks}>
 			<div className={scss.container}>
@@ -70,20 +85,23 @@ const AboutVendorsBooks = () => {
 					<p>Всего: {filteredBooks?.length} книг</p>
 					<div className={scss.click}>
 						<p onClick={toggleTypeList}>
-							<span>{bookTypeText}</span>
+							<span>{getBookTypeText(operationType)}</span>
 							<span>{isOpenBooksType ? <UpIcon /> : <IconArrowBottom />}</span>
 						</p>
-
 						<div
 							className={`${isOpenBooksType ? scss.type_list : scss.none_books_type}`}
 						>
-							<p onClick={() => setOperationType('ALL')}>Все</p>
-							<p onClick={() => setOperationType('IN_FAVORITE')}>В избранном</p>
-							<p onClick={() => setOperationType('IN_BASKET')}>В корзине</p>
-							<p onClick={() => setOperationType('WITH_DISCOUNT')}>
-								Со скидками
-							</p>
-							<p onClick={() => setOperationType('SOLD')}>Проданы</p>
+							{filterBooks.map((item) => (
+								<p
+									key={item.id}
+									onClick={() => {
+										setOperationType(item.label);
+										toggleTypeList();
+									}}
+								>
+									{item.type}
+								</p>
+							))}
 						</div>
 					</div>
 				</div>
@@ -132,7 +150,10 @@ const AboutVendorsBooks = () => {
 									</ul>
 								</div>
 							) : null}
-							<div className={scss.book_content}>
+							<div
+								onClick={() => handleBookClick(book.id)}
+								className={scss.book_content}
+							>
 								<div className={scss.book_img}>
 									<img src={book.imageLink} alt="" />
 								</div>

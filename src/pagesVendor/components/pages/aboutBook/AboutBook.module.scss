@@ -454,6 +454,8 @@
 					background-color: #ebebeb;
 				}
 				.book_info {
+					max-width: 478px;
+					width: 100%;
 					color: rgb(34, 34, 34);
 					font-size: 16px;
 					font-family: Open Sans;
@@ -466,6 +468,9 @@
 					margin-bottom: 149px;
 					margin-top: 84px;
 					overflow: auto;
+					overflow-y: auto;
+					word-wrap: break-word;
+					white-space: pre-wrap;
 					@media (max-width: 768px) {
 						max-width: 450px;
 						max-height: 300px;

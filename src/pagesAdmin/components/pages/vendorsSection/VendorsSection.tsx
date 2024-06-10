@@ -92,7 +92,7 @@ const VendorsSection = () => {
 			>
 				<div className={scss.delete_modal}>
 					<p>
-						Вы уверены, что хотите удалить{' '}
+						Вы уверены, что хотите удалить
 						<span>{selectedVendor?.fullName}</span>?
 					</p>
 					<div className={scss.btns_modal}>
