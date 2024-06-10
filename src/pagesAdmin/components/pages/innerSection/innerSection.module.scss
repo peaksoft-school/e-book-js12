@@ -44,8 +44,8 @@
 			position: relative;
 			display: flex;
 			flex-direction: column;
-			justify-content: space-around;
 			align-items: center;
+			justify-content: center;
 			padding: 35px 36px 20px;
 			max-width: 268px;
 			width: 100%;
@@ -140,17 +140,14 @@
 							font-size: 7px;
 						}
 						@media (max-width: 360px) {
-							font-size: 5px;
+							font-size: 6px;
 						}
 					}
 
 					.date_and_price {
-						max-width: 200px;
-						width: 100%;
 						display: flex;
 						align-items: center;
 						justify-content: space-between;
-						gap: 15px;
 						max-width: 197px;
 						width: 100%;
 
@@ -178,8 +175,6 @@
 						}
 
 						.price {
-							max-width: 90px;
-							width: 100%;
 							color: rgb(255, 76, 0);
 							font-family: 'Open Sans', sans-serif;
 							font-size: 16px;

@@ -171,14 +171,12 @@ const BookAddSection = () => {
 			price: book.price,
 			bestseller: clickBestseller
 		};
-
 		const result = await addBookVendor({
 			newUpDateBook,
 			genre: selectDataJenre!.englishName,
 			language: languageSeleced!.language,
 			bookType: bookType
 		}).unwrap();
-
 		if (result.httpStatus === 'OK') {
 			setModal(true);
 			reset();
@@ -193,24 +191,22 @@ const BookAddSection = () => {
 			setDelPhoto(false);
 		}
 	};
-
 	const handleFileChange = async (file: File) => {
 		setPdfFileName(file);
 		const result = await postFile(file);
 		if ('data' in result) {
-			const status = result.data.httpStatus;
+			const status = result.data!.httpStatus;
 			if (status === 'OK') {
-				setPdfFile(result.data.message);
+				setPdfFile(result.data!.message);
 			}
 		}
 	};
-
 	const handlePhotoChange = async (e: ChangeEvent<HTMLInputElement>) => {
 		const file = e.target.files ? e.target.files[0] : null;
 		const result = await postFile(file!);
 		if ('data' in result) {
-			if (result.data.httpStatus === 'OK') {
-				setFirstPhoto(result.data.message);
+			if (result.data!.httpStatus === 'OK') {
+				setFirstPhoto(result.data!.message);
 			}
 		}
 	};
@@ -218,12 +214,11 @@ const BookAddSection = () => {
 		const file = e.target.files ? e.target.files[0] : null;
 		const result = await postFile(file!);
 		if ('data' in result) {
-			if (result.data.httpStatus === 'OK') {
-				setSecondPhoto(result.data.message);
+			if (result.data!.httpStatus === 'OK') {
+				setSecondPhoto(result.data!.message);
 			}
 		}
 	};
-
 	const selectedJenres = (id: number) => {
 		const findData = jenreData.find((item) =>
 			item.jenreId === id ? item.jenreName : null
@@ -241,8 +236,8 @@ const BookAddSection = () => {
 	const handleAudioFragmetChange = async (e: File) => {
 		const result = await postFile(e);
 		if ('data' in result) {
-			if (result.data.httpStatus === 'OK') {
-				setAudioFileFragment(result.data.message);
+			if (result.data!.httpStatus === 'OK') {
+				setAudioFileFragment(result.data!.message);
 			}
 		}
 	};
@@ -250,8 +245,8 @@ const BookAddSection = () => {
 	const handleAudioChange = async (e: File) => {
 		const result = await postFile(e);
 		if ('data' in result) {
-			if (result.data.httpStatus === 'OK') {
-				setAudioFile(result.data.message);
+			if (result.data!.httpStatus === 'OK') {
+				setAudioFile(result.data!.message);
 			}
 		}
 	};

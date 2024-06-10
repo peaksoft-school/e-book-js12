@@ -11,20 +11,9 @@ const InnerSection = () => {
 	const [isOpen, setIsOpen] = useState(false);
 	const [idBook, setIdBook] = useState<null | number>(null);
 	const { data: books, refetch } = useGetReceiptRequestedBooksQuery();
-	// const [dataSplint, setDataSplint] = useState<string>();
 	const [rejectBookById] = useRejectBookMutation();
 
 	console.log(books);
-	// const func = () => {
-	// 	if (dataSplint !== null) {
-	// 		const dataBook = dataSplint!.split('T')[0];
-	// 		console.log(dataBook);
-	// 	}
-	// };
-
-	// useEffect(() => {
-	// 	func();
-	// }, []);
 
 	const handleBookClick = (id: number) => {
 		navigate(`/admin/inner/${id}`);
@@ -46,13 +35,12 @@ const InnerSection = () => {
 					<p>
 						Непросмотренные:
 						<span>
-							{books?.books.filter((book) => book.numberOfUnViewed).length || 0}
+							{books?.books.filter((book) => !book.isViewed).length || 0}
 						</span>
 					</p>
 				</div>
 				<div className={scss.content}>
 					{books?.books.map((book) => (
-						// setDataSplint(book.createdAt),
 						<div
 							key={book.id}
 							className={`${scss.book} ${book.isViewed ? '' : scss.unviewed}`}
@@ -100,8 +88,8 @@ const InnerSection = () => {
 								<div className={scss.info_book}>
 									<h3>{book.title}</h3>
 									<div className={scss.date_and_price}>
-										<p>s</p>
-										<p className={scss.price}>{book.price} $</p>
+										<p>{book.createdAt.split('T')[0]}</p>
+										<p className={scss.price}>{book.price} c</p>
 									</div>
 								</div>
 							</div>

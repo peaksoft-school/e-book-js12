@@ -158,7 +158,7 @@ const VendorsBooks: FC = () => {
 										<h3>{book.bookName}</h3>
 										<div className={scss.date_and_price}>
 											<p>{book.publishedYear}</p>
-											<p className={scss.price}>{book.price} $</p>
+											<p className={scss.price}>{book.price} c</p>
 										</div>
 									</div>
 								</div>

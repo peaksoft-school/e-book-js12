@@ -92,7 +92,7 @@ const BookInfo: FC<BookIdProps> = () => {
 									<h3>{book.title}</h3>
 								</div>
 								<div className={scss.section_mony}>
-									<p>{book.price} $</p>
+									<p>{book.price} с</p>
 									{book.bookType === 'AUDIO_BOOK' && (
 										<div>
 											<audio id="audioPlayer" controls>
@@ -198,21 +198,21 @@ const BookInfo: FC<BookIdProps> = () => {
 								<div className={scss.show_info_book}>
 									{book.bookType === 'PAPER_BOOK' && (
 										<p
-											className={showBookInfo ? '' : scss.color_text}
-											onClick={() => setShowBookInfo(true)}
+											className={!showBookInfo ? scss.color_text : ''}
+											onClick={() => setShowBookInfo(false)}
 										>
-											Читать фрагмент
+											О книге
 										</p>
 									)}
 									<p
 										className={showBookInfo ? scss.color_text : ''}
-										onClick={() => setShowBookInfo(false)}
+										onClick={() => setShowBookInfo(true)}
 									>
-										О книге
+										Читать фрагмент
 									</p>
 								</div>
 								<p className={scss.book_info}>
-									{showBookInfo ? book.fragment : book.description}
+									{showBookInfo ? book.fragment || '' : book.description}
 								</p>
 							</div>
 							<div className={scss.info_img}>
