@@ -14,9 +14,9 @@ import {
 
 const VendorsBooks: FC = () => {
 	const [isOpen, setIsOpen] = useState<boolean>(false);
+	const [bookoId, setBookId] = useState<null | number>(null);
 	const navigate = useNavigate();
 	const [sortSelected, setSortSelected] = useState('ALL');
-
 	const [sortBookData] = useState([
 		{
 			id: 1,
@@ -49,7 +49,6 @@ const VendorsBooks: FC = () => {
 		page: 1,
 		pageSize: 12
 	});
-	console.log(data);
 
 	const [deleteBook] = useDeleteBookMutation();
 
@@ -115,11 +114,17 @@ const VendorsBooks: FC = () => {
 										<p>В корзине ({book.quantityOfBasket})</p>
 									</div>
 								</div>
-								<div className={scss.extra} onClick={() => setIsOpen(!isOpen)}>
+								<div
+									className={scss.extra}
+									onClick={() => {
+										setIsOpen(!isOpen);
+										setBookId(book.id);
+									}}
+								>
 									<ThreeDotIcon />
 								</div>
-								{isOpen && (
-									<div className={scss.is_open}>
+								{bookoId === book.id ? (
+									<div className={` ${isOpen ? scss.is_open : scss.close}`}>
 										<ul>
 											<li onClick={() => setIsOpen(false)}>
 												<span>
@@ -141,7 +146,7 @@ const VendorsBooks: FC = () => {
 											</li>
 										</ul>
 									</div>
-								)}
+								) : null}
 								<div
 									onClick={() => navigate(`${book.id}`)}
 									className={scss.book_content}

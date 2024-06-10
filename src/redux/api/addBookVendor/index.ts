@@ -2,7 +2,10 @@ import { api as index } from '..';
 
 const api = index.injectEndpoints({
 	endpoints: (build) => ({
-		addBookVendor: build.mutation({
+		addBookVendor: build.mutation<
+			ADDBOOKVENDOR.AddBookVendorResponse,
+			ADDBOOKVENDOR.AddBookVendorRequest
+		>({
 			query: ({ newUpDateBook, genre, language, bookType }) => ({
 				url: `/api/book/saveBook`,
 				method: 'POST',
@@ -14,8 +17,23 @@ const api = index.injectEndpoints({
 				}
 			}),
 			invalidatesTags: ['add_book']
+		}),
+		PostFile: build.mutation<
+			ADDBOOKVENDOR.PostFileResponse,
+			ADDBOOKVENDOR.PostFileRequest
+		>({
+			query: (file) => {
+				const formData = new FormData();
+				formData.append('file', file);
+				return {
+					url: '/file',
+					method: 'POST',
+					body: formData
+				};
+			},
+			invalidatesTags: ['add_book']
 		})
 	})
 });
 
-export const { useAddBookVendorMutation } = api;
+export const { useAddBookVendorMutation, usePostFileMutation } = api;
