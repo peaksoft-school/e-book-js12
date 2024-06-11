@@ -18,8 +18,8 @@ const api = index.injectEndpoints({
 				method: 'GET'
 			}),
 			providesTags: ['book']
-		}),
+		})
 	})
 });
 
-export const { useGetAllBestsellersQuery ,	useGetEBookQuery, } = api;
+export const { useGetAllBestsellersQuery, useGetEBookQuery } = api;

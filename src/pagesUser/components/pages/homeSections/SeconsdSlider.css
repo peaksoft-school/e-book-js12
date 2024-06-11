@@ -32,7 +32,6 @@
 }
 
 .description-box .description {
-
 	width: 100%;
 	font-size: 11px;
 	overflow-wrap: break-word;
@@ -125,9 +124,9 @@
 	.containers {
 		display: inline-block;
 	}
-.slide{
-	top: 80px;
-}
+	.slide {
+		top: 80px;
+	}
 	.activeSlide {
 		transform: scale(0.8);
 	}

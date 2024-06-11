@@ -147,7 +147,6 @@ namespace BOOK {
 		page: number;
 		size: number;
 		genre: string;
-	
 	};
 
 	type GetAllLatestBooksResponse = {

@@ -93,9 +93,7 @@ const ProfileHistory = () => {
 															</div>
 														</div>
 														<p className={scss.book_data}>{item.createdAt}</p>
-														<p className={scss.book_state}>
-														Завершен
-														</p>
+														<p className={scss.book_state}>Завершен</p>
 													</div>
 												</div>
 											</div>
