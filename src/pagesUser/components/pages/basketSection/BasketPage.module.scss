@@ -316,7 +316,6 @@
 													top: 0px;
 													z-index: 0;
 													transition: 0.3s;
-													
 												}
 											}
 											.first_price {
@@ -582,8 +581,8 @@
 	}
 }
 .info_price {
-														display: flex;
-													}
+	display: flex;
+}
 :global {
 	.Toastify__progress-bar-theme--light {
 		background: #f34901 !important;

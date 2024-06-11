@@ -67,13 +67,6 @@ const api = index.injectEndpoints({
 			}),
 			providesTags: ['book']
 		}),
-		getEBook: build.query<BOOK.GetEBookResponse, BOOK.GetEBookRequest>({
-			query: () => ({
-				url: '/api/book/getAllElectronicBooks',
-				method: 'GET'
-			}),
-			providesTags: ['book']
-		}),
 		getLastPublication: build.query<
 			BOOK.GetLastPublicationResponse,
 			BOOK.GetLastPublicationRequest
@@ -81,11 +74,7 @@ const api = index.injectEndpoints({
 			query: ({ page, size, genre }) => ({
 				url: '/api/book/getAllLastPublicationBooks',
 				method: 'GET',
-				params: {
-					page,
-					size,
-					genre
-				}
+				params: { page, size, genre }
 			}),
 			providesTags: ['book']
 		}),
@@ -141,7 +130,6 @@ export const {
 	useDeleteBookMutation,
 	useGetBookByIdQuery,
 	useGetAudioBookQuery,
-	useGetEBookQuery,
 	useGetLastPublicationQuery,
 	useGetAllLatestBooksQuery,
 	useApproveBookMutation,

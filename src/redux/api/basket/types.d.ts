@@ -21,10 +21,10 @@ namespace BASKET {
 		success: boolean;
 		results: Results;
 	};
-	type DeleteCleatPageRequst = void
+	type DeleteCleatPageRequst = void;
 	type DeleteBookIdResponse = {
 		success: boolean;
 		results: Results;
 	};
-	type DeleteBookIdRequst = number
+	type DeleteBookIdRequst = number;
 }
