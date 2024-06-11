@@ -1,17 +1,29 @@
-import { FC, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 import Slider from 'react-slick';
 import './SeconsdSlider.css';
 import IconOrangeLeftArrow from '@/src/assets/icons/icon-orangeLeftArrow';
 import IconOrangeRightArrow from '@/src/assets/icons/icon-orangeRightArrow';
 import { Link } from 'react-router-dom';
 import { useGetEBookQuery } from '@/src/redux/api/bestsellers';
+import { KeenSliderInstance, useKeenSlider } from 'keen-slider/react';
 
 const SecondSlider: FC = () => {
 	const { data } = useGetEBookQuery();
-
+	const [isMobile, setIsMobile] = useState(window.innerWidth <= 600);
 	const [expandedCards, setExpandedCards] = useState<{
 		[key: number]: boolean;
 	}>({});
+
+	const handleResize = () => {
+		setIsMobile(window.innerWidth <= 600);
+	};
+
+	useEffect(() => {
+		window.addEventListener('resize', handleResize);
+		return () => {
+			window.removeEventListener('resize', handleResize);
+		};
+	}, []);
 
 	const handleClick = (id: number) => {
 		setExpandedCards((prevExpanded) => ({
@@ -59,6 +71,20 @@ const SecondSlider: FC = () => {
 		beforeChange: (_current: number, next: number) => setImageIndex(next)
 	};
 
+	const [keenSliderRef] = useKeenSlider<HTMLDivElement>({
+		loop: true,
+		mode: 'snap',
+		breakpoints: {
+			'(min-width: 600px)': {}
+		},
+		created(s: KeenSliderInstance) {
+			s.moveToIdx(0);
+		},
+		slideChanged(s: KeenSliderInstance) {
+			setImageIndex(s.track.details.rel);
+		}
+	});
+
 	return (
 		<div className="container">
 			<div className="content">
@@ -94,20 +120,35 @@ const SecondSlider: FC = () => {
 							</div>
 						))}
 				</div>
-
-				{data && data.length > 0 && (
-					<Slider {...settings}>
-						{data.map((item, idx) => (
-							<div
-								key={item.id}
-								className={idx === imageIndex ? 'slide activeSlide' : 'slide'}
-							>
-								<img src={item.imageUrl} alt="img" />
+				<div className="jo">
+					{data &&
+						data.length > 0 &&
+						(isMobile ? (
+							<div ref={keenSliderRef} className="keen-slider">
+								{data.map((item, idx) => (
+									<div
+										key={item.id}
+										className={`keen-slider__slide ${idx === imageIndex ? 'activeSlider' : ''}`}
+									>
+										<img src={item.imageUrl} alt="img" />
+									</div>
+								))}
 							</div>
+						) : (
+							<Slider {...settings}>
+								{data.map((item, idx) => (
+									<div
+										key={item.id}
+										className={
+											idx === imageIndex ? 'slide activeSlide' : 'slide'
+										}
+									>
+										<img src={item.imageUrl} alt="img" />
+									</div>
+								))}
+							</Slider>
 						))}
-					</Slider>
-				)}
-
+				</div>
 				{data && (
 					<div className="scroll-line">
 						<div
