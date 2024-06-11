@@ -204,6 +204,8 @@
 		}
 	}
 }
-.Toastify__progress-bar--anim {
-	background-color: #f34901;
+:global {
+	.Toastify__progress-bar-theme--light {
+		background: #f34901 !important;
+	}
 }

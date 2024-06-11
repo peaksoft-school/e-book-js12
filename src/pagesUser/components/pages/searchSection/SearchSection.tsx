@@ -157,10 +157,10 @@ const SearchSection = () => {
 			englishSort: 'best-sellers'
 		}
 	]);
-	const filterBooks =
-		selected === 'Сортировать'
-			? sortData
-			: sortData.filter((book) => book.id === selected);
+	// const filterBooks =
+	// 	selected === 'Сортировать'
+	// 		? sortData
+	// 		: sortData.filter((book) => book.id === selected);
 
 	const [dataBooks, setDataBooks] = useState<SORT.TypeDataBook[]>([]);
 

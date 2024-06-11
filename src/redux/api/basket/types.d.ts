@@ -17,9 +17,14 @@ namespace BASKET {
 	};
 	type GetProductsRequest = void;
 
-	type PostProductResponse = {
+	type DeleteClearPageResponse = {
 		success: boolean;
 		results: Results;
 	};
-	type PostProductRequest = number;
+	type DeleteCleatPageRequst = void
+	type DeleteBookIdResponse = {
+		success: boolean;
+		results: Results;
+	};
+	type DeleteBookIdRequst = number
 }

@@ -154,7 +154,11 @@ namespace BOOK {
 		imageUrl: string;
 		bookType: string;
 	}[];
-	type GetLastPublicationRequest = void;
+	type GetLastPublicationRequest = {
+		page: number;
+		size: number;
+		genre: string;
+	};
 
 	type GetAllLatestBooksResponse = {
 		id: number;

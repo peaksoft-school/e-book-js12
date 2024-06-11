@@ -23,24 +23,9 @@ namespace GETBOOKBYID {
 	type PutBookByIdRequest = number;
 
 	type PostBookByIdResponse = {
-		id?: number;
-		image: string;
-		bookType: string;
-		title: string;
-		authorsFullName: string;
-		genre: string;
-		publishingHouse: string;
-		description: string;
-		fragment: string;
-		language: string;
-		publishedYear: number;
-		volume: number;
-		discount: number;
-		price: number;
-		fragmentAudUrl: string;
-		duration: string;
-		statusBook: string;
-	}[];
+		httpStatus: string;
+		message: string;
+	};
 
 	type PostBookByIdRequest = number;
 }
