@@ -16,7 +16,7 @@ const Login = () => {
 	const onSubmit: SubmitHandler<IFormInput> = async (data) => {
 		const results = await postLogin(data);
 		if ('data' in results) {
-			if (results.data!.role === 'CLIENT') {
+			if (results.data?.role === 'CLIENT') {
 				const { token } = results.data;
 				const { firstName } = results.data;
 				localStorage.setItem('NameClient', firstName);
@@ -26,7 +26,7 @@ const Login = () => {
 				localStorage.setItem('admin', 'false');
 				reset();
 				navigate('/');
-			} else if (results.data!.role === 'VENDOR') {
+			} else if (results.data?.role === 'VENDOR') {
 				const { token } = results.data;
 				localStorage.setItem('token', token);
 				localStorage.setItem('isAuth', 'false');
@@ -34,7 +34,7 @@ const Login = () => {
 				localStorage.setItem('isAdmin', 'false');
 				reset();
 				navigate('/vendor/home');
-			} else if (results.data!.role === 'ADMIN') {
+			} else if (results.data?.role === 'ADMIN') {
 				const { token } = results.data;
 				localStorage.setItem('token', token);
 				localStorage.setItem('isAuth', 'false');
