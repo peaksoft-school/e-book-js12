@@ -39,36 +39,36 @@ const UserSection = () => {
 						<thead>
 							<tr>
 								<th>№</th>
-								<td>ФИО</td>
-								<td>Почта</td>
+								<th>ФИО</th>
+								<th>Почта</th>
+								<th></th>
 							</tr>
 						</thead>
+						<tbody>
+							{data?.clients.map((item, index) => (
+								<tr key={item.clientId} className={scss.users}>
+									<td>{index + 1}</td>
+									<td onClick={() => navigate(`/admin/users/${item.clientId}`)}>
+										{item.firstName}
+									</td>
+									<td onClick={() => navigate(`/admin/users/${item.clientId}`)}>
+										{item.email}
+									</td>
+									<td className={scss.button_as}>
+										<button onClick={() => showModal(item)}>
+											<DeleteIcon />
+										</button>
+									</td>
+								</tr>
+							))}
+						</tbody>
 					</table>
-					<tbody>
-						{data?.clients.map((item) => (
-							<tr key={item.clientId} className={scss.users}>
-								<td>{item.clientId}</td>
-								<td onClick={() => navigate(`/admin/users/${item.clientId}`)}>
-									{item.firstName}
-								</td>
-								<tr></tr>
-								<td onClick={() => navigate(`/admin/users/${item.clientId}`)}>
-									{item.email}
-								</td>
-								<td className={scss.button_as}>
-									<button onClick={() => showModal(item)}>
-										<DeleteIcon />
-									</button>
-								</td>
-							</tr>
-						))}
-					</tbody>
 				</div>
 			</div>
 			<Modal open={isModalOpen} onCancel={handleCancel} footer={false}>
 				<div className={scss.delete_modal}>
 					<p>
-						Вы уверены, что хотите удалить {''}
+						Вы уверены, что хотите удалить
 						<span>{selectedUser?.firstName}</span>
 					</p>
 					<div className={scss.buttons_modal}>

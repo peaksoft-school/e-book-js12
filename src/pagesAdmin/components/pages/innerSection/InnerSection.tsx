@@ -4,12 +4,15 @@ import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { IconPencil, IconX } from '@tabler/icons-react';
 import { useGetReceiptRequestedBooksQuery } from '@/src/redux/api/innerPage';
+import { useRejectBookMutation } from '@/src/redux/api/book';
 
 const InnerSection = () => {
 	const navigate = useNavigate();
 	const [isOpen, setIsOpen] = useState(false);
 	const [idBook, setIdBook] = useState<null | number>(null);
 	const { data: books, refetch } = useGetReceiptRequestedBooksQuery();
+	const [rejectBookById] = useRejectBookMutation();
+
 	console.log(books);
 
 	const handleBookClick = (id: number) => {
@@ -17,15 +20,25 @@ const InnerSection = () => {
 		refetch();
 	};
 
+	const handleRejectBook = async (id: number) => {
+		const newData = {
+			rejectReason: ''
+		};
+		await rejectBookById({ newData, id });
+	};
+
 	return (
 		<section className={scss.InnerSection}>
 			<div className={scss.container}>
 				<div className={scss.total_quantity}>
-					<p>Всего: {books?.books.length || 0}</p>
-					<p>
-						Непросмотренные:
+					<p className={scss.books_quantity}>
+						<span>Всего:</span>
+						<span>{books?.books.length || 0}</span>
+					</p>
+					<p className={scss.books_unvie}>
+						<span>Непросмотренные:</span>
 						<span>
-							{books?.books.filter((book) => book.numberOfUnViewed).length || 0}
+							{books?.books.filter((book) => !book.isViewed).length || 0}
 						</span>
 					</p>
 				</div>
@@ -54,7 +67,12 @@ const InnerSection = () => {
 											Редактировать
 										</li>
 										<hr />
-										<li onClick={() => setIsOpen(false)}>
+										<li
+											onClick={() => {
+												setIsOpen(false);
+												handleRejectBook(book.id);
+											}}
+										>
 											<span>
 												<IconX />
 											</span>
@@ -73,7 +91,7 @@ const InnerSection = () => {
 								<div className={scss.info_book}>
 									<h3>{book.title}</h3>
 									<div className={scss.date_and_price}>
-										<p>{book.createdAt}</p>
+										<p>{book.createdAt.split('T')[0]}</p>
 										<p className={scss.price}>{book.price} c</p>
 									</div>
 								</div>

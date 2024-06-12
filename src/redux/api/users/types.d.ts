@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 namespace USERS {
 	type GetAllUsersResponse = {
 		page: number;
@@ -15,7 +16,7 @@ namespace USERS {
 	type GetUserProfileResponse = {
 		email: string;
 		name: string;
-		dataOfRegistration: string;
+		dateOfRegistration: string;
 	};
 	type GetUserProfileRequest = number;
 

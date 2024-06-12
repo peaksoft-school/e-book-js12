@@ -45,7 +45,7 @@ const UserAboutSection: React.FC = () => {
 							location.pathname === '/admin/users/' ? scss.link_home_active : ''
 						}`}
 					>
-						Пользователи 
+						Пользователи
 					</Link>
 					/<span className={scss.link_vendor_page}>{data?.name}</span>
 				</div>
@@ -73,14 +73,14 @@ const UserAboutSection: React.FC = () => {
 							<div className={scss.inner_test}>
 								<div className={scss.inner_name}>
 									<p>
-										<strong>Имя:</strong>
+										<strong>Имя</strong>
 										{data?.name}
 									</p>
 								</div>
 								<div className={scss.inner_test}>
 									<div className={scss.inner_email}>
 										<p>
-											<strong>Почта:</strong>
+											<strong>Почта</strong>
 											{data?.email}
 										</p>
 									</div>
@@ -88,8 +88,8 @@ const UserAboutSection: React.FC = () => {
 							</div>
 							<div className={scss.inner_date}>
 								<p>
-									<strong>Дата регистрации:</strong>
-									{data?.dataOfRegistration}
+									<strong>Дата регистрации</strong>
+									{data?.dateOfRegistration}
 								</p>
 							</div>
 							<div className={scss.inner_div_delete}>

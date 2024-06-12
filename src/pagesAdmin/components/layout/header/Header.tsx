@@ -4,11 +4,18 @@ import { useEffect, useState } from 'react';
 import { IconUserCircle } from '@tabler/icons-react';
 import { Modal } from 'antd';
 import { useNavigate } from 'react-router-dom';
+import { useSearchBooksQuery } from '@/src/redux/api/search';
 
 const Header = () => {
 	const [, setHeaderScroll] = useState<boolean>(false);
 	const [isProfile, setIsProfile] = useState(false);
 	const [userExit, setUserExit] = useState<boolean>(false);
+	const [searchTerm, setSearchTerm] = useState<string>('');
+	const [showResults, setShowResults] = useState<boolean>(false);
+	const { data: searchResults, refetch } = useSearchBooksQuery(
+		{ searchTerm },
+		{ skip: !searchTerm }
+	);
 	const navigate = useNavigate();
 
 	useEffect(() => {
@@ -28,17 +35,50 @@ const Header = () => {
 		};
 	}, []);
 
+	const handleBookClick = (id: number) => {
+		navigate(`/admin/books/${id}`);
+		setShowResults(false);
+	};
+
+	const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+		const value = e.target.value;
+		setSearchTerm(value);
+		setShowResults(!!value);
+		refetch();
+	};
+
 	return (
 		<>
 			<header className={scss.Header}>
 				<div className={scss.container}>
 					<div className={scss.content}>
-						<div className={scss.search}>
-							<CustomGenreInput
-								onChange={() => {}}
-								value=""
-								placeholder={'Искать жанр, книги, авторов, издательства... '}
-							/>
+						<div className={scss.searchResults}>
+							<div className={scss.search}>
+								<CustomGenreInput
+									onChange={handleSearchChange}
+									value={searchTerm}
+									placeholder={'Искать жанр, книги, авторов, издательства... '}
+								/>
+							</div>
+							<div>
+								{showResults && searchResults && (
+									<div className={scss.searchResultsLi}>
+										<ul>
+											{searchResults.map((book) => (
+												<li
+													onClick={() => handleBookClick(book.id)}
+													key={book.id}
+												>
+													<div>
+														<p>{book.title}b</p>
+														<p>bhjhhhjb</p>
+													</div>
+												</li>
+											))}
+										</ul>
+									</div>
+								)}
+							</div>
 						</div>
 						<button
 							className={scss.user}
