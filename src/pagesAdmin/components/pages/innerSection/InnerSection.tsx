@@ -31,9 +31,12 @@ const InnerSection = () => {
 		<section className={scss.InnerSection}>
 			<div className={scss.container}>
 				<div className={scss.total_quantity}>
-					<p>Всего: {books?.books.length || 0}</p>
-					<p>
-						Непросмотренные:
+					<p className={scss.books_quantity}>
+						<span>Всего:</span>
+						<span>{books?.books.length || 0}</span>
+					</p>
+					<p className={scss.books_unvie}>
+						<span>Непросмотренные:</span>
 						<span>
 							{books?.books.filter((book) => !book.isViewed).length || 0}
 						</span>
