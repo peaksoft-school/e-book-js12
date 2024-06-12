@@ -27,6 +27,11 @@
 						span {
 							cursor: default;
 						}
+						span {
+							display: flex;
+							align-items: center;
+							gap: 7px;
+						}
 					}
 				}
 				.type_list {
