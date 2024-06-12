@@ -168,7 +168,7 @@ const BasketPage: React.FC = () => {
 												</div>
 											</div>
 											<div className={scss.add_to_basket}>
-												<p onClick={() => setIsPromo(!isPromo)}>промокод</p>
+												<p onClick={() => setIsPromo(!isPromo)}>Промокод</p>
 												<p>Добавить в избранное</p>
 											</div>
 											<Modal

@@ -70,8 +70,8 @@ const ProfilePageHistory = () => {
 												{historyItem.quantity} шт.
 											</p>
 											<p className={scss.book_price}>
-												<span>{historyItem.price} ₽</span>
-												{historyItem.priceWithDiscount} ₽
+												<span>{historyItem.price} с</span>
+												{historyItem.priceWithDiscount} с
 											</p>
 											<p className={scss.book_data}>{historyItem.createdAt}</p>
 											<p className={scss.book_state}>

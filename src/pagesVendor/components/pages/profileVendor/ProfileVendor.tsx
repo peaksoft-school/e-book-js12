@@ -68,7 +68,7 @@ const ProfileVendor: React.FC = () => {
 							<div className={scss.profile_name}>
 								<h4 className={scss.text_tree}>Личная информация</h4>
 								<div className={scss.input_name_info}>
-									<p className={scss.name_info_text}>Мое имя</p>
+									<p className={scss.name_info_text}>Ваше имя</p>
 									{isEditMode ? (
 										<CustomUserNameInput
 											placeholder="Напишите ваше имя"

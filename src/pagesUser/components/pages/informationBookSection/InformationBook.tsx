@@ -80,7 +80,7 @@ const InformationBook: FC<BookIdProps> = () => {
 									</span>{' '}
 									/ <span>{data.genre}</span>
 								</p>
-								/ <h4> {data.title}</h4>
+								/ <h4>{data.title}</h4>
 							</div>
 							<div className={scss.contents_book}>
 								<div className={scss.section_about_book}>
@@ -93,7 +93,7 @@ const InformationBook: FC<BookIdProps> = () => {
 										<h3>{data?.title}</h3>
 									</div>
 									<div className={scss.section_mony}>
-										<p>{data?.price} $</p>
+										<p>{data?.price} с</p>
 										{data.bookType === 'AUDIO_BOOK' ? (
 											<>
 												<div>

@@ -81,7 +81,7 @@ const FavoritSection: FC<BookId> = () => {
 						<div className={scss.favorite_nav_link}>
 							<NavLink to={'/'}>Главная</NavLink>
 							<span>/</span>
-							<NavLink to={'/favorites'} className={scss.active}>
+							<NavLink to={'/favorite'} className={scss.active}>
 								Избранные
 							</NavLink>
 						</div>

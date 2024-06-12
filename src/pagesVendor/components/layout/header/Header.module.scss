@@ -203,7 +203,6 @@
 					display: flex;
 					gap: 16px;
 					align-items: center;
-					cursor: pointer;
 					cursor: default;
 
 					button {
@@ -212,7 +211,7 @@
 						background-color: #fff;
 						color: rgb(255, 76, 0);
 						cursor: pointer;
-						cursor: default;
+						
 					}
 
 					svg {
@@ -244,8 +243,6 @@
 					display: flex;
 					gap: 16px;
 					align-items: center;
-					cursor: pointer;
-					cursor: default;
 				}
 			}
 		}
@@ -532,4 +529,5 @@
 
 .button_add_promo {
 	margin-top: 19px;
+	cursor: pointer;
 }
