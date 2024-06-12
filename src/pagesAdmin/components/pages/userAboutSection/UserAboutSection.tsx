@@ -89,7 +89,7 @@ const UserAboutSection: React.FC = () => {
 							<div className={scss.inner_date}>
 								<p>
 									<strong>Дата регистрации</strong>
-									{data?.dataOfRegistration}
+									{data?.dateOfRegistration}
 								</p>
 							</div>
 							<div className={scss.inner_div_delete}>

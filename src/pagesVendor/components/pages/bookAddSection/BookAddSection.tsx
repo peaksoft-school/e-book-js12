@@ -36,6 +36,7 @@ interface TypeLanguage {
 }
 
 const BookAddSection = () => {
+	const [nameBook, setNameBook] = useState('');
 	const [clickRadio, setClickRadio] = useState(true);
 	const [audioBook, setAudioBook] = useState(false);
 	const [ebook, setEBook] = useState(false);
@@ -153,6 +154,7 @@ const BookAddSection = () => {
 	];
 
 	const onSubmit: SubmitHandler<FieldValues> = async (book) => {
+		setNameBook(book.title);
 		const newUpDateBook = {
 			imageUrls: [firstPhoto, secondPhoto],
 			fragmentAudUrl: audioFileFragment,
@@ -1065,7 +1067,7 @@ const BookAddSection = () => {
 									<IconSuccess />
 									<div className={scss.info_text}>
 										<p>
-											<span>“Гарри Поттер и Тайная комната”</span> <br />
+											<span>“{nameBook}”</span> <br />
 											успешно добавлен!
 										</p>
 									</div>

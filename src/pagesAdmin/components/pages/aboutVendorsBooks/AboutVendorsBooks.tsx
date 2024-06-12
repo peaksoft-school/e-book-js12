@@ -75,7 +75,7 @@ const AboutVendorsBooks = () => {
 		: data;
 
 	const handleBookClick = (id: number) => {
-		navigate(`/admin/vendors/${id}`);
+		navigate(`/admin/vendors/books/${id}`);
 	};
 
 	return (
@@ -108,7 +108,11 @@ const AboutVendorsBooks = () => {
 				<hr />
 				<div className={scss.content}>
 					{filteredBooks?.map((book) => (
-						<div key={book.id} className={scss.book}>
+						<div
+							key={book.id}
+							className={scss.book}
+							onClick={() => handleBookClick(book.id)}
+						>
 							<div className={scss.book_header}>
 								<div className={scss.hearts}>
 									<IconWhiteLike />
@@ -150,10 +154,7 @@ const AboutVendorsBooks = () => {
 									</ul>
 								</div>
 							) : null}
-							<div
-								onClick={() => handleBookClick(book.id)}
-								className={scss.book_content}
-							>
+							<div className={scss.book_content}>
 								<div className={scss.book_img}>
 									<img src={book.imageLink} alt="" />
 								</div>

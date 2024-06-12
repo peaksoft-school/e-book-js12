@@ -68,7 +68,7 @@ const UserSection = () => {
 			<Modal open={isModalOpen} onCancel={handleCancel} footer={false}>
 				<div className={scss.delete_modal}>
 					<p>
-						Вы уверены, что хотите удалить {''}
+						Вы уверены, что хотите удалить
 						<span>{selectedUser?.firstName}</span>
 					</p>
 					<div className={scss.buttons_modal}>
