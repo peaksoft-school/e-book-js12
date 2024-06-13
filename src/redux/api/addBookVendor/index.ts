@@ -2,7 +2,7 @@ import { api as index } from '..';
 
 const api = index.injectEndpoints({
 	endpoints: (build) => ({
-		addBookVendor: build.mutation<
+		AddBookVendor: build.mutation<
 			ADDBOOKVENDOR.AddBookVendorResponse,
 			ADDBOOKVENDOR.AddBookVendorRequest
 		>({
@@ -15,6 +15,14 @@ const api = index.injectEndpoints({
 					language,
 					bookType
 				}
+			}),
+			invalidatesTags: ['add_book']
+		}),
+		EditBook: build.mutation({
+			query: () => ({
+				url: '/api/book/updateBook',
+				method: 'PUT',
+				body: ''
 			}),
 			invalidatesTags: ['add_book']
 		}),

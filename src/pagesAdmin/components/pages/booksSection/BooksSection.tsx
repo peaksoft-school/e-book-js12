@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import scss from './BooksSection.module.scss';
@@ -126,7 +127,7 @@ const BooksSection: React.FC = () => {
 		console.log(filters);
 
 		const result = await filterBooks(filters);
-		if (result && result.data) {
+		if ('data' in result) {
 			const { books } = result.data;
 			setBooks(books);
 		}

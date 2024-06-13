@@ -11,8 +11,65 @@ const api = index.injectEndpoints({
 				method: 'GET'
 			}),
 			providesTags: ['basket']
+		}),
+		TotalCost: build.query<BASKET.TotalCostResponse, BASKET.TotalCostRequest>({
+			query: () => ({
+				url: '/api/basket/totalCost',
+				method: 'GET'
+			}),
+			providesTags: ['basket']
+		}),
+		addBookToBasket: build.mutation<
+			BASKET.AddBookToBasketResponse,
+			BASKET.AddBookToBasketRequest
+		>({
+			query: (id) => ({
+				url: `/api/basket/addBookToBasket?bookId=${id}`,
+				method: 'PUT'
+			}),
+			invalidatesTags: ['basket']
+		}),
+
+		DeleteClearBasket: build.mutation<
+			BASKET.DeleteClearPageResponse,
+			BASKET.DeleteClearPageRequst
+		>({
+			query: () => ({
+				url: '/api/basket/emptyTrash',
+				method: 'DELETE'
+			}),
+			invalidatesTags: ['basket']
+		}),
+
+		DeleteBookId: build.mutation<
+			BASKET.DeleteBookIdResponse,
+			BASKET.DeleteBookIdRequst
+		>({
+			query: (id: number) => ({
+				url: `/api/basket/deleteBookFromBasket/${id}`,
+				method: 'DELETE'
+			}),
+			invalidatesTags: ['basket']
+		}),
+
+		CountBookBasket: build.mutation<
+			BASKET.CountBookBasketResponse,
+			BASKET.CountBookBasketRequest
+		>({
+			query: ({ bookId, addOrMinus }) => ({
+				url: `/api/basket/addOrMinusBookInBasket?bookId=${bookId}&addOrMinus=${addOrMinus}`,
+				method: 'PUT'
+			}),
+			invalidatesTags: ['basket']
 		})
 	})
 });
 
-export const { useGetCountInBasketQuery } = api;
+export const {
+	useAddBookToBasketMutation,
+	useGetCountInBasketQuery,
+	useDeleteClearBasketMutation,
+	useDeleteBookIdMutation,
+	useCountBookBasketMutation,
+	useTotalCostQuery
+} = api;

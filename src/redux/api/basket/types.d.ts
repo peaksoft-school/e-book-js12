@@ -17,9 +17,38 @@ namespace BASKET {
 	};
 	type GetProductsRequest = void;
 
-	type PostProductResponse = {
-		success: boolean;
-		results: Results;
+	type AddBookToBasketResponse = {
+		httpStatus: string;
+		message: string;
 	};
-	type PostProductRequest = number;
+
+	type AddBookToBasketRequest = number;
+
+	type TotalCostResponse = {
+		numberOfBooks: number;
+		disCount: number;
+		totalAmount: number;
+	};
+	type TotalCostRequest = void;
+
+	type DeleteClearPageResponse = {
+		httpStatus: string;
+		message: string;
+	};
+	type DeleteClearPageRequst = void;
+
+	type DeleteBookIdResponse = {
+		httpStatus: string;
+		message: string;
+	};
+	type DeleteBookIdRequst = number;
+
+	type CountBookBasketResponse = {
+		httpStatus: string;
+		message: string;
+	};
+	type CountBookBasketRequest = {
+		bookId: number;
+		addOrMinus: boolean;
+	};
 }

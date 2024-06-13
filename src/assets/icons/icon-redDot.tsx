@@ -16,7 +16,7 @@ const iconRedDot = () => {
 					cy="2.500000"
 					r="2.500000"
 					fill="currentColor"
-					fill-opacity="1.000000"
+					fillOpacity="1.000000"
 				/>
 			</svg>
 		</>
