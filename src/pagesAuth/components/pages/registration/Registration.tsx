@@ -40,10 +40,10 @@ const Registration = () => {
 		if (checkPassword === data.password) {
 			const results = await postUser(data);
 			if ('data' in results) {
-				const { token } = results.data;
-				const { firstName } = results.data;
+				const token = results.data?.token;
+				const { firstName } = results.data!;
 				localStorage.setItem('NameClient', firstName);
-				localStorage.setItem('token', token);
+				localStorage.setItem('token', token!);
 				localStorage.setItem('isAuth', 'true');
 				localStorage.setItem('vendor', 'false');
 				localStorage.setItem('admin', 'false');

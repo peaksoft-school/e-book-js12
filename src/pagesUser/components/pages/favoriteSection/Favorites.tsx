@@ -43,7 +43,7 @@ const FavoritSection: FC = () => {
 		const result = await addBookToBasket(id);
 		if ('data' in result) {
 			console.log(result);
-			const { httpStatus } = result.data;
+			const { httpStatus } = result.data!;
 			if (httpStatus === 'OK') {
 				toast.success('Успешно добавили в корзину!', {
 					position: 'top-right',

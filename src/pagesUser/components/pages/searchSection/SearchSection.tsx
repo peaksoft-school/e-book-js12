@@ -193,7 +193,7 @@ const SearchSection = () => {
 	const handleAddBookToBasket = async (id: number) => {
 		const result = await addBookToBasket(id);
 		if ('data' in result) {
-			const { httpStatus } = result.data;
+			const { httpStatus } = result.data!;
 			if (httpStatus === 'OK') {
 				toast.success('Успешно добавили в корзину!', {
 					position: 'top-right',
@@ -316,8 +316,8 @@ const SearchSection = () => {
 		};
 		const result = await postFillter(newData);
 		if ('data' in result) {
-			const booksData = result.data.books;
-			setTotalBooks(result.data.totalNumberOfBooks);
+			const booksData = result.data!.books;
+			setTotalBooks(result.data!.totalNumberOfBooks);
 			setDataBooks(booksData);
 		}
 	};

@@ -22,8 +22,8 @@ const Login = () => {
 	const handleOnSubmit = async (data: IFormInput) => {
 		const results = await postLogin(data);
 		if ('data' in results) {
-			const { token } = results.data;
-			localStorage.setItem('tokenVendor', token);
+			const token = results.data?.token;
+			localStorage.setItem('tokenVendor', token!);
 			localStorage.setItem('isVendor', 'true');
 			localStorage.setItem('isAuth', 'false');
 			localStorage.removeItem('token');

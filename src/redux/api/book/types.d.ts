@@ -216,7 +216,16 @@ namespace BOOK {
 	type FilterBooksAdminResponse = {
 		totalNumberOfBooks: number;
 		totalPages: number;
-		books: any[];
+		books: Books[]!;
+	};
+	type Books = {
+		bookId: number;
+		imageUrl: string;
+		title: string;
+		authorFullName: string;
+		dataOfDate: string;
+		price: number;
+		discount: number;
 	};
 
 	type FilterBooksAdminRequest = {

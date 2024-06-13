@@ -208,9 +208,9 @@ const EditBook = () => {
 		setPdfFileName(file);
 		const result = await postFile(file);
 		if ('data' in result) {
-			const status = result.data.httpStatus;
+			const status = result.data?.httpStatus;
 			if (status === 'OK') {
-				setPdfFile(result.data.message);
+				setPdfFile(result.data!.message);
 			}
 		}
 	};
@@ -219,8 +219,8 @@ const EditBook = () => {
 		const file = e.target.files ? e.target.files[0] : null;
 		const result = await postFile(file!);
 		if ('data' in result) {
-			if (result.data.httpStatus === 'OK') {
-				setFirstPhoto(result.data.message);
+			if (result.data?.httpStatus === 'OK') {
+				setFirstPhoto(result.data?.message);
 			}
 		}
 	};
@@ -228,8 +228,8 @@ const EditBook = () => {
 		const file = e.target.files ? e.target.files[0] : null;
 		const result = await postFile(file!);
 		if ('data' in result) {
-			if (result.data.httpStatus === 'OK') {
-				setSecondPhoto(result.data.message);
+			if (result.data!.httpStatus === 'OK') {
+				setSecondPhoto(result.data!.message);
 			}
 		}
 	};
@@ -251,8 +251,8 @@ const EditBook = () => {
 	const handleAudioFragmetChange = async (e: File) => {
 		const result = await postFile(e);
 		if ('data' in result) {
-			if (result.data.httpStatus === 'OK') {
-				setAudioFileFragment(result.data.message);
+			if (result.data!.httpStatus === 'OK') {
+				setAudioFileFragment(result.data!.message);
 			}
 		}
 	};
@@ -260,8 +260,8 @@ const EditBook = () => {
 	const handleAudioChange = async (e: File) => {
 		const result = await postFile(e);
 		if ('data' in result) {
-			if (result.data.httpStatus === 'OK') {
-				setAudioFile(result.data.message);
+			if (result.data!.httpStatus === 'OK') {
+				setAudioFile(result.data!.message);
 			}
 		}
 	};

@@ -16,10 +16,10 @@ type Book = {
 	bookId: number;
 	imageUrl: string;
 	title: string;
+	authorFullName: string;
 	dataOfDate: string;
 	price: number;
-	type: string;
-	genre: string;
+	discount: number;
 };
 
 const genreData = [
@@ -128,7 +128,7 @@ const BooksSection: React.FC = () => {
 
 		const result = await filterBooks(filters);
 		if ('data' in result) {
-			const { books } = result.data;
+			const { books } = result.data!;
 			setBooks(books);
 		}
 	};

@@ -35,8 +35,8 @@ const VendorRegistration = () => {
 	const onSubmit: SubmitHandler<TypeData> = async (data) => {
 		const results = await postVendor(data);
 		if ('data' in results) {
-			const { token } = results.data;
-			localStorage.setItem('token', token);
+			const token = results.data?.token;
+			localStorage.setItem('token', token!);
 			localStorage.setItem('isAuth', 'false');
 			localStorage.setItem('isVendor', 'true');
 			localStorage.setItem('isAdmin', 'false');
