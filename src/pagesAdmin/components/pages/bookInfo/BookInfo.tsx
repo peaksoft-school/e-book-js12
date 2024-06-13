@@ -13,8 +13,6 @@ import {
 } from '@/src/redux/api/book';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 
-
-
 interface GetResponse {
 	data: BookData;
 	isLoading: boolean;

@@ -280,7 +280,7 @@ const BasketPage: React.FC = () => {
 																		setIsPromo(!isPromo);
 																	}}
 																>
-																	промокод
+																	Промокод
 																</p>
 															</>
 														) : null}
@@ -294,14 +294,14 @@ const BasketPage: React.FC = () => {
 															<div className={scss.modal_promo}>
 																<div className={scss.promo_form}>
 																	<label>
-																		<p>Напишите Промокод</p>
+																		<p>Напишите промокод</p>
 																		<div className={scss.position_container}>
 																			<CustomPromoInput placeholder="Введите промокод" />
 																		</div>
 																	</label>
 																</div>
 																<div className={scss.promo_btns}>
-																	<button>отмена</button>
+																	<button onClick={() => setIsPromo(false)}>Отмена</button>
 																	<button>Активировать</button>
 																</div>
 															</div>

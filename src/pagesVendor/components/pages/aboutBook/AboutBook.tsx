@@ -47,7 +47,7 @@ const AboutBook = () => {
 						<Link
 							to="/vendor/home"
 							className={`${scss.link_to_home} ${
-								location.pathname === '/vendor' ? scss.link_to_home_active : ''
+								location.pathname === '/vendor/' ? scss.link_to_home_active : ''
 							}`}
 						>
 							Главная

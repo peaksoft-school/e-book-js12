@@ -57,6 +57,7 @@
 				text-align: left;
 				color: #545454;
 				padding: 20px 0px;
+				cursor: pointer;
 			}
 		}
 		.favorite_card_container {
@@ -163,7 +164,6 @@
 								line-height: 18.2px;
 								text-align: left;
 								color: #000000;
-								cursor: pointer;
 								@media (max-width: 765px) {
 									max-width: 300px;
 									font-size: 12px;
@@ -195,6 +195,7 @@
 						text-align: left;
 						color: #222222;
 						text-decoration: underline;
+						cursor: pointer;
 						@media (max-width: 650px) {
 							font-size: 12px;
 						}

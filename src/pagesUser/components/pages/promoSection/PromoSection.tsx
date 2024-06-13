@@ -60,7 +60,7 @@ const PromoSection = () => {
 							</div>
 						</div>
 						<div className={scss.useage_promo}>
-							<p>Активация промокода eBook</p>
+							<p className={scss.text}>Активация промокода eBook</p>
 							<div className={scss.promo_form}>
 								<input
 									type="text"
