@@ -8,37 +8,8 @@ import { Link, useNavigate, useParams } from 'react-router-dom';
 import { IconWhiteLike } from '@/src/assets/icons';
 import {
 	useDeleteBookMutation,
-	useGetBookByIdQuery
+	useGetBookByIdVendorQuery
 } from '@/src/redux/api/book';
-
-interface GetResponse {
-	data: BookData;
-	isLoading: boolean;
-	error: any;
-}
-
-interface BookData {
-	id?: number;
-	imageUrlFirst: string;
-	imageUrlLast: string;
-	bookType: string;
-	title: string;
-	authorsFullName: string;
-	genre: string;
-	publishingHouse: string;
-	description: string;
-	fragment: string;
-	language: string;
-	publishedYear: number;
-	volume: number;
-	discount: number;
-	price: number;
-	fragmentAudUrl: string;
-	duration: string;
-	statusBook: string;
-	quantityOfFavorite: number;
-	quantityOfBasket: number;
-}
 
 const AboutBook = () => {
 	const [isModalOpen, setIsModalOpen] = useState(false);
@@ -49,7 +20,7 @@ const AboutBook = () => {
 
 	const { id } = useParams();
 	const bookId = Number(id);
-	const { data: book, isLoading } = useGetBookByIdQuery<GetResponse>(bookId);
+	const { data: book, isLoading } = useGetBookByIdVendorQuery(bookId);
 	console.log(book);
 
 	const showModal = (book: any) => {
@@ -66,17 +37,15 @@ const AboutBook = () => {
 			}
 		}
 	};
-
 	if (isLoading) return <p>Загрузка...</p>;
 	if (!book) return <p>Ошибка загрузки данных книги</p>;
-
 	return (
 		<section className={scss.AboutBook}>
 			<div className="container">
 				<div className={scss.content}>
 					<div className={scss.links}>
 						<Link
-							to="/vendor"
+							to="/vendor/home"
 							className={`${scss.link_to_home} ${
 								location.pathname === '/vendor' ? scss.link_to_home_active : ''
 							}`}
@@ -101,8 +70,8 @@ const AboutBook = () => {
 										<IconWhiteLike />
 										<p>
 											(
-											{book.quantityOfFavorite > 0
-												? book.quantityOfFavorite
+											{book.countBasket > 0
+												? book.countFavorite
 												: 0}
 											)
 										</p>
@@ -110,7 +79,7 @@ const AboutBook = () => {
 									<div className={scss.in_basket}>
 										<p>
 											В корзине (
-											{book.quantityOfBasket > 0 ? book.quantityOfBasket : 0})
+											{book.countBasket > 0 ? book.countBasket : 0})
 										</p>
 									</div>
 								</div>
@@ -183,7 +152,9 @@ const AboutBook = () => {
 								</Modal>
 								<CustomBasketButton
 									nameClass={scss.basket_btn}
-									onClick={function (): void {}}
+									onClick={() => {
+										navigate(`/vendor/editBook/${book.bookId}`);
+									}}
 								>
 									<p className={scss.boot1}>Редактировать</p>
 								</CustomBasketButton>
@@ -212,11 +183,11 @@ const AboutBook = () => {
 							</div>
 							{aboutBook ? (
 								<>
-									<p className={scss.book_info}>{book.description}</p>
+									<p className={scss.book_info}>{book.fragment}</p>
 								</>
 							) : (
 								<>
-									<p className={scss.book_info}>{book.fragment}</p>
+									<p className={scss.book_info}>{book.description}</p>
 								</>
 							)}
 						</div>

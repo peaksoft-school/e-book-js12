@@ -582,6 +582,18 @@
 }
 .info_price {
 	display: flex;
+	flex-direction: column;
+	align-items: center;
+	.countBook{
+		display: flex;
+		justify-content: space-around;
+		max-width: 300px;
+	}
+	.discountBook{
+		display: flex;
+		justify-content: space-around;
+		max-width: 300px;
+	}
 }
 :global {
 	.Toastify__progress-bar-theme--light {

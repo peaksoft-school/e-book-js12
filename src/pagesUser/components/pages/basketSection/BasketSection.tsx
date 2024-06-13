@@ -9,10 +9,11 @@ import {
 	useCountBookBasketMutation,
 	useDeleteBookIdMutation,
 	useDeleteClearBasketMutation,
-	useGetCountInBasketQuery
+	useGetCountInBasketQuery,
+	useTotalCostQuery
 } from '@/src/redux/api/basket';
-import { useAddBookToFavoriteMutation } from '@/src/redux/api/bookInfo';
 import { ToastContainer, toast, Bounce } from 'react-toastify';
+import { usePostFavoriteUnFavoriteMutation } from '@/src/redux/api/favorite';
 // interface Book {
 // 	id: number;
 // 	bookName: string;
@@ -30,9 +31,12 @@ const BasketPage: React.FC = () => {
 	const { data } = useGetCountInBasketQuery();
 	const [clearBookPage] = useDeleteClearBasketMutation();
 	const [deleteBook] = useDeleteBookIdMutation();
-	const [addToFavorite] = useAddBookToFavoriteMutation();
+	const [addToFavorite] = usePostFavoriteUnFavoriteMutation();
 	const [countBookBasket] = useCountBookBasketMutation();
+	const { data: TotalCost } = useTotalCostQuery();
 	const [isModalVisible, setIsModalVisible] = useState(false);
+
+	console.log(TotalCost);
 
 	const showModal = () => {
 		setIsModalVisible(true);
@@ -57,10 +61,11 @@ const BasketPage: React.FC = () => {
 		await countBookBasket({ bookId, addOrMinus });
 	};
 
-	const func = (price: number, discount: number) => {
+	const func = (price: number, discount: number, amount: number) => {
 		const amountDiscount = price * (discount / 100);
 		const discountPrice = price - amountDiscount;
-		return discountPrice.toFixed();
+		const totalPrice = discountPrice * amount;
+		return totalPrice.toFixed();
 	};
 
 	const handleAddToFavorite = async (id: number) => {
@@ -94,6 +99,13 @@ const BasketPage: React.FC = () => {
 			}
 		}
 	};
+
+	const amountTotalDiscountPrice = (price: number, amount: number) => {
+		const totalDiscount = price * amount;
+		return totalDiscount;
+	};
+
+	// const totalPriceFunction = () => {};
 
 	return (
 		<section className={scss.BasketSection}>
@@ -160,9 +172,13 @@ const BasketPage: React.FC = () => {
 															<div>
 																{book.amount === 1 ? (
 																	<>
-																		<p>
-																			Промокод {book.discountFromPromoCode}%
-																		</p>
+																		{book.discountFromPromoCode !== 0 ? (
+																			<>
+																				<p>
+																					Промокод {book.discountFromPromoCode}%
+																				</p>
+																			</>
+																		) : null}
 																	</>
 																) : (
 																	<>
@@ -191,18 +207,40 @@ const BasketPage: React.FC = () => {
 																		<div className={scss.info_price}>
 																			<div className={scss.countBook}>
 																				<p>Количество книг</p>
-																				<p>шт</p>
+																				<p>{book.amount} шт</p>
+																				<p>{book.price}</p>
+																				<p>{}</p>
 																			</div>
 																			<div className={scss.discountBook}>
 																				<p>Скидка</p>
-																				<p></p>
+																				<p>{book.bookDisCount} %</p>
 																			</div>
 																		</div>
 																	</div>
 																</Modal>
-																<p className={scss.first_price}>{book.price}</p>
+																<p className={scss.first_price}>
+																	{book.amount !== 1 ? (
+																		<>
+																			{amountTotalDiscountPrice(
+																				book.price,
+																				book.amount
+																			)}
+																		</>
+																	) : null}
+																</p>
 																<p className={scss.sale_price}>
-																	{func(book.price, book.bookDisCount)} c
+																	{book.amount !== 1 ? (
+																		<>
+																			{func(
+																				book.price,
+																				book.bookDisCount,
+																				book.amount
+																			)}
+																		</>
+																	) : (
+																		book.price
+																	)}{' '}
+																	c
 																</p>
 															</div>
 														</div>

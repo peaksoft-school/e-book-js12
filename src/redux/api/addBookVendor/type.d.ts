@@ -29,6 +29,27 @@ namespace ADDBOOKVENDOR {
 		bestseller: boolean;
 	};
 
+	type EditBookResponse = {
+		title: string;
+		authorsFullName: string;
+		publishingHouse: string;
+		description: string;
+		fragment: string;
+		publishedYear: number;
+		volume: number;
+		amountOfBook: number;
+		discount: number;
+		price: number;
+		bestseller: boolean;
+	};
+
+	type EditBookRequest = {
+		newUpDateBook: dataBook;
+		genre: string;
+		language: string;
+		bookType: string;
+	};
+
 	type PostFileResponse = {
 		httpStatus: string;
 		message: string;

@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react';
 import CustomBasketButton from '@/src/ui/customButton/CustomBasketButton';
-import bg_promo from '../../../../assets/booksImg/Discount-cuate 1.png';
 import { useLazyGetPromoQuery } from '@/src/redux/api/promo';
 import { Modal } from 'antd';
 import scss from './PromoCode.module.scss';
+import { IconPromoPage } from '@/src/assets/icons';
 
 interface TypeRequest {
 	page: number;
@@ -55,7 +55,9 @@ const PromoSection = () => {
 				<div className={scss.content}>
 					<div className={scss.promo_content}>
 						<div className={scss.promo_image}>
-							<img src={bg_promo} alt="" />
+							<div className={scss.promo_page_img}>
+							<IconPromoPage/>
+							</div>
 						</div>
 						<div className={scss.useage_promo}>
 							<p>Активация промокода eBook</p>

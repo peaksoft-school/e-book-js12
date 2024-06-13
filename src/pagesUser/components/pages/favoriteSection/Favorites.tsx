@@ -3,7 +3,6 @@ import scss from './Favorites.module.scss';
 import { IconX } from '@/src/assets/icons';
 import { NavLink } from 'react-router-dom';
 import {
-	useAddBookToBasketMutation,
 	useClearFavoriteMutation,
 	usePostFavoriteUnFavoriteMutation,
 	useGetAllBooksInFavoriteQuery,
@@ -11,6 +10,7 @@ import {
 } from '@/src/redux/api/favorite';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { useAddBookToBasketMutation } from '@/src/redux/api/basket';
 interface BookId {
 	id: number;
 }

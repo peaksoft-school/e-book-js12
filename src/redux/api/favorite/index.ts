@@ -47,16 +47,6 @@ const api = index.injectEndpoints({
 			invalidatesTags: ['favorite']
 		}),
 
-		addBookToBasket: build.mutation<
-			FAVORITE.AddBookToBasketResponse,
-			FAVORITE.AddBookToBasketRequest
-		>({
-			query: (id) => ({
-				url: `/api/basket/addBookToBasket?bookId=${id}`,
-				method: 'PUT'
-			}),
-			invalidatesTags: ['favorite']
-		})
 	})
 });
 
@@ -65,5 +55,4 @@ export const {
 	useGetCountOfBooksInFavoriteQuery,
 	useClearFavoriteMutation,
 	usePostFavoriteUnFavoriteMutation,
-	useAddBookToBasketMutation
 } = api;

@@ -9,8 +9,8 @@ const BlackLikeIcon = () => {
 				xmlns="http://www.w3.org/2000/svg"
 			>
 				<path
-					fill-rule="evenodd"
-					clip-rule="evenodd"
+					fillRule="evenodd"
+					clipRule="evenodd"
 					d="M10 1.64251C15.548 -4.05999 29.4178 5.91938 10 18.75C-9.41784 5.91938 4.45205 -4.05999 10 1.64251Z"
 					fill="currentColor"
 				/>

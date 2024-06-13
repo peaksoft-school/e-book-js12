@@ -47,16 +47,23 @@ const api = index.injectEndpoints({
 		}),
 		getBookById: build.query<BOOK.GetBookByIdResponse, BOOK.GetBookByIdRequest>(
 			{
-				query: (id) => (
-					console.log(id, 'idinner'),
-					{
-						url: `/api/book/${id}`,
-						method: 'GET'
-					}
-				),
+				query: (id) => ({
+					url: `/api/book/${id}`,
+					method: 'GET'
+				}),
 				providesTags: ['book']
 			}
 		),
+		GetBookByIdVendor: build.query<
+			BOOK.GetBookByIdVendorResponse,
+			BOOK.GetBookByIdVendorRequest
+		>({
+			query: (id) => ({
+				url: `/api/book/getByBookId/${id}`,
+				method: 'GET'
+			}),
+			providesTags: ['book']
+		}),
 		getAudioBook: build.query<
 			BOOK.GetAudioBookResponse,
 			BOOK.GetAudioBookRequest
@@ -134,5 +141,6 @@ export const {
 	useGetAllLatestBooksQuery,
 	useApproveBookMutation,
 	useRejectBookMutation,
-	useFilterBooksMutation
+	useFilterBooksMutation,
+	useGetBookByIdVendorQuery
 } = api;

@@ -16,8 +16,8 @@ const GreyLine = () => {
 				x2="112.000000"
 				y2="-0.250000"
 				stroke="#C4C4C4"
-				stroke-opacity="1.000000"
-				stroke-width="0.500000"
+				strokeOpacity="1.000000"
+				strokeWidth="0.500000"
 			/>
 		</svg>
 	);

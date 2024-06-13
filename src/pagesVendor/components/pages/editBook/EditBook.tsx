@@ -1,4 +1,7 @@
-import scss from './BookAddSection.module.scss';
+/* eslint-disable react-hooks/exhaustive-deps */
+import CustomUserNameInput from '@/src/ui/customInpute/CustomUserNameInput';
+import scss from './EditBook.module.scss';
+import { Modal } from 'antd';
 import {
 	IconBlackCircle,
 	IconBlackSquare,
@@ -8,19 +11,19 @@ import {
 	IconWhiteCircle,
 	IconWhiteSquare
 } from '@/src/assets/icons';
+import CustomAddPhoto from '@/src/ui/customAddPhoto/CustomAddPhoto';
+import { Link, useParams } from 'react-router-dom';
 import { ChangeEvent, useEffect, useState } from 'react';
-import CustomUserNameInput from '@/src/ui/customInpute/CustomUserNameInput';
-import { Modal } from 'antd';
-import CustomBasketButton from '@/src/ui/customButton/CustomBasketButton';
-import CustomAudioDownloadInput from '@/src/ui/customAudioInput/CustomAudioDownloadInput';
-import CustomPDFDownloadInput from '@/src/ui/customPDFInput/CustomPDFDownloadInput';
-import { Link } from 'react-router-dom';
 import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
 import {
 	useAddBookVendorMutation,
 	usePostFileMutation
 } from '@/src/redux/api/addBookVendor';
-import CustomAddPhoto from '@/src/ui/customAddPhoto/CustomAddPhoto';
+import CustomAudioDownloadInput from '@/src/ui/customAudioInput/CustomAudioDownloadInput';
+import CustomBasketButton from '@/src/ui/customButton/CustomBasketButton';
+import CustomPDFDownloadInput from '@/src/ui/customPDFInput/CustomPDFDownloadInput';
+import { useGetBookByIdVendorQuery } from '@/src/redux/api/book';
+
 interface TypeJenre {
 	jenreId: number;
 	jenreName: string;
@@ -34,8 +37,12 @@ interface TypeLanguage {
 	languageName: string;
 }
 
-const BookAddSection = () => {
-	const [clickRadio, setClickRadio] = useState(true);
+const EditBook = () => {
+	const bookId = useParams();
+	const id = Number(bookId.id);
+	const { data } = useGetBookByIdVendorQuery(id);
+
+	const [peperBook, setPeperBook] = useState(true);
 	const [audioBook, setAudioBook] = useState(false);
 	const [ebook, setEBook] = useState(false);
 	const [modal, setModal] = useState(false);
@@ -50,9 +57,13 @@ const BookAddSection = () => {
 	const [minutsValue, setMinutsValue] = useState('');
 	const [secondValue, setSecondValue] = useState('');
 	const [pdfFileName, setPdfFileName] = useState<File>();
-	const [postFile] = usePostFileMutation();
-
 	const [selectLanguage, setSelectLanguage] = useState(false);
+	const [bookType, setBookType] = useState('');
+	const [clickBestseller, setClickBestseller] = useState(false);
+	const [selectDataJenre, setSelectDataJenre] = useState<TypeJenre | null>();
+	const [description, setDescription] = useState('');
+	const [pdfFile, setPdfFile] = useState(' ');
+	const [fragment, setFragment] = useState('');
 
 	const [languageSeleced, setLanguageSelected] = useState<
 		TypeLanguage | undefined
@@ -62,19 +73,19 @@ const BookAddSection = () => {
 		languageName: 'Русский язык'
 	});
 
-	const [bookType, setBookType] = useState('PAPER_BOOK');
-
-	const [clickBestseller, setClickBestseller] = useState(false);
-
-	const [selectDataJenre, setSelectDataJenre] = useState<TypeJenre>();
-
-	const [description, setDescription] = useState('');
-
-	const [pdfFile, setPdfFile] = useState(' ');
-	const { register, handleSubmit, reset } = useForm();
-
-	const [fragment, setFragment] = useState(' ');
-
+	const [postFile] = usePostFileMutation();
+	const { register, handleSubmit, reset } = useForm({
+		defaultValues: {
+			title: data?.title,
+			authorsFullName: data?.authorsFullName,
+			publishingHouse: data?.publishingHouse,
+			publishedYear: data?.publishedYear,
+			volume: data?.volume,
+			discount: data?.discount,
+			price: data?.price,
+			amountOfBook: ''
+		}
+	});
 	const [addBookVendor] = useAddBookVendorMutation();
 
 	const jenreData = [
@@ -175,7 +186,7 @@ const BookAddSection = () => {
 			newUpDateBook,
 			genre: selectDataJenre!.englishName,
 			language: languageSeleced!.language,
-			bookType: bookType
+			bookType: bookType!
 		}).unwrap();
 
 		if (result.httpStatus === 'OK') {
@@ -234,7 +245,7 @@ const BookAddSection = () => {
 		const findData = options.find((item) =>
 			item.id === id ? item : item.id === 3 ? item.languageName : null
 		);
-		setLanguageSelected(findData);
+		setLanguageSelected(findData!);
 	};
 
 	const handleAudioFragmetChange = async (e: File) => {
@@ -255,6 +266,12 @@ const BookAddSection = () => {
 		}
 	};
 
+	// const defaultGenre = () => {
+	// 	const ganre = jenreData.find((item) =>
+	// 		item.englishName === data?.genre ? item.jenreName : null
+	// 	);
+	// 	return setSelectDataJenre(ganre);
+	// };
 	const convertSecondsToHoursMinutesAndSeconds = (totalSeconds: number) => {
 		const hours = Math.floor(totalSeconds / 3600);
 		totalSeconds %= 3600;
@@ -269,13 +286,37 @@ const BookAddSection = () => {
 			setModal(false);
 		}, 3000);
 	}
+	useEffect(() => {
+		if (data?.bookType === 'PAPER_BOOK') {
+			setPeperBook(true);
+			setAudioBook(false);
+			setEBook(false);
+		} else if (data?.bookType === 'AUDIO_BOOK') {
+			setAudioBook(!audioBook);
+			setPeperBook(false);
+			setEBook(false);
+		} else if (data?.bookType === 'ONLINE_BOOK') {
+			setEBook(!ebook);
+			setAudioBook(false);
+			setPeperBook(false);
+		}
+
+		const defaultLanguage = options.find((item) =>
+			item.language === data?.language ? item.languageName : null
+		);
+		setLanguageSelected(defaultLanguage);
+		const ganre = jenreData.find((item) =>
+			item.englishName === data?.genre ? item.jenreName : null
+		);
+
+		setSelectDataJenre(ganre);
+	}, [data]);
 
 	useEffect(() => {
 		convertSecondsToHoursMinutesAndSeconds(duration);
 	}, [duration]);
-
 	return (
-		<section className={scss.AddBookSection}>
+		<section className={scss.EditBook}>
 			<div className={scss.container}>
 				<form onSubmit={handleSubmit(onSubmit)} className={scss.content}>
 					<div className={scss.links}>
@@ -352,14 +393,14 @@ const BookAddSection = () => {
 							<div className={scss.types}>
 								<label
 									onClick={() => {
-										setClickRadio(true);
+										setPeperBook(true);
 										setAudioBook(false);
 										setEBook(false);
 										setBookType('');
 										setBookType('PAPER_BOOK');
 									}}
 								>
-									{clickRadio ? (
+									{peperBook ? (
 										<>
 											<IconBlackCircle />
 										</>
@@ -372,8 +413,8 @@ const BookAddSection = () => {
 								</label>
 								<label
 									onClick={() => {
-										setAudioBook(!audioBook);
-										setClickRadio(false);
+										setAudioBook(true);
+										setPeperBook(false);
 										setEBook(false);
 										setBookType('');
 										setBookType('AUDIO_BOOK');
@@ -392,9 +433,9 @@ const BookAddSection = () => {
 								</label>
 								<label
 									onClick={() => {
-										setEBook(!ebook);
+										setEBook(true);
 										setAudioBook(false);
-										setClickRadio(false);
+										setPeperBook(false);
 										setBookType('');
 										setBookType('ONLINE_BOOK');
 									}}
@@ -414,7 +455,7 @@ const BookAddSection = () => {
 						</div>
 						{/*  !Бумажная*/}
 
-						{clickRadio === true && audioBook === false && ebook === false ? (
+						{peperBook === true && audioBook === false && ebook === false ? (
 							<>
 								<div className={scss.inputs_content}>
 									<div className={scss.left_inputs}>
@@ -443,10 +484,10 @@ const BookAddSection = () => {
 												}}
 											>
 												<p className={iconjenre ? scss.click : scss.un_ulick}>
-													{selectDataJenre ? (
-														selectDataJenre.jenreName
+													{selectDataJenre !== null ? (
+														selectDataJenre?.jenreName
 													) : (
-														<>Литература, роман, стихи...</>
+														<p></p>
 													)}
 												</p>
 												{
@@ -498,6 +539,7 @@ const BookAddSection = () => {
 												rows={636}
 												cols={264}
 												maxLength={1234}
+												defaultValue={data?.description}
 												placeholder="Напишите о книге"
 												onChange={(e) => setDescription(e.target.value)}
 											/>
@@ -509,6 +551,7 @@ const BookAddSection = () => {
 												rows={636}
 												cols={264}
 												maxLength={1234}
+												defaultValue={data?.fragment}
 												placeholder="Напишите фрагмент книги"
 												onChange={(e) => setFragment(e.target.value)}
 											/>
@@ -625,7 +668,7 @@ const BookAddSection = () => {
 						) : null}
 
 						{/* ! Аудиокнига */}
-						{audioBook && !ebook && !clickRadio ? (
+						{audioBook && !ebook && !peperBook ? (
 							<div className={scss.inputs_content}>
 								<div className={scss.left_inputs}>
 									<label>
@@ -656,7 +699,7 @@ const BookAddSection = () => {
 												{selectDataJenre ? (
 													selectDataJenre.jenreName
 												) : (
-													<>Литература, роман, стихи...</>
+													<p>Литература, роман, стихи...</p>
 												)}
 											</p>
 											{
@@ -698,6 +741,7 @@ const BookAddSection = () => {
 										<textarea
 											rows={4}
 											maxLength={1234}
+											defaultValue={data?.description}
 											placeholder="Напишите о книге"
 											onChange={(e) => setDescription(e.target.value)}
 										/>
@@ -841,7 +885,7 @@ const BookAddSection = () => {
 						) : null}
 
 						{/* !Электронная книга */}
-						{ebook === true && clickRadio === false && audioBook === false ? (
+						{ebook === true && peperBook === false && audioBook === false ? (
 							<>
 								<div className={scss.inputs_content}>
 									<div className={scss.left_inputs}>
@@ -873,7 +917,7 @@ const BookAddSection = () => {
 													{selectDataJenre ? (
 														selectDataJenre.jenreName
 													) : (
-														<>Литература, роман, стихи...</>
+														<p>Литература, роман, стихи...</p>
 													)}
 												</p>
 												{
@@ -924,6 +968,7 @@ const BookAddSection = () => {
 												rows={6}
 												cols={40}
 												maxLength={1234}
+												defaultValue={data?.description}
 												placeholder="Напишите о книге"
 												onChange={(e) => setDescription(e.target.value)}
 											/>
@@ -935,6 +980,7 @@ const BookAddSection = () => {
 												rows={6}
 												cols={40}
 												maxLength={1234}
+												defaultValue={data?.fragment}
 												placeholder="Напишите фрагмент книги"
 												onChange={(e) => setFragment(e.target.value)}
 											/>
@@ -1083,4 +1129,4 @@ const BookAddSection = () => {
 	);
 };
 
-export default BookAddSection;
+export default EditBook;
