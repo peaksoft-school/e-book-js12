@@ -195,7 +195,7 @@ const SearchSection = () => {
 		if ('data' in result) {
 			const { httpStatus } = result.data!;
 			if (httpStatus === 'OK') {
-				toast.success('Успешно добавили в корзину!', {
+				toast.success('Успешно добавлено в корзину!', {
 					position: 'top-right',
 					autoClose: 5000,
 					hideProgressBar: false,
