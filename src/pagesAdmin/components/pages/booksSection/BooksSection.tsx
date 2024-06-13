@@ -193,7 +193,7 @@ const BooksSection: React.FC = () => {
 												onClick={() => handleGenreClick(data.englishName)}
 											>
 												<p>{data.genreName}</p>
-												<p>{genreData.length}</p>
+												<p>{books.filter.length}</p>
 											</div>
 										))}
 									</div>
@@ -262,13 +262,18 @@ const BooksSection: React.FC = () => {
 							{idBook === book.bookId ? (
 								<div className={openState ? scss.is_open : scss.on_close}>
 									<ul>
-										<li>
+										<li onClick={() => setOpenState(!openState)}>
 											<span>
 												<IconPencil />
 											</span>
 											Редактировать
 										</li>
-										<li onClick={() => handleDeleteBook(book.bookId)}>
+										<li
+											onClick={() => {
+												handleDeleteBook(book.bookId);
+												setOpenState(!openState);
+											}}
+										>
 											<span>
 												<IconX />
 											</span>

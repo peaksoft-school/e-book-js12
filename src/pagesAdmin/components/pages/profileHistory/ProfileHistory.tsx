@@ -5,7 +5,7 @@ import {
 	useGetBooksInBasketQuery
 } from '@/src/redux/api/userHistory';
 import { useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 const ProfileHistory = () => {
 	const params = useParams();
@@ -14,6 +14,7 @@ const ProfileHistory = () => {
 	const { data: historyData } = useGetAllHistoryActionQuery(locationId);
 	const { data: favoriteData } = useGetAllFavoriteQuery(locationId);
 	const { data: basketData } = useGetBooksInBasketQuery(locationId);
+	const navigate = useNavigate();
 
 	return (
 		<div className={scss.profile_history}>
@@ -64,7 +65,10 @@ const ProfileHistory = () => {
 								<div>
 									{historyData?.map((item) => (
 										<div key={item.id} className={scss.line}>
-											<div className={scss.book_map_info}>
+											<div
+												className={scss.book_map_info}
+												onClick={() => navigate(`${item.id}`)}
+											>
 												<img
 													className={scss.book_image}
 													src={item.imageUrl}

@@ -82,6 +82,8 @@ const BookInfo: FC<BookIdProps> = () => {
 			return <p onClick={() => navigate('/admin/users')}>Пользователи</p>;
 		} else if (/^\/admin\/books\/\d+$/.test(location.pathname)) {
 			return <p onClick={() => navigate('/admin/books')}>Книги</p>;
+		} else if (/^\/admin\/users\/\d+\/\d+$/.test(location.pathname)) {
+			return <p onClick={() => navigate('/admin/users')}>Пользователи</p>;
 		}
 		return null;
 	};

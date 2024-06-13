@@ -70,8 +70,7 @@ const Header = () => {
 													key={book.id}
 												>
 													<div>
-														<p>{book.title}b</p>
-														<p>bhjhhhjb</p>
+														<p>{book.title}</p>
 													</div>
 												</li>
 											))}
