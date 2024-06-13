@@ -13,10 +13,6 @@ import {
 } from '@/src/redux/api/book';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 
-interface BookIdProps {
-	id: number;
-}
-
 interface GetResponse {
 	data: BookData;
 	isLoading: boolean;
@@ -44,7 +40,7 @@ interface BookData {
 	statusBook: string;
 }
 
-const BookInfo: FC<BookIdProps> = () => {
+const BookInfo: FC = () => {
 	const [showBookInfo, setShowBookInfo] = useState(false);
 	const [modalSuccess, setModalSuccess] = useState(false);
 	const [deviationModal, setDeviationModal] = useState(false);

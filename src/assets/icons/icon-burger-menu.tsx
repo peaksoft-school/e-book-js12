@@ -13,25 +13,25 @@ const iconBurgerMenu = () => {
 				id="Line 2"
 				d="M1 1L38 1"
 				stroke="#222222"
-				stroke-opacity="1.000000"
-				stroke-width="2.000000"
-				stroke-linecap="square"
+				strokeOpacity="1.000000"
+				strokeWidth="2.000000"
+				strokeLinecap="square"
 			/>
 			<path
 				id="Line 3"
 				d="M1 7L23 7"
 				stroke="#222222"
-				stroke-opacity="1.000000"
-				stroke-width="2.000000"
-				stroke-linecap="square"
+				strokeOpacity="1.000000"
+				strokeWidth="2.000000"
+				strokeLinecap="square"
 			/>
 			<path
 				id="Line 4"
 				d="M1 13L38 13"
 				stroke="#222222"
-				stroke-opacity="1.000000"
-				stroke-width="2.000000"
-				stroke-linecap="square"
+				strokeOpacity="1.000000"
+				strokeWidth="2.000000"
+				strokeLinecap="square"
 			/>
 		</svg>
 	);

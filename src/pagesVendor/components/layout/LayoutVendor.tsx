@@ -1,12 +1,13 @@
 import scss from './LayoutVendor.module.scss';
 import { Routes, Route, useLocation } from 'react-router-dom';
 import Header from './header/Header';
-import Footer from './footer/Footer';
 import HomePage from '../pages/HomePage';
-import AboutBook from '../pages/aboutBook/AboutBook';
-import BookAddSection from '../pages/bookAddSection/BookAddSection';
-import ProfileVendor from '../pages/profileVendor/ProfileVendor';
-import VendorsBooks from '../pages/homeSections/VendorsBooks';
+import AddBookPage from '../pages/AddBookPage';
+import AboutBookPage from '../pages/AboutBookPage';
+import ProfilePage from '../pages/ProfilePage';
+import Footer from './footer/Footer';
+import VendorBooksPage from '../pages/VendorBooksPage';
+import EditBookPage from '../pages/EditBookPage';
 
 const LayoutVendor = () => {
 	const location = useLocation();
@@ -24,10 +25,11 @@ const LayoutVendor = () => {
 				<main>
 					<Routes>
 						<Route path="/" element={<HomePage />} />
-						<Route path="/home" element={<VendorsBooks />} />
-						<Route path="/home/:id" element={<AboutBook />} />
-						<Route path="/addBook" element={<BookAddSection />} />
-						<Route path="/profile" element={<ProfileVendor />} />
+						<Route path="/home" element={<VendorBooksPage />} />
+						<Route path="/home/:id" element={<AboutBookPage />} />
+						<Route path="/addBook" element={<AddBookPage />} />
+						<Route path="/profile" element={<ProfilePage />} />
+						<Route path="/editBook/:id" element={<EditBookPage />} />
 					</Routes>
 				</main>
 				{location.pathname === '/vendor/registration' ||

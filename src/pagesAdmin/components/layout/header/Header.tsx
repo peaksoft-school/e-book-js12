@@ -35,6 +35,14 @@ const Header = () => {
 		};
 	}, []);
 
+	const handleExitAdmin = () => {
+		localStorage.removeItem('token');
+		localStorage.setItem('isAuth', 'false');
+		localStorage.setItem('isVendor', 'false');
+		localStorage.setItem('admin', 'false');
+		navigate('/auth/login');
+	};
+
 	const handleBookClick = (id: number) => {
 		navigate(`/admin/books/${id}`);
 		setShowResults(false);
@@ -112,7 +120,7 @@ const Header = () => {
 									</button>
 									<button
 										onClick={() => {
-											navigate('/auth/login');
+											handleExitAdmin();
 										}}
 									>
 										Выйти
