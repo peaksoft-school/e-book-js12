@@ -11,11 +11,8 @@ import {
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useAddBookToBasketMutation } from '@/src/redux/api/basket';
-interface BookId {
-	id: number;
-}
 
-const FavoritSection: FC<BookId> = () => {
+const FavoritSection: FC = () => {
 	// const paramsId = useParams();
 	// const bookId = Number(paramsId.id);
 	const [expandedCards, setExpandedCards] = useState<{

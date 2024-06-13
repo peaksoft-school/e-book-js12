@@ -9,9 +9,7 @@ import { useGetBookByIdQuery } from '@/src/redux/api/book';
 import { useAddBookToBasketMutation } from '@/src/redux/api/basket';
 import { usePostFavoriteUnFavoriteMutation } from '@/src/redux/api/favorite';
 
-interface BookIdProps {
-	id: number;
-}
+
 
 interface TypeGetById {
 	data: BookData;
@@ -40,7 +38,7 @@ interface BookData {
 	statusBook: string;
 }
 
-const InformationBook: FC<BookIdProps> = () => {
+const InformationBook: FC = () => {
 	const [showBookInfo, setShowBookInfo] = useState(false);
 
 	const { id } = useParams();
