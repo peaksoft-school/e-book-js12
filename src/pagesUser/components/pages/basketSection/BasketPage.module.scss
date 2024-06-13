@@ -105,6 +105,21 @@
 					text-align: left;
 					margin-bottom: 50px;
 				}
+				hr {
+					max-width: 797px;
+					width: 100%;
+					border: 1px solid silver;
+					margin-bottom: 15px;
+					&:first-child {
+						display: none;
+					}
+					@media (max-width: 760px) {
+						max-width: 797px;
+						width: 100%;
+						border: 1px solid silver;
+						margin-bottom: 15px;
+					}
+				}
 				.all_books_in_basket {
 					max-width: 799px;
 					width: 100%;
@@ -118,21 +133,6 @@
 						display: flex;
 						flex-direction: column;
 						align-items: flex-start;
-					}
-					hr {
-						max-width: 797px;
-						width: 100%;
-						border: 1px solid silver;
-						margin-bottom: 15px;
-						&:first-child {
-							display: none;
-						}
-						@media (max-width: 760px) {
-							max-width: 797px;
-							width: 100%;
-							border: 1px solid silver;
-							margin-bottom: 15px;
-						}
 					}
 					.card_container {
 						width: 100%;

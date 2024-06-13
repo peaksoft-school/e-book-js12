@@ -4,7 +4,7 @@ import scss from './BasketPage.module.scss';
 import CustomPromoInput from '@/src/ui/customInpute/CustomPromoInput';
 import { IconMinusIcon, IconPlus, IconX } from '@/src/assets/icons';
 import CustomAuthButton from '@/src/ui/customButton/CustomAuthButton';
-import { Modal } from 'antd';
+import { Modal, Skeleton } from 'antd';
 import {
 	useCountBookBasketMutation,
 	useDeleteBookIdMutation,
@@ -33,7 +33,7 @@ const BasketPage: React.FC = () => {
 	const [deleteBook] = useDeleteBookIdMutation();
 	const [addToFavorite] = usePostFavoriteUnFavoriteMutation();
 	const [countBookBasket] = useCountBookBasketMutation();
-	const { data: TotalCost } = useTotalCostQuery();
+	const { data: TotalCost, isLoading } = useTotalCostQuery();
 	const [isModalVisible, setIsModalVisible] = useState(false);
 
 	console.log(TotalCost);
@@ -112,7 +112,6 @@ const BasketPage: React.FC = () => {
 			<div className="container">
 				<div className={scss.content}>
 					<ToastContainer />
-
 					<div className={scss.links}>
 						<Link
 							to={'/'}
@@ -150,164 +149,174 @@ const BasketPage: React.FC = () => {
 							<div className={scss.all_books_in_basket}>
 								{data?.books.map((book) => (
 									<>
-										<hr />
-										<div className={scss.card_container}>
-											<div
-												onClick={() => {
-													handleDeleteBookId(book.id);
-												}}
-												className={scss.delete_x}
-											>
-												<IconX />
-											</div>
-											<div className={scss.book} key={book.id}>
-												<div className={scss.book_img}>
-													<img src={book.cover} alt={book.title} />
-												</div>
-												<div className={scss.more_info_book}>
-													<div className={scss.book_info}>
-														<h3>{book.title}</h3>
-														<p>{book.authorsFullName}</p>
-														<div className={scss.prices}>
-															<div>
-																{book.amount === 1 ? (
-																	<>
-																		{book.discountFromPromoCode !== 0 ? (
-																			<>
-																				<p>
-																					Промокод {book.discountFromPromoCode}%
-																				</p>
-																			</>
-																		) : null}
-																	</>
-																) : (
-																	<>
-																		<p>Скидка {book.bookDisCount}%</p>
-																	</>
-																)}
-															</div>
-															<div
-																className={scss.prices_with_sale}
-																onMouseEnter={showModal}
-															>
-																{/* <div className={scss.hover_content}>
-																	<div className={scss.info_price}>
-																		<h1>asdasd</h1>
-																	</div>
-																</div> */}
-
-																<Modal
-																	onCancel={() => {
-																		setIsModalVisible(false);
-																	}}
-																	footer={false}
-																	visible={isModalVisible}
-																>
-																	<div className={scss.hover_content}>
-																		<div className={scss.info_price}>
-																			<div className={scss.countBook}>
-																				<p>Количество книг</p>
-																				<p>{book.amount} шт</p>
-																				<p>{book.price}</p>
-																				<p>{}</p>
-																			</div>
-																			<div className={scss.discountBook}>
-																				<p>Скидка</p>
-																				<p>{book.bookDisCount} %</p>
-																			</div>
-																		</div>
-																	</div>
-																</Modal>
-																<p className={scss.first_price}>
-																	{book.amount !== 1 ? (
-																		<>
-																			{amountTotalDiscountPrice(
-																				book.price,
-																				book.amount
-																			)}
-																		</>
-																	) : null}
-																</p>
-																<p className={scss.sale_price}>
-																	{book.amount !== 1 ? (
-																		<>
-																			{func(
-																				book.price,
-																				book.bookDisCount,
-																				book.amount
-																			)}
-																		</>
-																	) : (
-																		book.price
-																	)}{' '}
-																	c
-																</p>
-															</div>
+										<hr key={book.id} />
+										{isLoading ? (
+											<>
+												<Skeleton />
+											</>
+										) : (
+											<>
+												<div key={book.id} className={scss.card_container}>
+													<div
+														onClick={() => {
+															handleDeleteBookId(book.id);
+														}}
+														className={scss.delete_x}
+														key={book.id}
+													>
+														<IconX />
+													</div>
+													<div className={scss.book} key={book.id}>
+														<div className={scss.book_img}>
+															<img src={book.cover} alt={book.title} />
 														</div>
-														<div className={scss.book_quantity}>
-															<button
-																onClick={() => {
-																	handleCountBookInc(book.id);
-																}}
-															>
-																<IconMinusIcon />
-															</button>
-															<span>{book.amount}</span>
-															<button
-																onClick={() => {
-																	handleCountBookDec(book.id);
-																}}
-															>
-																<IconPlus />
-															</button>
+														<div className={scss.more_info_book}>
+															<div className={scss.book_info}>
+																<h3>{book.title}</h3>
+																<p>{book.authorsFullName}</p>
+																<div className={scss.prices}>
+																	<div>
+																		{book.amount === 1 ? (
+																			<>
+																				{book.discountFromPromoCode !== 0 ? (
+																					<>
+																						<p>
+																							Промокод{' '}
+																							{book.discountFromPromoCode}%
+																						</p>
+																					</>
+																				) : null}
+																			</>
+																		) : (
+																			<>
+																				<p>Скидка {book.bookDisCount}%</p>
+																			</>
+																		)}
+																	</div>
+																	<div
+																		className={scss.prices_with_sale}
+																		onMouseEnter={showModal}
+																	>
+																		{/* <div className={scss.hover_content}>
+							<div className={scss.info_price}>
+								<h1>asdasd</h1>
+							</div>
+						</div> */}
+
+																		<Modal
+																			onCancel={() => {
+																				setIsModalVisible(false);
+																			}}
+																			footer={false}
+																			visible={isModalVisible}
+																		>
+																			<div className={scss.hover_content}>
+																				<div className={scss.info_price}>
+																					<div className={scss.countBook}>
+																						<p>Количество книг</p>
+																						<p>{book.amount} шт</p>
+																						<p>{book.price}</p>
+																						<p>{}</p>
+																					</div>
+																					<div className={scss.discountBook}>
+																						<p>Скидка</p>
+																						<p>{book.bookDisCount} %</p>
+																					</div>
+																				</div>
+																			</div>
+																		</Modal>
+																		<p className={scss.first_price}>
+																			{book.amount !== 1 ? (
+																				<>
+																					{amountTotalDiscountPrice(
+																						book.price,
+																						book.amount
+																					)}
+																				</>
+																			) : null}
+																		</p>
+																		<p className={scss.sale_price}>
+																			{book.amount !== 1 ? (
+																				<>
+																					{func(
+																						book.price,
+																						book.bookDisCount,
+																						book.amount
+																					)}
+																				</>
+																			) : (
+																				book.price
+																			)}{' '}
+																			c
+																		</p>
+																	</div>
+																</div>
+																<div className={scss.book_quantity}>
+																	<button
+																		onClick={() => {
+																			handleCountBookInc(book.id);
+																		}}
+																	>
+																		<IconMinusIcon />
+																	</button>
+																	<span>{book.amount}</span>
+																	<button
+																		onClick={() => {
+																			handleCountBookDec(book.id);
+																		}}
+																	>
+																		<IconPlus />
+																	</button>
+																</div>
+															</div>
 														</div>
 													</div>
-												</div>
-											</div>
-											<div className={scss.add_to_basket}>
-												{book.discountFromPromoCode !== null ||
-												book.discountFromPromoCode !== undefined ? (
-													<>
-														<p
+													<div className={scss.add_to_basket}>
+														{book.discountFromPromoCode !== null ||
+														book.discountFromPromoCode !== undefined ? (
+															<>
+																<p
+																	onClick={() => {
+																		setIsPromo(!isPromo);
+																	}}
+																>
+																	промокод
+																</p>
+															</>
+														) : null}
+														<Modal
+															open={isPromo}
+															onCancel={() => {
+																setIsPromo(false);
+															}}
+															footer={false}
+														>
+															<div className={scss.modal_promo}>
+																<div className={scss.promo_form}>
+																	<label>
+																		<p>Напишите Промокод</p>
+																		<div className={scss.position_container}>
+																			<CustomPromoInput placeholder="Введите промокод" />
+																		</div>
+																	</label>
+																</div>
+																<div className={scss.promo_btns}>
+																	<button>отмена</button>
+																	<button>Активировать</button>
+																</div>
+															</div>
+														</Modal>
+														<button
 															onClick={() => {
-																setIsPromo(!isPromo);
+																handleAddToFavorite(book.id);
 															}}
 														>
-															промокод
-														</p>
-													</>
-												) : null}
-												<Modal
-													open={isPromo}
-													onCancel={() => {
-														setIsPromo(false);
-													}}
-													footer={false}
-												>
-													<div className={scss.modal_promo}>
-														<div className={scss.promo_form}>
-															<label>
-																<p>Напишите Промокод</p>
-																<div className={scss.position_container}>
-																	<CustomPromoInput placeholder="Введите промокод" />
-																</div>
-															</label>
-														</div>
-														<div className={scss.promo_btns}>
-															<button>отмена</button>
-															<button>Активировать</button>
-														</div>
+															<p>Добавить в избранное</p>
+														</button>
 													</div>
-												</Modal>
-												<button
-													onClick={() => {
-														handleAddToFavorite(book.id);
-													}}
-												>
-													<p>Добавить в избранное</p>
-												</button>
-											</div>
-										</div>
+												</div>
+											</>
+										)}
 									</>
 								))}
 							</div>
