@@ -1,4 +1,4 @@
-import VendorsBooks from "./vendorBooks/VendorsBooks";
+import VendorsBooks from './vendorBooks/VendorsBooks';
 
 const VendorBooksPage = () => {
 	return (

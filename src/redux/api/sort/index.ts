@@ -13,4 +13,4 @@ const api = index.injectEndpoints({
 		})
 	})
 });
-export const {  usePostSortBookMutation } = api;
+export const { usePostSortBookMutation } = api;

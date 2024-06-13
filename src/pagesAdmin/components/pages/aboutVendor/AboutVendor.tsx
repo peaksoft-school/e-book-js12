@@ -68,30 +68,30 @@ const AboutVendor: React.FC = () => {
 							<div className={scss.test}>
 								<div className={scss.name}>
 									<p>
-										<strong>Имя:</strong> {data?.firstName}
+										<strong>Имя</strong> {data?.firstName}
 									</p>
 								</div>
 								<div className={scss.surname}>
 									<p>
-										<strong>Фамилия:</strong> {data?.lastName}
+										<strong>Фамилия</strong> {data?.lastName}
 									</p>
 								</div>
 							</div>
 							<div className={scss.test}>
 								<div className={scss.phone}>
 									<p>
-										<strong>Номер телефона:</strong> {data?.phoneNumber}
+										<strong>Номер телефона</strong> {data?.phoneNumber}
 									</p>
 								</div>
 								<div className={scss.email}>
 									<p>
-										<strong>Почта:</strong> {data?.email}
+										<strong>Почта</strong> {data?.email}
 									</p>
 								</div>
 							</div>
 							<div className={scss.date}>
 								<p>
-									<strong>Дата регистрации:</strong> {data?.dateOfRegistration}
+									<strong>Дата регистрации</strong> {data?.dateOfRegistration}
 								</p>
 							</div>
 							<div className={scss.div_delete}>

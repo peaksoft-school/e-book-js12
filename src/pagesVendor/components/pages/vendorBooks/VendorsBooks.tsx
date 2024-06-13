@@ -14,7 +14,7 @@ import {
 
 const VendorsBooks: FC = () => {
 	const [isOpen, setIsOpen] = useState<boolean>(false);
-	const [bookoId, setBookId] = useState<null | number>(null);
+	const [bookId, setBookId] = useState<null | number>(null); // Исправлено: было bookoId
 	const navigate = useNavigate();
 	const [sortSelected, setSortSelected] = useState('ALL');
 	const [sortBookData] = useState([
@@ -72,32 +72,34 @@ const VendorsBooks: FC = () => {
 										setIsOpenBooksType(!isOpenBooksType);
 									}}
 								>
-									<span>Все</span>
+									<span>
+										{
+											sortBookData.find((sort) => sort.sort === sortSelected)
+												?.sortName
+										}
+									</span>
 									<span>
 										{isOpenBooksType ? <UpIcon /> : <IconArrowBottom />}
 									</span>
 								</p>
-								{
-									<div
-										className={`${isOpenBooksType ? scss.type_list : scss.none_books_type}`}
-									>
-										{sortBookData.map((sort) => (
-											<>
-												<p
-													onClick={() => {
-														setIsOpenBooksType(false);
-														sort.id === 1
-															? setSortSelected('ALL')
-															: setSortSelected(sort.sort);
-													}}
-												>
-													{sort.sortName}
-												</p>
-												<hr />
-											</>
-										))}
-									</div>
-								}
+								<div
+									className={`${isOpenBooksType ? scss.type_list : scss.none_books_type}`}
+								>
+									{sortBookData.map((sort) => (
+										<>
+											<p
+												key={sort.id}
+												onClick={() => {
+													setIsOpenBooksType(false);
+													setSortSelected(sort.sort);
+												}}
+											>
+												{sort.sortName}
+											</p>
+											<hr />
+										</>
+									))}
+								</div>
 							</div>
 						</div>
 					</div>
@@ -123,7 +125,7 @@ const VendorsBooks: FC = () => {
 								>
 									<ThreeDotIcon />
 								</div>
-								{bookoId === book.id ? (
+								{bookId === book.id && (
 									<div className={` ${isOpen ? scss.is_open : scss.close}`}>
 										<ul>
 											<li onClick={() => setIsOpen(false)}>
@@ -146,7 +148,7 @@ const VendorsBooks: FC = () => {
 											</li>
 										</ul>
 									</div>
-								) : null}
+								)}
 								<div
 									onClick={() => navigate(`${book.id}`)}
 									className={scss.book_content}
@@ -158,7 +160,7 @@ const VendorsBooks: FC = () => {
 										<h3>{book.bookName}</h3>
 										<div className={scss.date_and_price}>
 											<p>{book.publishedYear}</p>
-											<p className={scss.price}>{book.price} $</p>
+											<p className={scss.price}>{book.price} c</p>
 										</div>
 									</div>
 								</div>

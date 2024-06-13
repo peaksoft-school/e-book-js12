@@ -45,8 +45,7 @@ const api = index.injectEndpoints({
 				method: 'POST'
 			}),
 			invalidatesTags: ['favorite']
-		}),
-
+		})
 	})
 });
 
@@ -54,5 +53,5 @@ export const {
 	useGetAllBooksInFavoriteQuery,
 	useGetCountOfBooksInFavoriteQuery,
 	useClearFavoriteMutation,
-	usePostFavoriteUnFavoriteMutation,
+	usePostFavoriteUnFavoriteMutation
 } = api;

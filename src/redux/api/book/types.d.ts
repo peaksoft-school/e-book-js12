@@ -115,7 +115,7 @@ namespace BOOK {
 		countBasket: number;
 	};
 
-	type GetBookByIdVendorRequest = number
+	type GetBookByIdVendorRequest = number;
 
 	type PutBookByIdResponse = {
 		id?: number;

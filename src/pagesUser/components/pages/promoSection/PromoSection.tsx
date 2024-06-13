@@ -56,7 +56,7 @@ const PromoSection = () => {
 					<div className={scss.promo_content}>
 						<div className={scss.promo_image}>
 							<div className={scss.promo_page_img}>
-							<IconPromoPage/>
+								<IconPromoPage />
 							</div>
 						</div>
 						<div className={scss.useage_promo}>

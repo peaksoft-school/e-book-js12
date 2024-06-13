@@ -5,6 +5,7 @@
 	color: #fff;
 	font-weight: 600;
 	font-size: 16px;
+	cursor: pointer;
 	&:hover {
 		background: #484848;
 		transition: 0.2s;
@@ -41,6 +42,7 @@
 	color: #c4c4c4;
 	font-weight: 600;
 	font-size: 14px;
+	cursor: pointer;
 	&:hover {
 		background: #fe6f33;
 		transition: 0.2s;
@@ -76,6 +78,7 @@
 }
 
 .custom_button_add_book {
+	cursor: pointer;
 	background: orangered;
 	padding: 10px 24px;
 	border: none;

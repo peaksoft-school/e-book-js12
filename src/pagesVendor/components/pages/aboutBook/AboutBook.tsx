@@ -68,18 +68,11 @@ const AboutBook = () => {
 								<div className={scss.book_header}>
 									<div className={scss.hearts}>
 										<IconWhiteLike />
-										<p>
-											(
-											{book.countBasket > 0
-												? book.countFavorite
-												: 0}
-											)
-										</p>
+										<p>({book.countBasket > 0 ? book.countFavorite : 0})</p>
 									</div>
 									<div className={scss.in_basket}>
 										<p>
-											В корзине (
-											{book.countBasket > 0 ? book.countBasket : 0})
+											В корзине ({book.countBasket > 0 ? book.countBasket : 0})
 										</p>
 									</div>
 								</div>
@@ -164,19 +157,17 @@ const AboutBook = () => {
 					<div className={scss.section_text_books}>
 						<div className={scss.section_show_info}>
 							<div className={scss.show_info_book}>
+								{book.bookType === 'PAPER_BOOK' && (
+									<p
+										className={!aboutBook ? scss.color_text : ''}
+										onClick={() => setAboutBook(false)}
+									>
+										О книге
+									</p>
+								)}
 								<p
-									className={`${aboutBook ? '' : scss.color_text}`}
-									onClick={() => {
-										setAboutBook(false);
-									}}
-								>
-									O книге
-								</p>
-								<p
-									className={`${aboutBook ? scss.color_text : ''}`}
-									onClick={() => {
-										setAboutBook(true);
-									}}
+									className={aboutBook ? scss.color_text : ''}
+									onClick={() => setAboutBook(true)}
 								>
 									Читать фрагмент
 								</p>

@@ -1,7 +1,11 @@
-import EditBook from "./editBook/EditBook";
+import EditBook from './editBook/EditBook';
 
 const EditBookPage = () => {
-	return <><EditBook/></>;
+	return (
+		<>
+			<EditBook />
+		</>
+	);
 };
 
 export default EditBookPage;

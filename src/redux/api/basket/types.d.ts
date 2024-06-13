@@ -22,7 +22,7 @@ namespace BASKET {
 		message: string;
 	};
 
-	type AddBookToBasketRequest = number
+	type AddBookToBasketRequest = number;
 
 	type TotalCostResponse = {
 		numberOfBooks: number;

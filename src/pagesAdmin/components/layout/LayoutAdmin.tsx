@@ -23,9 +23,10 @@ const LayoutAdmin = () => {
 						<Route path="/vendors" element={<VendorsPage />} />
 						<Route path="/users" element={<UserPage />} />
 						<Route path="/books" element={<BooksPage />} />
+						<Route path="/books/:id" element={<BookInfoPage />} />
 						<Route path="/books/add_book" element={<AddBookPage />} />
-						<Route path="/inner/:id" element={<BookInfoPage />} />
-						<Route path="/users/:fullName" element={<UserAboutPage/>} />
+						<Route path="/vendors/books/:id" element={<BookInfoPage />} />
+						<Route path="/users/:fullName" element={<UserAboutPage />} />
 						<Route path="/vendors/:name" element={<AboutVendorPage />} />
 					</Routes>
 				</main>
