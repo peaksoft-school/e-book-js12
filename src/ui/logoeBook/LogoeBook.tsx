@@ -6,7 +6,7 @@ const LogoeBook = () => {
 
 	const navigateToHome = () => {
 		navigate('/');
-	} 
+	};
 
 	return (
 		<>

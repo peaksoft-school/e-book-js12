@@ -59,7 +59,7 @@ const Welcome: FC = () => {
 						<div className={scss.button_content}>
 							<CustomPersonalAreaButton
 								children="Личный кабинет"
-								onClick={() => navigate('/profile')}
+								onClick={() => navigate('/vendor/profile')}
 								nameClass={scss.custom_button_personal}
 							/>
 						</div>
@@ -72,7 +72,7 @@ const Welcome: FC = () => {
 									<p>Начните продавать свои книги на eBook</p>
 									<button
 										onClick={() => {
-											navigate('/auth/login');
+											navigate('/auth/vendor/registration');
 										}}
 									>
 										Стать продавцом
@@ -116,7 +116,7 @@ const Welcome: FC = () => {
 						<div className={scss.text}>
 							<button
 								onClick={() => {
-									navigate('registration');
+									navigate('/auth/vendor/registration');
 								}}
 							>
 								Стать продавцом

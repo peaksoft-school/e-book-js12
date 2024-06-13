@@ -76,9 +76,9 @@ const AboutBook = () => {
 				<div className={scss.content}>
 					<div className={scss.links}>
 						<Link
-							to="/vendor"
+							to="/vendor/"
 							className={`${scss.link_to_home} ${
-								location.pathname === '/vendor' ? scss.link_to_home_active : ''
+								location.pathname === '/vendor/' ? scss.link_to_home_active : ''
 							}`}
 						>
 							Главная

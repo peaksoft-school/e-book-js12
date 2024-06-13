@@ -10,7 +10,9 @@ import { Link } from 'react-router-dom';
 
 const BestsellersSection: FC = () => {
 	const { data } = useGetAllBestsellersQuery();
-	const [expandedCards, setExpandedCards] = useState<{ [key: number]: boolean; }>({});
+	const [expandedCards, setExpandedCards] = useState<{
+		[key: number]: boolean;
+	}>({});
 	const [imageIndex, setImageIndex] = useState(0);
 	const [isMobile, setIsMobile] = useState(window.innerWidth <= 600);
 
@@ -50,27 +52,39 @@ const BestsellersSection: FC = () => {
 		speed: 400,
 		slidesToShow: 3,
 		slidesToScroll: 1,
-		nextArrow: <NextArrow onClick={() => setImageIndex((prev) => (prev + 1) % (data?.length ?? 1))} />,
-		prevArrow: <PrevArrow onClick={() => setImageIndex((prev) => (prev - 1 + (data?.length ?? 1)) % (data?.length ?? 1))} />,
-		beforeChange: (_current: number, next: number) => setImageIndex(next),
+		nextArrow: (
+			<NextArrow
+				onClick={() =>
+					setImageIndex((prev) => (prev + 1) % (data?.length ?? 1))
+				}
+			/>
+		),
+		prevArrow: (
+			<PrevArrow
+				onClick={() =>
+					setImageIndex(
+						(prev) => (prev - 1 + (data?.length ?? 1)) % (data?.length ?? 1)
+					)
+				}
+			/>
+		),
+		beforeChange: (_current: number, next: number) => setImageIndex(next)
 	};
 
 	const [keenSliderRef] = useKeenSlider<HTMLDivElement>({
 		loop: true,
 
-		mode: "snap",
-		
-		breakpoints: {
-			'(min-width: 600px)': {
+		mode: 'snap',
 
-			},
+		breakpoints: {
+			'(min-width: 600px)': {}
 		},
 		created(s: KeenSliderInstance) {
 			s.moveToIdx(0);
 		},
 		slideChanged(s: KeenSliderInstance) {
 			setImageIndex(s.track.details.rel);
-		},
+		}
 	});
 
 	return (
@@ -106,12 +120,16 @@ const BestsellersSection: FC = () => {
 								</div>
 							))}
 					</div>
-					<div className='jo'>
-						{data && data.length > 0 && (
-							isMobile ? (
+					<div className="jo">
+						{data &&
+							data.length > 0 &&
+							(isMobile ? (
 								<div ref={keenSliderRef} className="keen-slider">
 									{data.map((item, idx) => (
-										<div key={item.id} className={`keen-slider__slide ${idx === imageIndex ? 'activeSlider' : ''}`}>
+										<div
+											key={item.id}
+											className={`keen-slider__slide ${idx === imageIndex ? 'activeSlider' : ''}`}
+										>
 											<img src={item.imageUrl} alt="img" />
 										</div>
 									))}
@@ -119,17 +137,24 @@ const BestsellersSection: FC = () => {
 							) : (
 								<Slider {...slickSettings}>
 									{data.map((item, idx) => (
-										<div key={item.id} className={idx === imageIndex ? 'slider activeSlider' : 'slider'}>
+										<div
+											key={item.id}
+											className={
+												idx === imageIndex ? 'slider activeSlider' : 'slider'
+											}
+										>
 											<img src={item.imageUrl} alt="img" />
 										</div>
 									))}
 								</Slider>
-							)
-						)}
+							))}
 					</div>
 					{data && (
 						<div className="scroll-lines">
-							<div className="active-line" style={{ width: `${(100 / data.length) * (imageIndex + 1)}%` }}></div>
+							<div
+								className="active-line"
+								style={{ width: `${(100 / data.length) * (imageIndex + 1)}%` }}
+							></div>
 						</div>
 					)}
 				</div>

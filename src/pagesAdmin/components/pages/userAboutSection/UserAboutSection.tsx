@@ -45,7 +45,7 @@ const UserAboutSection: React.FC = () => {
 							location.pathname === '/admin/users/' ? scss.link_home_active : ''
 						}`}
 					>
-						Пользователи 
+						Пользователи
 					</Link>
 					/<span className={scss.link_vendor_page}>{data?.name}</span>
 				</div>
