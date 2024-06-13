@@ -94,6 +94,7 @@
 					width: 100%;
 					display: flex;
 					justify-content: flex-end;
+					cursor: pointer;
 				}
 				.delete_all {
 					color: rgb(84, 84, 84);
@@ -105,6 +106,21 @@
 					text-align: left;
 					margin-bottom: 50px;
 					cursor: pointer;
+				}
+				hr {
+					max-width: 797px;
+					width: 100%;
+					border: 1px solid silver;
+					margin-bottom: 15px;
+					&:first-child {
+						display: none;
+					}
+					@media (max-width: 760px) {
+						max-width: 797px;
+						width: 100%;
+						border: 1px solid silver;
+						margin-bottom: 15px;
+					}
 				}
 				.all_books_in_basket {
 					max-width: 799px;
@@ -120,21 +136,6 @@
 						flex-direction: column;
 						align-items: flex-start;
 					}
-					hr {
-						max-width: 797px;
-						width: 100%;
-						border: 1px solid silver;
-						margin-bottom: 15px;
-						&:first-child {
-							display: none;
-						}
-						@media (max-width: 760px) {
-							max-width: 797px;
-							width: 100%;
-							border: 1px solid silver;
-							margin-bottom: 15px;
-						}
-					}
 					.card_container {
 						width: 100%;
 						@media (max-width: 431px) {
@@ -144,8 +145,10 @@
 						.delete_x {
 							display: flex;
 							justify-content: end;
-							cursor: pointer;
 							width: 100%;
+							svg {
+								cursor: pointer;
+							}
 							@media (max-width: 760px) {
 								max-width: 760px;
 								width: 100%;
@@ -296,29 +299,46 @@
 											letter-spacing: 0px;
 											text-align: left;
 										}
-										.first_price {
-											color: rgb(150, 150, 150);
-											font-family: Open Sans;
-											font-size: 16px;
-											font-weight: 400;
-											line-height: 130%;
-											letter-spacing: 0px;
-											text-align: left;
-											text-decoration-line: line-through;
-										}
-										.sale_price {
-											color: rgb(34, 34, 34);
-											font-family: Open Sans;
-											font-size: 20px;
-											font-weight: 400;
-											line-height: 130%;
-											letter-spacing: 0px;
-											text-align: left;
-										}
+
 										.prices_with_sale {
 											display: flex;
 											align-items: center;
 											gap: 13px;
+											cursor: pointer;
+											position: relative;
+											.hover_content {
+												position: absolute;
+												top: -100px;
+												z-index: -100;
+												transition: 0.3s;
+											}
+											&:hover {
+												.hover_content {
+													position: absolute;
+													top: 0px;
+													z-index: 0;
+													transition: 0.3s;
+												}
+											}
+											.first_price {
+												color: rgb(150, 150, 150);
+												font-family: Open Sans;
+												font-size: 16px;
+												font-weight: 400;
+												line-height: 130%;
+												letter-spacing: 0px;
+												text-align: left;
+												text-decoration-line: line-through;
+											}
+											.sale_price {
+												color: rgb(34, 34, 34);
+												font-family: Open Sans;
+												font-size: 20px;
+												font-weight: 400;
+												line-height: 130%;
+												letter-spacing: 0px;
+												text-align: left;
+											}
 										}
 									}
 									.book_quantity {
@@ -369,14 +389,20 @@
 							justify-content: end;
 							width: 100%;
 						}
-						p {
-							color: rgb(34, 34, 34);
-							font-size: 14px;
-							font-weight: 400;
-							line-height: 19px;
-							letter-spacing: 0%;
-							text-align: left;
-							text-decoration-line: underline;
+						button {
+							border: none;
+							outline: none;
+							cursor: pointer;
+							background-color: transparent;
+							p {
+								color: rgb(34, 34, 34);
+								font-size: 14px;
+								font-weight: 400;
+								line-height: 19px;
+								letter-spacing: 0%;
+								text-align: left;
+								text-decoration-line: underline;
+							}
 						}
 						p {
 							display: flex;
@@ -500,83 +526,80 @@
 			}
 		}
 	}
-
-	:global {
-		.ant-modal.css-dev-only-do-not-override-1qfezbu.ant-modal-confirm.ant-modal-confirm-success {
-			max-width: 460px !important;
-			width: 100% !important;
-		}
-		.ant-modal-confirm-body {
-			display: flex;
-			flex-direction: column;
-			align-items: center !important;
-			gap: 23px;
-		}
-		.ant-modal-confirm-content {
-			font-size: 18px !important;
-			color: rgb(0, 0, 0) !important;
-			font-family: Open Sans;
-			font-weight: 400;
-			line-height: 130% !important;
-			letter-spacing: 0px;
-			text-align: left;
-		}
-		.anticon-check-circle {
-			width: 46px !important;
-			height: 46px !important;
-			svg {
-				width: 46px;
-			}
-		}
-		.anticon {
-			width: 14px;
-			height: 14px;
-			svg {
-				width: 46px;
-				height: 46px;
-			}
-		}
-		.ant-modal-confirm-btns {
-			display: flex;
-			justify-content: center;
-			margin-top: 32px !important;
-			.ant-btn {
-				max-width: 223px !important;
-				width: 100% !important;
-				&:hover {
-					border: 1px solid transparent !important;
-					span {
-						color: #f34901;
-					}
-				}
-				span {
-					color: rgb(255, 255, 255);
-					font-family: Open Sans;
-					font-size: 16px;
-					font-weight: 600;
-					line-height: 22px;
-					letter-spacing: 0px;
-					text-align: left;
-				}
-			}
-		}
-	}
-	.modal_container {
+}
+.modal_promo {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	.promo_form {
 		display: flex;
 		flex-direction: column;
-		align-items: center;
-		margin: 20px 10px;
-		gap: 30px 0px;
-	}
-	:global {
-		.ant-modal-content {
-			padding: 24px 30px !important ;
-		}
-		.ant-modal-footer {
-			margin-top: 40px !important;
-			button {
-				max-width: 162px !important;
+		align-items: start;
+		label {
+			width: 100%;
+			margin-bottom: 12px;
+			p {
+				color: rgb(0, 0, 0);
+				font-family: Open Sans;
+				font-size: 16px;
+				font-weight: 400;
+				line-height: 130%;
+				letter-spacing: 0px;
+				text-align: left;
+				margin-bottom: 12px;
+			}
+			.position_container {
+				height: 100%;
 			}
 		}
+	}
+	.promo_btns {
+		display: flex;
+		justify-content: end;
+		gap: 20px;
+		button {
+			outline: none;
+			padding: 10px 24px;
+			font-size: 16px;
+			font-weight: 500;
+			font-family: Open Sans;
+			line-height: 22px;
+			letter-spacing: 0px;
+			color: rgb(50, 50, 50);
+			background-color: transparent;
+			border: 1px solid transparent;
+			cursor: pointer;
+			&:hover {
+				border: 1px solid #f34901;
+			}
+			&:last-child {
+				color: white;
+				background-color: black;
+				&:hover {
+					color: #f34901;
+					border: 1px solid transparent;
+				}
+			}
+		}
+	}
+}
+.info_price {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	.countBook {
+		display: flex;
+		justify-content: space-around;
+		max-width: 300px;
+	}
+	.discountBook {
+		display: flex;
+		justify-content: space-around;
+		max-width: 300px;
+	}
+}
+:global {
+	.Toastify__progress-bar-theme--light {
+		background: #f34901 !important;
 	}
 }

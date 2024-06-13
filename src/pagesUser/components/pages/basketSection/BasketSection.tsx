@@ -1,106 +1,117 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import scss from './BasketPage.module.scss';
-import harryPoter from '../../../../assets/booksImg/harry-potter-chamber.png';
 import CustomPromoInput from '@/src/ui/customInpute/CustomPromoInput';
 import { IconMinusIcon, IconPlus, IconX } from '@/src/assets/icons';
 import CustomAuthButton from '@/src/ui/customButton/CustomAuthButton';
-import { Modal } from 'antd';
-interface Book {
-	id: number;
-	bookName: string;
-	author: string;
-	image: string;
-	promoCode: string;
-	firstPrice: number;
-	salePrice: number;
-	quantity: number;
-}
+import { Modal, Skeleton } from 'antd';
+import {
+	useCountBookBasketMutation,
+	useDeleteBookIdMutation,
+	useDeleteClearBasketMutation,
+	useGetCountInBasketQuery,
+	useTotalCostQuery
+} from '@/src/redux/api/basket';
+import { ToastContainer, toast, Bounce } from 'react-toastify';
+import { usePostFavoriteUnFavoriteMutation } from '@/src/redux/api/favorite';
+// interface Book {
+// 	id: number;
+// 	bookName: string;
+// 	author: string;
+// 	image: string;
+// 	promoCode: string;
+// 	firstPrice: number;
+// 	salePrice: number;
+// 	quantity: number;
+// }
 const BasketPage: React.FC = () => {
 	const [isPromo, setIsPromo] = useState(false);
-	const success = () => {
-		Modal.success({
-			content: 'Ваш заказ успешно оформлен!',
-			okText: 'Продолжить покупки',
-			closable: true
-		});
+	// const [promoValue, setPromoValue] = useState('');
+
+	const { data } = useGetCountInBasketQuery();
+	const [clearBookPage] = useDeleteClearBasketMutation();
+	const [deleteBook] = useDeleteBookIdMutation();
+	const [addToFavorite] = usePostFavoriteUnFavoriteMutation();
+	const [countBookBasket] = useCountBookBasketMutation();
+	const { data: TotalCost, isLoading } = useTotalCostQuery();
+	const [isModalVisible, setIsModalVisible] = useState(false);
+
+	console.log(TotalCost);
+
+	const showModal = () => {
+		setIsModalVisible(true);
 	};
 
-	const successPromo = () => {
-		Modal.warning({
-			content: 'dddd',
-			okText: 'okk',
-			closable: true,
-			footer: true,
-			cancelText: 'sdsa'
-		});
+	console.log(data);
+
+	const handleDeleteBookId = async (id: number) => {
+		await deleteBook(id);
 	};
 
-	const [booksData, setBooksData] = useState<Book[]>([
-		{
-			id: 1,
-			bookName: 'Гарри Поттер и тайная комната',
-			author: 'Роулинг Джоан Кэтлин',
-			image: harryPoter,
-			promoCode: 'Промокод 20%',
-			firstPrice: 545,
-			salePrice: 345,
-			quantity: 1
-		},
-		{
-			id: 2,
-			bookName: 'Гарри Поттер и тайная комната',
-			author: 'Роулинг Джоан Кэтлин',
-			image: harryPoter,
-			promoCode: 'Промокод 20%',
-			firstPrice: 545,
-			salePrice: 400,
-			quantity: 1
-		},
-		{
-			id: 3,
-			bookName: 'Гарри Поттер и тайная комната',
-			author: 'Роулинг Джоан Кэтлин',
-			image: harryPoter,
-			promoCode: 'Промокод 20%',
-			firstPrice: 545,
-			salePrice: 345,
-			quantity: 1
+	const handleClearPage = async () => {
+		await clearBookPage();
+	};
+
+	const handleCountBookDec = async (bookId: number) => {
+		const addOrMinus = true;
+		await countBookBasket({ bookId, addOrMinus });
+	};
+	const handleCountBookInc = async (bookId: number) => {
+		const addOrMinus = false;
+		await countBookBasket({ bookId, addOrMinus });
+	};
+
+	const func = (price: number, discount: number, amount: number) => {
+		const amountDiscount = price * (discount / 100);
+		const discountPrice = price - amountDiscount;
+		const totalPrice = discountPrice * amount;
+		return totalPrice.toFixed();
+	};
+
+	const handleAddToFavorite = async (id: number) => {
+		const result = await addToFavorite(id);
+		console.log(result);
+		if ('data' in result) {
+			if (result.data.httpStatus === 'OK') {
+				toast(`${result.data.message}`, {
+					position: 'top-right',
+					autoClose: 5000,
+					hideProgressBar: false,
+					closeOnClick: true,
+					pauseOnHover: false,
+					draggable: true,
+					progress: undefined,
+					theme: 'light',
+					transition: Bounce
+				});
+			} else if (result.data.httpStatus === 'CREATED') {
+				toast(`${result.data.message}`, {
+					position: 'top-right',
+					autoClose: 5000,
+					hideProgressBar: false,
+					closeOnClick: true,
+					pauseOnHover: false,
+					draggable: true,
+					progress: undefined,
+					theme: 'light',
+					transition: Bounce
+				});
+			}
 		}
-	]);
-	const incrementQuantity = (id: number) => {
-		setBooksData((prevBooksData) =>
-			prevBooksData.map((book) =>
-				book.id === id ? { ...book, quantity: book.quantity + 1 } : book
-			)
-		);
 	};
-	const decrementQuantity = (id: number) => {
-		setBooksData((prevBooksData) =>
-			prevBooksData.map((book) =>
-				book.id === id && book.quantity > 1
-					? { ...book, quantity: book.quantity - 1 }
-					: book
-			)
-		);
+
+	const amountTotalDiscountPrice = (price: number, amount: number) => {
+		const totalDiscount = price * amount;
+		return totalDiscount;
 	};
-	const calculateTotalPrice = (book: Book) => {
-		return book.salePrice * book.quantity;
-	};
-	const totalQuantity = booksData.reduce(
-		(total, book) => total + book.quantity,
-		0
-	);
-	const totalSum = booksData.reduce(
-		(total, book) => total + calculateTotalPrice(book),
-		0
-	);
-	const discount = 456;
-	const overallTotal = totalSum - discount;
+
+	// const totalPriceFunction = () => {};
+
 	return (
 		<section className={scss.BasketSection}>
 			<div className="container">
 				<div className={scss.content}>
+					<ToastContainer />
 					<div className={scss.links}>
 						<Link
 							to={'/'}
@@ -120,75 +131,192 @@ const BasketPage: React.FC = () => {
 						<div className={scss.left_content}>
 							<div className={scss.title}>
 								<h2>Ваши книги</h2>
-								<p>Всего: {totalQuantity} шт</p>
+								<p>
+									Всего:
+									{data?.books.length}
+									шт
+								</p>
 							</div>
 							<hr />
-							<div className={scss.delete_all}>Очистить корзину</div>
+							<div
+								className={scss.delete_all}
+								onClick={() => {
+									handleClearPage();
+								}}
+							>
+								Очистить корзину
+							</div>
 							<div className={scss.all_books_in_basket}>
-								{booksData.map((book) => (
+								{data?.books.map((book) => (
 									<>
-										<hr />
-										<div className={scss.card_container}>
-											<div className={scss.delete_x}>
-												<IconX />
-											</div>
-											<div className={scss.book} key={book.id}>
-												<div className={scss.book_img}>
-													<img src={book.image} alt={book.bookName} />
-												</div>
-												<div className={scss.more_info_book}>
-													<div className={scss.book_info}>
-														<h3>{book.bookName}</h3>
-														<p>{book.author}</p>
-														<div className={scss.prices}>
-															<p>{book.promoCode}</p>
-															<div className={scss.prices_with_sale}>
-																<p className={scss.first_price}>
-																	{book.firstPrice} c
-																</p>
-																<p className={scss.sale_price}>
-																	{calculateTotalPrice(book)} c
-																</p>
+										<hr key={book.id} />
+										{isLoading ? (
+											<>
+												<Skeleton />
+											</>
+										) : (
+											<>
+												<div key={book.id} className={scss.card_container}>
+													<div
+														onClick={() => {
+															handleDeleteBookId(book.id);
+														}}
+														className={scss.delete_x}
+														key={book.id}
+													>
+														<IconX />
+													</div>
+													<div className={scss.book} key={book.id}>
+														<div className={scss.book_img}>
+															<img src={book.cover} alt={book.title} />
+														</div>
+														<div className={scss.more_info_book}>
+															<div className={scss.book_info}>
+																<h3>{book.title}</h3>
+																<p>{book.authorsFullName}</p>
+																<div className={scss.prices}>
+																	<div>
+																		{book.amount === 1 ? (
+																			<>
+																				{book.discountFromPromoCode !== 0 ? (
+																					<>
+																						<p>
+																							Промокод{' '}
+																							{book.discountFromPromoCode}%
+																						</p>
+																					</>
+																				) : null}
+																			</>
+																		) : (
+																			<>
+																				<p>Скидка {book.bookDisCount}%</p>
+																			</>
+																		)}
+																	</div>
+																	<div
+																		className={scss.prices_with_sale}
+																		onMouseEnter={showModal}
+																	>
+																		{/* <div className={scss.hover_content}>
+							<div className={scss.info_price}>
+								<h1>asdasd</h1>
+							</div>
+						</div> */}
+
+																		<Modal
+																			onCancel={() => {
+																				setIsModalVisible(false);
+																			}}
+																			footer={false}
+																			visible={isModalVisible}
+																		>
+																			<div className={scss.hover_content}>
+																				<div className={scss.info_price}>
+																					<div className={scss.countBook}>
+																						<p>Количество книг</p>
+																						<p>{book.amount} шт</p>
+																						<p>{book.price}</p>
+																						<p>{}</p>
+																					</div>
+																					<div className={scss.discountBook}>
+																						<p>Скидка</p>
+																						<p>{book.bookDisCount} %</p>
+																					</div>
+																				</div>
+																			</div>
+																		</Modal>
+																		<p className={scss.first_price}>
+																			{book.amount !== 1 ? (
+																				<>
+																					{amountTotalDiscountPrice(
+																						book.price,
+																						book.amount
+																					)}
+																				</>
+																			) : null}
+																		</p>
+																		<p className={scss.sale_price}>
+																			{book.amount !== 1 ? (
+																				<>
+																					{func(
+																						book.price,
+																						book.bookDisCount,
+																						book.amount
+																					)}
+																				</>
+																			) : (
+																				book.price
+																			)}{' '}
+																			c
+																		</p>
+																	</div>
+																</div>
+																<div className={scss.book_quantity}>
+																	<button
+																		onClick={() => {
+																			handleCountBookInc(book.id);
+																		}}
+																	>
+																		<IconMinusIcon />
+																	</button>
+																	<span>{book.amount}</span>
+																	<button
+																		onClick={() => {
+																			handleCountBookDec(book.id);
+																		}}
+																	>
+																		<IconPlus />
+																	</button>
+																</div>
 															</div>
 														</div>
-														<div className={scss.book_quantity}>
-															<button
-																onClick={() => decrementQuantity(book.id)}
-															>
-																<IconMinusIcon />
-															</button>
-															<span>{book.quantity}</span>
-															<button
-																onClick={() => incrementQuantity(book.id)}
-															>
-																<IconPlus />
-															</button>
-														</div>
+													</div>
+													<div className={scss.add_to_basket}>
+														{book.discountFromPromoCode !== null ||
+														book.discountFromPromoCode !== undefined ? (
+															<>
+																<p
+																	onClick={() => {
+																		setIsPromo(!isPromo);
+																	}}
+																>
+																	промокод
+																</p>
+															</>
+														) : null}
+														<Modal
+															open={isPromo}
+															onCancel={() => {
+																setIsPromo(false);
+															}}
+															footer={false}
+														>
+															<div className={scss.modal_promo}>
+																<div className={scss.promo_form}>
+																	<label>
+																		<p>Напишите Промокод</p>
+																		<div className={scss.position_container}>
+																			<CustomPromoInput placeholder="Введите промокод" />
+																		</div>
+																	</label>
+																</div>
+																<div className={scss.promo_btns}>
+																	<button>отмена</button>
+																	<button>Активировать</button>
+																</div>
+															</div>
+														</Modal>
+														<button
+															onClick={() => {
+																handleAddToFavorite(book.id);
+															}}
+														>
+															<p>Добавить в избранное</p>
+														</button>
 													</div>
 												</div>
-											</div>
-											<div className={scss.add_to_basket}>
-												<p onClick={() => setIsPromo(!isPromo)}>Промокод</p>
-												<p>Добавить в избранное</p>
-											</div>
-											<Modal
-												open={isPromo}
-												onOk={() => {
-													setIsPromo(false);
-													successPromo();
-												}}
-												onCancel={() => {
-													setIsPromo(false);
-												}}
-												cancelText={'отмена'}
-												okText={'Активировать'}
-											>
-												<div className={scss.modal_container}>
-													<p>promocode is 1 book</p>
-													<CustomPromoInput placeholder="Введите промокод" />
-												</div>
-											</Modal>
-										</div>
+											</>
+										)}
 									</>
 								))}
 							</div>
@@ -199,15 +327,18 @@ const BasketPage: React.FC = () => {
 								<div className={scss.purchases}>
 									<div className={scss.purchase}>
 										<p>Количество книг:</p>
-										<p>{totalQuantity} шт</p>
+										<p>
+											{/* {totalQuantity} */}
+											шт
+										</p>
 									</div>
 									<div className={scss.purchase}>
 										<p>Скидка:</p>
-										<p>{discount} с</p>
+										<p>{/* {discount} */}с</p>
 									</div>
 									<div className={scss.purchase}>
 										<p>Сумма:</p>
-										<p>{totalSum} с</p>
+										<p>{/* {totalSum} */}с</p>
 									</div>
 								</div>
 								<div className={scss.promo_input}>
@@ -215,14 +346,10 @@ const BasketPage: React.FC = () => {
 								</div>
 								<div className={scss.total_price}>
 									<p>Итого:</p>
-									<p>{overallTotal} с</p>
+									<p>{/* {overallTotal}  */}с</p>
 								</div>
 							</div>
-							<CustomAuthButton
-								onClick={() => {
-									success();
-								}}
-							>
+							<CustomAuthButton onClick={() => {}}>
 								Оформить заказ
 							</CustomAuthButton>
 						</div>

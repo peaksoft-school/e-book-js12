@@ -19,12 +19,10 @@ import CustomBasketButton from '@/src/ui/customButton/CustomBasketButton';
 import { Slider, ConfigProvider } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import { usePostSortBookMutation } from '@/src/redux/api/sort';
-import {
-	useAddBookToBasketMutation,
-	usePostFavoriteUnFavoriteMutation
-} from '@/src/redux/api/favorite';
+import { usePostFavoriteUnFavoriteMutation } from '@/src/redux/api/favorite';
 import { ToastContainer, toast } from 'react-toastify';
 import { SORT } from '@/src/redux/api/sort/types';
+import { useAddBookToBasketMutation } from '@/src/redux/api/basket';
 
 const SearchSection = () => {
 	// 	const useDebounce = (value:number[], delay: number) => {
@@ -57,6 +55,8 @@ const SearchSection = () => {
 	const [language, setLanguage] = useState(false);
 
 	const [menufilters, setMenuFilters] = useState(false);
+
+	const [totalBooks, setTotalBooks] = useState<number>();
 
 	const [postFillter] = usePostSortBookMutation();
 	const [addBookFavorite] = usePostFavoriteUnFavoriteMutation();
@@ -157,10 +157,10 @@ const SearchSection = () => {
 			englishSort: 'best-sellers'
 		}
 	]);
-	const filterBooks =
-		selected === 'Сортировать'
-			? sortData
-			: sortData.filter((book) => book.id === selected);
+	// const filterBooks =
+	// 	selected === 'Сортировать'
+	// 		? sortData
+	// 		: sortData.filter((book) => book.id === selected);
 
 	const [dataBooks, setDataBooks] = useState<SORT.TypeDataBook[]>([]);
 
@@ -315,16 +315,12 @@ const SearchSection = () => {
 			sort: sortValue
 		};
 		const result = await postFillter(newData);
-		// if (result && (result as { data: TypeResponse }).data.books) {
-		// const booksData = (result as { data: TypeResponse }).data.books;
 		if ('data' in result) {
 			const booksData = result.data.books;
-			console.log(booksData);
+			setTotalBooks(result.data.totalNumberOfBooks);
 			setDataBooks(booksData);
 		}
-		// }
 	};
-	console.log(dataBooks);
 
 	useEffect(() => {
 		handleChangeFillter();
@@ -335,18 +331,10 @@ const SearchSection = () => {
 			<div className="container">
 				<div className={scss.content}>
 					<ToastContainer />
-					{/* <div className={scss.title_navigate}>
-						<p
-							onClick={() => {
-								navigate('/');
-							}}
-						>
-							Главная/<span>Психология</span>
-						</p>
-					</div> */}
+					<div className={scss.title_navigate}></div>
 					<div className={scss.info_filtred}>
 						<div className={scss.left_content}>
-							<p>Найдены 2344 книг</p>
+							<p>Найдены {totalBooks} книг</p>
 						</div>
 						<div className={scss.center_content}>
 							{jenreData

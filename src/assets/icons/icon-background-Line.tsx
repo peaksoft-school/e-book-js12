@@ -14,7 +14,7 @@ const iconBackgroundLine = () => {
 				<path
 					d="M1254 0.5C963.833 29.3333 298 44.5 381.5 227C458.66 395.643 1184.56 281.811 1104 449.5C1036.5 590 340.5 691.333 -1 719.5"
 					stroke="#4F4F4F"
-					stroke-opacity="0.4"
+					strokeOpacity="0.4"
 				/>
 			</svg>
 		</>

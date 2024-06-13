@@ -22,10 +22,6 @@ namespace USERHISTORY {
 
 namespace USERALLHISTORY {
 	export type UserHistoryActionResponse = {
-		data: UserHistoryAction[];
-	};
-
-	export type UserHistoryAction = {
 		id: number;
 		title: string;
 		authorsFullName: string;
@@ -35,17 +31,13 @@ namespace USERALLHISTORY {
 		price: number;
 		priceWithDiscount: number;
 		createdAt: string;
-	};
+	}[];
 
 	export type UserHistoryActionRequest = number;
 }
 
 namespace USEFAVORITE {
 	export type UserAllFavoriteResponse = {
-		data: UseAllFavorite[];
-	};
-
-	export type UseAllFavorite = {
 		id: number;
 		title: string;
 		authorsFullName: string;
@@ -54,17 +46,14 @@ namespace USEFAVORITE {
 		price: number;
 		priceWithDiscount: number;
 		createdAt: string;
-	};
+		quantity: number;
+	}[];
 
 	export type UserAllFavoriteRequest = number;
 }
 
 namespace USEBASKET {
 	export type UseBasketBooksResponse = {
-		data: UseBooksBasket[];
-	};
-
-	export type UseBooksBasket = {
 		id: number;
 		title: string;
 		authorsFullName: string;
@@ -73,7 +62,8 @@ namespace USEBASKET {
 		price: number;
 		priceWithDiscount: number;
 		quantity: number;
-	};
+		createdAt: string;
+	}[];
 
 	export type UseBasketBooksRequest = number;
 }

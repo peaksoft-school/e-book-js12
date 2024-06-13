@@ -4,16 +4,10 @@ import scss from './Information.module.scss';
 import { FC, useState } from 'react';
 import CustomBasketButton from '@/src/ui/customButton/CustomBasketButton';
 import CustomPersonalAreaButton from '@/src/ui/customButton/CustomPersonalArea';
-import {
-	useAddBookToBasketMutation,
-	useAddBookToFavoriteMutation
-} from '@/src/redux/api/bookInfo';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useGetBookByIdQuery } from '@/src/redux/api/book';
-
-interface BookIdProps {
-	id: number;
-}
+import { useAddBookToBasketMutation } from '@/src/redux/api/basket';
+import { usePostFavoriteUnFavoriteMutation } from '@/src/redux/api/favorite';
 
 interface TypeGetById {
 	data: BookData;
@@ -42,15 +36,16 @@ interface BookData {
 	statusBook: string;
 }
 
-const InformationBook: FC<BookIdProps> = () => {
+const InformationBook: FC = () => {
 	const [showBookInfo, setShowBookInfo] = useState(false);
+
 	const { id } = useParams();
 	const bookId = Number(id);
 
 	const navigate = useNavigate();
 	const { data, isLoading } = useGetBookByIdQuery<TypeGetById>(bookId);
 	const [addBookToBasket] = useAddBookToBasketMutation();
-	const [addBookToFavorite] = useAddBookToFavoriteMutation();
+	const [addBookToFavorite] = usePostFavoriteUnFavoriteMutation();
 
 	const handleAddBookToBasket = async (id: number) => {
 		await addBookToBasket(id);
@@ -98,10 +93,7 @@ const InformationBook: FC<BookIdProps> = () => {
 											<>
 												<div>
 													<audio id="audioPlayer" controls>
-														<source
-															src="path_to_your_audio_file.mp3"
-															type="audio/mpeg"
-														/>
+														<source src="" type="audio/mpeg" />
 													</audio>
 												</div>
 											</>
@@ -171,30 +163,23 @@ const InformationBook: FC<BookIdProps> = () => {
 							<div className={scss.section_text_books}>
 								<div className={scss.section_show_info}>
 									<div className={scss.show_info_book}>
-										{data.bookType === 'PAPER_BOOK' ? (
-											<>
-												{' '}
-												<p
-													className={showBookInfo ? scss.color_text : ''}
-													onClick={() => setShowBookInfo(true)}
-												>
-													Читать фрагмент
-												</p>
-											</>
-										) : null}
+										{data.bookType === 'PAPER_BOOK' && (
+											<p
+												className={!showBookInfo ? scss.color_text : ''}
+												onClick={() => setShowBookInfo(false)}
+											>
+												О книге
+											</p>
+										)}
 										<p
-											className={showBookInfo ? '' : scss.color_text}
-											onClick={() => setShowBookInfo(false)}
+											className={showBookInfo ? scss.color_text : ''}
+											onClick={() => setShowBookInfo(true)}
 										>
-											О книге
+											Читать фрагмент
 										</p>
 									</div>
 									<p className={scss.book_info}>
-										{showBookInfo ? (
-											<>{data.description}</>
-										) : (
-											<>{data.fragment}</>
-										)}
+										{showBookInfo ? data.fragment || '' : data.description}
 									</p>
 								</div>
 								<div className={scss.info_img}>
