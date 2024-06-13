@@ -94,6 +94,7 @@
 					position: absolute;
 					top: 36px;
 					left: 92%;
+					cursor: pointer;
 					@media (max-width: 450px) {
 						position: absolute;
 						left: 88%;
@@ -170,6 +171,7 @@
 				color: rgb(34, 34, 34);
 				width: 100%;
 				font-family: Open Sans;
+				cursor: pointer;
 			}
 		}
 		.btn_with_google {
@@ -187,6 +189,7 @@
 				padding: 6px 24px;
 				background-color: #f8f8f8;
 				border: 1px solid black;
+				cursor: pointer;
 				.content_btn {
 					display: flex;
 					align-items: center;

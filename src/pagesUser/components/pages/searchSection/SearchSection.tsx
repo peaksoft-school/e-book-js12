@@ -82,7 +82,7 @@ const SearchSection = () => {
 		},
 		{
 			jenreId: 4,
-			jenreName: 'НАУКА И ТЕХНОЛОГИЯ БРАЗОВАНИЕ',
+			jenreName: 'НАУКА И ТЕХНОЛОГИЯ',
 			englishName: 'SCIENCE_AND_TECHNOLOGY',
 			isCheked: false
 		},
@@ -143,7 +143,7 @@ const SearchSection = () => {
 	const [sortData] = useState([
 		{
 			id: 1,
-			nameSort: 'все',
+			nameSort: 'Все',
 			englishSort: 'all'
 		},
 		{
@@ -383,9 +383,9 @@ const SearchSection = () => {
 								))}
 						</div>
 						<div className={scss.right_content}>
-							<div className={scss.iconText}>
-								{selected === 'все'
-									? 'все'
+							<div className={scss.iconText} onClick={() => setIsSort(!isSort)}>
+								{selected === 'Все'
+									? 'Все'
 									: selected === 'Новинки'
 										? 'Новинки'
 										: selected === 'Бестселлеры'
@@ -656,7 +656,7 @@ const SearchSection = () => {
 									>
 										<h3>{item.title}</h3>
 										<p>{item.authorFullName}</p>
-										<p>{item.price}</p>
+										<p>{item.price} с</p>
 									</div>
 									<div className={scss.btn_basket}>
 										<CustomBasketButton
