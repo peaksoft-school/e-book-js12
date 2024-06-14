@@ -97,6 +97,7 @@
 
 	.eye_see_icon {
 		color: rgb(196, 196, 196);
+		cursor: pointer;
 	}
 
 	&:hover {
@@ -158,6 +159,7 @@
 	width: 100%;
 	height: 35px;
 	padding-right: 18px;
+	position: relative;
 	&:focus-within {
 		border: 1px solid rgb(243, 73, 1);
 		background: transparent;
@@ -197,6 +199,47 @@
 	}
 	.promo_input:focus::placeholder {
 		opacity: 0;
+	}
+	.icon_container {
+		position: absolute;
+		right: 20px;
+		width: 18px;
+		.icon {
+			background-color: transparent;
+			width: 16px;
+			height: 16px;
+			position: relative;
+			.right {
+				height: 16px;
+				opacity: 0;
+				transition: 0.2s;
+				position: absolute;
+			}
+			.left {
+				height: 16px;
+				opacity: 100;
+				transition: 0.4s;
+				position: absolute;
+			}
+		}
+		.close {
+			background-color: transparent;
+			width: 16px;
+			height: 16px;
+			position: relative;
+			.right {
+				height: 16px;
+				opacity: 100;
+				transition: 0.3s;
+				position: absolute;
+			}
+			.left {
+				height: 16px;
+				opacity: 0;
+				transition: 0.2s;
+				position: absolute;
+			}
+		}
 	}
 }
 

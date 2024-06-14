@@ -3,13 +3,6 @@ import { SORT } from './types';
 
 const api = index.injectEndpoints({
 	endpoints: (build) => ({
-		getSort: build.query<SORT.GetSortsResponse, SORT.GetSortsRequest>({
-			query: () => ({
-				url: '',
-				method: 'GET'
-			}),
-			providesTags: ['sort']
-		}),
 		postSortBook: build.mutation<SORT.PostSortResponse, SORT.PostSortRequest>({
 			query: (newData) => ({
 				url: '/api/book/filter',
@@ -20,4 +13,4 @@ const api = index.injectEndpoints({
 		})
 	})
 });
-export const { useGetSortQuery, usePostSortBookMutation } = api;
+export const { usePostSortBookMutation } = api;

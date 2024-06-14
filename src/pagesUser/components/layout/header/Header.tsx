@@ -18,11 +18,17 @@ const Header = () => {
 	const [isUser, setIsUser] = useState<boolean>(false);
 	const [test, setTest] = useState('');
 	const [userExit, setUserExit] = useState<boolean>(false);
-	const [searchTerm, setInputValue] = useState('');
+
 	const localName = localStorage.getItem('NameClient');
 	const localAuth = localStorage.getItem('isAuth');
 	const location = useLocation();
 	const { data: countBasket } = useGetCountInBasketQuery();
+	const [searchTerm, setSearchTerm] = useState<string>('');
+	const [showResults, setShowResults] = useState<boolean>(false);
+	const { data: searchResults, refetch } = useSearchBooksQuery(
+		{ searchTerm },
+		{ skip: !searchTerm }
+	);
 
 	const scrollToSection = () => {
 		const element = document.getElementById(test);
@@ -36,7 +42,7 @@ const Header = () => {
 			}
 		}
 	};
-	const { data } = useSearchBooksQuery({ searchTerm }, { skip: !searchTerm });
+
 	const navigate = useNavigate();
 	useEffect(() => {
 		const changeHeader = () => {
@@ -53,6 +59,18 @@ const Header = () => {
 		};
 	}, []);
 
+	const handleBookClick = (id: number) => {
+		navigate(`/search_book/${id}`);
+		setShowResults(false);
+	};
+
+	const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+		const value = e.target.value;
+		setSearchTerm(value);
+		setShowResults(!!value);
+		refetch();
+	};
+
 	return (
 		<>
 			<header className={scss.Header}>
@@ -64,13 +82,6 @@ const Header = () => {
 					<div className="container">
 						<div className={scss.content}>
 							<div className={scss.header_content}>
-								<div className={scss.search_container}>
-									<>
-										{data &&
-											data.length > 0 &&
-											data.map((item) => <p key={item.id}>{item.title}</p>)}
-									</>
-								</div>
 								<div
 									className={scss.logo_content}
 									onClick={() => {
@@ -79,14 +90,34 @@ const Header = () => {
 								>
 									<LogoeBook />
 								</div>
-								<div className={scss.input_content}>
-									<CustomGenreInput
-										onChange={(e) => {
-											setInputValue(e.target.value);
-										}}
-										value={searchTerm}
-										placeholder="Искать жанр, книги, авторов, издательства... "
-									/>
+								<div className={scss.searchResults}>
+									<div className={scss.search}>
+										<CustomGenreInput
+											onChange={handleSearchChange}
+											value={searchTerm}
+											placeholder={
+												'Искать жанр, книги, авторов, издательства... '
+											}
+										/>
+									</div>
+									<div>
+										{showResults && searchResults && (
+											<div className={scss.searchResultsLi}>
+												<ul>
+													{searchResults.map((book) => (
+														<li
+															onClick={() => handleBookClick(book.id)}
+															key={book.id}
+														>
+															<div>
+																<p>{book.title}</p>
+															</div>
+														</li>
+													))}
+												</ul>
+											</div>
+										)}
+									</div>
 								</div>
 								<div className={scss.right_content}>
 									<div
@@ -227,8 +258,6 @@ const Header = () => {
 														setTimeout(() => {
 															setTest('audioBook');
 														}, 300);
-														// if (location.pathname === '/') {
-														// }
 													}
 												}}
 											>

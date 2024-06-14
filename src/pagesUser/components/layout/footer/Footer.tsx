@@ -7,7 +7,7 @@ const Footer: FC = () => {
 			<footer className={scss.Footer}>
 				<div className="container">
 					<div className={scss.content}>
-						<h1 className={scss.logoEbook}>eBook</h1>
+						<h1 className={scss.logoEbook}>eBooK</h1>
 						<div className={scss.footerBoxDiv}>
 							<a href="#">Жанры</a>
 							<a href="#">Аудиокниги</a>
@@ -22,7 +22,7 @@ const Footer: FC = () => {
 							<h3>Свяжитесь с нами</h3>
 							<a href="https://wa.me/996551252512">+996 551 252 512</a>
 							<a href="https://maps.app.goo.gl/eWcmoKct934Gj6eg7">
-								119 ул. Гражданская, Бишкек
+								г. Бишкек ул. Гражданская 119
 							</a>
 						</div>
 					</div>

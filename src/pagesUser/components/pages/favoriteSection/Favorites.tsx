@@ -3,7 +3,6 @@ import scss from './Favorites.module.scss';
 import { IconX } from '@/src/assets/icons';
 import { NavLink } from 'react-router-dom';
 import {
-	useAddBookToBasketMutation,
 	useClearFavoriteMutation,
 	usePostFavoriteUnFavoriteMutation,
 	useGetAllBooksInFavoriteQuery,
@@ -11,11 +10,9 @@ import {
 } from '@/src/redux/api/favorite';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-interface BookId {
-	id: number;
-}
+import { useAddBookToBasketMutation } from '@/src/redux/api/basket';
 
-const FavoritSection: FC<BookId> = () => {
+const FavoritSection: FC = () => {
 	// const paramsId = useParams();
 	// const bookId = Number(paramsId.id);
 	const [expandedCards, setExpandedCards] = useState<{
@@ -46,7 +43,7 @@ const FavoritSection: FC<BookId> = () => {
 		const result = await addBookToBasket(id);
 		if ('data' in result) {
 			console.log(result);
-			const { httpStatus } = result.data;
+			const { httpStatus } = result.data!;
 			if (httpStatus === 'OK') {
 				toast.success('Успешно добавили в корзину!', {
 					position: 'top-right',
@@ -81,7 +78,7 @@ const FavoritSection: FC<BookId> = () => {
 						<div className={scss.favorite_nav_link}>
 							<NavLink to={'/'}>Главная</NavLink>
 							<span>/</span>
-							<NavLink to={'/favorites'} className={scss.active}>
+							<NavLink to={'/favorite'} className={scss.active}>
 								Избранные
 							</NavLink>
 						</div>

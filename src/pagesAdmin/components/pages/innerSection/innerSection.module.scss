@@ -2,6 +2,7 @@
 	.container {
 		padding-inline: 20px;
 		margin: 0px auto;
+		margin-bottom: 50px;
 		.total_quantity {
 			display: flex;
 			gap: 22px;
@@ -12,7 +13,8 @@
 				align-items: center;
 				justify-content: center;
 			}
-			p {
+
+			.books_quantity {
 				color: rgb(181, 181, 181);
 				font-family: 'Open Sans', sans-serif;
 				font-size: 16px;
@@ -20,12 +22,28 @@
 				line-height: 130%;
 				letter-spacing: 0px;
 				text-align: left;
+				display: flex;
+				align-items: center;
+				gap: 4px;
+			}
+
+			.books_unvie {
+				color: rgb(181, 181, 181);
+				font-family: 'Open Sans', sans-serif;
+				font-size: 16px;
+				font-weight: 400;
+				line-height: 130%;
+				letter-spacing: 0px;
+				text-align: left;
+				display: flex;
+				align-items: center;
+				gap: 4px;
 
 				@media (max-width: 360px) {
 					font-size: 12px;
 				}
 
-				span {
+				:last-child {
 					color: rgb(255, 76, 0);
 				}
 			}
@@ -34,7 +52,7 @@
 
 	.content {
 		display: flex;
-		justify-content: space-around;
+		justify-content: start;
 		flex-wrap: wrap;
 		gap: 20px 10px;
 		width: 100%;
@@ -43,8 +61,8 @@
 			position: relative;
 			display: flex;
 			flex-direction: column;
-			justify-content: space-around;
 			align-items: center;
+			justify-content: center;
 			padding: 35px 36px 20px;
 			max-width: 268px;
 			width: 100%;
@@ -120,6 +138,8 @@
 					gap: 7px;
 
 					h3 {
+						max-width: 160px;
+						width: 100%;
 						color: rgb(34, 34, 34);
 						font-family: 'Open Sans', sans-serif;
 						font-size: 14px;
@@ -127,6 +147,8 @@
 						line-height: 120%;
 						text-align: left;
 						text-transform: uppercase;
+						word-wrap: break-word;
+						white-space: pre-wrap;
 
 						@media (max-width: 830px) {
 							font-size: 8px;
@@ -135,7 +157,7 @@
 							font-size: 7px;
 						}
 						@media (max-width: 360px) {
-							font-size: 5px;
+							font-size: 6px;
 						}
 					}
 
@@ -153,6 +175,9 @@
 							font-weight: 400;
 							line-height: 120%;
 							text-align: left;
+
+							word-wrap: break-word;
+							white-space: pre-wrap;
 
 							@media (max-width: 830px) {
 								font-size: 10px;

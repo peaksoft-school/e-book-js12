@@ -17,8 +17,8 @@ const AudioBookSection = () => {
 								<div className={scss.title_audio_books}>
 									<h5>Аудиокниги</h5>
 									<Link to={'/search_book'} className={scss.orange_all}>
-                        Смотреть все
-                    </Link>
+										Смотреть все
+									</Link>
 								</div>
 								<div className={scss.books_container}>
 									<div className={scss.book_first}>

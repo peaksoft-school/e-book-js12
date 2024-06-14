@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 import { useGetLastPublicationQuery } from '@/src/redux/api/book';
 
 const LastPublicationSection: FC = () => {
-	const [state, setState] = useState('');
+	const [state, setState] = useState('BOOKS_FOR_CHILDREN');
 	const [expandedCards, setExpandedCards] = useState<{
 		[key: number]: boolean;
 	}>({});

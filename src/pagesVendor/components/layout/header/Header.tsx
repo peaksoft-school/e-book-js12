@@ -1,14 +1,14 @@
+import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import CustomGenreInput from '@/src/ui/customInpute/CustomGenreInput';
 import scss from './Header.module.scss';
-import { useEffect, useState } from 'react';
 import { IconRedDot, IconSuccess, IconTest } from '@/src/assets/icons';
 import LogoeBook from '@/src/ui/logoeBook/LogoeBook';
-
 import { IconInfoCircle, IconUserCircle } from '@tabler/icons-react';
-import { useNavigate } from 'react-router-dom';
 import { ConfigProvider, Modal, Tooltip } from 'antd';
 import CustomAddBookButton from '@/src/ui/customButton/CustomAddBook';
 import { usePostPromoCodeMutation } from '@/src/redux/api/promo';
+import { useSearchBooksQuery } from '@/src/redux/api/search';
 
 const Header = () => {
 	const [headerScroll, setHeaderScroll] = useState<boolean>(false);
@@ -16,15 +16,19 @@ const Header = () => {
 	const [userExit, setUserExit] = useState<boolean>(false);
 	const [isModalOpen, setIsModalOpen] = useState(false);
 	const [modalSuccess, setModalSuccess] = useState(false);
-	//
 	const [promoCode, setPromoCode] = useState('');
 	const [dateStart, setDateStart] = useState('');
 	const [dateEnd, setDateEnd] = useState('');
 	const [disCount, setDisCount] = useState('');
-	//
 	const [createNewPromo] = usePostPromoCodeMutation();
-	//
+	const [searchTerm, setSearchTerm] = useState<string>('');
+	const [showResults, setShowResults] = useState<boolean>(false);
+	const { data: searchResults, refetch } = useSearchBooksQuery(
+		{ searchTerm },
+		{ skip: !searchTerm }
+	);
 	const navigate = useNavigate();
+
 	useEffect(() => {
 		const changeHeader = () => {
 			if (window.scrollY >= 10) {
@@ -41,6 +45,7 @@ const Header = () => {
 			window.removeEventListener('scroll', changeHeader);
 		};
 	}, []);
+
 	useEffect(() => {
 		if (modalSuccess) {
 			setTimeout(() => {
@@ -75,6 +80,19 @@ const Header = () => {
 		localStorage.setItem('isAuth', 'false');
 		localStorage.removeItem('token');
 	};
+
+	const handleBookClick = (id: number) => {
+		navigate(`home/${id}`);
+		setShowResults(false);
+	};
+
+	const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+		const value = e.target.value;
+		setSearchTerm(value);
+		setShowResults(!!value);
+		refetch();
+	};
+
 	return (
 		<>
 			<header className={scss.Header}>
@@ -89,14 +107,32 @@ const Header = () => {
 								<div className={scss.logo_content}>
 									<LogoeBook />
 								</div>
-								<div className={scss.input_vontent}>
-									<CustomGenreInput
-										placeholder="Искать жанр, книги, авторов, издательства... "
-										value={''}
-										onChange={function (): void {
-											throw new Error('Function not implemented.');
-										}}
-									/>
+								<div className={scss.searchResults}>
+									<div className={scss.search}>
+										<CustomGenreInput
+											onChange={handleSearchChange}
+											value={searchTerm}
+											placeholder="Искать жанр, книги, авторов, издательства..."
+										/>
+									</div>
+									<div>
+										{showResults && searchResults && (
+											<div className={scss.searchResultsLi}>
+												<ul>
+													{searchResults.map((book) => (
+														<li
+															onClick={() => handleBookClick(book.id)}
+															key={book.id}
+														>
+															<div>
+																<p>{book.title}</p>
+															</div>
+														</li>
+													))}
+												</ul>
+											</div>
+										)}
+									</div>
 								</div>
 								<div className={scss.right_content}>
 									<div className={scss.notice_icon}>
@@ -115,32 +151,24 @@ const Header = () => {
 											<IconUserCircle />
 										</p>
 									</div>
-									{
-										<>
-											<div
-												className={`${isUser ? scss.user_drop : scss.user_down}`}
-											>
-												<ul>
-													<li
-														onClick={() => {
-															navigate('/vendor/profile');
-														}}
-													>
-														Профиль
-													</li>
-													<hr />
-													<li
-														onClick={() => {
-															HandleExitVendor();
-															setIsUser(false);
-														}}
-													>
-														Выйти
-													</li>
-												</ul>
-											</div>
-										</>
-									}
+									{isUser && (
+										<div className={scss.user_drop}>
+											<ul>
+												<li onClick={() => navigate('/vendor/profile')}>
+													Профиль
+												</li>
+												<hr />
+												<li
+													onClick={() => {
+														HandleExitVendor();
+														setIsUser(false);
+													}}
+												>
+													Выйти
+												</li>
+											</ul>
+										</div>
+									)}
 									<Modal
 										open={userExit}
 										className={scss.modal_exit}
@@ -168,11 +196,9 @@ const Header = () => {
 							</div>
 							<div className={scss.search_input}>
 								<CustomGenreInput
-									placeholder="Искать жанр, книги, авторов, издательства... "
-									value={''}
-									onChange={function (): void {
-										throw new Error('Function not implemented.');
-									}}
+									placeholder="Искать жанр, книги, авторов, издательства..."
+									value=""
+									onChange={() => {}}
 								/>
 							</div>
 							<div className={scss.buttons_contents}>
@@ -180,17 +206,13 @@ const Header = () => {
 									<div
 										className={`customVendorsBooksModal ${scss.promocode_button}`}
 									>
-										<button
-											onClick={() => {
-												setIsModalOpen(true);
-											}}
-										>
+										<button onClick={() => setIsModalOpen(true)}>
 											Создать промокод
 										</button>
 										<Tooltip
 											className={scss.info_hover}
 											title="Промокод применится ко всем вашим книгам"
-											color={'orangered'}
+											color="orangered"
 											placement="bottomLeft"
 										>
 											<span>
@@ -200,102 +222,79 @@ const Header = () => {
 									</div>
 									<div className={scss.add_book_button}>
 										<CustomAddBookButton
-											children="+ Добавить книгу"
-											onClick={() => {
-												navigate('/vendor/addBook');
-											}}
-										/>
+											onClick={() => navigate('/vendor/addBook')}
+										>
+											+ Добавить книгу
+										</CustomAddBookButton>
 									</div>
 								</div>
-								<>
-									<ConfigProvider
-										theme={{
-											components: {
-												Modal: {
-													lineWidth: 20
-												}
-											}
-										}}
+								<ConfigProvider
+									theme={{ components: { Modal: { lineWidth: 20 } } }}
+								>
+									<Modal
+										className={scss.modal}
+										open={isModalOpen}
+										closable={false}
+										onCancel={() => setIsModalOpen(false)}
+										footer={[
+											<button
+												className={scss.button_add_promo}
+												type="submit"
+												key="submit"
+												onClick={() => {
+													onSubmitAddPromo();
+													setIsModalOpen(false);
+												}}
+											>
+												Создать
+											</button>
+										]}
 									>
-										<Modal
-											className={scss.modal}
-											open={isModalOpen}
-											closable={false}
-											onCancel={() => {
-												setIsModalOpen(false);
-											}}
-											footer={[
-												<button
-													className={scss.button_add_promo}
-													type="submit"
-													key="submit"
-													onClick={() => {
-														onSubmitAddPromo();
-														setIsModalOpen(false);
-													}}
-												>
-													Создать
-												</button>
-											]}
-										>
-											<>
-												<div className={scss.promocode}>
-													<label>Промокод</label>
-													<input
-														className={scss.promocode_input}
-														type="text"
-														placeholder="Напишите промокод"
-														value={promoCode}
-														onChange={(e) => {
-															setPromoCode(e.target.value);
-														}}
-													/>
-												</div>
-												<div className={scss.inputs}>
-													<div className={scss.input_x_label}>
-														<label>Дата начала</label>
-														<input
-															type="date"
-															value={dateStart}
-															onChange={(e) => {
-																setDateStart(e.target.value);
-															}}
-														/>
-													</div>
-													<div className={scss.input_x_label}>
-														<label>Дата завершения</label>
-														<input
-															type="date"
-															value={dateEnd}
-															onChange={(e) => {
-																setDateEnd(e.target.value);
-															}}
-														/>
-													</div>
-													<div
-														className={`${scss.input_x_label} ${scss.last_input}`}
-													>
-														<label>Процент скидки</label>
-														<input
-															type="text"
-															placeholder="%"
-															value={disCount}
-															onChange={(e) => {
-																setDisCount(e.target.value);
-															}}
-														/>
-													</div>
-												</div>
-											</>
-										</Modal>
-									</ConfigProvider>
-								</>
+										<div className={scss.promocode}>
+											<label>Промокод</label>
+											<input
+												className={scss.promocode_input}
+												type="text"
+												placeholder="Напишите промокод"
+												value={promoCode}
+												onChange={(e) => setPromoCode(e.target.value)}
+											/>
+										</div>
+										<div className={scss.inputs}>
+											<div className={scss.input_x_label}>
+												<label>Дата начала</label>
+												<input
+													type="date"
+													value={dateStart}
+													onChange={(e) => setDateStart(e.target.value)}
+												/>
+											</div>
+											<div className={scss.input_x_label}>
+												<label>Дата завершения</label>
+												<input
+													type="date"
+													value={dateEnd}
+													onChange={(e) => setDateEnd(e.target.value)}
+												/>
+											</div>
+											<div
+												className={`${scss.input_x_label} ${scss.last_input}`}
+											>
+												<label>Процент скидки</label>
+												<input
+													type="text"
+													placeholder="%"
+													value={disCount}
+													onChange={(e) => setDisCount(e.target.value)}
+												/>
+											</div>
+										</div>
+									</Modal>
+								</ConfigProvider>
 							</div>
 							<Modal
 								className={scss.modal_success}
-								onCancel={() => {
-									setModalSuccess(false);
-								}}
+								onCancel={() => setModalSuccess(false)}
 								open={modalSuccess}
 								closable={false}
 								footer={false}

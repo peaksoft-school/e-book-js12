@@ -57,3 +57,4 @@ export { default as IconGreyLine } from './icon-greyLine';
 export { default as IconSuccess } from './icon-success';
 export { default as IconTest } from './icon-test';
 export { default as IconGoogleLogo } from './icon-google-logo';
+export { default as IconPromoPage } from './icon-promo-page';

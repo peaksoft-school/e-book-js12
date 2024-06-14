@@ -40,6 +40,34 @@
 			.logo_content {
 				cursor: pointer;
 			}
+			.searchResults {
+				max-width: 895px;
+				width: 100%;
+				display: flex;
+				flex-direction: column;
+				position: relative;
+
+				.searchResultsLi {
+					position: absolute;
+					z-index: 999;
+					ul {
+						max-width: 895px;
+						width: 100%;
+						display: flex;
+						flex-direction: column;
+						gap: 5px;
+						background-color: white;
+						li {
+							max-width: 895px;
+							width: 100%;
+							max-height: 30px;
+							padding: 20px 20px;
+							text-align: start;
+							border-bottom: 1px solid rgb(168, 165, 165);
+						}
+					}
+				}
+			}
 
 			.input_vontent {
 				display: flex;
@@ -114,6 +142,7 @@
 						line-height: 130%;
 						letter-spacing: 0px;
 						text-align: left;
+						margin-top: 2.5px;
 						@media (max-width: 470px) {
 							font-size: 12px;
 						}
@@ -204,7 +233,6 @@
 					gap: 16px;
 					align-items: center;
 					cursor: pointer;
-					cursor: default;
 
 					button {
 						padding: 10px 16px;
@@ -212,7 +240,6 @@
 						background-color: #fff;
 						color: rgb(255, 76, 0);
 						cursor: pointer;
-						cursor: default;
 					}
 
 					svg {
@@ -245,7 +272,6 @@
 					gap: 16px;
 					align-items: center;
 					cursor: pointer;
-					cursor: default;
 				}
 			}
 		}
@@ -532,4 +558,5 @@
 
 .button_add_promo {
 	margin-top: 19px;
+	cursor: pointer;
 }

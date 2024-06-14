@@ -15,8 +15,8 @@ const Footer: FC = () => {
 						</div>
 						<div className={scss.footerBox}>
 							<h3>Свяжитесь с нами</h3>
-							<a href="#">+996 707 123 456</a>
-							<a href="#">г. Бишкек ул. Исанова 45</a>
+							<a href="#">+996 551 252 512</a>
+							<a href="#">г. Бишкек ул. Гражданская 119</a>
 						</div>
 					</div>
 				</div>

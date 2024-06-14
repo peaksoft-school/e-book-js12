@@ -54,7 +54,6 @@ namespace BOOK {
 	type DeleteProductRequest = number;
 
 	type GetBookByIdResponse = {
-		id?: number;
 		imageUrlFirst: string;
 		imageUrlLast: string;
 		bookType: string;
@@ -70,13 +69,53 @@ namespace BOOK {
 		discount: number;
 		price: number;
 		fragmentAudUrl: string;
-		duration: string;
+		duration: Duration;
 		statusBook: string;
-		quantityOfFavorite: string;
-		quantityOfBasket: string;
-	}[];
+	};
+	type Duration = {
+		seconds: number;
+		zero: boolean;
+		nano: number;
+		negative: boolean;
+		positive: boolean;
+		units: Unit[];
+	};
+
+	type Unit = {
+		durationEstimated: boolean;
+		timeBased: boolean;
+		dateBased: boolean;
+	};
 
 	type GetBookByIdRequest = number;
+
+	type GetBookByIdVendorResponse = {
+		bookId: number;
+		imageUrlFirst: string;
+		imageUrlLast: string;
+		bookType: string;
+		title: string;
+		authorsFullName: string;
+		genre: string;
+		publishingHouse: string;
+		description: string;
+		fragment: string;
+		language: string;
+		publishedYear: number;
+		volume: number;
+		discount: number;
+		price: number;
+		priceWithDiscount: number;
+		fragmentAudUrl: string;
+		audBookUrl: string;
+		fileForBook: string;
+		duration: Duration;
+		statusBook: string;
+		countFavorite: number;
+		countBasket: number;
+	};
+
+	type GetBookByIdVendorRequest = number;
 
 	type PutBookByIdResponse = {
 		id?: number;

@@ -9,6 +9,18 @@ const LayoutAuth = () => {
 	return (
 		<>
 			<div className={scss.layout}>
+				<video
+					autoPlay
+					muted
+					loop
+					id="background-video"
+					className={scss['background-video']}
+				>
+					<source
+						src="https://media.gettyimages.com/id/1391170263/video/turning-pages-loopable.mp4?s=mp4-640x640-gi&k=20&c=2dOYEcJ5_mWMSnXezEULnoVBctXo4Hve2VWqdXDFGl0="
+						type="video/mp4"
+					/>
+				</video>
 				<main>
 					<Routes>
 						<Route path="/" element={<HomePage />} />
@@ -24,4 +36,5 @@ const LayoutAuth = () => {
 		</>
 	);
 };
+
 export default LayoutAuth;
