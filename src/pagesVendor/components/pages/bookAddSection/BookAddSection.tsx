@@ -1004,7 +1004,6 @@ const BookAddSection = () => {
 												<label
 													onClick={() => {
 														setClickBestseller(!clickBestseller);
-														setModal(true);
 													}}
 												>
 													<div className={scss.checkbox}>

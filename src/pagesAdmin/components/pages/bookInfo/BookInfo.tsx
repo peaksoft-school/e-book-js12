@@ -71,7 +71,7 @@ const BookInfo: FC = () => {
 
 	const locationFunction = () => {
 		if (/^\/admin\/inner\/\d+$/.test(location.pathname)) {
-			return <p onClick={() => navigate('/admin/')}>Заявки</p>;
+			return <p onClick={() => navigate('/admin')}>Заявки</p>;
 		} else if (/^\/admin\/vendors\/books\/\d+$/.test(location.pathname)) {
 			return <p onClick={() => navigate('/admin/vendors')}>Продавцы</p>;
 		} else if (/^\/admin\/users\/\d+$/.test(location.pathname)) {
