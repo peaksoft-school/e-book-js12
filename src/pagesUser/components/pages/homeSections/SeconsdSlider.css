@@ -60,7 +60,7 @@
 }
 
 .slide {
-	transform: scale(0.59);
+	transform: scale(0.69);
 	transition: transform 300ms;
 
 	width: 300px;
@@ -234,10 +234,19 @@
 	}
 }
 
+@media (max-width: 767px) {
+	.title {
+		display: flex;
+		flex-direction: column;
+		gap: 15px;
+		align-items: center;
+		justify-content: center;
+	}
+}
 @media screen and (max-width: 680px) {
 	.slide img {
-		width: 150px;
-		height: 258px;
+		width: 270px;
+		height: 470px;
 	}
 
 	.slick-list {
@@ -249,7 +258,7 @@
 		font-size: 14px;
 	}
 	.slide .name {
-		/* margin-bottom: 50px; */
+	
 		font-size: 11px;
 	}
 	.slide .auth {
@@ -266,105 +275,34 @@
 }
 
 @media screen and (max-width: 600px) {
-	.slide img {
-		width: 200px;
-		height: 300px;
+	.joc{
+		margin-top: 40px;
 	}
-
+	.keen-slider__slider img {
+		width: 70%;
+		height: 80%;
+	}
+	.keen-slider__slide {
+		transform: scale(2);
+}
 	.slick-list {
 		width: 30rem;
 	}
 
 	.slide {
-		top: 50px;
-		height: 100px;
-	}
-	.slide .price {
-		top: 362px;
-		font-size: 10px;
-	}
-	.slide .name {
-		font-size: 10px;
-	}
-	.slide .auth {
-		font-size: 8px;
-	}
-
-	.arrow {
-		display: none;
-	}
-	.scroll-line {
-		bottom: 40%;
-		left: 60%;
-	}
-}
-
-@media (max-width: 767px) {
-	.title {
-		display: flex;
-		flex-direction: column;
-		gap: 15px;
-		align-items: center;
-		justify-content: center;
-	}
-}
-@media screen and (max-width: 500px) {
-	.slide img {
-		width: 150px;
-		height: 250px;
-	}
-
-	.slick-list {
-		width: 27rem;
-	}
-
-	.slide .price {
-		top: 318px;
-		font-size: 8px;
-	}
-	.slide .name {
-		font-size: 8px;
-	}
-	.slide .auth {
-		font-size: 6px;
-	}
-
-	.arrow {
-		display: none;
-	}
-	.box {
-		width: 50%;
-	}
-}
-
-@media screen and (max-width: 422px) {
-	.slide img {
-		width: 110px;
-		height: 180px;
-	}
-
-	.slick-list {
-		width: 21rem;
-	}
-
-	.slide .price {
-		top: 298px;
-		font-size: 6px;
-	}
-	.slide .name {
-		font-size: 6px;
-	}
-	.slide .auth {
-		font-size: 4px;
+		transform: scale(0.67);
+		transition: transform 100ms;
+		width: 300px;
+		position: relative;
+		opacity: 0;
 	}
 	.activeSlide {
-		height: 10px;
-	}
-
-	.arrow {
-		display: none;
-	}
-	.box {
-		width: 50%;
-	}
+		transform: scale(1);
+		width: 300px;
+		height: 600px;
+		position: relative;
+		z-index: 100;
+		opacity: 1;
+		top: 50px;
+}
 }

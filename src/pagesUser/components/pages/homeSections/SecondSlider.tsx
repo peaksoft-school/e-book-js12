@@ -120,7 +120,7 @@ const SecondSlider: FC = () => {
 							</div>
 						))}
 				</div>
-				<div className="jo">
+				<div className="joc">
 					{data &&
 						data.length > 0 &&
 						(isMobile ? (
@@ -128,7 +128,7 @@ const SecondSlider: FC = () => {
 								{data.map((item, idx) => (
 									<div
 										key={item.id}
-										className={`keen-slider__slide ${idx === imageIndex ? 'activeSlider' : ''}`}
+										className={`keen-slider__slide slide ${idx === imageIndex ? 'activeSlide' : ''}`}
 									>
 										<img src={item.imageUrl} alt="img" />
 									</div>

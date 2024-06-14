@@ -11,7 +11,11 @@
 			width: 100%;
 			display: flex;
 			justify-content: space-between;
+.orange_all{
+	color: rgb(255, 76, 0);
+	-webkit-tap-highlight-color: transparent;
 
+}
 			@media (max-width: 767px) {
 				display: flex;
 				align-items: center;

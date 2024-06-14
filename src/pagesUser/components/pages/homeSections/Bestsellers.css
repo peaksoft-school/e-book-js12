@@ -6,7 +6,6 @@
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
-
 }
 .content {
 	display: flex;
@@ -17,6 +16,8 @@
 
 .see_orange {
 	color: #ff4c00;
+	cursor: pointer;
+	-webkit-tap-highlight-color: transparent;
 }
 
 .name {
@@ -74,7 +75,7 @@
 	opacity: 0.8;
 }
 .activeSlider {
-	transform: scale(1);
+	transform: scale(0.90);
 	width: 300px;
 	height: 600px;
 	position: relative;
@@ -130,7 +131,7 @@
 	.slider {
 		top: 80px;
 	}
-	.box_box{
+	.box_box {
 		width: 20%;
 	}
 	.content {
@@ -156,7 +157,7 @@
 	.scroll-lines {
 		display: none;
 	}
-	.title_box_box p{
+	.title_box_box p {
 		max-width: 100%;
 	}
 }
@@ -228,14 +229,14 @@
 	.description-box_box {
 		width: 100%;
 	}
-	.box_box{
+	.box_box {
 		width: 30%;
 	}
 }
 @media screen and (max-width: 680px) {
 	.slider img {
 		width: 150px;
-		height: 258px;
+		height: 218px;
 	}
 	.slick-list {
 		width: 37rem;
@@ -244,7 +245,7 @@
 		top: 190px;
 	}
 	.slick-track {
-		height: 300px;
+		height: 400px;
 	}
 	.slide .price {
 		top: 400px;
@@ -259,42 +260,43 @@
 	.arrow {
 		display: none;
 	}
-	.scroll-line {
-		bottom: 30%;
-		left: 60%;
+}
+
+@media screen and (max-width: 600px) {
+	.jo {
+			margin-top: 40px;
+	}
+	.keen-slider__slide img {
+			width: 70%;
+			height: 80%;
+	}
+	.keen-slider__slide {
+			transform: scale(2);
+	}
+	.slider {
+			transform: scale(0.67);
+			transition: transform 100ms;
+			width: 300px;
+			position: relative;
+			opacity: 0;
+	}
+	.activeSlider {
+			transform: scale(1);
+			width: 300px;
+			height: 600px;
+			position: relative;
+			z-index: 100;
+			opacity: 1;
+			top: 50px;
+	}
+	.box_box {
+			width: 50%;
 	}
 }
 
-@media screen and (max-width: 600px){
-	.jo{
-		margin-top: 40px;
-	}
-	.keen-slider__slide img{
-width: 70%;
-height: 80%;
-	}
-	.slider {
-		transform: scale(0);
-		transition: transform 300ms;
-		width: 300px;
-		position: relative;
-		opacity: 0;
-		}
-		.activeSlider {
-			transform: scale(0);
-		width: 300px;
-		height: 600px;
-		position: relative;
-		z-index: 100;
-		opacity: 1;
-		top: 50px;
-	}
-	.box_box{
-		width: 50%;
-	}
-}
-@media screen and (max-width:450px) {
-	.keen-slider__slide img{
+
+@media screen and (max-width: 450px) {
+	.keen-slider__slide img {
 		width: 90%;
 	}
 }
