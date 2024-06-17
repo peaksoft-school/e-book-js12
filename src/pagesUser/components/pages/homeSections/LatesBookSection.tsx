@@ -50,7 +50,7 @@ const LatestBookSection: FC = () => {
 					centerMode: true,
 					centerPadding: '0',
 					autoplaySpeed: 2000,
-					cssEase: "linear",
+					cssEase: 'linear',
 					autoplay: true
 				}
 			}

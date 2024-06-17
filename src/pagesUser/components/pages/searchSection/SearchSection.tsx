@@ -407,7 +407,7 @@ const SearchSection = () => {
 												<li
 													key={item.id}
 													onClick={() => {
-														setIdSort(item.id);
+														setIdSort(item.id)
 														setSelected(item.nameSort);
 														setIsSort(false);
 													}}

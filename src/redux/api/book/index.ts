@@ -128,6 +128,18 @@ const api = index.injectEndpoints({
 				body: filters
 			}),
 			invalidatesTags: ['book']
+		}),
+		EditPhotoUrl: build.mutation({
+			query: ({ newData, bookId }) => {
+				const formData = new FormData();
+				formData.append('file', newData);
+				return {
+					url: `/api/book/updatePhoto?bookId=${bookId}`,
+					method: 'PATCH',
+					body: newData
+				};
+			},
+			invalidatesTags: ['book']
 		})
 	})
 });
@@ -142,5 +154,6 @@ export const {
 	useApproveBookMutation,
 	useRejectBookMutation,
 	useFilterBooksMutation,
-	useGetBookByIdVendorQuery
+	useGetBookByIdVendorQuery,
+	useEditPhotoUrlMutation
 } = api;

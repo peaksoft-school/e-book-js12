@@ -17,7 +17,7 @@ const LayoutAuth = () => {
 					className={scss['background-video']}
 				>
 					<source
-						src="https://media.gettyimages.com/id/1391170263/video/turning-pages-loopable.mp4?s=mp4-640x640-gi&k=20&c=2dOYEcJ5_mWMSnXezEULnoVBctXo4Hve2VWqdXDFGl0="
+						src="https://cdn.pixabay.com/video/2022/12/03/141525-777930401_large.mp4"
 						type="video/mp4"
 					/>
 				</video>

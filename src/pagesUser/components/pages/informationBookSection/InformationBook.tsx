@@ -46,6 +46,7 @@ const InformationBook: FC = () => {
 	const { data, isLoading } = useGetBookByIdQuery<TypeGetById>(bookId);
 	const [addBookToBasket] = useAddBookToBasketMutation();
 	const [addBookToFavorite] = usePostFavoriteUnFavoriteMutation();
+	
 
 	const handleAddBookToBasket = async (id: number) => {
 		await addBookToBasket(id);
@@ -93,7 +94,10 @@ const InformationBook: FC = () => {
 											<>
 												<div>
 													<audio id="audioPlayer" controls>
-														<source src="" type="audio/mpeg" />
+														<source
+															src={data.fragmentAudUrl}
+															type="audio/mpeg"
+														/>
 													</audio>
 												</div>
 											</>
@@ -128,7 +132,9 @@ const InformationBook: FC = () => {
 														<p>{data?.publishedYear}</p>
 														{data.bookType === 'AUDIO_BOOK' ? (
 															<>
-																<p>{data?.duration}</p>
+																<p>
+																	{data?.duration === null ? 0 : data.duration}
+																</p>
 															</>
 														) : (
 															<>

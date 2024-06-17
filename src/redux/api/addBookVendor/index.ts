@@ -19,10 +19,16 @@ const api = index.injectEndpoints({
 			invalidatesTags: ['add_book']
 		}),
 		EditBook: build.mutation({
-			query: () => ({
+			query: ({ bookId, newUpDateBook, genre, language, bookType }) => ({
 				url: '/api/book/updateBook',
 				method: 'PUT',
-				body: ''
+				body: newUpDateBook,
+				params: {
+					bookId,
+					genre,
+					language,
+					bookType
+				}
 			}),
 			invalidatesTags: ['add_book']
 		}),
@@ -44,4 +50,8 @@ const api = index.injectEndpoints({
 	})
 });
 
-export const { useAddBookVendorMutation, usePostFileMutation } = api;
+export const {
+	useAddBookVendorMutation,
+	usePostFileMutation,
+	useEditBookMutation
+} = api;
