@@ -48,7 +48,10 @@ const LatestBookSection: FC = () => {
 				settings: {
 					slidesToShow: 1,
 					centerMode: true,
-					centerPadding: '0'
+					centerPadding: '0',
+					autoplaySpeed: 2000,
+					cssEase: "linear",
+					autoplay: true
 				}
 			}
 		]
