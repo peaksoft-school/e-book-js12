@@ -169,7 +169,7 @@ const AddBookSection = () => {
 			publishedYear: book.publishedYear,
 			volume: book.volume !== '' ? book.volume : 0,
 			amountOfBook: book.amountOfBook,
-			discount: book.discount,
+			discount: book.discount !== '' ? book.discount : 0,
 			price: book.price,
 			bestseller: clickBestseller
 		};
