@@ -83,7 +83,7 @@ const bookTypes = [
 	{
 		typeId: 1,
 		typeName: 'Электронные книги',
-		typeNameEnglish: 'ELECTRONIC_BOOK'
+		typeNameEnglish: 'ONLINE_BOOK'
 	},
 	{
 		typeId: 2,
@@ -112,6 +112,7 @@ const BooksSection: React.FC = () => {
 
 	const handleDeleteBook = (id: number) => {
 		deleteBookById(id);
+		setOpenState(false);
 	};
 
 	const handleBookClick = (id: number) => {
@@ -124,7 +125,6 @@ const BooksSection: React.FC = () => {
 			genres: [...selectedGenre],
 			bookTypes: filteredBookTypes
 		};
-		console.log(filters);
 
 		const result = await filterBooks(filters);
 		if ('data' in result) {
@@ -135,7 +135,7 @@ const BooksSection: React.FC = () => {
 
 	useEffect(() => {
 		handlePostRequest();
-	}, [selectedGenre, selectedType]);
+	}, [selectedGenre, selectedType, openState]);
 
 	const toggleTypeList = (): void => {
 		setIsOpenBooksType(!isOpenBooksType);
@@ -167,6 +167,7 @@ const BooksSection: React.FC = () => {
 		selectedGenre.length > 0
 			? genreData.find((g) => g.englishName === selectedGenre[0])?.genreName
 			: 'Жанры';
+	console.log(genreText);
 
 	return (
 		<section className={scss.BooksSection}>
@@ -177,7 +178,7 @@ const BooksSection: React.FC = () => {
 							<div className={scss.click}>
 								<p onClick={toggleGenreList}>
 									<span>
-										{genreText}
+										janre
 										{isOpenBooksGenre ? <UpIcon /> : <IconArrowBottom />}
 									</span>
 								</p>
@@ -201,6 +202,8 @@ const BooksSection: React.FC = () => {
 								}
 							</div>
 						</div>
+						<div className={scss.types_book}>
+							
 						<div className={scss.click}>
 							<p onClick={toggleTypeList}>
 								<span>{bookTypeText}</span>
@@ -212,7 +215,7 @@ const BooksSection: React.FC = () => {
 										isOpenBooksType ? scss.type_list : scss.none_books_type
 									}
 								>
-									{selectedType !== '' ? (
+									{selectedType !== null ? (
 										<>
 											<p onClick={() => handleTypeSelect(null)}>Все</p>
 											<hr />
@@ -233,6 +236,7 @@ const BooksSection: React.FC = () => {
 									))}
 								</div>
 							}
+						</div>
 						</div>
 					</div>
 					<div className={scss.add_book_btn}>

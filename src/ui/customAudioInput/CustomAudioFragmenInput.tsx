@@ -8,7 +8,7 @@ interface CustomAudioDownloadInputProps {
 	setDuration: React.Dispatch<React.SetStateAction<number>>;
 }
 
-const CustomAudioDownloadInput: FC<CustomAudioDownloadInputProps> = ({
+const CustomAudioFragmentInput: FC<CustomAudioDownloadInputProps> = ({
 	accept,
 	onChange,
 	setDuration
@@ -23,8 +23,7 @@ const CustomAudioDownloadInput: FC<CustomAudioDownloadInputProps> = ({
 		if (file) {
 			const audio = new Audio(URL.createObjectURL(file));
 			audio.addEventListener('loadedmetadata', () => {
-				console.log(audio.duration);
-				
+            
 				setDuration(audio.duration);
 			});
 		}
@@ -68,4 +67,4 @@ const CustomAudioDownloadInput: FC<CustomAudioDownloadInputProps> = ({
 	);
 };
 
-export default CustomAudioDownloadInput;
+export default CustomAudioFragmentInput;

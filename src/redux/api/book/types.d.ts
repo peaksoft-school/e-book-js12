@@ -109,8 +109,11 @@ namespace BOOK {
 		fragmentAudUrl: string;
 		audBookUrl: string;
 		fileForBook: string;
-		duration: Duration;
+		duration: string;
+		durationFragmentAud: string;
+		durationAudFragment: number;
 		statusBook: string;
+		bestseller: boolean;
 		countFavorite: number;
 		countBasket: number;
 	};

@@ -29,7 +29,7 @@ const LayoutVendor = () => {
 						<Route path="/home/:id" element={<AboutBookPage />} />
 						<Route path="/addBook" element={<AddBookPage />} />
 						<Route path="/profile" element={<ProfilePage />} />
-						<Route path="/editBook/:id" element={<EditBookPage />} />
+						<Route path="/home/editBook/:id" element={<EditBookPage />} />
 					</Routes>
 				</main>
 				{location.pathname === '/vendor/registration' ||
