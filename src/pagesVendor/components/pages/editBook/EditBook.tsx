@@ -16,13 +16,16 @@ import { Link, useParams } from 'react-router-dom';
 import { ChangeEvent, useEffect, useState } from 'react';
 import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
 import {
-	useAddBookVendorMutation,
+	useEditBookMutation,
 	usePostFileMutation
 } from '@/src/redux/api/addBookVendor';
 import CustomAudioDownloadInput from '@/src/ui/customAudioInput/CustomAudioDownloadInput';
 import CustomBasketButton from '@/src/ui/customButton/CustomBasketButton';
 import CustomPDFDownloadInput from '@/src/ui/customPDFInput/CustomPDFDownloadInput';
-import { useGetBookByIdVendorQuery } from '@/src/redux/api/book';
+import {
+	useEditPhotoUrlMutation,
+	useGetBookByIdVendorQuery
+} from '@/src/redux/api/book';
 
 interface TypeJenre {
 	jenreId: number;
@@ -38,9 +41,9 @@ interface TypeLanguage {
 }
 
 const EditBook = () => {
-	const bookId = useParams();
-	const id = Number(bookId.id);
-	const { data } = useGetBookByIdVendorQuery(id);
+	const paramsId = useParams();
+	const bookId = Number(paramsId.id);
+	const { data } = useGetBookByIdVendorQuery(bookId);
 
 	const [peperBook, setPeperBook] = useState(true);
 	const [audioBook, setAudioBook] = useState(false);
@@ -59,11 +62,16 @@ const EditBook = () => {
 	const [pdfFileName, setPdfFileName] = useState<File>();
 	const [selectLanguage, setSelectLanguage] = useState(false);
 	const [bookType, setBookType] = useState('');
-	const [clickBestseller, setClickBestseller] = useState(false);
+	const [clickBestseller, setClickBestseller] = useState<boolean>(false);
 	const [selectDataJenre, setSelectDataJenre] = useState<TypeJenre | null>();
 	const [description, setDescription] = useState('');
 	const [pdfFile, setPdfFile] = useState(' ');
 	const [fragment, setFragment] = useState('');
+	const [inintialImg, setInitialImg] = useState<string>('');
+	const [initialImgSecond, setInitialImgSecond] = useState<string | undefined>(
+		''
+	);
+	const [test, setTest] = useState('');
 
 	const [languageSeleced, setLanguageSelected] = useState<
 		TypeLanguage | undefined
@@ -74,6 +82,7 @@ const EditBook = () => {
 	});
 
 	const [postFile] = usePostFileMutation();
+	const [updatePhoto] = useEditPhotoUrlMutation();
 	const { register, handleSubmit, reset } = useForm({
 		defaultValues: {
 			title: data?.title,
@@ -86,7 +95,7 @@ const EditBook = () => {
 			amountOfBook: ''
 		}
 	});
-	const [addBookVendor] = useAddBookVendorMutation();
+	const [addBookVendor] = useEditBookMutation();
 
 	const jenreData = [
 		{
@@ -162,9 +171,25 @@ const EditBook = () => {
 		}
 	];
 
+	const EditPhotoFirst = async () => {
+		if (test !== '') {
+			const newData = {
+				oldUrl: inintialImg,
+				newUrl: 'asdasdsd'
+			};
+			await updatePhoto({ newData, bookId });
+		}
+	};
+	const EditPhotoSecond = async () => {
+		const newData = {
+			oldUrl: initialImgSecond,
+			newUrl: secondPhoto
+		};
+		await updatePhoto({ newData, bookId });
+	};
+
 	const onSubmit: SubmitHandler<FieldValues> = async (book) => {
 		const newUpDateBook = {
-			imageUrls: [firstPhoto, secondPhoto],
 			fragmentAudUrl: audioFileFragment,
 			fullAudUrl: audioFile,
 			pdfUrl: pdfFile,
@@ -183,6 +208,7 @@ const EditBook = () => {
 		};
 
 		const result = await addBookVendor({
+			bookId,
 			newUpDateBook,
 			genre: selectDataJenre!.englishName,
 			language: languageSeleced!.language,
@@ -221,6 +247,8 @@ const EditBook = () => {
 		if ('data' in result) {
 			if (result.data.httpStatus === 'OK') {
 				setFirstPhoto(result.data.message);
+				setTest(result.data.message);
+				EditPhotoFirst();
 			}
 		}
 	};
@@ -310,7 +338,12 @@ const EditBook = () => {
 		);
 
 		setSelectDataJenre(ganre);
-	}, [data]);
+		setInitialImg(data!.imageUrlFirst);
+		setInitialImgSecond(data?.imageUrlLast);
+		setClickBestseller(data!.bestseller);
+		setDescription(data!.description);
+		setFragment(data!.fragment);
+	}, [data, fragment, description, firstPhoto, secondPhoto]);
 
 	useEffect(() => {
 		convertSecondsToHoursMinutesAndSeconds(duration);
@@ -346,8 +379,10 @@ const EditBook = () => {
 									<CustomAddPhoto
 										onChange={(e) => handlePhotoChange(e)}
 										label="Главное фото"
+										initialState={inintialImg}
 										setDelPhoto={setDelPhoto}
 										delPhoto={delPhoto}
+										editPhoto={firstPhoto}
 									/>
 									<p>Главное фото</p>
 								</div>
@@ -355,8 +390,10 @@ const EditBook = () => {
 									<CustomAddPhoto
 										onChange={(e) => handleSecondPhotoChange(e)}
 										label="Фото 2"
+										initialState={initialImgSecond!}
 										delPhoto={delPhoto}
 										setDelPhoto={setDelPhoto}
+										editPhoto={secondPhoto}
 									/>
 									<p>2</p>
 								</div>
@@ -539,7 +576,7 @@ const EditBook = () => {
 												rows={636}
 												cols={264}
 												maxLength={1234}
-												defaultValue={data?.description}
+												value={description}
 												placeholder="Напишите о книге"
 												onChange={(e) => setDescription(e.target.value)}
 											/>
@@ -551,7 +588,7 @@ const EditBook = () => {
 												rows={636}
 												cols={264}
 												maxLength={1234}
-												defaultValue={data?.fragment}
+												value={fragment}
 												placeholder="Напишите фрагмент книги"
 												onChange={(e) => setFragment(e.target.value)}
 											/>
@@ -1099,7 +1136,7 @@ const EditBook = () => {
 
 						<div className={scss.btn_content}>
 							<CustomBasketButton
-								children={'Отправить'}
+								children={'Редактировать'}
 								onClick={() => {}}
 								nameClass={scss.button}
 								type="submit"
@@ -1116,7 +1153,7 @@ const EditBook = () => {
 									<div className={scss.info_text}>
 										<p>
 											<span>“Гарри Поттер и Тайная комната”</span> <br />
-											успешно добавлен!
+											успешно Редактировано!
 										</p>
 									</div>
 								</div>

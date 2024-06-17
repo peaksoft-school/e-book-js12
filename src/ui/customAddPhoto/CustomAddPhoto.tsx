@@ -7,13 +7,17 @@ interface CustomAddPhotoProps {
 	label: string;
 	setDelPhoto: React.Dispatch<React.SetStateAction<boolean>>;
 	delPhoto: boolean;
+	initialState: string;
+	editPhoto: string;
 }
 
 const CustomAddPhoto: React.FC<CustomAddPhotoProps> = ({
 	onChange,
 	label,
 	setDelPhoto,
-	delPhoto
+	delPhoto,
+	initialState,
+	editPhoto
 }) => {
 	const [image, setImage] = useState<string>('');
 	const fileInputRef = useRef<HTMLInputElement>(null);
@@ -43,11 +47,21 @@ const CustomAddPhoto: React.FC<CustomAddPhotoProps> = ({
 		if (!delPhoto) {
 			setImage('');
 		}
-	}, [delPhoto]);
+		if (initialState !== '') {
+			setImage(initialState);
+		}
+		if (editPhoto !== '') {
+			setImage(editPhoto);
+		}
+	}, [delPhoto, initialState, image, editPhoto]);
 
 	return (
 		<div
-			onClick={handleButtonClick}
+			onClick={() => {
+				if (image === '' || image === null) {
+					handleButtonClick();
+				}
+			}}
 			className={scss.input_container}
 			style={{ backgroundImage: `url(${image})` }}
 		>

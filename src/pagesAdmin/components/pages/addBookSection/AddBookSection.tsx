@@ -22,6 +22,7 @@ import {
 	usePostFileMutation
 } from '@/src/redux/api/addBookVendor';
 import CustomAddPhoto from '@/src/ui/customAddPhoto/CustomAddPhoto';
+import CustomAudioFragmentInput from '@/src/ui/customAudioInput/CustomAudioFragmenInput';
 
 interface TypeJenre {
 	jenreId: number;
@@ -36,6 +37,7 @@ interface TypeLanguage {
 	languageName: string;
 }
 const AddBookSection = () => {
+	const [nameBook, setNameBook] = useState('');
 	const [clickRadio, setClickRadio] = useState(true);
 	const [audioBook, setAudioBook] = useState(false);
 	const [ebook, setEBook] = useState(false);
@@ -47,10 +49,11 @@ const AddBookSection = () => {
 	const [audioFileFragment, setAudioFileFragment] = useState('');
 	const [audioFile, setAudioFile] = useState('');
 	const [duration, setDuration] = useState(0);
-	const [hourValue, setHourValue] = useState('');
-	const [minutsValue, setMinutsValue] = useState('');
-	const [secondValue, setSecondValue] = useState('');
-	const [pdfFileName, setPdfFileName] = useState<File>();
+	const [hourValue, setHourValue] = useState<number>(0);
+	const [minutsValue, setMinutsValue] = useState<number>(0);
+	const [secondValue, setSecondValue] = useState<number>(0);
+	const [durationFragment, setDurationFragment] = useState<number>(0);
+	const [pdfFileName, setPdfFileName] = useState<File | null>();
 	const [postFile] = usePostFileMutation();
 
 	const [selectLanguage, setSelectLanguage] = useState(false);
@@ -75,8 +78,6 @@ const AddBookSection = () => {
 	const { register, handleSubmit, reset } = useForm();
 
 	const [fragment, setFragment] = useState(' ');
-
-	const [nameBook, setNameBook] = useState('');
 
 	const [addBookVendor] = useAddBookVendorMutation();
 
@@ -153,8 +154,10 @@ const AddBookSection = () => {
 			languageName: 'Английский язык'
 		}
 	];
+
 	const onSubmit: SubmitHandler<FieldValues> = async (book) => {
 		setNameBook(book.title);
+
 		const newUpDateBook = {
 			imageUrls: [firstPhoto, secondPhoto],
 			fragmentAudUrl: audioFileFragment,
@@ -169,9 +172,10 @@ const AddBookSection = () => {
 			publishedYear: book.publishedYear,
 			volume: book.volume !== '' ? book.volume : 0,
 			amountOfBook: book.amountOfBook,
-			discount: book.discount,
+			discount: book.discount === '' ? 0 : book.discount,
 			price: book.price,
-			bestseller: clickBestseller
+			bestseller: clickBestseller,
+			durationFragment: durationFragment
 		};
 		const result = await addBookVendor({
 			newUpDateBook,
@@ -191,6 +195,7 @@ const AddBookSection = () => {
 			setFirstPhoto('');
 			setSecondPhoto('');
 			setDelPhoto(false);
+			setPdfFileName(null);
 		}
 	};
 	const handleFileChange = async (file: File) => {
@@ -258,9 +263,14 @@ const AddBookSection = () => {
 		totalSeconds %= 3600;
 		const minutes = Math.floor(totalSeconds / 60);
 		const seconds = totalSeconds % 60;
-		setHourValue(hours.toFixed());
-		setMinutsValue(minutes.toFixed());
-		setSecondValue(seconds.toFixed());
+
+		const hourN = hours.toFixed();
+		const minutsN = minutes.toFixed();
+		const secondsN = seconds.toFixed();
+
+		setHourValue(Number(hourN));
+		setMinutsValue(Number(minutsN));
+		setSecondValue(Number(secondsN));
 	};
 	if (modal === true) {
 		setTimeout(() => {
@@ -271,7 +281,6 @@ const AddBookSection = () => {
 	useEffect(() => {
 		convertSecondsToHoursMinutesAndSeconds(duration);
 	}, [duration]);
-
 	return (
 		<section className={scss.AddBookSection}>
 			<div className={scss.container}>
@@ -301,6 +310,8 @@ const AddBookSection = () => {
 							<div className={scss.container_add_photo}>
 								<div className={scss.card_first}>
 									<CustomAddPhoto
+										editPhoto=""
+										initialState=""
 										onChange={(e) => handlePhotoChange(e)}
 										label="Главное фото"
 										setDelPhoto={setDelPhoto}
@@ -310,6 +321,8 @@ const AddBookSection = () => {
 								</div>
 								<div className={scss.card_second}>
 									<CustomAddPhoto
+										editPhoto=""
+										initialState=""
 										onChange={(e) => handleSecondPhotoChange(e)}
 										label="Фото 2"
 										delPhoto={delPhoto}
@@ -811,8 +824,8 @@ const AddBookSection = () => {
 										<label>
 											Загрузите фрагмент аудиозаписи
 											<div className={scss.audio_input}>
-												<CustomAudioDownloadInput
-													setDuration={() => {}}
+												<CustomAudioFragmentInput
+													setDuration={setDurationFragment}
 													accept="audio/*"
 													onChange={(e) => {
 														handleAudioFragmetChange(e);
@@ -1067,7 +1080,7 @@ const AddBookSection = () => {
 									<IconSuccess />
 									<div className={scss.info_text}>
 										<p>
-											<span>{nameBook}</span> <br />
+											<span>“{nameBook}”</span> <br />
 											успешно добавлен!
 										</p>
 									</div>
