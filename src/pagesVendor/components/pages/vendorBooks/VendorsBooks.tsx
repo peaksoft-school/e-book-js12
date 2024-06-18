@@ -79,7 +79,12 @@ const VendorsBooks: FC = () => {
 										}
 									</span>
 									<span>
-										{isOpenBooksType ? <UpIcon /> : <IconArrowBottom />}
+										<div
+											className={isOpenBooksType ? scss.arrow_bottom : scss.arrow_top}
+										>
+											<IconArrowBottom />
+										</div>
+										<></>
 									</span>
 								</p>
 								<div

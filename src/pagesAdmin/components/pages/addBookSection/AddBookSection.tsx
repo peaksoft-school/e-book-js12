@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import scss from './AddBookStyle.module.scss';
 import {
+	IconArrowBottom,
 	IconBlackCircle,
 	IconBlackSquare,
 	IconDownIcon,
@@ -462,15 +463,14 @@ const AddBookSection = () => {
 												</p>
 												{
 													<div className={scss.icon_arrow}>
-														{iconjenre ? (
-															<>
-																<IconUpIcon />
-															</>
-														) : (
-															<>
-																<IconDownIcon />
-															</>
-														)}
+														<div
+															className={
+																iconjenre ? scss.arrow_bottom : scss.arrow_top
+															}
+														>
+															<IconArrowBottom />
+														</div>
+														<></>
 													</div>
 												}
 												<div
@@ -672,15 +672,14 @@ const AddBookSection = () => {
 											</p>
 											{
 												<div className={scss.icon_arrow}>
-													{iconjenre ? (
-														<>
-															<IconUpIcon />
-														</>
-													) : (
-														<>
-															<IconDownIcon />
-														</>
-													)}
+													<div
+														className={
+															iconjenre ? scss.arrow_bottom : scss.arrow_top
+														}
+													>
+														<IconArrowBottom />
+													</div>
+													<></>
 												</div>
 											}
 											<div
@@ -889,15 +888,14 @@ const AddBookSection = () => {
 												</p>
 												{
 													<div className={scss.icon_arrow}>
-														{iconjenre ? (
-															<>
-																<IconUpIcon />
-															</>
-														) : (
-															<>
-																<IconDownIcon />
-															</>
-														)}
+														<div
+															className={
+																iconjenre ? scss.arrow_bottom : scss.arrow_top
+															}
+														>
+															<IconArrowBottom />
+														</div>
+														<></>
 													</div>
 												}
 												<div

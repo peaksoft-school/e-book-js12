@@ -110,13 +110,20 @@
 					span {
 						cursor: pointer;
 					}
-					.arrow {
-						margin-top: 3px;
-					}
 				}
 				.all {
 					display: flex;
 					gap: 2px;
+
+					span {
+						.arrow_bottom {
+							transform: rotate(-180deg);
+							transition: 0.3s;
+						}
+						.arrow_top {
+							transition: 0.2s;
+						}
+					}
 				}
 
 				.type_list {

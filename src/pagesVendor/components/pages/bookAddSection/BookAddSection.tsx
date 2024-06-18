@@ -1,5 +1,6 @@
 import scss from './BookAddSection.module.scss';
 import {
+	IconArrowBottom,
 	IconBlackCircle,
 	IconBlackSquare,
 	IconDownIcon,
@@ -310,7 +311,7 @@ const BookAddSection = () => {
 							<div className={scss.container_add_photo}>
 								<div className={scss.card_first}>
 									<CustomAddPhoto
-									editPhoto=''
+										editPhoto=""
 										initialState=""
 										onChange={(e) => handlePhotoChange(e)}
 										label="Главное фото"
@@ -321,7 +322,7 @@ const BookAddSection = () => {
 								</div>
 								<div className={scss.card_second}>
 									<CustomAddPhoto
-									editPhoto=''
+										editPhoto=""
 										initialState=""
 										onChange={(e) => handleSecondPhotoChange(e)}
 										label="Фото 2"
@@ -462,15 +463,14 @@ const BookAddSection = () => {
 												</p>
 												{
 													<div className={scss.icon_arrow}>
-														{iconjenre ? (
-															<>
-																<IconUpIcon />
-															</>
-														) : (
-															<>
-																<IconDownIcon />
-															</>
-														)}
+														<div
+															className={
+																iconjenre ? scss.arrow_bottom : scss.arrow_top
+															}
+														>
+															<IconArrowBottom />
+														</div>
+														<></>
 													</div>
 												}
 												<div
@@ -672,15 +672,14 @@ const BookAddSection = () => {
 											</p>
 											{
 												<div className={scss.icon_arrow}>
-													{iconjenre ? (
-														<>
-															<IconUpIcon />
-														</>
-													) : (
-														<>
-															<IconDownIcon />
-														</>
-													)}
+													<div
+														className={
+															iconjenre ? scss.arrow_bottom : scss.arrow_top
+														}
+													>
+														<IconArrowBottom />
+													</div>
+													<></>
 												</div>
 											}
 											<div
@@ -889,15 +888,14 @@ const BookAddSection = () => {
 												</p>
 												{
 													<div className={scss.icon_arrow}>
-														{iconjenre ? (
-															<>
-																<IconUpIcon />
-															</>
-														) : (
-															<>
-																<IconDownIcon />
-															</>
-														)}
+														<div
+															className={
+																iconjenre ? scss.arrow_bottom : scss.arrow_top
+															}
+														>
+															<IconArrowBottom />
+														</div>
+														<></>
 													</div>
 												}
 												<div
