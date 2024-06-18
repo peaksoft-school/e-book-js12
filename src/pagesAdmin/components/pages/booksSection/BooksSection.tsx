@@ -22,96 +22,98 @@ type Book = {
 	discount: number;
 };
 
-const genreData = [
-	{
-		genreId: 1,
-		genreName: 'ХУДОЖЕСТВЕННАЯ ЛИТЕРАТУРА',
-		englishName: 'ARTISTIC_LITERATURE',
-		isChecked: false
-	},
-	{
-		genreId: 2,
-		genreName: 'ОБРАЗОВАНИЕ',
-		englishName: 'EDUCATION',
-		isChecked: false
-	},
-	{
-		genreId: 3,
-		genreName: 'КНИГИ ДЛЯ ДЕТЕЙ',
-		englishName: 'BOOKS_FOR_CHILDREN',
-		isChecked: false
-	},
-	{
-		genreId: 4,
-		genreName: 'НАУКА И ТЕХНОЛОГИЯ',
-		englishName: 'SCIENCE_AND_TECHNOLOGY',
-		isChecked: false
-	},
-	{
-		genreId: 5,
-		genreName: 'СООБЩЕСТВО',
-		englishName: 'COMMUNITY',
-		isChecked: false
-	},
-	{
-		genreId: 6,
-		genreName: 'БИЗНЕС ЛИТЕРАТУРА',
-		englishName: 'BUSINESS_LITERATURE',
-		isChecked: false
-	},
-	{
-		genreId: 7,
-		genreName: 'КРАСОТА, ЗДОРОВЬЕ, СПОРТ',
-		englishName: 'BEAUTY_HEALTH_SPORT',
-		isChecked: false
-	},
-	{
-		genreId: 8,
-		genreName: 'УВЛЕЧЕНИЯ',
-		englishName: 'HOBBIES',
-		isChecked: false
-	},
-	{
-		genreId: 9,
-		genreName: 'ПСИХОЛОГИЯ',
-		englishName: 'PSYCHOLOGY',
-		isChecked: false
-	}
-];
-
-const bookTypes = [
-	{
-		typeId: 1,
-		typeName: 'Электронные книги',
-		typeNameEnglish: 'ELECTRONIC_BOOK'
-	},
-	{
-		typeId: 2,
-		typeName: 'Аудиокниги',
-		typeNameEnglish: 'AUDIO_BOOK'
-	},
-	{
-		typeId: 3,
-		typeName: 'Бумажные книги',
-		typeNameEnglish: 'PAPER_BOOK'
-	}
-];
-
 const BooksSection: React.FC = () => {
 	const [openState, setOpenState] = useState(false);
 	const [isOpenBooksType, setIsOpenBooksType] = useState<boolean>(false);
 	const [selectedType, setSelectedType] = useState<string | null>(null);
 	const [isOpenBooksGenre, setIsOpenBooksGenre] = useState<boolean>(false);
 	const [selectedGenre, setSelectedGenre] = useState<string[]>([]);
+	const [genre, setGenre] = useState<string>('Все');
 	const [books, setBooks] = useState<Book[]>([]);
 	const navigate = useNavigate();
 	const [filterBooks] = useFilterBooksMutation();
 	const [idBook, setIdBook] = useState<null | number>(null);
-
 	const [deleteBookById] = useDeleteBookMutation();
+	console.log(genre);
+
+	const bookType = [
+		{
+			typeId: 1,
+			typeName: 'Электронные книги',
+			typeNameEnglish: 'ONLINE_BOOK'
+		},
+		{
+			typeId: 2,
+			typeName: 'Аудиокниги',
+			typeNameEnglish: 'AUDIO_BOOK'
+		},
+		{
+			typeId: 3,
+			typeName: 'Бумажные книги',
+			typeNameEnglish: 'PAPER_BOOK'
+		}
+	];
+
+	const genreBook = [
+		{
+			genreId: 1,
+			genreName: 'ХУДОЖЕСТВЕННАЯ ЛИТЕРАТУРА',
+			englishName: 'ARTISTIC_LITERATURE',
+			isChecked: false
+		},
+		{
+			genreId: 2,
+			genreName: 'ОБРАЗОВАНИЕ',
+			englishName: 'EDUCATION',
+			isChecked: false
+		},
+		{
+			genreId: 3,
+			genreName: 'КНИГИ ДЛЯ ДЕТЕЙ',
+			englishName: 'BOOKS_FOR_CHILDREN',
+			isChecked: false
+		},
+		{
+			genreId: 4,
+			genreName: 'НАУКА И ТЕХНОЛОГИЯ',
+			englishName: 'SCIENCE_AND_TECHNOLOGY',
+			isChecked: false
+		},
+		{
+			genreId: 5,
+			genreName: 'СООБЩЕСТВО',
+			englishName: 'COMMUNITY',
+			isChecked: false
+		},
+		{
+			genreId: 6,
+			genreName: 'БИЗНЕС ЛИТЕРАТУРА',
+			englishName: 'BUSINESS_LITERATURE',
+			isChecked: false
+		},
+		{
+			genreId: 7,
+			genreName: 'КРАСОТА, ЗДОРОВЬЕ, СПОРТ',
+			englishName: 'BEAUTY_HEALTH_SPORT',
+			isChecked: false
+		},
+		{
+			genreId: 8,
+			genreName: 'УВЛЕЧЕНИЯ',
+			englishName: 'HOBBIES',
+			isChecked: false
+		},
+		{
+			genreId: 9,
+			genreName: 'ПСИХОЛОГИЯ',
+			englishName: 'PSYCHOLOGY',
+			isChecked: false
+		}
+	];
 
 	const handleDeleteBook = (id: number) => {
 		deleteBookById(id);
+		setOpenState(false);
 	};
 
 	const handleBookClick = (id: number) => {
@@ -124,7 +126,6 @@ const BooksSection: React.FC = () => {
 			genres: [...selectedGenre],
 			bookTypes: filteredBookTypes
 		};
-		console.log(filters);
 
 		const result = await filterBooks(filters);
 		if ('data' in result) {
@@ -135,7 +136,7 @@ const BooksSection: React.FC = () => {
 
 	useEffect(() => {
 		handlePostRequest();
-	}, [selectedGenre, selectedType]);
+	}, [selectedGenre, selectedType, openState]);
 
 	const toggleTypeList = (): void => {
 		setIsOpenBooksType(!isOpenBooksType);
@@ -155,17 +156,18 @@ const BooksSection: React.FC = () => {
 	const handleGenreClick = (genre: string | null): void => {
 		if (genre !== null) {
 			setSelectedGenre([genre]);
+			setGenre(genre);
 		}
 		setIsOpenBooksGenre(false);
 	};
 
 	const bookTypeText = selectedType
-		? bookTypes.find((bt) => bt.typeNameEnglish === selectedType)?.typeName
+		? bookType.find((bt) => bt.typeNameEnglish === selectedType)?.typeName
 		: 'Все';
 
 	const genreText =
 		selectedGenre.length > 0
-			? genreData.find((g) => g.englishName === selectedGenre[0])?.genreName
+			? genreBook.find((g) => g.englishName === selectedGenre[0])?.genreName
 			: 'Жанры';
 
 	return (
@@ -177,48 +179,46 @@ const BooksSection: React.FC = () => {
 							<div className={scss.click}>
 								<p onClick={toggleGenreList}>
 									<span>
-										{genreText}
+										Жанры
 										{isOpenBooksGenre ? <UpIcon /> : <IconArrowBottom />}
 									</span>
 								</p>
-								{
-									<div
-										className={
-											isOpenBooksGenre ? scss.genre_list : scss.none_books_genre
-										}
-									>
-										{genreData.map((data) => (
-											<div
-												key={data.genreId}
-												className={scss.genre_quantity}
-												onClick={() => handleGenreClick(data.englishName)}
-											>
-												<p>{data.genreName}</p>
-												<p>{books.filter.length}</p>
-											</div>
-										))}
-									</div>
-								}
+								<div
+									className={
+										isOpenBooksGenre ? scss.genre_list : scss.none_books_genre
+									}
+								>
+									{genreBook.map((data) => (
+										<div
+											key={data.genreId}
+											className={scss.genre_quantity}
+											onClick={() => handleGenreClick(data.englishName)}
+										>
+											<p>{data.genreName}</p>
+											<p>{books.length}</p>
+										</div>
+									))}
+								</div>
 							</div>
 						</div>
-						<div className={scss.click}>
-							<p onClick={toggleTypeList}>
-								<span>{bookTypeText}</span>
-								{isOpenBooksType ? <UpIcon /> : <IconArrowBottom />}
-							</p>
-							{
+						<div className={scss.types_book}>
+							<div className={scss.click}>
+								<p onClick={toggleTypeList}>
+									<span>Тип</span>
+									{isOpenBooksType ? <UpIcon /> : <IconArrowBottom />}
+								</p>
 								<div
 									className={
 										isOpenBooksType ? scss.type_list : scss.none_books_type
 									}
 								>
-									{selectedType !== '' ? (
+									{selectedType !== null ? (
 										<>
-											<p onClick={() => handleTypeSelect(null)}>Все</p>
-											<hr />
+											{/* <p onClick={() => handleTypeSelect(null)}>Все</p>      понадобится */}
+											{/* <hr />					понадобится */}
 										</>
 									) : null}
-									{bookTypes.map((bookType) => (
+									{bookType.map((bookType) => (
 										<>
 											<p
 												key={bookType.typeId}
@@ -232,7 +232,7 @@ const BooksSection: React.FC = () => {
 										</>
 									))}
 								</div>
-							}
+							</div>
 						</div>
 					</div>
 					<div className={scss.add_book_btn}>
@@ -246,6 +246,29 @@ const BooksSection: React.FC = () => {
 				</div>
 				<div className={scss.total_quantity}>
 					<p>Всего: {books.length}</p>
+					<div className={scss.janry}>
+						<span>{genreText}</span>
+						<span
+							onClick={() => {
+								setGenre('Все');
+								setSelectedGenre([]);
+							}}
+						>
+							<IconX />
+						</span>
+					</div>
+					<div className={scss.tipy}>
+						<span>
+							<span>{bookTypeText}</span>
+						</span>
+						<span
+							onClick={() => {
+								setSelectedType(null);
+							}}
+						>
+							<IconX />
+						</span>
+					</div>
 				</div>
 				<div className={scss.content}>
 					{books.map((book) => (

@@ -146,7 +146,7 @@ const AboutBook = () => {
 								<CustomBasketButton
 									nameClass={scss.basket_btn}
 									onClick={() => {
-										navigate(`/vendor/editBook/${book.bookId}`);
+										navigate(`/vendor/home/editBook/${book.bookId}`);
 									}}
 								>
 									<p className={scss.boot1}>Редактировать</p>

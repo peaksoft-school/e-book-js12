@@ -29,7 +29,6 @@ const Header = () => {
 
 		changeHeader();
 		window.addEventListener('scroll', changeHeader);
-
 		return () => {
 			window.removeEventListener('scroll', changeHeader);
 		};

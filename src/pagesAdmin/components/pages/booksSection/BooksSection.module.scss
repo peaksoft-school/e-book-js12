@@ -20,17 +20,30 @@
 				justify-content: space-between;
 				max-width: 450px;
 				width: 100%;
+				.books_genre {
+					display: flex;
+					justify-content: start;
+					max-width: 300px;
+					width: 100%;
+				}
+				.types_book {
+					display: flex;
+					justify-content: start;
+					max-width: 200px;
+					width: 100%;
+				}
 
 				.click {
 					p {
-						cursor: default;
+						cursor: pointer;
 						span {
-							cursor: default;
+							cursor: pointer;
 						}
 						span {
 							display: flex;
 							align-items: center;
 							gap: 7px;
+							justify-content: start;
 						}
 					}
 				}
@@ -46,6 +59,11 @@
 					z-index: 100;
 					transition: 0.4s;
 					opacity: 100;
+					hr {
+						&:last-child {
+							display: none;
+						}
+					}
 
 					@media (max-width: 465px) {
 						max-width: 200px;
@@ -71,7 +89,10 @@
 					}
 				}
 				.none_books_type {
-					padding: 10px;
+					padding: 20px;
+					display: flex;
+					flex-direction: column;
+					gap: 7px;
 					background-color: #f8f8f8;
 					position: absolute;
 					top: -0px;
@@ -80,6 +101,25 @@
 					transition: 0.3s;
 					cursor: default;
 					z-index: -10;
+					hr {
+						&:last-child {
+							display: none;
+						}
+					}
+
+					@media (max-width: 465px) {
+						max-width: 200px;
+						max-height: 200px;
+						top: 85px;
+						left: 190px;
+					}
+					@media (max-width: 420px) {
+						max-width: 200px;
+						max-height: 200px;
+						top: 85px;
+						right: 0px;
+					}
+
 					p {
 						color: rgb(35, 35, 35);
 						font-family: Open Sans;
@@ -259,11 +299,12 @@
 
 		.total_quantity {
 			display: flex;
-			justify-content: space-between;
+			// justify-content: space-between;
 			align-items: center;
 			gap: 22px;
 			max-width: 1300px;
 			width: 100%;
+
 			margin-bottom: 22px;
 			margin-top: 30px;
 
@@ -289,6 +330,37 @@
 
 				span {
 					color: rgb(255, 76, 0);
+				}
+			}
+
+			.janry {
+				max-width: 300px;
+				width: 100%;
+				max-height: 30px;
+				height: 100vh;
+				display: flex;
+				align-items: center;
+				justify-content: space-between;
+				gap: 10px;
+				border: 1px solid black;
+				padding: 20px 20px;
+				:first-child {
+					font-size: 14px;
+				}
+			}
+
+			.tipy {
+				max-width: 200px;
+				width: 100%;
+				max-height: 30px;
+				height: 100vh;
+				display: flex;
+				align-items: center;
+				justify-content: space-between;
+				border: 1px solid black;
+				padding: 20px 20px;
+				:first-child {
+					font-size: small;
 				}
 			}
 		}
