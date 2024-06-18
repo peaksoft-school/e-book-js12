@@ -4,11 +4,11 @@ namespace PROMO {
 		page: number;
 		size: number;
 		allBooksByVendors: Book[];
-	}[];
+	};
 
 	export type Book = {
 		id: number;
-		images: string[];
+		images: string;
 		title: string;
 		authorsFullName: string;
 		price: number;
@@ -18,5 +18,10 @@ namespace PROMO {
 
 	export type GetBookPromoRequest = {
 		promoCode: string;
+	};
+
+	export type CreatePromoCodeRequest = {
+		code: string;
+		description: string;
 	};
 }

@@ -1,7 +1,7 @@
 import { FC, useState } from 'react';
 import scss from './Favorites.module.scss';
 import { IconX } from '@/src/assets/icons';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import {
 	useClearFavoriteMutation,
 	usePostFavoriteUnFavoriteMutation,
@@ -13,8 +13,6 @@ import 'react-toastify/dist/ReactToastify.css';
 import { useAddBookToBasketMutation } from '@/src/redux/api/basket';
 
 const FavoritSection: FC = () => {
-	// const paramsId = useParams();
-	// const bookId = Number(paramsId.id);
 	const [expandedCards, setExpandedCards] = useState<{
 		[key: string]: boolean;
 	}>({});
@@ -23,6 +21,8 @@ const FavoritSection: FC = () => {
 	const [clearFavorite] = useClearFavoriteMutation();
 	const [deleteFavoriteBook] = usePostFavoriteUnFavoriteMutation();
 	const [addBookToBasket] = useAddBookToBasketMutation();
+
+	const navigate = useNavigate();
 
 	const handleClick = (id: number) => {
 		setExpandedCards((prevExpanded) => ({
@@ -100,7 +100,7 @@ const FavoritSection: FC = () => {
 							{data?.map((item) => (
 								<>
 									<hr />
-									<div className={scss.favorite_card_content}>
+									<div className={scss.favorite_card_content} key={item.id}>
 										<div className={scss.btn_delete}>
 											<button
 												className={scss.close_button}
@@ -113,7 +113,7 @@ const FavoritSection: FC = () => {
 										</div>
 										<div className={scss.favorite_card}>
 											<div className={scss.favorite_image_about}>
-												<div className={scss.container_img}>
+												<div onClick={() => navigate(`/search_book/${item.id}`)} className={scss.container_img}>
 													<img
 														src={item.image}
 														alt={item.title}

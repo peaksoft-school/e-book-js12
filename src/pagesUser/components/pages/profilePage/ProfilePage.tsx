@@ -6,8 +6,10 @@ import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
 import {
 	useUpdatePasswordUserMutation,
 	useClientGetProfileQuery,
-	useClientProfileMutation
+	useClientProfileMutation,
+	useDeletUserProfileMutation
 } from '@/src/redux/api/userProfile';
+import { useNavigate } from 'react-router-dom';
 
 const ProfileClient: React.FC = () => {
 	const { register, handleSubmit, reset, setValue } = useForm();
@@ -16,6 +18,20 @@ const ProfileClient: React.FC = () => {
 	const [updateProfile] = useClientProfileMutation();
 	const { data: profileData, refetch } = useClientGetProfileQuery();
 	const [updatePassword] = useUpdatePasswordUserMutation();
+	const [handleDeleteProfile]= useDeletUserProfileMutation();
+
+	const navigate = useNavigate()
+
+	const handleDeleteAndNavigate = async () => {
+    try {
+        await handleDeleteProfile(); 
+        navigate('/auth/login'); 
+    } catch (error) {
+        console.error('Error deleting profile:', error);
+        return false; 
+    }
+};
+
 
 	useEffect(() => {
 		if (profileData) {
@@ -65,6 +81,7 @@ const ProfileClient: React.FC = () => {
 			console.error('Error updating profile:', error);
 		}
 	};
+
 
 	return (
 		<section className={scss.ProfileSection}>
@@ -143,6 +160,14 @@ const ProfileClient: React.FC = () => {
 									)}
 								</div>
 								<div className={scss.button_section}>
+									<div>
+										<p
+											className={scss.delete_user_profile}
+											onClick={() => handleDeleteAndNavigate()}
+										>
+											Удалить профиль?
+										</p>
+									</div>
 									{!isEditMode && !isPasswordMode && (
 										<>
 											<div className={scss.button_note}>

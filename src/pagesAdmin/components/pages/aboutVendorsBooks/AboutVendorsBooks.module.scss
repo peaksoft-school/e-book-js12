@@ -158,6 +158,9 @@
 				max-width: 268px;
 				width: 100%;
 				background: rgb(237, 237, 237);
+				cursor: pointer;
+				z-index: 1;
+				
 				@media (max-width: 1170px) {
 					max-width: 230px;
 					padding: 35px 36px 20px;
@@ -330,11 +333,8 @@
 					right: 10px;
 					cursor: pointer;
 					cursor: default;
-					position: absolute;
-					top: 10px;
-					right: 10px;
-					cursor: pointer;
-					cursor: default;
+z-index: 2;
+					
 
 					@media (max-width: 990px) {
 						top: 1px;

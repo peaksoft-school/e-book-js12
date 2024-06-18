@@ -6,8 +6,10 @@ import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
 import {
 	useUpdatePasswordMutation,
 	useGetProfileQuery,
-	useUpdateProfileMutation
+	useUpdateProfileMutation,
+	useDeletVendorProfileMutation
 } from '@/src/redux/api/updateProfile';
+import { useNavigate } from 'react-router-dom';
 
 const ProfileVendor: React.FC = () => {
 	const { register, handleSubmit, reset, setValue } = useForm();
@@ -16,6 +18,19 @@ const ProfileVendor: React.FC = () => {
 	const [updateProfile] = useUpdateProfileMutation();
 	const { data: profileData, refetch } = useGetProfileQuery();
 	const [updatePassword] = useUpdatePasswordMutation();
+	const [handleDelVendorProfile] = useDeletVendorProfileMutation();
+
+	const navigate = useNavigate();
+
+	const handleDeletNavigate = async () => {
+		try {
+			await handleDelVendorProfile();
+			navigate('/auth/login');
+		} catch (error) {
+			console.error('err', error);
+			return false;
+		}
+	};
 
 	useEffect(() => {
 		if (profileData) {
@@ -114,6 +129,14 @@ const ProfileVendor: React.FC = () => {
 									) : (
 										<p>{profileData?.email}</p>
 									)}
+								</div>
+								<div>
+									<p
+										onClick={() => handleDeletNavigate()}
+										className={scss.delete_profile_vendor}
+									>
+										Удалить профиль?
+									</p>
 								</div>
 							</div>
 							{isPasswordMode && (

@@ -103,7 +103,7 @@
 
 				.profile_name {
 					width: 600px;
-
+				
 					@media (max-width: 1056px) {
 						width: 400px;
 					}
@@ -167,6 +167,13 @@
 				justify-content: end;
 
 				margin-top: 200px;
+
+					.delete_user_profile {
+						color: red;
+						left: 60px;
+						position: absolute;
+						cursor: pointer;
+					}
 				.custom_white_button {
 					width: 130px;
 					height: 42px;

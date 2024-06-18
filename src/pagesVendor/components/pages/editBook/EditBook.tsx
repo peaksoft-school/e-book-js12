@@ -245,9 +245,9 @@ const EditBook = () => {
 		const file = e.target.files ? e.target.files[0] : null;
 		const result = await postFile(file!);
 		if ('data' in result) {
-			if (result.data.httpStatus === 'OK') {
-				setFirstPhoto(result.data.message);
-				setTest(result.data.message);
+			if (result.data!.httpStatus === 'OK') {
+				setFirstPhoto(result.data!.message);
+				setTest(result.data!.message);
 				EditPhotoFirst();
 			}
 		}
