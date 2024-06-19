@@ -178,8 +178,15 @@ const BooksSection: React.FC = () => {
 							<div className={scss.click}>
 								<p onClick={toggleGenreList}>
 									<span>
-										janre
-										{isOpenBooksGenre ? <UpIcon /> : <IconArrowBottom />}
+										Жанры
+										<div
+											className={
+												isOpenBooksGenre ? scss.arrow_bottom : scss.arrow_top
+											}
+										>
+											<IconArrowBottom />
+										</div>
+										<></>
 									</span>
 								</p>
 								{
@@ -206,7 +213,14 @@ const BooksSection: React.FC = () => {
 							<div className={scss.click}>
 								<p onClick={toggleTypeList}>
 									<span>{bookTypeText}</span>
-									{isOpenBooksType ? <UpIcon /> : <IconArrowBottom />}
+									<div
+										className={
+											isOpenBooksType ? scss.arrow_bottom : scss.arrow_top
+										}
+									>
+										<IconArrowBottom />
+									</div>
+									<></>
 								</p>
 								{
 									<div

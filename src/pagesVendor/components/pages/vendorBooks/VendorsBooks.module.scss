@@ -110,19 +110,19 @@
 					span {
 						cursor: pointer;
 					}
-					.arrow {
-						margin-top: 3px;
-					}
 				}
 				.all {
 					display: flex;
 					gap: 2px;
-					.aroow_top {
-						transform: rotate(-180deg);
-						transition: 0.3s;
-					}
-					.arrow_bottom {
-						transition: 0.3s;
+
+					span {
+						.arrow_bottom {
+							transform: rotate(-180deg);
+							transition: 0.3s;
+						}
+						.arrow_top {
+							transition: 0.2s;
+						}
 					}
 				}
 

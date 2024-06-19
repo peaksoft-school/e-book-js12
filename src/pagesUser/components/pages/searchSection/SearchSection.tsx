@@ -400,11 +400,11 @@ const SearchSection = () => {
 											: 'Сортировать'}
 							</div>
 							<div className={scss.rightIcon}>
-								<div
-									onClick={() => setIsSort(!isSort)}
-									className={isSort ? scss.arrow_bottom : scss.arrow_top}
-								>
-									<IconUpIcon />
+								<div onClick={() => setIsSort(!isSort)}>
+									<div className={isSort ? scss.arrow_bottom : scss.arrow_top}>
+										<IconArrowBottom />
+									</div>
+									<></>
 								</div>
 							</div>
 						</div>
@@ -448,7 +448,7 @@ const SearchSection = () => {
 							>
 								<p>Жанры</p>
 								<div className={isGenre ? scss.arrow_bottom : scss.arrow_top}>
-									<IconUpIcon />
+									<IconArrowBottom />
 								</div>
 								<></>
 							</div>
@@ -488,15 +488,12 @@ const SearchSection = () => {
 								className={scss.type_fillter}
 							>
 								<p>Тип</p>
-								{filterType ? (
-									<>
-										<IconUpIcon />
-									</>
-								) : (
-									<>
-										<IconArrowBottom />
-									</>
-								)}
+								<div
+									className={filterType ? scss.arrow_bottom : scss.arrow_top}
+								>
+									<IconArrowBottom />
+								</div>
+								<></>
 							</div>
 							<hr />
 							<div
@@ -532,15 +529,12 @@ const SearchSection = () => {
 								className={scss.price_fillter}
 							>
 								<p>Стоимость</p>
-								{priceGenre ? (
-									<>
-										<IconUpIcon />
-									</>
-								) : (
-									<>
-										<IconArrowBottom />
-									</>
-								)}
+								<div
+									className={priceGenre ? scss.arrow_bottom : scss.arrow_top}
+								>
+									<IconArrowBottom />
+								</div>
+								<></>
 							</div>
 							<hr />
 							<div className={`${priceGenre ? scss.fillters : scss.none}`}>
@@ -584,15 +578,10 @@ const SearchSection = () => {
 								className={scss.language_fillter}
 							>
 								<p>Язык издания</p>
-								{language ? (
-									<>
-										<IconUpIcon />
-									</>
-								) : (
-									<>
-										<IconArrowBottom />
-									</>
-								)}
+								<div className={language ? scss.arrow_bottom : scss.arrow_top}>
+									<IconArrowBottom />
+								</div>
+								<></>
 							</div>
 							<hr />
 							<>
