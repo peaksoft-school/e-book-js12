@@ -135,7 +135,12 @@ const Header = () => {
 									</div>
 								</div>
 								<div className={scss.right_content}>
-									<div className={scss.notice_icon}>
+									<div
+										onClick={() => {
+											navigate('vendor/notification');
+										}}
+										className={scss.notice_icon}
+									>
 										<span>
 											<IconTest />
 										</span>

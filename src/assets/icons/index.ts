@@ -58,3 +58,5 @@ export { default as IconSuccess } from './icon-success';
 export { default as IconTest } from './icon-test';
 export { default as IconGoogleLogo } from './icon-google-logo';
 export { default as IconPromoPage } from './icon-promo-page';
+export { default as CircleXIcon } from './icon-circle-x';
+export { default as IconBuyed } from './icon-buyed.tsx';
