@@ -13,8 +13,6 @@ const InnerSection = () => {
 	const { data: books, refetch } = useGetReceiptRequestedBooksQuery();
 	const [rejectBookById] = useRejectBookMutation();
 
-	console.log(books);
-
 	const handleBookClick = (id: number) => {
 		navigate(`/admin/inner/${id}`);
 		refetch();
@@ -57,7 +55,7 @@ const InnerSection = () => {
 							>
 								<ThreeDotIcon />
 							</div>
-							{idBook === book.id ? (
+							{idBook === book.id && (
 								<div className={isOpen ? scss.is_open : scss.on_close}>
 									<ul>
 										<li>
@@ -80,13 +78,13 @@ const InnerSection = () => {
 										</li>
 									</ul>
 								</div>
-							) : null}
+							)}
 							<div
 								onClick={() => handleBookClick(book.id)}
 								className={scss.book_content}
 							>
 								<div className={scss.book_img}>
-									<img src={book.imageUrl1} alt="" />
+									<img src={book.imageUrl1} alt={book.title} />
 								</div>
 								<div className={scss.info_book}>
 									<h3>{book.title}</h3>

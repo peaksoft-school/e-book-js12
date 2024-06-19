@@ -50,6 +50,7 @@ export const api = createApi({
 		'users',
 		'books',
 		'add_book',
+		'notification',
 		'payment'
 	],
 

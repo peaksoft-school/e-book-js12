@@ -14,7 +14,6 @@ const ProfileHistory = () => {
 	const { data: historyData } = useGetAllHistoryActionQuery(locationId);
 	const { data: favoriteData } = useGetAllFavoriteQuery(locationId);
 	const { data: basketData } = useGetBooksInBasketQuery(locationId);
-
 	const navigate = useNavigate();
 
 	const handleBook = (id: number) => {
