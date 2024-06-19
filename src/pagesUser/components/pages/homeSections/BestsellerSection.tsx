@@ -6,10 +6,11 @@ import './Bestsellers.css';
 import IconOrangeLeftArrow from '@/src/assets/icons/icon-orangeLeftArrow';
 import IconOrangeRightArrow from '@/src/assets/icons/icon-orangeRightArrow';
 import { useGetAllBestsellersQuery } from '@/src/redux/api/bestsellers';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const BestsellersSection: FC = () => {
 	const { data } = useGetAllBestsellersQuery();
+	const navigate = useNavigate();
 	const [expandedCards, setExpandedCards] = useState<{
 		[key: number]: boolean;
 	}>({});
@@ -112,7 +113,14 @@ const BestsellersSection: FC = () => {
 												)}
 											</div>
 											<div className="box_box">
-												<p className="read-more">Подробнее</p>
+												<p
+													className="read-more"
+													onClick={() => {
+														navigate(`/${item.id}`);
+													}}
+												>
+													Подробнее
+												</p>
 												<p className="price">{item.price} c</p>
 											</div>
 										</div>

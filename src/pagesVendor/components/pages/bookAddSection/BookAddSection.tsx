@@ -310,7 +310,7 @@ const BookAddSection = () => {
 							<div className={scss.container_add_photo}>
 								<div className={scss.card_first}>
 									<CustomAddPhoto
-									editPhoto=''
+										editPhoto=""
 										initialState=""
 										onChange={(e) => handlePhotoChange(e)}
 										label="Главное фото"
@@ -321,7 +321,7 @@ const BookAddSection = () => {
 								</div>
 								<div className={scss.card_second}>
 									<CustomAddPhoto
-									editPhoto=''
+										editPhoto=""
 										initialState=""
 										onChange={(e) => handleSecondPhotoChange(e)}
 										label="Фото 2"

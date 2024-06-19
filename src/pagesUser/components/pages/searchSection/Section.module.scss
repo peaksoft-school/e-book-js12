@@ -115,6 +115,15 @@
 					}
 				}
 			}
+			.rightIcon {
+				.arrow_bottom {
+					transform: rotate(-180deg);
+					transition: 0.3s;
+				}
+				.arrow_top {
+					transition: 0.2s;
+				}
+			}
 			.sort_down {
 				display: flex;
 				max-width: 151px;
@@ -246,6 +255,13 @@
 					p {
 						width: 100%;
 						user-select: none;
+					}
+					.arrow_bottom {
+						transform: rotate(-180deg);
+						transition: 0.3s;
+					}
+					.arrow_top {
+						transition: 0.2s;
 					}
 				}
 				.type_fillter {
@@ -551,6 +567,10 @@
 					background-color: transparent;
 					padding: 10px 0px;
 					cursor: pointer;
+					&:hover {
+						color: #f8f8f8;
+						background-color: #f34901;
+					}
 				}
 			}
 		}

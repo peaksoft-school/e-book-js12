@@ -23,7 +23,6 @@ const CustomAudioFragmentInput: FC<CustomAudioDownloadInputProps> = ({
 		if (file) {
 			const audio = new Audio(URL.createObjectURL(file));
 			audio.addEventListener('loadedmetadata', () => {
-            
 				setDuration(audio.duration);
 			});
 		}

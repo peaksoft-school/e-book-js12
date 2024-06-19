@@ -30,7 +30,15 @@ export namespace SORT {
 		inFavorites: boolean;
 	};
 	type PostSortRequest = {
-		genres: string[];
+		newData: dataFillters;
+		pagination: pagination;
+	};
+	type pagination = {
+		page: number;
+		size: number;
+	};
+	type dataFillters = {
+		genres: string[] | null;
 		bookTypes: string[];
 		languages: string[];
 		price: Price;

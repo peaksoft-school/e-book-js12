@@ -3,7 +3,7 @@ import scss from './VendorsBooks.module.scss';
 import { IconPencil } from '@tabler/icons-react';
 
 import { useNavigate } from 'react-router-dom';
-import { IconArrowBottom, IconDelete, IconWhiteLike } from '@/src/assets/icons';
+import { IconDelete, IconWhiteLike } from '@/src/assets/icons';
 import ThreeDotIcon from '@/src/assets/icons/icon-threeDot';
 import CustomSeeMoreButton from '@/src/ui/customButton/CustomSeeMoreButton';
 import UpIcon from '@/src/assets/icons/icon-upIcon';
@@ -78,8 +78,10 @@ const VendorsBooks: FC = () => {
 												?.sortName
 										}
 									</span>
-									<span>
-										{isOpenBooksType ? <UpIcon /> : <IconArrowBottom />}
+									<span
+										className={`${isOpenBooksType ? scss.aroow_top : scss.arrow_bottom}`}
+									>
+										<UpIcon />
 									</span>
 								</p>
 								<div
