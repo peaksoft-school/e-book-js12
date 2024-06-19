@@ -11,7 +11,7 @@ namespace AUTHORIZATION {
 		message: string;
 	};
 	type RegistrationRequest = {
-		name: string;
+		firstName: string;
 		email: string;
 		password: string;
 	};

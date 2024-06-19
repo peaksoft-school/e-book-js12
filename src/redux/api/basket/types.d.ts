@@ -51,4 +51,18 @@ namespace BASKET {
 		bookId: number;
 		addOrMinus: boolean;
 	};
+
+	type ActivedPromoResponse = {
+		numberOfBooks: number;
+		price: number;
+		numberOfBooksDisCount: number;
+		disCount: number;
+		bookDiscount: number;
+		totalAmount: number;
+	};
+
+	type ActivePromoRequest = {
+		promoCode: string;
+		id: number;
+	};
 }

@@ -6,7 +6,6 @@ import { useNavigate } from 'react-router-dom';
 import { IconArrowBottom, IconDelete, IconWhiteLike } from '@/src/assets/icons';
 import ThreeDotIcon from '@/src/assets/icons/icon-threeDot';
 import CustomSeeMoreButton from '@/src/ui/customButton/CustomSeeMoreButton';
-import UpIcon from '@/src/assets/icons/icon-upIcon';
 import {
 	useDeleteBookMutation,
 	useGetAllBookVedorQuery
@@ -80,7 +79,9 @@ const VendorsBooks: FC = () => {
 									</span>
 									<span>
 										<div
-											className={isOpenBooksType ? scss.arrow_bottom : scss.arrow_top}
+											className={
+												isOpenBooksType ? scss.arrow_bottom : scss.arrow_top
+											}
 										>
 											<IconArrowBottom />
 										</div>

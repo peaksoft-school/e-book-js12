@@ -23,8 +23,7 @@ const firstData = [
 	{
 		image:
 			'https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEggTu7DsNwN06djRJalUksB-4Ev7Od5gqiLK3tGUianJl7nbaRoUcOpxpOSlfVMmt4l2bBQejcsUfEqP_AJp0j_fZDzXftR7fz_wZ2-SBFA1NaaFVBSVQAyMZR6NJO14iRApHY7mW5NYbg/w1200-h630-p-k-no-nu/Library.png',
-		description:
-			`Чтобы начать продавать свои книги на Ebook, вам нужно пройти быструю и простую регистрацию для продавцов. Это позволит вам незамедлительно начать делиться своими изданиями с широкой аудиторией.
+		description: `Чтобы начать продавать свои книги на Ebook, вам нужно пройти быструю и простую регистрацию для продавцов. Это позволит вам незамедлительно начать делиться своими изданиями с широкой аудиторией.
  
 			Присоединяйтесь к нашему сообществу и откройте новые возможности для распространения и приобретения книг!
 			 
@@ -34,8 +33,7 @@ const firstData = [
 	{
 		image:
 			'https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEggTu7DsNwN06djRJalUksB-4Ev7Od5gqiLK3tGUianJl7nbaRoUcOpxpOSlfVMmt4l2bBQejcsUfEqP_AJp0j_fZDzXftR7fz_wZ2-SBFA1NaaFVBSVQAyMZR6NJO14iRApHY7mW5NYbg/w1200-h630-p-k-no-nu/Library.png',
-		description:
-			`После успешной регистрации вам потребуется разместить книгу на продажу.
+		description: `После успешной регистрации вам потребуется разместить книгу на продажу.
  
 			Вы можете разместить книгу в одном из трех форматов:
 			 

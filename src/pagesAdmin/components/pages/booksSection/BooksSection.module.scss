@@ -26,19 +26,19 @@
 					max-width: 300px;
 					width: 100%;
 				}
-				.types_book{
+				.types_book {
 					display: flex;
 					justify-content: start;
 					max-width: 200px;
 					width: 100%;
 
 					.arrow_bottom {
-                        transform: rotate(-180deg);
-                        transition: 0.3s;
-                    }
-                    .arrow_top {
-                        transition: 0.2s;
-                    }
+						transform: rotate(-180deg);
+						transition: 0.3s;
+					}
+					.arrow_top {
+						transition: 0.2s;
+					}
 				}
 
 				.click {

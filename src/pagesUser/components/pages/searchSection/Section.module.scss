@@ -117,12 +117,21 @@
 
 				.rightIcon {
 					.arrow_bottom {
-                        transform: rotate(-180deg);
-                        transition: 0.3s;
-                    }
-                    .arrow_top {
-                        transition: 0.2s;
-                    }
+						transform: rotate(-180deg);
+						transition: 0.3s;
+					}
+					.arrow_top {
+						transition: 0.2s;
+					}
+				}
+			}
+			.rightIcon {
+				.arrow_bottom {
+					transform: rotate(-180deg);
+					transition: 0.3s;
+				}
+				.arrow_top {
+					transition: 0.2s;
 				}
 			}
 			.sort_down {
@@ -261,8 +270,7 @@
 						transform: rotate(-180deg);
 						transition: 0.3s;
 					}
-
-					.arrow_top {
+					<<<<<<< HEAD =======>>>>>>>dev .arrow_top {
 						transition: 0.2s;
 					}
 				}
@@ -275,12 +283,12 @@
 					margin-bottom: 9.5px;
 
 					.arrow_bottom {
-                        transform: rotate(-180deg);
-                        transition: 0.3s;
-                    }
-                    .arrow_top {
-                        transition: 0.2s;
-                    }
+						transform: rotate(-180deg);
+						transition: 0.3s;
+					}
+					.arrow_top {
+						transition: 0.2s;
+					}
 				}
 				.price_fillter {
 					display: flex;
@@ -291,12 +299,12 @@
 					margin-bottom: 9.5px;
 
 					.arrow_bottom {
-                        transform: rotate(-180deg);
-                        transition: 0.3s;
-                    }
-                    .arrow_top {
-                        transition: 0.2s;
-                    }
+						transform: rotate(-180deg);
+						transition: 0.3s;
+					}
+					.arrow_top {
+						transition: 0.2s;
+					}
 				}
 				.language_fillter {
 					display: flex;
@@ -307,12 +315,12 @@
 					margin-bottom: 9.5px;
 
 					.arrow_bottom {
-                        transform: rotate(-180deg);
-                        transition: 0.3s;
-                    }
-                    .arrow_top {
-                        transition: 0.2s;
-                    }
+						transform: rotate(-180deg);
+						transition: 0.3s;
+					}
+					.arrow_top {
+						transition: 0.2s;
+					}
 				}
 
 				.fillters {
@@ -593,6 +601,10 @@
 					background-color: transparent;
 					padding: 10px 0px;
 					cursor: pointer;
+					&:hover {
+						color: #f8f8f8;
+						background-color: #f34901;
+					}
 				}
 			}
 		}
