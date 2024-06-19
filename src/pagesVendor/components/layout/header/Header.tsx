@@ -19,7 +19,7 @@ const Header = () => {
 	const [promoCode, setPromoCode] = useState('');
 	const [dateStart, setDateStart] = useState('');
 	const [dateEnd, setDateEnd] = useState('');
-	const [disCount, setDisCount] = useState('');
+	const [disCount, setDisCount] = useState<string | number>('');
 	const [createNewPromo] = usePostPromoCodeMutation();
 	const [searchTerm, setSearchTerm] = useState<string>('');
 	const [showResults, setShowResults] = useState<boolean>(false);
@@ -175,21 +175,23 @@ const Header = () => {
 										closable={false}
 										footer={false}
 									>
-										<div className={scss.modal_text}>
-											<p>Вы уверены, что хотите выйти?</p>
-										</div>
-										<div className={scss.footer_modal}>
-											<button onClick={() => setUserExit(false)}>
-												Отменить
-											</button>
-											<button
-												onClick={() => {
-													setUserExit(false);
-													navigate('/auth/login');
-												}}
-											>
-												Выйти
-											</button>
+										<div className={scss.exit_modal}>
+											<div className={scss.modal_text}>
+												<p>Вы уверены, что хотите выйти?</p>
+											</div>
+											<div className={scss.footer_modal}>
+												<button onClick={() => setUserExit(false)}>
+													Отменить
+												</button>
+												<button
+													onClick={() => {
+														setUserExit(false);
+														navigate('/auth/login');
+													}}
+												>
+													Выйти
+												</button>
+											</div>
 										</div>
 									</Modal>
 								</div>
