@@ -168,20 +168,20 @@ const InformationBook: FC = () => {
 							<div className={scss.section_text_books}>
 								<div className={scss.section_show_info}>
 									<div className={scss.show_info_book}>
+										<p
+											className={!showBookInfo ? scss.color_text : ''}
+											onClick={() => setShowBookInfo(false)}
+										>
+											О книге
+										</p>
 										{data.bookType === 'PAPER_BOOK' && (
 											<p
-												className={!showBookInfo ? scss.color_text : ''}
-												onClick={() => setShowBookInfo(false)}
+												className={showBookInfo ? scss.color_text : ''}
+												onClick={() => setShowBookInfo(true)}
 											>
-												О книге
+												Читать фрагмент
 											</p>
 										)}
-										<p
-											className={showBookInfo ? scss.color_text : ''}
-											onClick={() => setShowBookInfo(true)}
-										>
-											Читать фрагмент
-										</p>
 									</div>
 									<p className={scss.book_info}>
 										{showBookInfo ? data.fragment || '' : data.description}

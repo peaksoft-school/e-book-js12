@@ -33,11 +33,23 @@ const api = index.injectEndpoints({
 				}
 			),
 			invalidatesTags: ['clientProfile']
+		}),
+		deletUserProfile: build.mutation<
+			PASS.ProfileDeleteResponse,
+			PASS.ProfileDeleteRequest
+		>({
+			query: (data) => ({
+				url: `/api/client/deleteClient`,
+				method: 'DELETE',
+				bady: data
+			}),
+			invalidatesTags: ['clientProfile']
 		})
 	})
 });
 
 export const {
+	useDeletUserProfileMutation,
 	useClientProfileMutation,
 	useClientGetProfileQuery,
 	useUpdatePasswordUserMutation

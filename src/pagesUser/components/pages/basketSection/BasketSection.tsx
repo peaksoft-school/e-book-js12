@@ -87,8 +87,8 @@ const BasketPage: React.FC = () => {
 		const result = await addToFavorite(id);
 		console.log(result);
 		if ('data' in result) {
-			if (result.data.httpStatus === 'OK') {
-				toast(`${result.data.message}`, {
+			if (result.data!.httpStatus === 'OK') {
+				toast(`${result.data!.message}`, {
 					position: 'top-right',
 					autoClose: 5000,
 					hideProgressBar: false,
@@ -99,8 +99,8 @@ const BasketPage: React.FC = () => {
 					theme: 'light',
 					transition: Bounce
 				});
-			} else if (result.data.httpStatus === 'CREATED') {
-				toast(`${result.data.message}`, {
+			} else if (result.data!.httpStatus === 'CREATED') {
+				toast(`${result.data!.message}`, {
 					position: 'top-right',
 					autoClose: 5000,
 					hideProgressBar: false,

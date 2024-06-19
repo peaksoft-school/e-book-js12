@@ -23,7 +23,6 @@
 		overflow-x: auto;
 		font-size: 14px;
 		border-collapse: collapse;
-		cursor: pointer;
 		thead {
 			th {
 				@media (max-width: 870px) {
@@ -110,6 +109,7 @@
 		}
 
 		.vendors {
+			cursor: pointer;
 			&:hover {
 				background-color: rgba(255, 68, 0, 0.376);
 				color: black;

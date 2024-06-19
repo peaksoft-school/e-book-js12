@@ -30,11 +30,23 @@ const api = index.injectEndpoints({
 				body: passwordData
 			}),
 			invalidatesTags: ['update']
+		}),
+		deletVendorProfile: build.mutation<
+			PASSWORD.VendorDeleteResponse,
+			PASSWORD.VendorDeleteRequest
+		>({
+			query: (data) => ({
+				url: `/api/user/deleteVendorProfile`,
+				method: 'DELETE',
+				body: data
+			}),
+			invalidatesTags: ['update']
 		})
 	})
 });
 
 export const {
+	useDeletVendorProfileMutation,
 	useUpdateProfileMutation,
 	useGetProfileQuery,
 	useUpdatePasswordMutation

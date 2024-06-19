@@ -1,6 +1,6 @@
-import { api as index } from '..';
+import { api as baseApi } from '..';
 
-const api = index.injectEndpoints({
+const api = baseApi.injectEndpoints({
 	endpoints: (build) => ({
 		getPromo: build.query<
 			PROMO.GetBookPromoResponse,
@@ -13,7 +13,7 @@ const api = index.injectEndpoints({
 			}),
 			providesTags: ['promo']
 		}),
-		postPromoCode: build.mutation({
+		postPromoCode: build.mutation<void, PROMO.CreatePromoCodeRequest>({
 			query: (newData) => ({
 				url: '/api/promoCode/creatingPromotionalCode',
 				method: 'POST',

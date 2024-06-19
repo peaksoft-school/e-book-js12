@@ -44,8 +44,8 @@ const VendorRegistration = () => {
 			};
 			const results = await postVendor(newData);
 			if ('data' in results) {
-				const { token } = results.data;
-				localStorage.setItem('token', token);
+				const token = results.data?.token;
+				localStorage.setItem('token', token!);
 				localStorage.setItem('isAuth', 'false');
 				localStorage.setItem('isVendor', 'true');
 				localStorage.setItem('isAdmin', 'false');

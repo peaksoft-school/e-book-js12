@@ -47,8 +47,8 @@ const Registration = () => {
 			};
 			const results = await postUser(newData);
 			if ('data' in results) {
-				const { token } = results.data;
-				const { firstName } = results.data;
+				const { token } = results.data!;
+				const { firstName } = results.data!;
 				localStorage.setItem('NameClient', firstName);
 				localStorage.setItem('token', token);
 				localStorage.setItem('isAuth', 'true');
