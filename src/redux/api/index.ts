@@ -36,10 +36,6 @@ export const api = createApi({
 		'favorite',
 		'sort',
 		'add_to_favorite',
-		'sort',
-		'product',
-		'favorite',
-		'basket',
 		'promo',
 		'audioBook',
 		'eBook',
@@ -54,7 +50,8 @@ export const api = createApi({
 		'users',
 		'books',
 		'add_book',
-		'notification'
+		'notification',
+		'payment'
 	],
 
 	endpoints: () => ({})

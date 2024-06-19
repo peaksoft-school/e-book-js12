@@ -1,17 +1,32 @@
-import { FC, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 import Slider from 'react-slick';
 import './SeconsdSlider.css';
 import IconOrangeLeftArrow from '@/src/assets/icons/icon-orangeLeftArrow';
 import IconOrangeRightArrow from '@/src/assets/icons/icon-orangeRightArrow';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useGetEBookQuery } from '@/src/redux/api/bestsellers';
+import { useKeenSlider } from 'keen-slider/react';
 
 const SecondSlider: FC = () => {
-	const { data } = useGetEBookQuery();
-
+	const { data, error, isLoading } = useGetEBookQuery();
+	const [isMobile, setIsMobile] = useState(window.innerWidth <= 600);
 	const [expandedCards, setExpandedCards] = useState<{
 		[key: number]: boolean;
 	}>({});
+	const [imageIndex, setImageIndex] = useState(0);
+
+	const handleResize = () => {
+		setIsMobile(window.innerWidth <= 600);
+	};
+
+	const navigate = useNavigate();
+
+	useEffect(() => {
+		window.addEventListener('resize', handleResize);
+		return () => {
+			window.removeEventListener('resize', handleResize);
+		};
+	}, []);
 
 	const handleClick = (id: number) => {
 		setExpandedCards((prevExpanded) => ({
@@ -31,8 +46,6 @@ const SecondSlider: FC = () => {
 			<IconOrangeLeftArrow />
 		</div>
 	);
-
-	const [imageIndex, setImageIndex] = useState(0);
 
 	const settings = {
 		infinite: true,
@@ -59,6 +72,60 @@ const SecondSlider: FC = () => {
 		beforeChange: (_current: number, next: number) => setImageIndex(next)
 	};
 
+	const [keenSliderRef] = useKeenSlider<HTMLDivElement>(
+		{
+			loop: true,
+			breakpoints: {
+				'(min-width: 600px)': {
+					renderMode: 'performance',
+					drag: false
+				}
+			},
+			created(s) {
+				s.moveToIdx(0);
+			},
+			slideChanged(s) {
+				setImageIndex(s.track.details.rel);
+			}
+		},
+		[
+			(slider) => {
+				let timeout: ReturnType<typeof setTimeout>;
+				let mouseOver = false;
+
+				function clearNextTimeout() {
+					clearTimeout(timeout);
+				}
+
+				function nextTimeout() {
+					clearTimeout(timeout);
+					if (mouseOver) return;
+					timeout = setTimeout(() => {
+						slider.next();
+					}, 3000);
+				}
+
+				slider.on('created', () => {
+					slider.container.addEventListener('mouseover', () => {
+						mouseOver = true;
+						clearNextTimeout();
+					});
+					slider.container.addEventListener('mouseout', () => {
+						mouseOver = false;
+						nextTimeout();
+					});
+					nextTimeout();
+				});
+				slider.on('dragStarted', clearNextTimeout);
+				slider.on('animationEnded', nextTimeout);
+				slider.on('updated', nextTimeout);
+			}
+		]
+	);
+
+	if (isLoading) return <p>Загрузка...</p>;
+	if (error) return <p>Ошибка загрузки данных</p>;
+
 	return (
 		<div className="container">
 			<div className="content">
@@ -69,45 +136,64 @@ const SecondSlider: FC = () => {
 			</div>
 			<div className="containers">
 				<div>
-					{data &&
-						data.map((item, idx) => (
-							<div key={item.id} className="description-box">
-								{idx === imageIndex && (
-									<div className="title">
-										<h2 className="name">{item.title}</h2>
-										<div
-											className="favorite_card_descriptions"
-											onClick={() => handleClick(item.id)}
-										>
-											{expandedCards[item.id] ? (
-												<p className="description">{item.description}</p>
-											) : (
-												<p>{item.description.substring(0, 250)}...</p>
-											)}
-										</div>
-										<div className="box">
-											<p className="read-more">Подробнее</p>
-											<p className="price">{item.price} c</p>
-										</div>
+					{data?.map((item, idx) => (
+						<div key={item.id} className="description-box">
+							{idx === imageIndex && (
+								<div className="title">
+									<h2 className="name">{item.title}</h2>
+									<div
+										className="favorite_card_descriptions"
+										onClick={() => handleClick(item.id)}
+									>
+										{expandedCards[item.id] ? (
+											<p className="description">{item.description}</p>
+										) : (
+											<p>{item.description.substring(0, 250)}...</p>
+										)}
 									</div>
-								)}
+									<div className="box">
+										<p
+											className="read-more"
+											onClick={() => navigate(`${item.id}`)}
+										>
+											Подробнее
+										</p>
+										<p className="price">{item.price} c</p>
+									</div>
+								</div>
+							)}
+						</div>
+					))}
+				</div>
+				<div className="joc">
+					{data &&
+						data.length > 0 &&
+						(isMobile ? (
+							<div ref={keenSliderRef} className="keen-slider">
+								{data.map((item, idx) => (
+									<div
+										key={item.id}
+										className={`keen-slider__slide slide ${idx === imageIndex ? 'activeSlide' : ''}`}
+									>
+										<img src={item.imageUrl} alt="img" />
+									</div>
+								))}
 							</div>
+						) : (
+							<Slider {...settings}>
+								{data.map((item, idx) => (
+									<div
+										key={item.id}
+										className={
+											idx === imageIndex ? 'slide activeSlide' : 'slide'
+										}
+									>
+										<img src={item.imageUrl} alt="img" />
+									</div>
+								))}
+							</Slider>
 						))}
 				</div>
-
-				{data && data.length > 0 && (
-					<Slider {...settings}>
-						{data.map((item, idx) => (
-							<div
-								key={item.id}
-								className={idx === imageIndex ? 'slide activeSlide' : 'slide'}
-							>
-								<img src={item.imageUrl} alt="img" />
-							</div>
-						))}
-					</Slider>
-				)}
-
 				{data && (
 					<div className="scroll-line">
 						<div

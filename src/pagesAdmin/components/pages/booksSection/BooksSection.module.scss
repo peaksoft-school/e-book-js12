@@ -31,6 +31,14 @@
 					justify-content: start;
 					max-width: 200px;
 					width: 100%;
+
+					.arrow_bottom {
+						transform: rotate(-180deg);
+						transition: 0.3s;
+					}
+					.arrow_top {
+						transition: 0.2s;
+					}
 				}
 
 				.click {
@@ -44,6 +52,14 @@
 							align-items: center;
 							gap: 7px;
 							justify-content: start;
+
+							.arrow_bottom {
+								transform: rotate(-180deg);
+								transition: 0.3s;
+							}
+							.arrow_top {
+								transition: 0.2s;
+							}
 						}
 					}
 				}

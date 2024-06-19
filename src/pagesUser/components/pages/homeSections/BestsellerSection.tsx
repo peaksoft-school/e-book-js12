@@ -6,10 +6,11 @@ import './Bestsellers.css';
 import IconOrangeLeftArrow from '@/src/assets/icons/icon-orangeLeftArrow';
 import IconOrangeRightArrow from '@/src/assets/icons/icon-orangeRightArrow';
 import { useGetAllBestsellersQuery } from '@/src/redux/api/bestsellers';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const BestsellersSection: FC = () => {
 	const { data } = useGetAllBestsellersQuery();
+	const navigate = useNavigate();
 	const [expandedCards, setExpandedCards] = useState<{
 		[key: number]: boolean;
 	}>({});
@@ -71,21 +72,58 @@ const BestsellersSection: FC = () => {
 		beforeChange: (_current: number, next: number) => setImageIndex(next)
 	};
 
-	const [keenSliderRef] = useKeenSlider<HTMLDivElement>({
-		loop: true,
+	const [keenSliderRef] = useKeenSlider<HTMLDivElement>(
+		{
+			loop: true,
 
-		mode: 'snap',
+			breakpoints: {
+				'(min-width: 600px)': {
+					loop: true,
+					renderMode: 'performance',
+					drag: false
+				}
+			},
+			created(s: KeenSliderInstance) {
+				s.moveToIdx(0);
+			},
+			slideChanged(s: KeenSliderInstance) {
+				setImageIndex(s.track.details.rel);
+			}
+		},
+		[
+			(slider) => {
+				let timeout: ReturnType<typeof setTimeout>;
+				let mouseOver = false;
 
-		breakpoints: {
-			'(min-width: 600px)': {}
-		},
-		created(s: KeenSliderInstance) {
-			s.moveToIdx(0);
-		},
-		slideChanged(s: KeenSliderInstance) {
-			setImageIndex(s.track.details.rel);
-		}
-	});
+				function clearNextTimeout() {
+					clearTimeout(timeout);
+				}
+
+				function nextTimeout() {
+					clearTimeout(timeout);
+					if (mouseOver) return;
+					timeout = setTimeout(() => {
+						slider.next();
+					}, 3000);
+				}
+
+				slider.on('created', () => {
+					slider.container.addEventListener('mouseover', () => {
+						mouseOver = true;
+						clearNextTimeout();
+					});
+					slider.container.addEventListener('mouseout', () => {
+						mouseOver = false;
+						nextTimeout();
+					});
+					nextTimeout();
+				});
+				slider.on('dragStarted', clearNextTimeout);
+				slider.on('animationEnded', nextTimeout);
+				slider.on('updated', nextTimeout);
+			}
+		]
+	);
 
 	return (
 		<section className="BestsellersSection">
@@ -112,7 +150,14 @@ const BestsellersSection: FC = () => {
 												)}
 											</div>
 											<div className="box_box">
-												<p className="read-more">Подробнее</p>
+												<p
+													className="read-more"
+													onClick={() => {
+														navigate(`/${item.id}`);
+													}}
+												>
+													Подробнее
+												</p>
 												<p className="price">{item.price} c</p>
 											</div>
 										</div>
@@ -128,7 +173,7 @@ const BestsellersSection: FC = () => {
 									{data.map((item, idx) => (
 										<div
 											key={item.id}
-											className={`keen-slider__slide ${idx === imageIndex ? 'activeSlider' : ''}`}
+											className={`keen-slider__slide slider ${idx === imageIndex ? 'activeSlider' : ''}`}
 										>
 											<img src={item.imageUrl} alt="img" />
 										</div>

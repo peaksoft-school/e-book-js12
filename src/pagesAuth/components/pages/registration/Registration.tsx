@@ -11,17 +11,19 @@ import {
 import { signInWithPopup } from 'firebase/auth';
 import { auth, provider } from '@/src/configs/firebase';
 import { IconGoogleLogo } from '@/src/assets/icons';
+import { ToastContainer, toast } from 'react-toastify';
 
 interface TypeData {
 	email: string;
 	name: string;
 	password: string;
+	confirmPassword: string;
 }
 
 const Registration = () => {
 	const [isPassword, setIsPassword] = useState(false);
 	const [isLogPassword, setLogPassword] = useState(false);
-	const [checkPassword, setCheckPassword] = useState('');
+	const [password, setPassword] = useState('');
 	const [postUser] = usePostRegistrationMutation();
 	const [postGoogleToken] = usePostWithGoogleMutation();
 	const navigate = useNavigate();
@@ -33,24 +35,41 @@ const Registration = () => {
 		reset,
 		handleSubmit
 	} = useForm<TypeData>({
-		defaultValues: { email: '', name: '', password: '' }
+		defaultValues: { email: '', name: '', password: '', confirmPassword: '' }
 	});
 
 	const onHandleChange: SubmitHandler<TypeData> = async (data) => {
-		if (checkPassword === data.password) {
-			const results = await postUser(data);
+		if (data.confirmPassword === data.password) {
+			const newData = {
+				firstName: data.name,
+				email: data.email,
+				password: data.password
+			};
+			const results = await postUser(newData);
 			if ('data' in results) {
-				const token = results.data?.token;
+				const { token } = results.data!;
 				const { firstName } = results.data!;
 				localStorage.setItem('NameClient', firstName);
 				localStorage.setItem('token', token!);
 				localStorage.setItem('isAuth', 'true');
 				localStorage.setItem('vendor', 'false');
 				localStorage.setItem('admin', 'false');
+				console.log(firstName);
+
 				reset();
 				navigate('/');
-				setCheckPassword('');
 			}
+		} else {
+			toast(`Подтвердите пароль`, {
+				position: 'top-right',
+				autoClose: 5000,
+				hideProgressBar: false,
+				closeOnClick: true,
+				pauseOnHover: true,
+				draggable: true,
+				progress: undefined,
+				theme: 'light'
+			});
 		}
 	};
 	const signInWithGoogleHandler = async () => {
@@ -63,6 +82,8 @@ const Registration = () => {
 		const results = await postGoogleToken(data);
 		if ('data' in results) {
 			const { token } = results.data;
+			const { displayName } = result.user;
+			localStorage.setItem('NameClient', displayName!);
 			localStorage.setItem('token', token);
 			localStorage.setItem('isAuth', 'true');
 			localStorage.setItem('vendor', 'false');
@@ -116,7 +137,13 @@ const Registration = () => {
 								}
 								type={isPassword ? 'text' : 'password'}
 								placeholder="Напишите пароль"
-								{...register('password', { minLength: 4, required: true })}
+								{...register('password', {
+									minLength: 4,
+									required: true,
+									onChange(event) {
+										setPassword(event.target.value);
+									}
+								})}
 							/>
 							{isPassword ? (
 								<div
@@ -144,12 +171,20 @@ const Registration = () => {
 							</div>
 							<input
 								className={
-									errors.password ? `${scss.input_error}` : `${scss.input}`
+									errors.confirmPassword
+										? `${scss.input_error}`
+										: `${scss.input}`
 								}
 								type={isLogPassword ? 'text' : 'password'}
 								placeholder="Подтвердите пароль"
-								value={checkPassword}
-								onChange={(e) => setCheckPassword(e.target.value)}
+								{...register('confirmPassword', {
+									minLength: 4,
+									required: true,
+
+									validate: (value) => {
+										return value === password || 'Пароль не совпадает';
+									}
+								})}
 							/>
 							{isLogPassword ? (
 								<div
@@ -171,11 +206,11 @@ const Registration = () => {
 								</div>
 							)}
 						</label>
-
 						<div className={scss.btn_container}>
 							<button type="submit">Создать аккаунт</button>
 						</div>
 					</form>
+					<ToastContainer />
 					<div className={scss.btn_with_google}>
 						<button onClick={signInWithGoogleHandler}>
 							<div className={scss.content_btn}>

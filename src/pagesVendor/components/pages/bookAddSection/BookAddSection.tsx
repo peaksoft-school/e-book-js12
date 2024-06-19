@@ -1,5 +1,6 @@
 import scss from './BookAddSection.module.scss';
 import {
+	IconArrowBottom,
 	IconBlackCircle,
 	IconBlackSquare,
 	IconDownIcon,
@@ -462,15 +463,14 @@ const BookAddSection = () => {
 												</p>
 												{
 													<div className={scss.icon_arrow}>
-														{iconjenre ? (
-															<>
-																<IconUpIcon />
-															</>
-														) : (
-															<>
-																<IconDownIcon />
-															</>
-														)}
+														<div
+															className={
+																iconjenre ? scss.arrow_bottom : scss.arrow_top
+															}
+														>
+															<IconArrowBottom />
+														</div>
+														<></>
 													</div>
 												}
 												<div
@@ -672,15 +672,14 @@ const BookAddSection = () => {
 											</p>
 											{
 												<div className={scss.icon_arrow}>
-													{iconjenre ? (
-														<>
-															<IconUpIcon />
-														</>
-													) : (
-														<>
-															<IconDownIcon />
-														</>
-													)}
+													<div
+														className={
+															iconjenre ? scss.arrow_bottom : scss.arrow_top
+														}
+													>
+														<IconArrowBottom />
+													</div>
+													<></>
 												</div>
 											}
 											<div
@@ -889,15 +888,14 @@ const BookAddSection = () => {
 												</p>
 												{
 													<div className={scss.icon_arrow}>
-														{iconjenre ? (
-															<>
-																<IconUpIcon />
-															</>
-														) : (
-															<>
-																<IconDownIcon />
-															</>
-														)}
+														<div
+															className={
+																iconjenre ? scss.arrow_bottom : scss.arrow_top
+															}
+														>
+															<IconArrowBottom />
+														</div>
+														<></>
 													</div>
 												}
 												<div

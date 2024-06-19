@@ -36,4 +36,10 @@ namespace PASSWORD {
 		password: string;
 		confirmPassword: string;
 	};
+
+	type VendorDeleteResponse = {
+		httpStatus: string;
+		message: string;
+	}[];
+	type VendorDeleteRequest = void;
 }

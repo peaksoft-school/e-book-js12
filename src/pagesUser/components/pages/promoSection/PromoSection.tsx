@@ -5,15 +5,9 @@ import { Modal } from 'antd';
 import scss from './PromoCode.module.scss';
 import { IconPromoPage } from '@/src/assets/icons';
 
-interface TypeRequest {
-	page: number;
-	size: number;
-	allBooksByVendors: Book[];
-}
-
 interface Book {
 	id: number;
-	images: string[];
+	images: string;
 	title: string;
 	authorsFullName: string;
 	price: number;
@@ -30,10 +24,10 @@ const PromoSection = () => {
 	const [trigger, { data }] = useLazyGetPromoQuery();
 
 	useEffect(() => {
-		if (data && data.length > 0) {
+		if (data) {
 			let books: Book[] = [];
-			data.forEach((item: TypeRequest) => {
-				books = books.concat(item.allBooksByVendors);
+			data.allBooksByVendors.forEach((item: Book) => {
+				books = books.concat(item);
 			});
 			setFoundBooks(books);
 			setFoundBooksCount(books.length);
@@ -66,11 +60,17 @@ const PromoSection = () => {
 									type="text"
 									placeholder="Введите промокод"
 									value={promoCode}
+									onKeyPress={(e) => {
+										if (e.key === 'Enter') {
+											handleActivateClick();
+										}
+									}}
 									onChange={(e) => setPromoCode(e.target.value)}
 								/>
 								<CustomBasketButton
-									onClick={handleActivateClick}
+									onClick={() => handleActivateClick()}
 									nameClass={scss.promo_add_btn}
+									type={'submit'}
 								>
 									Активировать
 								</CustomBasketButton>
@@ -88,7 +88,7 @@ const PromoSection = () => {
 						<div className={scss.container_books}>
 							{foundBooks.map((book) => (
 								<div key={book.id} className={scss.card_book}>
-									<img src={book.images[0]} alt={book.title} />
+									<img src={book.images} alt={book.title} />
 									<div className={scss.description}>
 										<h3>{book.title}</h3>
 										<p>{book.authorsFullName}</p>
@@ -106,7 +106,7 @@ const PromoSection = () => {
 			</div>
 			<Modal
 				open={promoModal}
-				footer={true}
+				footer={null}
 				className={scss.modal_promo}
 				onCancel={() => setPromoModal(false)}
 			>

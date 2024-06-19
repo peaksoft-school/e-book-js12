@@ -6,7 +6,6 @@ import { IconPencil, IconX } from '@tabler/icons-react';
 import CustomAddBookButton from '@/src/ui/customButton/CustomAddBook';
 import ThreeDotIcon from '@/src/assets/icons/icon-threeDot';
 import { IconArrowBottom } from '@/src/assets/icons';
-import UpIcon from '@/src/assets/icons/icon-upIcon';
 import {
 	useDeleteBookMutation,
 	useFilterBooksMutation
@@ -180,7 +179,14 @@ const BooksSection: React.FC = () => {
 								<p onClick={toggleGenreList}>
 									<span>
 										Жанры
-										{isOpenBooksGenre ? <UpIcon /> : <IconArrowBottom />}
+										<div
+											className={
+												isOpenBooksGenre ? scss.arrow_bottom : scss.arrow_top
+											}
+										>
+											<IconArrowBottom />
+										</div>
+										<></>
 									</span>
 								</p>
 								<div
@@ -204,34 +210,43 @@ const BooksSection: React.FC = () => {
 						<div className={scss.types_book}>
 							<div className={scss.click}>
 								<p onClick={toggleTypeList}>
-									<span>Тип</span>
-									{isOpenBooksType ? <UpIcon /> : <IconArrowBottom />}
+									<span>{bookTypeText}</span>
+									<div
+										className={
+											isOpenBooksType ? scss.arrow_bottom : scss.arrow_top
+										}
+									>
+										<IconArrowBottom />
+									</div>
+									<></>
 								</p>
-								<div
-									className={
-										isOpenBooksType ? scss.type_list : scss.none_books_type
-									}
-								>
-									{selectedType !== null ? (
-										<>
-											{/* <p onClick={() => handleTypeSelect(null)}>Все</p>      понадобится */}
-											{/* <hr />					понадобится */}
-										</>
-									) : null}
-									{bookType.map((bookType) => (
-										<>
-											<p
-												key={bookType.typeId}
-												onClick={() =>
-													handleTypeSelect(bookType.typeNameEnglish)
-												}
-											>
-												{bookType.typeName}
-											</p>
-											<hr />
-										</>
-									))}
-								</div>
+								{
+									<div
+										className={
+											isOpenBooksType ? scss.type_list : scss.none_books_type
+										}
+									>
+										{selectedType !== null ? (
+											<>
+												<p onClick={() => handleTypeSelect(null)}>Все</p>
+												<hr />
+											</>
+										) : null}
+										{bookType.map((bookType) => (
+											<>
+												<p
+													key={bookType.typeId}
+													onClick={() =>
+														handleTypeSelect(bookType.typeNameEnglish)
+													}
+												>
+													{bookType.typeName}
+												</p>
+												<hr />
+											</>
+										))}
+									</div>
+								}
 							</div>
 						</div>
 					</div>

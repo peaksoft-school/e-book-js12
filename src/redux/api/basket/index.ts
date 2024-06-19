@@ -61,6 +61,15 @@ const api = index.injectEndpoints({
 				method: 'PUT'
 			}),
 			invalidatesTags: ['basket']
+		}),
+		ActivedBookPromocode: build.mutation<
+			BASKET.ActivedPromoResponse,
+			BASKET.ActivePromoRequest
+		>({
+			query: ({ promoCode, id }) => ({
+				url: `/api/basket/totalCostPromoCode/${id}?promoCodeString=${promoCode}`,
+				method: 'POST'
+			})
 		})
 	})
 });
@@ -71,5 +80,6 @@ export const {
 	useDeleteClearBasketMutation,
 	useDeleteBookIdMutation,
 	useCountBookBasketMutation,
-	useTotalCostQuery
+	useTotalCostQuery,
+	useActivedBookPromocodeMutation
 } = api;

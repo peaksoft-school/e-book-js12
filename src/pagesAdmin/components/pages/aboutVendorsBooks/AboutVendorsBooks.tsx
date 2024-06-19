@@ -78,6 +78,11 @@ const AboutVendorsBooks = () => {
 		navigate(`/admin/vendors/books/${id}`);
 	};
 
+	const handleThreeDotClick = (id: number) => {
+		setIsOpen((prev) => (prev && idBook === id ? false : true));
+		setIdBook(id);
+	};
+
 	return (
 		<section className={scss.AboutVendorsBooks}>
 			<div className={scss.container}>
@@ -108,11 +113,7 @@ const AboutVendorsBooks = () => {
 				<hr />
 				<div className={scss.content}>
 					{filteredBooks?.map((book) => (
-						<div
-							key={book.id}
-							className={scss.book}
-							onClick={() => handleBookClick(book.id)}
-						>
+						<div key={book.id} className={scss.book}>
 							<div className={scss.book_header}>
 								<div className={scss.hearts}>
 									<IconWhiteLike />
@@ -124,9 +125,9 @@ const AboutVendorsBooks = () => {
 							</div>
 							<div
 								className={scss.extra}
-								onClick={() => {
-									setIsOpen(!isOpen);
-									setIdBook(book.id);
+								onClick={(e) => {
+									e.stopPropagation();
+									handleThreeDotClick(book.id);
 								}}
 							>
 								<ThreeDotIcon />
@@ -154,7 +155,10 @@ const AboutVendorsBooks = () => {
 									</ul>
 								</div>
 							) : null}
-							<div className={scss.book_content}>
+							<div
+								className={scss.book_content}
+								onClick={() => handleBookClick(book.id)}
+							>
 								<div className={scss.book_img}>
 									<img src={book.imageLink} alt="" />
 								</div>
@@ -178,7 +182,7 @@ const AboutVendorsBooks = () => {
 					</button>
 				</div>
 				<Modal onCancel={handleCancel} footer={false} open={isModalOpen}>
-					<div className={scss.delete_modal}>
+					<div className={scss.delete_modals}>
 						<p>Вы уверены, что хотите удалить профиль?</p>
 						<div className={scss.buttons_modal}>
 							<button

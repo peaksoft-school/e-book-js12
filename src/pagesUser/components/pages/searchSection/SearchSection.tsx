@@ -57,6 +57,7 @@ const SearchSection = () => {
 	const [menufilters, setMenuFilters] = useState(false);
 
 	const [totalBooks, setTotalBooks] = useState<number>();
+	const [page, setPage] = useState<number>(1);
 
 	const [postFillter] = usePostSortBookMutation();
 	const [addBookFavorite] = usePostFavoriteUnFavoriteMutation();
@@ -138,13 +139,13 @@ const SearchSection = () => {
 		}
 	]);
 
-	const [selected, setSelected] = useState('Сортировать');
+	const [selected, setSelected] = useState('');
 	const [idSort, setIdSort] = useState<null | number>(null);
 	const [sortData] = useState([
 		{
 			id: 1,
 			nameSort: 'Все',
-			englishSort: 'all'
+			englishSort: ' '
 		},
 		{
 			id: 2,
@@ -157,6 +158,7 @@ const SearchSection = () => {
 			englishSort: 'best-sellers'
 		}
 	]);
+
 	// const filterBooks =
 	// 	selected === 'Сортировать'
 	// 		? sortData
@@ -305,7 +307,7 @@ const SearchSection = () => {
 		});
 
 		const newData = {
-			genres: [...englsihNameJenre],
+			genres: englsihNameJenre === []! ? null : [...englsihNameJenre],
 			bookTypes: [...typeEnglishName],
 			languages: [...nameLanguageBook],
 			price: {
@@ -314,7 +316,12 @@ const SearchSection = () => {
 			},
 			sort: sortValue
 		};
-		const result = await postFillter(newData);
+		const pagination = {
+			page: page,
+			size: 12
+		};
+
+		const result = await postFillter({ newData, pagination });
 		if ('data' in result) {
 			const booksData = result.data!.books;
 			setTotalBooks(result.data!.totalNumberOfBooks);
@@ -324,7 +331,7 @@ const SearchSection = () => {
 
 	useEffect(() => {
 		handleChangeFillter();
-	}, [jenreData, idSort, typesBookData, languageBooksData, value]);
+	}, [jenreData, idSort, typesBookData, languageBooksData, value, page]);
 
 	return (
 		<section className={scss.SearchSection}>
@@ -394,35 +401,35 @@ const SearchSection = () => {
 							</div>
 							<div className={scss.rightIcon}>
 								<div onClick={() => setIsSort(!isSort)}>
-									{isSort ? <IconUpIcon /> : <IconArrowBottom />}
+									<div className={isSort ? scss.arrow_bottom : scss.arrow_top}>
+										<IconArrowBottom />
+									</div>
+									<></>
 								</div>
 							</div>
 						</div>
-						{isSort && (
-							<>
-								<div className={`${isSort ? scss.sort_drop : scss.sort_down}`}>
-									<ul>
-										{sortData.map((item) => (
-											<>
-												<li
-													key={item.id}
-													onClick={() => {
-														setIdSort(item.id);
-														setSelected(item.nameSort);
-														setIsSort(false);
-													}}
-												>
-													{item.nameSort}
-												</li>
-												<hr />
-											</>
-										))}
-									</ul>
-								</div>
-							</>
-						)}
+						<>
+							<div className={`${isSort ? scss.sort_drop : scss.sort_down}`}>
+								<ul>
+									{sortData.map((item) => (
+										<>
+											<li
+												key={item.id}
+												onClick={() => {
+													setIdSort(item.id);
+													setSelected(item.nameSort);
+													setIsSort(false);
+												}}
+											>
+												{item.nameSort}
+											</li>
+											<hr />
+										</>
+									))}
+								</ul>
+							</div>
+						</>
 					</div>
-
 					<div className={scss.container}>
 						<div
 							onClick={() => setMenuFilters(!menufilters)}
@@ -440,15 +447,10 @@ const SearchSection = () => {
 								className={scss.genre_fillter}
 							>
 								<p>Жанры</p>
-								{isGenre ? (
-									<>
-										<IconUpIcon />
-									</>
-								) : (
-									<>
-										<IconArrowBottom />
-									</>
-								)}
+								<div className={isGenre ? scss.arrow_bottom : scss.arrow_top}>
+									<IconArrowBottom />
+								</div>
+								<></>
 							</div>
 							<hr />
 							<>
@@ -486,15 +488,12 @@ const SearchSection = () => {
 								className={scss.type_fillter}
 							>
 								<p>Тип</p>
-								{filterType ? (
-									<>
-										<IconUpIcon />
-									</>
-								) : (
-									<>
-										<IconArrowBottom />
-									</>
-								)}
+								<div
+									className={filterType ? scss.arrow_bottom : scss.arrow_top}
+								>
+									<IconArrowBottom />
+								</div>
+								<></>
 							</div>
 							<hr />
 							<div
@@ -530,15 +529,12 @@ const SearchSection = () => {
 								className={scss.price_fillter}
 							>
 								<p>Стоимость</p>
-								{priceGenre ? (
-									<>
-										<IconUpIcon />
-									</>
-								) : (
-									<>
-										<IconArrowBottom />
-									</>
-								)}
+								<div
+									className={priceGenre ? scss.arrow_bottom : scss.arrow_top}
+								>
+									<IconArrowBottom />
+								</div>
+								<></>
 							</div>
 							<hr />
 							<div className={`${priceGenre ? scss.fillters : scss.none}`}>
@@ -582,15 +578,10 @@ const SearchSection = () => {
 								className={scss.language_fillter}
 							>
 								<p>Язык издания</p>
-								{language ? (
-									<>
-										<IconUpIcon />
-									</>
-								) : (
-									<>
-										<IconArrowBottom />
-									</>
-								)}
+								<div className={language ? scss.arrow_bottom : scss.arrow_top}>
+									<IconArrowBottom />
+								</div>
+								<></>
 							</div>
 							<hr />
 							<>
@@ -671,7 +662,13 @@ const SearchSection = () => {
 								</div>
 							))}
 							<div className={scss.btn_morebook}>
-								<button>Смотреть больше</button>
+								<button
+									onClick={() => {
+										setPage(page + 1);
+									}}
+								>
+									Смотреть больше
+								</button>
 							</div>
 						</div>
 					</div>

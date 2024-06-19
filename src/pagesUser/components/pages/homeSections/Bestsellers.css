@@ -6,7 +6,6 @@
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
-	margin-bottom: 126.5px;
 }
 .content {
 	display: flex;
@@ -17,6 +16,8 @@
 
 .see_orange {
 	color: #ff4c00;
+	cursor: pointer;
+	-webkit-tap-highlight-color: transparent;
 }
 
 .name {
@@ -51,7 +52,7 @@
 	line-height: 20.8px;
 	color: #ff4c00;
 }
-.box .read-more {
+.box_box .read-more {
 	font-family: Open Sans;
 	font-size: 14px;
 	font-weight: 400;
@@ -74,7 +75,7 @@
 	opacity: 0.8;
 }
 .activeSlider {
-	transform: scale(1);
+	transform: scale(0.9);
 	width: 300px;
 	height: 600px;
 	position: relative;
@@ -235,7 +236,7 @@
 @media screen and (max-width: 680px) {
 	.slider img {
 		width: 150px;
-		height: 258px;
+		height: 218px;
 	}
 	.slick-list {
 		width: 37rem;
@@ -244,7 +245,7 @@
 		top: 190px;
 	}
 	.slick-track {
-		height: 300px;
+		height: 400px;
 	}
 	.slide .price {
 		top: 400px;
@@ -259,10 +260,6 @@
 	.arrow {
 		display: none;
 	}
-	.scroll-line {
-		bottom: 30%;
-		left: 60%;
-	}
 }
 
 @media screen and (max-width: 600px) {
@@ -273,15 +270,18 @@
 		width: 70%;
 		height: 80%;
 	}
+	.keen-slider__slide {
+		transform: scale(2);
+	}
 	.slider {
-		transform: scale(0);
-		transition: transform 300ms;
+		transform: scale(0.67);
+		transition: transform 100ms;
 		width: 300px;
 		position: relative;
 		opacity: 0;
 	}
 	.activeSlider {
-		transform: scale(0);
+		transform: scale(1);
 		width: 300px;
 		height: 600px;
 		position: relative;
@@ -293,6 +293,7 @@
 		width: 50%;
 	}
 }
+
 @media screen and (max-width: 450px) {
 	.keen-slider__slide img {
 		width: 90%;

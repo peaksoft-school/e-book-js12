@@ -329,6 +329,14 @@
 									position: absolute;
 									right: 18px;
 									top: 14px;
+
+									.arrow_bottom {
+										transform: rotate(-180deg);
+										transition: 0.3s;
+									}
+									.arrow_top {
+										transition: 0.2s;
+									}
 								}
 								.oprions_jenre {
 									display: flex;

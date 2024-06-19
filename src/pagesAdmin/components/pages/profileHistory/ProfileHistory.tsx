@@ -16,6 +16,10 @@ const ProfileHistory = () => {
 	const { data: basketData } = useGetBooksInBasketQuery(locationId);
 	const navigate = useNavigate();
 
+	const handleBook = (id: number) => {
+		navigate(`/admin/users/books/${id}`);
+	};
+
 	return (
 		<div className={scss.profile_history}>
 			<div className="container">
@@ -66,8 +70,8 @@ const ProfileHistory = () => {
 									{historyData?.map((item) => (
 										<div key={item.id} className={scss.line}>
 											<div
+												onClick={() => handleBook(item.id)}
 												className={scss.book_map_info}
-												onClick={() => navigate(`${item.id}`)}
 											>
 												<img
 													className={scss.book_image}

@@ -5,6 +5,7 @@ interface CustomBasketProps {
 	children: ReactNode;
 	onClick: () => void;
 	nameClass: string;
+
 	type?: React.ButtonHTMLAttributes<HTMLButtonElement>['type'];
 }
 

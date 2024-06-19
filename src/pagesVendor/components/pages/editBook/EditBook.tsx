@@ -180,13 +180,13 @@ const EditBook = () => {
 			await updatePhoto({ newData, bookId });
 		}
 	};
-	const EditPhotoSecond = async () => {
-		const newData = {
-			oldUrl: initialImgSecond,
-			newUrl: secondPhoto
-		};
-		await updatePhoto({ newData, bookId });
-	};
+	// const EditPhotoSecond = async () => {
+	// 	const newData = {
+	// 		oldUrl: initialImgSecond,
+	// 		newUrl: secondPhoto
+	// 	};
+	// 	await updatePhoto({ newData, bookId });
+	// };
 
 	const onSubmit: SubmitHandler<FieldValues> = async (book) => {
 		const newUpDateBook = {
@@ -234,7 +234,7 @@ const EditBook = () => {
 		setPdfFileName(file);
 		const result = await postFile(file);
 		if ('data' in result) {
-			const status = result.data?.httpStatus;
+			const status = result.data!.httpStatus;
 			if (status === 'OK') {
 				setPdfFile(result.data!.message);
 			}
@@ -245,9 +245,9 @@ const EditBook = () => {
 		const file = e.target.files ? e.target.files[0] : null;
 		const result = await postFile(file!);
 		if ('data' in result) {
-			if (result.data.httpStatus === 'OK') {
-				setFirstPhoto(result.data.message);
-				setTest(result.data.message);
+			if (result.data!.httpStatus === 'OK') {
+				setFirstPhoto(result.data!.message);
+				setTest(result.data!.message);
 				EditPhotoFirst();
 			}
 		}

@@ -114,6 +114,25 @@
 						font-size: 14px;
 					}
 				}
+
+				.rightIcon {
+					.arrow_bottom {
+						transform: rotate(-180deg);
+						transition: 0.3s;
+					}
+					.arrow_top {
+						transition: 0.2s;
+					}
+				}
+			}
+			.rightIcon {
+				.arrow_bottom {
+					transform: rotate(-180deg);
+					transition: 0.3s;
+				}
+				.arrow_top {
+					transition: 0.2s;
+				}
 			}
 			.sort_down {
 				display: flex;
@@ -247,6 +266,13 @@
 						width: 100%;
 						user-select: none;
 					}
+					.arrow_bottom {
+						transform: rotate(-180deg);
+						transition: 0.3s;
+					}
+					<<<<<<< HEAD =======>>>>>>>dev .arrow_top {
+						transition: 0.2s;
+					}
 				}
 				.type_fillter {
 					display: flex;
@@ -255,6 +281,14 @@
 					cursor: pointer;
 					user-select: none;
 					margin-bottom: 9.5px;
+
+					.arrow_bottom {
+						transform: rotate(-180deg);
+						transition: 0.3s;
+					}
+					.arrow_top {
+						transition: 0.2s;
+					}
 				}
 				.price_fillter {
 					display: flex;
@@ -263,6 +297,14 @@
 					cursor: pointer;
 					user-select: none;
 					margin-bottom: 9.5px;
+
+					.arrow_bottom {
+						transform: rotate(-180deg);
+						transition: 0.3s;
+					}
+					.arrow_top {
+						transition: 0.2s;
+					}
 				}
 				.language_fillter {
 					display: flex;
@@ -271,6 +313,14 @@
 					cursor: pointer;
 					user-select: none;
 					margin-bottom: 9.5px;
+
+					.arrow_bottom {
+						transform: rotate(-180deg);
+						transition: 0.3s;
+					}
+					.arrow_top {
+						transition: 0.2s;
+					}
 				}
 
 				.fillters {
@@ -551,6 +601,10 @@
 					background-color: transparent;
 					padding: 10px 0px;
 					cursor: pointer;
+					&:hover {
+						color: #f8f8f8;
+						background-color: #f34901;
+					}
 				}
 			}
 		}
