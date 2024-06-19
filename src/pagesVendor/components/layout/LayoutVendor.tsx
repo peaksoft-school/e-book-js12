@@ -18,7 +18,8 @@ const LayoutVendor = () => {
 			<div className={scss.layout}>
 				{location.pathname === '/vendor/registration' ||
 				location.pathname === '/vendor/login' ||
-				location.pathname === '/vendor/' ? null : (
+				location.pathname === '/vendor/' ||
+				location.pathname === '/vendor' ? null : (
 					<>
 						<Header />
 					</>

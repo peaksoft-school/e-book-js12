@@ -13,7 +13,10 @@ const api = baseApi.injectEndpoints({
 			}),
 			providesTags: ['promo']
 		}),
-		postPromoCode: build.mutation<void, PROMO.CreatePromoCodeRequest>({
+		postPromoCode: build.mutation<
+			PROMO.CreatePromoCodeResponse,
+			PROMO.CreatePromoCodeRequest
+		>({
 			query: (newData) => ({
 				url: '/api/promoCode/creatingPromotionalCode',
 				method: 'POST',

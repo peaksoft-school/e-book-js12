@@ -21,7 +21,13 @@ namespace PROMO {
 	};
 
 	export type CreatePromoCodeRequest = {
-		code: string;
-		description: string;
+		promoCode: string;
+		dateStart: string;
+		dateEnd: string;
+		disCount: number | string;
+	};
+	type CreatePromoCodeResponse = {
+		httpStatus: string;
+		message: string;
 	};
 }
