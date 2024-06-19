@@ -80,6 +80,11 @@ const AboutBook = () => {
 							</div>
 							<div className={scss.section_mony}>
 								<p>365 c</p>
+								<div>
+									<audio id="audioPlayer" controls>
+										<source src={book.fragmentAudUrl} type="audio/mpeg" />
+									</audio>
+								</div>
 							</div>
 							<div className={scss.section_info}>
 								<div className={scss.section_info_name}>
@@ -90,6 +95,7 @@ const AboutBook = () => {
 									<p>Год выпуска</p>
 									<p>Обьем</p>
 								</div>
+								<div></div>
 								<div className={scss.section_info_two}>
 									<p>{book.authorsFullName}</p>
 									<p>{book.genre}</p>

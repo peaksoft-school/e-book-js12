@@ -180,13 +180,13 @@ const EditBook = () => {
 			await updatePhoto({ newData, bookId });
 		}
 	};
-	const EditPhotoSecond = async () => {
-		const newData = {
-			oldUrl: initialImgSecond,
-			newUrl: secondPhoto
-		};
-		await updatePhoto({ newData, bookId });
-	};
+	// const EditPhotoSecond = async () => {
+	// 	const newData = {
+	// 		oldUrl: initialImgSecond,
+	// 		newUrl: secondPhoto
+	// 	};
+	// 	await updatePhoto({ newData, bookId });
+	// };
 
 	const onSubmit: SubmitHandler<FieldValues> = async (book) => {
 		const newUpDateBook = {

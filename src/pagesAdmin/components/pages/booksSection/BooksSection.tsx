@@ -203,40 +203,39 @@ const BooksSection: React.FC = () => {
 							</div>
 						</div>
 						<div className={scss.types_book}>
-							
-						<div className={scss.click}>
-							<p onClick={toggleTypeList}>
-								<span>{bookTypeText}</span>
-								{isOpenBooksType ? <UpIcon /> : <IconArrowBottom />}
-							</p>
-							{
-								<div
-									className={
-										isOpenBooksType ? scss.type_list : scss.none_books_type
-									}
-								>
-									{selectedType !== null ? (
-										<>
-											<p onClick={() => handleTypeSelect(null)}>Все</p>
-											<hr />
-										</>
-									) : null}
-									{bookTypes.map((bookType) => (
-										<>
-											<p
-												key={bookType.typeId}
-												onClick={() =>
-													handleTypeSelect(bookType.typeNameEnglish)
-												}
-											>
-												{bookType.typeName}
-											</p>
-											<hr />
-										</>
-									))}
-								</div>
-							}
-						</div>
+							<div className={scss.click}>
+								<p onClick={toggleTypeList}>
+									<span>{bookTypeText}</span>
+									{isOpenBooksType ? <UpIcon /> : <IconArrowBottom />}
+								</p>
+								{
+									<div
+										className={
+											isOpenBooksType ? scss.type_list : scss.none_books_type
+										}
+									>
+										{selectedType !== null ? (
+											<>
+												<p onClick={() => handleTypeSelect(null)}>Все</p>
+												<hr />
+											</>
+										) : null}
+										{bookTypes.map((bookType) => (
+											<>
+												<p
+													key={bookType.typeId}
+													onClick={() =>
+														handleTypeSelect(bookType.typeNameEnglish)
+													}
+												>
+													{bookType.typeName}
+												</p>
+												<hr />
+											</>
+										))}
+									</div>
+								}
+							</div>
 						</div>
 					</div>
 					<div className={scss.add_book_btn}>
