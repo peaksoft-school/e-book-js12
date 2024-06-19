@@ -29,7 +29,7 @@ namespace PASS {
 		password: string;
 		confirmPassword: string;
 	};
-	
+
 	type ProfileDeleteResponse = {
 		httpStatus: string;
 		message: string;

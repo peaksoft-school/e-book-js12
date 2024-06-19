@@ -19,7 +19,7 @@ const SecondSlider: FC = () => {
 		setIsMobile(window.innerWidth <= 600);
 	};
 
-	const navigate = useNavigate()
+	const navigate = useNavigate();
 
 	useEffect(() => {
 		window.addEventListener('resize', handleResize);
@@ -152,7 +152,12 @@ const SecondSlider: FC = () => {
 										)}
 									</div>
 									<div className="box">
-										<p className="read-more" onClick={() =>navigate(`${item.id}`)}>Подробнее</p>
+										<p
+											className="read-more"
+											onClick={() => navigate(`${item.id}`)}
+										>
+											Подробнее
+										</p>
 										<p className="price">{item.price} c</p>
 									</div>
 								</div>

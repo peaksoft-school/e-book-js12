@@ -24,7 +24,7 @@ const ProfilePageHistory = () => {
 	const clientId = 3;
 	const { data } = useClientProfileHistoryQuery<GetResponse>(clientId);
 
-	const navigate = useNavigate()
+	const navigate = useNavigate();
 	return (
 		<section className={scss.ProfileHistorySection}>
 			<div className="container">
@@ -55,7 +55,10 @@ const ProfilePageHistory = () => {
 							{data && data.length > 0 ? (
 								data.map((historyItem) => (
 									<div className={scss.line} key={historyItem.id}>
-										<div onClick={()=>navigate(`/search_book/${historyItem.id}`)} className={scss.book_map_info}>
+										<div
+											onClick={() => navigate(`/search_book/${historyItem.id}`)}
+											className={scss.book_map_info}
+										>
 											<img
 												className={scss.book_image}
 												src={historyItem.imageUrl}

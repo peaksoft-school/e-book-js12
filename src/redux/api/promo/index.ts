@@ -1,23 +1,26 @@
 import { api as baseApi } from '..';
 
 const api = baseApi.injectEndpoints({
-    endpoints: (build) => ({
-        getPromo: build.query<PROMO.GetBookPromoResponse, PROMO.GetBookPromoRequest>({
-            query: ({ promoCode }) => ({
-                url: `/api/promoCode/enterPromotionalCode`,
-                method: 'GET',
-                params: { promoCode },
-            }),
-            providesTags: ['promo'],
-        }),
-        postPromoCode: build.mutation<void, PROMO.CreatePromoCodeRequest>({
-            query: (newData) => ({
-                url: '/api/promoCode/creatingPromotionalCode',
-                method: 'POST',
-                body: newData,
-            }),
-        }),
-    }),
+	endpoints: (build) => ({
+		getPromo: build.query<
+			PROMO.GetBookPromoResponse,
+			PROMO.GetBookPromoRequest
+		>({
+			query: ({ promoCode }) => ({
+				url: `/api/promoCode/enterPromotionalCode`,
+				method: 'GET',
+				params: { promoCode }
+			}),
+			providesTags: ['promo']
+		}),
+		postPromoCode: build.mutation<void, PROMO.CreatePromoCodeRequest>({
+			query: (newData) => ({
+				url: '/api/promoCode/creatingPromotionalCode',
+				method: 'POST',
+				body: newData
+			})
+		})
+	})
 });
 
 export const { useLazyGetPromoQuery, usePostPromoCodeMutation } = api;

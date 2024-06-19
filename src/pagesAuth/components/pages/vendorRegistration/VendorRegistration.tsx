@@ -7,6 +7,7 @@ import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import { PhoneInput } from 'react-international-phone';
 import 'react-international-phone/style.css';
 import { usePostVendorRegistrationMutation } from '@/src/redux/api/me';
+import { ToastContainer, toast } from 'react-toastify';
 
 interface TypeData {
 	firstName: string;
@@ -14,14 +15,14 @@ interface TypeData {
 	phoneNumber: string;
 	email: string;
 	password: string;
+	confirmPassword: string;
 }
-[];
 
 const VendorRegistration = () => {
 	const [isPassword, setIsPassword] = useState(false);
 	const navigate = useNavigate();
 	const [isLogPassword, setLogPassword] = useState(false);
-	const [confirmPassword, setConfirmPassword] = useState('');
+	const [password, setPassword] = useState('');
 	const [postVendor] = usePostVendorRegistrationMutation();
 
 	const {
@@ -33,16 +34,36 @@ const VendorRegistration = () => {
 	} = useForm<TypeData>();
 
 	const onSubmit: SubmitHandler<TypeData> = async (data) => {
-		const results = await postVendor(data);
-		if ('data' in results) {
-			const { token } = results.data!;
-			localStorage.setItem('token', token);
-			localStorage.setItem('isAuth', 'false');
-			localStorage.setItem('isVendor', 'true');
-			localStorage.setItem('isAdmin', 'false');
-			reset();
-			navigate('/vendor/home');
-			setConfirmPassword('');
+		if (data.confirmPassword === data.password) {
+			const newData = {
+				firstName: data.firstName,
+				lastName: data.lastName,
+				phoneNumber: data.phoneNumber,
+				email: data.email,
+				password: data.password
+			};
+			const results = await postVendor(newData);
+			if ('data' in results) {
+				const token = results.data?.token;
+				localStorage.setItem('token', token!);
+				localStorage.setItem('isAuth', 'false');
+				localStorage.setItem('isVendor', 'true');
+				localStorage.setItem('isAdmin', 'false');
+				reset();
+				navigate('/vendor/home');
+				setPassword('');
+			}
+		} else {
+			toast(`Подтвердите пароль`, {
+				position: 'top-right',
+				autoClose: 5000,
+				hideProgressBar: false,
+				closeOnClick: true,
+				pauseOnHover: true,
+				draggable: true,
+				progress: undefined,
+				theme: 'light'
+			});
 		}
 	};
 
@@ -118,7 +139,13 @@ const VendorRegistration = () => {
 								}
 								type={isPassword ? 'text' : 'password'}
 								placeholder="Напишите пароль"
-								{...register('password', { minLength: 4, required: true })}
+								{...register('password', {
+									minLength: 4,
+									required: true,
+									onChange: (event) => {
+										setPassword(event.target.value);
+									}
+								})}
 							/>
 							{isPassword ? (
 								<div
@@ -146,12 +173,19 @@ const VendorRegistration = () => {
 							</div>
 							<input
 								className={
-									errors.password ? `${scss.input_error}` : `${scss.input}`
+									errors.confirmPassword
+										? `${scss.input_error}`
+										: `${scss.input}`
 								}
 								type={isLogPassword ? 'text' : 'password'}
 								placeholder="Подтвердите пароль"
-								value={confirmPassword}
-								onChange={(e) => setConfirmPassword(e.target.value)}
+								{...register('confirmPassword', {
+									required: true,
+									minLength: 4,
+									validate: (value) => {
+										return value === password;
+									}
+								})}
 							/>
 							{isLogPassword ? (
 								<div
@@ -173,6 +207,7 @@ const VendorRegistration = () => {
 								</div>
 							)}
 						</label>
+						<ToastContainer />
 						<div className={scss.btn_container}>
 							<button type="submit">Создать аккаунт</button>
 						</div>

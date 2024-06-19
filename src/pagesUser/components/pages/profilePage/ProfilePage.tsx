@@ -18,20 +18,19 @@ const ProfileClient: React.FC = () => {
 	const [updateProfile] = useClientProfileMutation();
 	const { data: profileData, refetch } = useClientGetProfileQuery();
 	const [updatePassword] = useUpdatePasswordUserMutation();
-	const [handleDeleteProfile]= useDeletUserProfileMutation();
+	const [handleDeleteProfile] = useDeletUserProfileMutation();
 
-	const navigate = useNavigate()
+	const navigate = useNavigate();
 
 	const handleDeleteAndNavigate = async () => {
-    try {
-        await handleDeleteProfile(); 
-        navigate('/auth/login'); 
-    } catch (error) {
-        console.error('Error deleting profile:', error);
-        return false; 
-    }
-};
-
+		try {
+			await handleDeleteProfile();
+			navigate('/auth/login');
+		} catch (error) {
+			console.error('Error deleting profile:', error);
+			return false;
+		}
+	};
 
 	useEffect(() => {
 		if (profileData) {
@@ -81,7 +80,6 @@ const ProfileClient: React.FC = () => {
 			console.error('Error updating profile:', error);
 		}
 	};
-
 
 	return (
 		<section className={scss.ProfileSection}>

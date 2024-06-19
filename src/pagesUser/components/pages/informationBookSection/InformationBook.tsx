@@ -46,7 +46,6 @@ const InformationBook: FC = () => {
 	const { data, isLoading } = useGetBookByIdQuery<TypeGetById>(bookId);
 	const [addBookToBasket] = useAddBookToBasketMutation();
 	const [addBookToFavorite] = usePostFavoriteUnFavoriteMutation();
-	
 
 	const handleAddBookToBasket = async (id: number) => {
 		await addBookToBasket(id);
@@ -169,20 +168,20 @@ const InformationBook: FC = () => {
 							<div className={scss.section_text_books}>
 								<div className={scss.section_show_info}>
 									<div className={scss.show_info_book}>
+										<p
+											className={!showBookInfo ? scss.color_text : ''}
+											onClick={() => setShowBookInfo(false)}
+										>
+											О книге
+										</p>
+										{data.bookType === 'PAPER_BOOK' && (
 											<p
-												className={!showBookInfo ? scss.color_text : ''}
-												onClick={() => setShowBookInfo(false)}
-												>
-												О книге
+												className={showBookInfo ? scss.color_text : ''}
+												onClick={() => setShowBookInfo(true)}
+											>
+												Читать фрагмент
 											</p>
-												{data.bookType === 'PAPER_BOOK' && (
-												<p
-													className={showBookInfo ? scss.color_text : ''}
-													onClick={() => setShowBookInfo(true)}
-												>
-													Читать фрагмент  
-												</p> 
-												)}
+										)}
 									</div>
 									<p className={scss.book_info}>
 										{showBookInfo ? data.fragment || '' : data.description}

@@ -49,7 +49,8 @@ export const api = createApi({
 		'update',
 		'users',
 		'books',
-		'add_book'
+		'add_book',
+		'payment'
 	],
 
 	endpoints: () => ({})

@@ -10,6 +10,7 @@ import { Link, useNavigate } from 'react-router-dom';
 
 const BestsellersSection: FC = () => {
 	const { data } = useGetAllBestsellersQuery();
+	const navigate = useNavigate();
 	const [expandedCards, setExpandedCards] = useState<{
 		[key: number]: boolean;
 	}>({});
@@ -20,7 +21,6 @@ const BestsellersSection: FC = () => {
 		setIsMobile(window.innerWidth <= 600);
 	};
 
-	const navigate = useNavigate()
 	useEffect(() => {
 		window.addEventListener('resize', handleResize);
 		return () => {
@@ -150,7 +150,14 @@ const BestsellersSection: FC = () => {
 												)}
 											</div>
 											<div className="box_box">
-												<p className="read-more" onClick={() =>navigate(`${item.id}`)}>Подробнее</p>
+												<p
+													className="read-more"
+													onClick={() => {
+														navigate(`/${item.id}`);
+													}}
+												>
+													Подробнее
+												</p>
 												<p className="price">{item.price} c</p>
 											</div>
 										</div>

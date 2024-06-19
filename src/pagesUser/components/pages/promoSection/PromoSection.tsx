@@ -88,7 +88,7 @@ const PromoSection = () => {
 						<div className={scss.container_books}>
 							{foundBooks.map((book) => (
 								<div key={book.id} className={scss.card_book}>
-									<img  src={book.images} alt={book.title} />
+									<img src={book.images} alt={book.title} />
 									<div className={scss.description}>
 										<h3>{book.title}</h3>
 										<p>{book.authorsFullName}</p>

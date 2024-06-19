@@ -4,10 +4,13 @@ import { SORT } from './types';
 const api = index.injectEndpoints({
 	endpoints: (build) => ({
 		postSortBook: build.mutation<SORT.PostSortResponse, SORT.PostSortRequest>({
-			query: (newData) => ({
+			query: ({ newData, pagination }) => ({
 				url: '/api/book/filter',
 				method: 'POST',
-				body: newData
+				body: newData,
+				params: {
+					...pagination
+				}
 			}),
 			invalidatesTags: ['sort']
 		})

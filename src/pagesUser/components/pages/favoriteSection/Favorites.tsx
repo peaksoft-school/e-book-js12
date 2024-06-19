@@ -113,7 +113,10 @@ const FavoritSection: FC = () => {
 										</div>
 										<div className={scss.favorite_card}>
 											<div className={scss.favorite_image_about}>
-												<div onClick={() => navigate(`/search_book/${item.id}`)} className={scss.container_img}>
+												<div
+													onClick={() => navigate(`/search_book/${item.id}`)}
+													className={scss.container_img}
+												>
 													<img
 														src={item.image}
 														alt={item.title}

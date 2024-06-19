@@ -11,6 +11,7 @@ import {
 import CustomAuthButton from '@/src/ui/customButton/CustomAuthButton';
 import { Modal, Skeleton, Tooltip } from 'antd';
 import {
+	useActivedBookPromocodeMutation,
 	useCountBookBasketMutation,
 	useDeleteBookIdMutation,
 	useDeleteClearBasketMutation,
@@ -20,34 +21,33 @@ import {
 import { ToastContainer, toast, Bounce } from 'react-toastify';
 import { usePostFavoriteUnFavoriteMutation } from '@/src/redux/api/favorite';
 import { IconInfoCircle } from '@tabler/icons-react';
-// interface Book {
-// 	id: number;
-// 	bookName: string;
-// 	author: string;
-// 	image: string;
-// 	promoCode: string;
-// 	firstPrice: number;
-// 	salePrice: number;
-// 	quantity: number;
-// }
+// import Payment from '@/src/payment/Payment';
+
 const BasketPage: React.FC = () => {
 	const [isPromo, setIsPromo] = useState(false);
-	// const [promoValue, setPromoValue] = useState('');
 
 	const { data } = useGetCountInBasketQuery();
 	const [clearBookPage] = useDeleteClearBasketMutation();
 	const [deleteBook] = useDeleteBookIdMutation();
 	const [addToFavorite] = usePostFavoriteUnFavoriteMutation();
 	const [countBookBasket] = useCountBookBasketMutation();
+	const [activePromo] = useActivedBookPromocodeMutation();
 	const { data: TotalCost, isLoading } = useTotalCostQuery();
 	const [isModalVisible, setIsModalVisible] = useState(false);
+	const [promoCode, setPromoValue] = useState<string>('');
+	const [isPayment, setIsPayment] = useState(false);
+	const [bookId, setBookId] = useState<null | number>(null);
+
+	console.log(isPayment);
 
 	const showModal = () => {
 		setIsModalVisible(true);
 		setIsPromo(false);
 	};
 
-	console.log(data);
+	const hadnleOpenModalPromo = () => {
+		setIsPromo(!isPromo);
+	};
 
 	const handleDeleteBookId = async (id: number) => {
 		await deleteBook(id);
@@ -71,6 +71,16 @@ const BasketPage: React.FC = () => {
 		const discountPrice = price - amountDiscount;
 		const totalPrice = discountPrice * amount;
 		return totalPrice.toFixed();
+	};
+
+	const handlePromoCode = async () => {
+		console.log(bookId);
+		const result = await activePromo({ promoCode, id: bookId! });
+		console.log(result);
+		if (result) {
+			showModal();
+			setBookId(null);
+		}
 	};
 
 	const handleAddToFavorite = async (id: number) => {
@@ -209,19 +219,7 @@ const BasketPage: React.FC = () => {
 																			</>
 																		)}
 																	</div>
-																	<div
-																		className={scss.prices_with_sale}
-																		// onMouseEnter={showModal}
-																		// onMouseLeave={() =>
-																		// 	setIsModalVisible(false)
-																		// }
-																	>
-																		{/* <div className={scss.hover_content}>
-							<div className={scss.info_price}>
-								<h1>asdasd</h1>
-							</div>
-						</div> */}
-
+																	<div className={scss.prices_with_sale}>
 																		<Modal
 																			onCancel={() => {
 																				setIsModalVisible(false);
@@ -240,15 +238,10 @@ const BasketPage: React.FC = () => {
 																							Промокод успешно активирован на
 																							одну книгу
 																						</p>
-																						{/* <p>Количество книг</p>
-																						<p>{book.amount} шт</p>
-																						<p>{book.price}</p>
-																						<p>{}</p> */}
 																					</div>
-																					<div className={scss.discountBook}>
-																						{/* <p>Скидка</p>
-																						<p>{book.bookDisCount} %</p> */}
-																					</div>
+																					<div
+																						className={scss.discountBook}
+																					></div>
 																				</div>
 																			</div>
 																		</Modal>
@@ -308,7 +301,8 @@ const BasketPage: React.FC = () => {
 															<>
 																<p
 																	onClick={() => {
-																		setIsPromo(!isPromo);
+																		hadnleOpenModalPromo();
+																		setBookId(book.id);
 																	}}
 																>
 																	Промокод
@@ -338,7 +332,11 @@ const BasketPage: React.FC = () => {
 																			</Tooltip>{' '}
 																		</div>
 																		<div className={scss.position_container}>
-																			<CustomPromoInput placeholder="Введите промокод" />
+																			<CustomPromoInput
+																				placeholder="Введите промокод"
+																				setValue={setPromoValue}
+																				value={promoCode}
+																			/>
 																		</div>
 																	</label>
 																</div>
@@ -346,7 +344,11 @@ const BasketPage: React.FC = () => {
 																	<button onClick={() => setIsPromo(false)}>
 																		Отмена
 																	</button>
-																	<button onClick={showModal}>
+																	<button
+																		onClick={() => {
+																			handlePromoCode();
+																		}}
+																	>
 																		Активировать
 																	</button>
 																</div>
@@ -354,6 +356,8 @@ const BasketPage: React.FC = () => {
 														</Modal>
 														<button
 															onClick={() => {
+																console.log(book.id, book.title);
+
 																handleAddToFavorite(book.id);
 															}}
 														>
@@ -387,20 +391,27 @@ const BasketPage: React.FC = () => {
 										<p>{TotalCost?.totalAmount}с</p>
 									</div>
 								</div>
-								<div className={scss.promo_input}>
-									{/* <CustomPromoInput placeholder={'Введите промокод'} /> */}
-								</div>
+								<div className={scss.promo_input}></div>
 								<div className={scss.total_price}>
 									<p>Итого:</p>
 									<p>{TotalCost?.totalAmount} с</p>
 								</div>
 							</div>
-							<CustomAuthButton onClick={() => {}}>
+							<CustomAuthButton
+								onClick={() => {
+									setIsPayment(true);
+								}}
+							>
 								Оформить заказ
 							</CustomAuthButton>
 						</div>
 					</div>
 				</div>
+				{/* <Payment
+					openModal={isPayment}
+					setOpenModal={setIsPayment}
+					totalAmount={TotalCost!.totalAmount}
+				/> */}
 			</div>
 		</section>
 	);
