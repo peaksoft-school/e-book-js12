@@ -3,9 +3,8 @@ import {
 	useGetNotificationQuery
 } from '@/src/redux/api/notification';
 import { Link, useLocation } from 'react-router-dom';
-import { IconSuccess } from '@/src/assets/icons';
+import { CircleXIcon, IconBuyed, IconSuccess } from '@/src/assets/icons';
 import scss from './NotificationPage.module.scss';
-import { IconError404 } from '@tabler/icons-react';
 
 const NotificationPage = () => {
 	const { data: notifications, isLoading, error } = useGetNotificationQuery();
@@ -46,26 +45,48 @@ const NotificationPage = () => {
 			</div>
 			<div className={scss.content}>
 				<div className={scss.handleDeleteAllNotification}>
-					<button onClick={handleDeleteAllNotification}>Удалить все</button>
+					<button onClick={handleDeleteAllNotification}>
+						Удалить все уведомлении
+					</button>
 				</div>
 				{notifications!.length > 0 ? (
 					<ul>
 						{notifications!.map((notification) => (
-							<li key={notification.id}>
-								<p>{notification.message}</p>
-								<p>{new Date(notification.createdAt).toLocaleString()}</p>
-								<span>
-									{notification.notificationType === 'APPROVE' ? (
-										<IconSuccess />
-									) : (
-										<IconError404 />
-									)}
-								</span>
-								<button
-									onClick={() => handleDeleteNotification(notification.id)}
-								>
-									Удалить
-								</button>
+							<li
+								className={
+									notification.notificationType === 'REJECT'
+										? `${scss.li} ${scss.liNoticReject}`
+										: scss.li
+								}
+								key={notification.id}
+							>
+								<div className={scss.test}>
+									<div className={scss.createdAt}>
+										<div className={scss.message}>
+											<p>
+												{notification.notificationType === 'REJECT'
+													? 'Админ отклонил ваш запрос!'
+													: notification.message}
+											</p>
+											<p>{new Date(notification.createdAt).toLocaleString()}</p>
+										</div>
+										<span>
+											{notification.notificationType === 'APPROVE' ? (
+												<IconSuccess />
+											) : notification.notificationType === 'BUY' ? (
+												<IconBuyed />
+											) : notification.notificationType === 'REJECT' ? (
+												<CircleXIcon />
+											) : null}
+										</span>
+									</div>
+
+									<button
+										onClick={() => handleDeleteNotification(notification.id)}
+									>
+										Удалить
+									</button>
+								</div>
 							</li>
 						))}
 					</ul>
