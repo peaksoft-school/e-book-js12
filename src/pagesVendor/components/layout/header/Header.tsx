@@ -105,7 +105,11 @@ const Header = () => {
 						<div className={scss.content}>
 							<div className={scss.header_content}>
 								<div className={scss.logo_content}>
-									<LogoeBook />
+									<LogoeBook
+										navigateToHome={() => {
+											navigate('/vendor');
+										}}
+									/>
 								</div>
 								<div className={scss.searchResults}>
 									<div className={scss.search}>

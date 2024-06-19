@@ -11,7 +11,6 @@ import {
 	IconBurgerMenu,
 	IconDeleteX,
 	IconHeadphoneOrange,
-	IconUpIcon,
 	IconWhiteCircle,
 	IconWhiteLike
 } from '@/src/assets/icons';
