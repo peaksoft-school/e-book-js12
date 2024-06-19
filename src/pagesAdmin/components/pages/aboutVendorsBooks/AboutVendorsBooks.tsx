@@ -182,7 +182,7 @@ const AboutVendorsBooks = () => {
                     </button>
                 </div>
                 <Modal onCancel={handleCancel} footer={false} open={isModalOpen}>
-                    <div className={scss.delete_modal}>
+                    <div className={scss.delete_modals}>
                         <p>Вы уверены, что хотите удалить профиль?</p>
                         <div className={scss.buttons_modal}>
                             <button
