@@ -1,8 +1,7 @@
 import { FC, useState } from 'react';
-import scss from './VendorsBooks.module.scss';
-import { IconPencil } from '@tabler/icons-react';
-
 import { useNavigate } from 'react-router-dom';
+import { Modal } from 'antd';
+import { IconPencil } from '@tabler/icons-react';
 import { IconArrowBottom, IconDelete, IconWhiteLike } from '@/src/assets/icons';
 import ThreeDotIcon from '@/src/assets/icons/icon-threeDot';
 import CustomSeeMoreButton from '@/src/ui/customButton/CustomSeeMoreButton';
@@ -10,39 +9,17 @@ import {
 	useDeleteBookMutation,
 	useGetAllBookVedorQuery
 } from '@/src/redux/api/book';
+import scss from './VendorsBooks.module.scss';
 
 const VendorsBooks: FC = () => {
 	const [isOpen, setIsOpen] = useState<boolean>(false);
-	const [bookId, setBookId] = useState<null | number>(null); // Исправлено: было bookoId
+	const [bookId, setBookId] = useState<number | null>(null); // Fixed type
 	const navigate = useNavigate();
 	const [sortSelected, setSortSelected] = useState('ALL');
-	const [sortBookData] = useState([
-		{
-			id: 1,
-			sort: 'ALL',
-			sortName: 'Все'
-		},
-		{
-			id: 2,
-			sort: 'IN_FAVORITE',
-			sortName: 'В избранном'
-		},
-		{
-			id: 3,
-			sort: 'IN_BASKET',
-			sortName: 'В корзине'
-		},
-		{
-			id: 4,
-			sort: 'SOLD',
-			sortName: 'Проданы'
-		},
-		{
-			id: 5,
-			sort: 'WITH_DISCOUNT',
-			sortName: 'Со скидками'
-		}
-	]);
+	const [isOpenBooksType, setIsOpenBooksType] = useState(false);
+	const [isModalOpen, setIsModalOpen] = useState(false);
+	const [selectedBook, setSelectedBook] = useState<number | null>(null);
+
 	const { data } = useGetAllBookVedorQuery({
 		bookOperationType: sortSelected,
 		page: 1,
@@ -55,7 +32,31 @@ const VendorsBooks: FC = () => {
 		await deleteBook(id);
 	};
 
-	const [isOpenBooksType, setIsOpenBooksType] = useState(false);
+	const sortBookData = [
+		{ id: 1, sort: 'ALL', sortName: 'Все' },
+		{ id: 2, sort: 'IN_FAVORITE', sortName: 'В избранном' },
+		{ id: 3, sort: 'IN_BASKET', sortName: 'В корзине' },
+		{ id: 4, sort: 'SOLD', sortName: 'Проданы' },
+		{ id: 5, sort: 'WITH_DISCOUNT', sortName: 'Со скидками' }
+	];
+
+	const showModal = (bookId: number) => {
+		setSelectedBook(bookId);
+		setIsModalOpen(true);
+	};
+
+	const handleOk = async () => {
+		if (selectedBook !== null) {
+			await deleteBookChange(selectedBook);
+		}
+		setIsModalOpen(false);
+		setSelectedBook(null);
+	};
+
+	const handleCancel = () => {
+		setIsModalOpen(false);
+		setSelectedBook(null);
+	};
 
 	return (
 		<section className={scss.VendorsBooks}>
@@ -67,9 +68,7 @@ const VendorsBooks: FC = () => {
 							<div className={scss.click}>
 								<p
 									className={scss.all}
-									onClick={() => {
-										setIsOpenBooksType(!isOpenBooksType);
-									}}
+									onClick={() => setIsOpenBooksType(!isOpenBooksType)}
 								>
 									<span>
 										{
@@ -85,25 +84,25 @@ const VendorsBooks: FC = () => {
 										>
 											<IconArrowBottom />
 										</div>
-										<></>
 									</span>
 								</p>
 								<div
-									className={`${isOpenBooksType ? scss.type_list : scss.none_books_type}`}
+									className={
+										isOpenBooksType ? scss.type_list : scss.none_books_type
+									}
 								>
 									{sortBookData.map((sort) => (
-										<>
+										<div key={sort.id}>
 											<p
-												key={sort.id}
 												onClick={() => {
-													setIsOpenBooksType(false);
 													setSortSelected(sort.sort);
+													setIsOpenBooksType(false);
 												}}
 											>
 												{sort.sortName}
 											</p>
 											<hr />
-										</>
+										</div>
 									))}
 								</div>
 							</div>
@@ -125,14 +124,14 @@ const VendorsBooks: FC = () => {
 								<div
 									className={scss.extra}
 									onClick={() => {
-										setIsOpen(!isOpen);
+										setIsOpen(bookId !== book.id || !isOpen);
 										setBookId(book.id);
 									}}
 								>
 									<ThreeDotIcon />
 								</div>
-								{bookId === book.id && (
-									<div className={` ${isOpen ? scss.is_open : scss.close}`}>
+								{bookId === book.id && isOpen && (
+									<div className={scss.is_open}>
 										<ul>
 											<li onClick={() => setIsOpen(false)}>
 												<span>
@@ -141,12 +140,7 @@ const VendorsBooks: FC = () => {
 												Редактировать
 											</li>
 											<hr />
-											<li
-												onClick={() => {
-													deleteBookChange(book.id);
-													setIsOpen(false);
-												}}
-											>
+											<li onClick={() => showModal(book.id)}>
 												<span>
 													<IconDelete />
 												</span>
@@ -160,7 +154,7 @@ const VendorsBooks: FC = () => {
 									className={scss.book_content}
 								>
 									<div className={scss.book_img}>
-										<img src={book.imageLink} alt={book.imageLink} />
+										<img src={book.imageLink} alt={book.bookName} />
 									</div>
 									<div className={scss.info_book}>
 										<h3>{book.bookName}</h3>
@@ -174,13 +168,27 @@ const VendorsBooks: FC = () => {
 						))}
 					</div>
 					<div className={scss.see_more_button}>
-						<CustomSeeMoreButton
-							children="Смотреть больше"
-							onClick={function (): void {}}
-						/>
+						<CustomSeeMoreButton onClick={() => {}}>
+							Смотреть больше
+						</CustomSeeMoreButton>
 					</div>
 				</div>
 			</div>
+			<Modal
+				visible={isModalOpen}
+				onOk={handleOk}
+				onCancel={handleCancel}
+				footer={null}
+				className={scss.delete_modal}
+			>
+				<div className={scss.delete_modal}>
+					<p>Вы уверены, что хотите удалить?</p>
+					<div className={scss.bt_modal}>
+						<button  onClick={handleCancel}>Отменить</button>
+						<button onClick={handleOk}>Удалить</button>
+					</div>
+				</div>
+			</Modal>
 		</section>
 	);
 };

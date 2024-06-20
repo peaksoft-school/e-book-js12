@@ -32,6 +32,7 @@ const ProfileHistory = () => {
 
 						<div className={scss.info_tes_two}>
 							<p className={scss.item_two}>Фото</p>
+							<th></th><th></th>
 							<p className={scss.item_tree}>Название/Автор</p>
 							<div className={scss.item_flex}>
 								<p className={scss.item_four}>Кол-во</p>
@@ -80,30 +81,25 @@ const ProfileHistory = () => {
 													alt="book"
 												/>
 												<div className={scss.book_flex}>
-													<div className={scss.flex_book}>
-														<div className={scss.book_name_end}>
-															<p>{item.title}</p>
-															<p className={scss.book_name_people}>
-																{item.authorsFullName}
-															</p>
-														</div>
-													</div>
-													<div className={scss.flex_book}>
-														<p className={scss.book_quantity}>
-															{item.quantity}
+													<div className={scss.book_name_end}>
+														<p>{item.title}</p>
+														<p className={scss.book_name_people}>
+															{item.authorsFullName}
 														</p>
-														<div className={scss.scitd_one}>
-															<p className={scss.pprom}>
-																Промокод {item.discount}%
-															</p>
-															<div className={scss.scitd}>
-																<p>(-{item.priceWithDiscount})</p>
-																<p className={scss.book_price}>{item.price}</p>
-															</div>
-														</div>
-														<p className={scss.book_data}>{item.createdAt}</p>
-														<p className={scss.book_state}>Завершен</p>
 													</div>
+
+													<p className={scss.book_quantity}>{item.quantity}</p>
+													<div className={scss.scitd_one}>
+														<p className={scss.pprom}>
+															Промокод {item.discount}%
+														</p>
+														<div className={scss.scitd}>
+															<p>(-{item.priceWithDiscount})</p>
+															<p className={scss.book_price}>{item.price}</p>
+														</div>
+													</div>
+													<p className={scss.book_data}>{item.createdAt}</p>
+													<p className={scss.book_state}>Завершен</p>
 												</div>
 											</div>
 										</div>
@@ -120,7 +116,7 @@ const ProfileHistory = () => {
 													src={item.imageUrl}
 													alt="book"
 												/>
-												<div className={scss.book_flex}>
+												<div className={scss.book_flexx}>
 													<div className={scss.flex_book}>
 														<div className={scss.book_name_end}>
 															<p>{item.title}</p>
@@ -129,7 +125,7 @@ const ProfileHistory = () => {
 															</p>
 														</div>
 													</div>
-													<div className={scss.flex_book}>
+													<div className={scss.flex_bookk}>
 														<p className={scss.book_quantity}>
 															{item.quantity}
 														</p>
@@ -138,7 +134,7 @@ const ProfileHistory = () => {
 																Промокод {item.discount}%
 															</p>
 															<div className={scss.scitd}>
-																<p>(-{item.priceWithDiscount})</p>
+																<p className={scss.promo_pro}>(-{item.priceWithDiscount})</p>
 																<p className={scss.book_price}>{item.price}</p>
 															</div>
 														</div>
