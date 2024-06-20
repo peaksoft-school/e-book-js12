@@ -295,7 +295,7 @@ const AddBookSection = () => {
 						</Link>
 						/
 						<Link
-							to={'/vendor/addBook'}
+							to={'/admin/books/add_book'}
 							className={`${scss.link_to_addBook} ${location.pathname === '/addBook' ? scss.link_to_addBook_active : ''}`}
 						>
 							Добавить книгу
@@ -529,20 +529,21 @@ const AddBookSection = () => {
 									<div className={scss.right_inputs}>
 										<div className={scss.left_i}>
 											<label>
-												<p className={scss.language}>Язык</p>
+												<p style={{cursor: 'pointer'}} className={scss.language}>Язык</p>
 												<div
 													onClick={() => {
 														setSelectLanguage(!selectLanguage);
 													}}
 													className={scss.language_content}
+													style={{cursor: 'pointer'}}
 												>
-													<p>{languageSeleced?.languageName}</p>
+													<p style={{cursor: 'pointer'}}>{languageSeleced?.languageName}</p>
 													{selectLanguage ? (
-														<div className={scss.icon_language}>
+														<div style={{cursor: 'pointer'}} className={scss.icon_language}>
 															<IconUpIcon />
 														</div>
 													) : (
-														<div className={scss.icon_language}>
+														<div style={{cursor: 'pointer'}} className={scss.icon_language}>
 															<IconDownIcon />
 														</div>
 													)}
@@ -564,6 +565,7 @@ const AddBookSection = () => {
 																	}}
 																	key={item.id}
 																	className={scss.option_language}
+																	style={{cursor: 'pointer'}}
 																>
 																	<p>{item.languageName}</p>
 																</div>
@@ -592,6 +594,7 @@ const AddBookSection = () => {
 														setClickBestseller(!clickBestseller);
 													}}
 													className={scss.checkbox}
+													style={{ cursor: 'pointer' }}
 												>
 													{clickBestseller ? (
 														<>
@@ -716,7 +719,7 @@ const AddBookSection = () => {
 								</div>
 								<div className={`${scss.right_inputs} ${scss.audio_inputs}`}>
 									<div className={scss.box_first}>
-										<label>
+										<label style={{ cursor: 'pointer' }}>
 											<p className={scss.language}>Язык</p>
 											<div
 												onClick={() => {
@@ -953,7 +956,7 @@ const AddBookSection = () => {
 									<div className={scss.right_inputs}>
 										<div className={scss.ebook}>
 											<div className={scss.box_first}>
-												<label>
+												<label style={{ cursor: 'pointer' }}>
 													<p className={scss.language}>Язык</p>
 													<div
 														onClick={() => {
