@@ -4,6 +4,7 @@ import { useLazyGetPromoQuery } from '@/src/redux/api/promo';
 import { Modal } from 'antd';
 import scss from './PromoCode.module.scss';
 import { IconPromoPage } from '@/src/assets/icons';
+import { useNavigate } from 'react-router-dom';
 
 interface Book {
 	id: number;
@@ -20,6 +21,8 @@ const PromoSection = () => {
 	const [foundBooks, setFoundBooks] = useState<Book[]>([]);
 	const [foundBooksCount, setFoundBooksCount] = useState(0);
 	const [promoModal, setPromoModal] = useState(false);
+
+	const navigate = useNavigate();
 
 	const [trigger, { data }] = useLazyGetPromoQuery();
 
@@ -87,7 +90,11 @@ const PromoSection = () => {
 					{foundBooks.length > 0 && (
 						<div className={scss.container_books}>
 							{foundBooks.map((book) => (
-								<div key={book.id} className={scss.card_book}>
+								<div
+									onClick={() => navigate(`/${book.id}`)}
+									key={book.id}
+									className={scss.card_book}
+								>
 									<img src={book.images} alt={book.title} />
 									<div className={scss.description}>
 										<h3>{book.title}</h3>

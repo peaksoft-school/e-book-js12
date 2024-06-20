@@ -16,7 +16,11 @@ const Navbar = () => {
 		<div className={scss.Navbar}>
 			<nav>
 				<span onClick={() => navigate('/admin')}>
-					<LogoeBook />
+					<LogoeBook
+						navigateToHome={() => {
+							navigate('/');
+						}}
+					/>
 				</span>
 				<ul>
 					<Link

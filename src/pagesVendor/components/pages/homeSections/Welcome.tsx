@@ -58,6 +58,7 @@ const firstData = [
 			`
 	}
 ];
+
 const secondData = [
 	{
 		iamge:
@@ -81,18 +82,33 @@ const secondData = [
 
 const Welcome: FC = () => {
 	const navigate = useNavigate();
+	const handelChangeProfile = () => {
+		const vendor = localStorage.getItem('isVendor');
+
+		if (vendor) {
+			navigate('/vendor/profile');
+		} else {
+			navigate('/auth/vendor/registration');
+		}
+	};
 	return (
 		<>
 			<section className={scss.Welcome}>
 				<div className="container">
 					<header>
 						<div>
-							<LogoeBook />
+							<LogoeBook
+								navigateToHome={() => {
+									navigate('/vendor');
+								}}
+							/>
 						</div>
 						<div className={scss.button_content}>
 							<CustomPersonalAreaButton
 								children="Личный кабинет"
-								onClick={() => navigate('/vendor/profile')}
+								onClick={() => {
+									handelChangeProfile();
+								}}
 								nameClass={scss.custom_button_personal}
 							/>
 						</div>

@@ -50,7 +50,7 @@ const Registration = () => {
 				const { token } = results.data!;
 				const { firstName } = results.data!;
 				localStorage.setItem('NameClient', firstName);
-				localStorage.setItem('token', token);
+				localStorage.setItem('token', token!);
 				localStorage.setItem('isAuth', 'true');
 				localStorage.setItem('vendor', 'false');
 				localStorage.setItem('admin', 'false');

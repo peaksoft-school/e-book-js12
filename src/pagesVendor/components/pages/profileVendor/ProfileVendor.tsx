@@ -9,7 +9,7 @@ import {
 	useUpdateProfileMutation,
 	useDeletVendorProfileMutation
 } from '@/src/redux/api/updateProfile';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const ProfileVendor: React.FC = () => {
 	const { register, handleSubmit, reset, setValue } = useForm();
@@ -81,6 +81,15 @@ const ProfileVendor: React.FC = () => {
 					<div className={scss.profile_info_name}>
 						<div className={scss.profile_box}>
 							<div className={scss.profile_name}>
+								<div className={scss.navi}>
+									<Link
+										to={'/vendor/home'}
+										className={`${scss.link_to_home} ${location.pathname === '/vendor' ? scss.link_to_home_active : ''}`}
+									>
+										Главная
+									</Link>
+									/ <span>Profile</span>
+								</div>
 								<h4 className={scss.text_tree}>Личная информация</h4>
 								<div className={scss.input_name_info}>
 									<p className={scss.name_info_text}>Ваше имя</p>

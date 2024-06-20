@@ -1,13 +1,9 @@
-import { useNavigate } from 'react-router-dom';
+import { FC } from 'react';
 import scss from './LogoeBook.module.scss';
-
-const LogoeBook = () => {
-	const navigate = useNavigate();
-
-	const navigateToHome = () => {
-		navigate('/');
-	};
-
+interface TypeProps {
+	navigateToHome: () => void;
+}
+const LogoeBook: FC<TypeProps> = ({ navigateToHome }) => {
 	return (
 		<>
 			<div className={scss.LogoContainer} onClick={navigateToHome}>

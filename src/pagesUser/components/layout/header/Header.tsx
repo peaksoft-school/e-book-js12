@@ -88,7 +88,9 @@ const Header = () => {
 										navigate('/');
 									}}
 								>
-									<LogoeBook />
+									<LogoeBook navigateToHome={() => {
+										navigate('/')
+									}} />
 								</div>
 								<div className={scss.searchResults}>
 									<div className={scss.search}>

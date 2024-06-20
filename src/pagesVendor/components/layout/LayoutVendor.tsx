@@ -8,6 +8,7 @@ import ProfilePage from '../pages/ProfilePage';
 import Footer from './footer/Footer';
 import VendorBooksPage from '../pages/VendorBooksPage';
 import EditBookPage from '../pages/EditBookPage';
+import Notification from '../pages/Notification';
 
 const LayoutVendor = () => {
 	const location = useLocation();
@@ -17,7 +18,8 @@ const LayoutVendor = () => {
 			<div className={scss.layout}>
 				{location.pathname === '/vendor/registration' ||
 				location.pathname === '/vendor/login' ||
-				location.pathname === '/vendor/' ? null : (
+				location.pathname === '/vendor/' ||
+				location.pathname === '/vendor' ? null : (
 					<>
 						<Header />
 					</>
@@ -30,6 +32,7 @@ const LayoutVendor = () => {
 						<Route path="/addBook" element={<AddBookPage />} />
 						<Route path="/profile" element={<ProfilePage />} />
 						<Route path="/home/editBook/:id" element={<EditBookPage />} />
+						<Route path="vendor/notification" element={<Notification />} />
 					</Routes>
 				</main>
 				{location.pathname === '/vendor/registration' ||
