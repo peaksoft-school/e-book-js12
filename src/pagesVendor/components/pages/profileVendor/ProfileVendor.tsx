@@ -88,7 +88,7 @@ const ProfileVendor: React.FC = () => {
 									>
 										Главная
 									</Link>
-									/ <span>Profile</span>
+									/ <span>Профиль</span>
 								</div>
 								<h4 className={scss.text_tree}>Личная информация</h4>
 								<div className={scss.input_name_info}>

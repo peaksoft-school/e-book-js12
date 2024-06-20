@@ -106,7 +106,13 @@ const BookInfo: FC = () => {
 			<div className="container">
 				<div className={scss.content}>
 					<div className={scss.content_text}>
-						{locationFunction()}
+						<p
+							onClick={() => {
+								navigate('/admin/books');
+							}}
+						>
+							Книги
+						</p>
 						<h4>/ {book.title}</h4>
 					</div>
 					<div className={scss.contents_book}>
