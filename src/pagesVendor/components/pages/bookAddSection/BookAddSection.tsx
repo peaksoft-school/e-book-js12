@@ -529,21 +529,34 @@ const AddBookSection = () => {
 									<div className={scss.right_inputs}>
 										<div className={scss.left_i}>
 											<label>
-												<p style={{cursor: 'pointer'}} className={scss.language}>Язык</p>
+												<p
+													style={{ cursor: 'pointer' }}
+													className={scss.language}
+												>
+													Язык
+												</p>
 												<div
 													onClick={() => {
 														setSelectLanguage(!selectLanguage);
 													}}
 													className={scss.language_content}
-													style={{cursor: 'pointer'}}
+													style={{ cursor: 'pointer' }}
 												>
-													<p style={{cursor: 'pointer'}}>{languageSeleced?.languageName}</p>
+													<p style={{ cursor: 'pointer' }}>
+														{languageSeleced?.languageName}
+													</p>
 													{selectLanguage ? (
-														<div style={{cursor: 'pointer'}} className={scss.icon_language}>
+														<div
+															style={{ cursor: 'pointer' }}
+															className={scss.icon_language}
+														>
 															<IconUpIcon />
 														</div>
 													) : (
-														<div style={{cursor: 'pointer'}} className={scss.icon_language}>
+														<div
+															style={{ cursor: 'pointer' }}
+															className={scss.icon_language}
+														>
 															<IconDownIcon />
 														</div>
 													)}
@@ -565,7 +578,7 @@ const AddBookSection = () => {
 																	}}
 																	key={item.id}
 																	className={scss.option_language}
-																	style={{cursor: 'pointer'}}
+																	style={{ cursor: 'pointer' }}
 																>
 																	<p>{item.languageName}</p>
 																</div>
