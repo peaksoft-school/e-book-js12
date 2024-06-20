@@ -1,11 +1,11 @@
-import { FC, useState } from 'react';
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { FC, useState, useEffect } from 'react';
 import scss from './VendorsBooks.module.scss';
 import { IconPencil } from '@tabler/icons-react';
-
+import girl_img from '../../../../assets/img/Knowledgecuate.png';
 import { useNavigate } from 'react-router-dom';
 import { IconArrowBottom, IconDelete, IconWhiteLike } from '@/src/assets/icons';
 import ThreeDotIcon from '@/src/assets/icons/icon-threeDot';
-import CustomSeeMoreButton from '@/src/ui/customButton/CustomSeeMoreButton';
 import {
 	useDeleteBookMutation,
 	useGetAllBookVedorQuery
@@ -13,7 +13,9 @@ import {
 
 const VendorsBooks: FC = () => {
 	const [isOpen, setIsOpen] = useState<boolean>(false);
-	const [bookId, setBookId] = useState<null | number>(null); // Исправлено: было bookoId
+	const [bookId, setBookId] = useState<null | number>(null);
+	const [initialLoad, setInitialLoad] = useState<boolean>(true);
+	const [allBooks, setAllBooks] = useState<any[]>([]);
 	const navigate = useNavigate();
 	const [sortSelected, setSortSelected] = useState('ALL');
 	const [sortBookData] = useState([
@@ -43,10 +45,12 @@ const VendorsBooks: FC = () => {
 			sortName: 'Со скидками'
 		}
 	]);
-	const { data } = useGetAllBookVedorQuery({
+
+	const [currentPage, setCurrentPage] = useState(1);
+	const { data, isLoading } = useGetAllBookVedorQuery({
 		bookOperationType: sortSelected,
-		page: 1,
-		pageSize: 12
+		page: currentPage,
+		pageSize: 8
 	});
 
 	const [deleteBook] = useDeleteBookMutation();
@@ -57,12 +61,23 @@ const VendorsBooks: FC = () => {
 
 	const [isOpenBooksType, setIsOpenBooksType] = useState(false);
 
+	useEffect(() => {
+		if (data) {
+			setAllBooks((prevBooks) => [...prevBooks, ...data]);
+			setInitialLoad(false);
+		}
+	}, [data]);
+
+	if (initialLoad) {
+		return <div>Loading...</div>;
+	}
+
 	return (
 		<section className={scss.VendorsBooks}>
 			<div className="container">
 				<div className={scss.content}>
 					<div className={scss.books_quantity}>
-						<p>Всего {data?.length} книг</p>
+						<p>Всего {allBooks.length} книг</p>
 						<div className={scss.all_books}>
 							<div className={scss.click}>
 								<p
@@ -98,6 +113,8 @@ const VendorsBooks: FC = () => {
 												onClick={() => {
 													setIsOpenBooksType(false);
 													setSortSelected(sort.sort);
+													setCurrentPage(1);
+													setAllBooks([]);
 												}}
 											>
 												{sort.sortName}
@@ -110,75 +127,87 @@ const VendorsBooks: FC = () => {
 						</div>
 					</div>
 					<hr className={scss.title_hr} />
-					<div className={scss.books_content}>
-						{data?.map((book) => (
-							<div key={book.id} className={scss.book}>
-								<div className={scss.book_header}>
-									<div className={scss.hearts}>
-										<IconWhiteLike />
-										<p>({book.quantityOfFavorite})</p>
+					{allBooks.length > 0 ? (
+						<div className={scss.books_content}>
+							{allBooks.map((book) => (
+								<div key={book.id} className={scss.book}>
+									<div className={scss.book_header}>
+										<div className={scss.hearts}>
+											<IconWhiteLike />
+											<p>({book.quantityOfFavorite})</p>
+										</div>
+										<div className={scss.in_basket}>
+											<p>В корзине ({book.quantityOfBasket})</p>
+										</div>
 									</div>
-									<div className={scss.in_basket}>
-										<p>В корзине ({book.quantityOfBasket})</p>
+									<div
+										className={scss.extra}
+										onClick={() => {
+											setIsOpen(!isOpen);
+											setBookId(book.id);
+										}}
+									>
+										<ThreeDotIcon />
 									</div>
-								</div>
-								<div
-									className={scss.extra}
-									onClick={() => {
-										setIsOpen(!isOpen);
-										setBookId(book.id);
-									}}
-								>
-									<ThreeDotIcon />
-								</div>
-								{bookId === book.id && (
-									<div className={` ${isOpen ? scss.is_open : scss.close}`}>
-										<ul>
-											<li onClick={() => setIsOpen(false)}>
-												<span>
-													<IconPencil />
-												</span>
-												Редактировать
-											</li>
-											<hr />
-											<li
-												onClick={() => {
-													deleteBookChange(book.id);
-													setIsOpen(false);
-												}}
-											>
-												<span>
-													<IconDelete />
-												</span>
-												Удалить
-											</li>
-										</ul>
-									</div>
-								)}
-								<div
-									onClick={() => navigate(`${book.id}`)}
-									className={scss.book_content}
-								>
-									<div className={scss.book_img}>
-										<img src={book.imageLink} alt={book.imageLink} />
-									</div>
-									<div className={scss.info_book}>
-										<h3>{book.bookName}</h3>
-										<div className={scss.date_and_price}>
-											<p>{book.publishedYear}</p>
-											<p className={scss.price}>{book.price} c</p>
+									{bookId === book.id && (
+										<div className={` ${isOpen ? scss.is_open : scss.close}`}>
+											<ul>
+												<li onClick={() => setIsOpen(false)}>
+													<span>
+														<IconPencil />
+													</span>
+													Редактировать
+												</li>
+												<hr />
+												<li
+													onClick={() => {
+														deleteBookChange(book.id);
+														setIsOpen(false);
+													}}
+												>
+													<span>
+														<IconDelete />
+													</span>
+													Удалить
+												</li>
+											</ul>
+										</div>
+									)}
+									<div
+										onClick={() => navigate(`${book.id}`)}
+										className={scss.book_content}
+									>
+										<div className={scss.book_img}>
+											<img src={book.imageLink} alt={book.imageLink} />
+										</div>
+										<div className={scss.info_book}>
+											<h3>{book.bookName}</h3>
+											<div className={scss.date_and_price}>
+												<p>{book.publishedYear}</p>
+												<p className={scss.price}>{book.price} c</p>
+											</div>
 										</div>
 									</div>
 								</div>
+							))}
+						</div>
+					) : (
+						<div className={scss.noBooksYet}>
+							<div className={scss.noBooksYetContent}>
+								<h1>Здесь появятся добавленные вами книги.</h1>
+								<img src={girl_img} alt="Girl with books" />
 							</div>
-						))}
-					</div>
-					<div className={scss.see_more_button}>
-						<CustomSeeMoreButton
-							children="Смотреть больше"
-							onClick={function (): void {}}
-						/>
-					</div>
+						</div>
+					)}
+					{!isLoading && data && data.length >= 8 ? (
+						<div className={scss.btn_morebook}>
+							<button
+								onClick={() => setCurrentPage((prevPage) => prevPage + 1)}
+							>
+								Смотреть больше
+							</button>
+						</div>
+					) : null}
 				</div>
 			</div>
 		</section>

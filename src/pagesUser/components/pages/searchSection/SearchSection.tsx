@@ -660,15 +660,17 @@ const SearchSection = () => {
 									</div>
 								</div>
 							))}
-							<div className={scss.btn_morebook}>
-								<button
-									onClick={() => {
-										setPage(page + 1);
-									}}
-								>
-									Смотреть больше
-								</button>
-							</div>
+							{dataBooks.length >= 12 ? (
+								<div className={scss.btn_morebook}>
+									<button
+										onClick={() => {
+											setPage(page + 1);
+										}}
+									>
+										Смотреть больше
+									</button>
+								</div>
+							) : null}
 						</div>
 					</div>
 				</div>

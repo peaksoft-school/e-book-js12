@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import CustomGenreInput from '@/src/ui/customInpute/CustomGenreInput';
-import scss from './Header.module.scss';
+import { ConfigProvider, Modal, Tooltip } from 'antd';
+import { IconInfoCircle, IconUserCircle } from '@tabler/icons-react';
 import { IconRedDot, IconSuccess, IconTest } from '@/src/assets/icons';
 import LogoeBook from '@/src/ui/logoeBook/LogoeBook';
-import { IconInfoCircle, IconUserCircle } from '@tabler/icons-react';
-import { ConfigProvider, Modal, Tooltip } from 'antd';
 import CustomAddBookButton from '@/src/ui/customButton/CustomAddBook';
+import CustomGenreInput from '@/src/ui/customInpute/CustomGenreInput';
+import scss from './Header.module.scss';
 import { usePostPromoCodeMutation } from '@/src/redux/api/promo';
 import { useSearchBooksQuery } from '@/src/redux/api/search';
 
@@ -20,6 +20,7 @@ const Header = () => {
 	const [dateStart, setDateStart] = useState('');
 	const [dateEnd, setDateEnd] = useState('');
 	const [disCount, setDisCount] = useState<string | number>('');
+	const [currentDate, setCurrentDate] = useState<string>('');
 	const [createNewPromo] = usePostPromoCodeMutation();
 	const [searchTerm, setSearchTerm] = useState<string>('');
 	const [showResults, setShowResults] = useState<boolean>(false);
@@ -47,6 +48,11 @@ const Header = () => {
 	}, []);
 
 	useEffect(() => {
+		const currentDate = new Date().toISOString().split('T')[0];
+		setCurrentDate(currentDate);
+	}, []);
+
+	useEffect(() => {
 		if (modalSuccess) {
 			setTimeout(() => {
 				setModalSuccess(false);
@@ -65,7 +71,7 @@ const Header = () => {
 		if ('data' in result) {
 			const data = result.data;
 			console.log(data);
-			if (data.httpStatus === 'OK') {
+			if (data!.httpStatus === 'OK') {
 				setTimeout(() => {
 					setModalSuccess(true);
 				}, 600);
@@ -91,6 +97,24 @@ const Header = () => {
 		setSearchTerm(value);
 		setShowResults(!!value);
 		refetch();
+	};
+
+	const hndleAddPromoCode = () => {
+		if (dateStart === '' || dateEnd === '' || promoCode === '') {
+			alert('Заполните все поля!');
+			setIsModalOpen(true);
+		} else {
+			setIsModalOpen(false);
+		}
+	};
+
+	const handleDateEndChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+		const selectedDate = e.target.value;
+		if (selectedDate < currentDate) {
+			alert('Выберите дату, которая еще не прошла!');
+		} else {
+			setDateEnd(selectedDate);
+		}
 	};
 
 	return (
@@ -253,8 +277,8 @@ const Header = () => {
 												type="submit"
 												key="submit"
 												onClick={() => {
+													hndleAddPromoCode();
 													onSubmitAddPromo();
-													setIsModalOpen(false);
 												}}
 											>
 												Создать
@@ -285,7 +309,8 @@ const Header = () => {
 												<input
 													type="date"
 													value={dateEnd}
-													onChange={(e) => setDateEnd(e.target.value)}
+													onChange={handleDateEndChange}
+													min={currentDate}
 												/>
 											</div>
 											<div

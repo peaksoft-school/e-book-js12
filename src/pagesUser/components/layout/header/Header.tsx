@@ -10,6 +10,7 @@ import { Modal } from 'antd';
 import { useSearchBooksQuery } from '@/src/redux/api/search';
 import BlackLikeIcon from '@/src/assets/icons/icon-blackLike';
 import { useGetCountInBasketQuery } from '@/src/redux/api/basket';
+// import { useGetCountOfBooksInFavoriteQuery } from '@/src/redux/api/favorite';
 
 const Header = () => {
 	const [headerScroll, setHeaderScroll] = useState<boolean>(false);
@@ -18,17 +19,19 @@ const Header = () => {
 	const [isUser, setIsUser] = useState<boolean>(false);
 	const [test, setTest] = useState('');
 	const [userExit, setUserExit] = useState<boolean>(false);
-
 	const localName = localStorage.getItem('NameClient');
 	const localAuth = localStorage.getItem('isAuth');
 	const location = useLocation();
 	const { data: countBasket } = useGetCountInBasketQuery();
 	const [searchTerm, setSearchTerm] = useState<string>('');
 	const [showResults, setShowResults] = useState<boolean>(false);
+
 	const { data: searchResults, refetch } = useSearchBooksQuery(
 		{ searchTerm },
 		{ skip: !searchTerm }
 	);
+
+	// const [favorite] = useGetCountOfBooksInFavoriteQuery();
 
 	const scrollToSection = () => {
 		const element = document.getElementById(test);
@@ -88,9 +91,11 @@ const Header = () => {
 										navigate('/');
 									}}
 								>
-									<LogoeBook navigateToHome={() => {
-										navigate('/')
-									}} />
+									<LogoeBook
+										navigateToHome={() => {
+											navigate('/');
+										}}
+									/>
 								</div>
 								<div className={scss.searchResults}>
 									<div className={scss.search}>
@@ -138,6 +143,7 @@ const Header = () => {
 												<span>
 													<WhiteLikeIcon />
 												</span>
+
 												<span>
 													<IconRedDot />
 												</span>
