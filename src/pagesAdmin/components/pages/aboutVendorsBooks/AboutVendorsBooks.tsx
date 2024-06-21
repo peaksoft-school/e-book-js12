@@ -150,7 +150,7 @@ const AboutVendorsBooks = () => {
 											<span>
 												<IconX />
 											</span>
-											Отклонить
+											Удалить
 										</li>
 									</ul>
 								</div>

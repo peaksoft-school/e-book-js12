@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { FC, useState, useEffect } from 'react';
+import { FC, useEffect, useState } from 'react';
 import scss from './VendorsBooks.module.scss';
 import { IconPencil } from '@tabler/icons-react';
-import girl_img from '../../../../assets/img/Knowledgecuate.png';
+
 import { useNavigate } from 'react-router-dom';
 import { IconArrowBottom, IconDelete, IconWhiteLike } from '@/src/assets/icons';
 import ThreeDotIcon from '@/src/assets/icons/icon-threeDot';
@@ -11,14 +11,18 @@ import {
 	useGetAllBookVedorQuery
 } from '@/src/redux/api/book';
 import CustomSeeMoreButton from '@/src/ui/customButton/CustomSeeMoreButton';
+import { Modal } from 'antd';
 
 const VendorsBooks: FC = () => {
 	const [isOpen, setIsOpen] = useState<boolean>(false);
-	const [bookId, setBookId] = useState<null | number>(null);
-	const [initialLoad, setInitialLoad] = useState<boolean>(true);
-	const [allBooks, setAllBooks] = useState<any[]>([]);
+	const [bookId, setBookId] = useState<null | number>(null); // Исправлено: было bookoId
 	const navigate = useNavigate();
 	const [sortSelected, setSortSelected] = useState('ALL');
+	const [isOpenBooksType, setIsOpenBooksType] = useState(false);
+	const [isModalOpen, setIsModalOpen] = useState(false);
+	const [selectedBook, setSelectedBook] = useState<number | null>(null);
+	const [initialLoad, setInitialLoad] = useState<boolean>(true);
+	const [allBooks, setAllBooks] = useState<any[]>([]);
 	const [sizePage, setSizePage] = useState(12);
 	const [sortBookData] = useState([
 		{
@@ -61,11 +65,26 @@ const VendorsBooks: FC = () => {
 		await deleteBook(id);
 	};
 
+	const showModal = (bookId: number) => {
+		setSelectedBook(bookId);
+		setIsModalOpen(true);
+	};
+
+	const handleOk = async () => {
+		if (selectedBook !== null) {
+			await deleteBookChange(selectedBook);
+		}
+		setIsModalOpen(false);
+		setSelectedBook(null);
+	};
+
+	const handleCancel = () => {
+		setIsModalOpen(false);
+		setSelectedBook(null);
+	};
 	const hadnlePageSizeBook = () => {
 		return setSizePage(sizePage + 12);
 	};
-
-	const [isOpenBooksType, setIsOpenBooksType] = useState(false);
 
 	useEffect(() => {
 		if (data) {
@@ -88,9 +107,7 @@ const VendorsBooks: FC = () => {
 							<div className={scss.click}>
 								<p
 									className={scss.all}
-									onClick={() => {
-										setIsOpenBooksType(!isOpenBooksType);
-									}}
+									onClick={() => setIsOpenBooksType(!isOpenBooksType)}
 								>
 									<span>
 										{
@@ -106,27 +123,28 @@ const VendorsBooks: FC = () => {
 										>
 											<IconArrowBottom />
 										</div>
-										<></>
 									</span>
 								</p>
 								<div
-									className={`${isOpenBooksType ? scss.type_list : scss.none_books_type}`}
+									className={
+										isOpenBooksType ? scss.type_list : scss.none_books_type
+									}
 								>
 									{sortBookData.map((sort) => (
-										<>
+										<div key={sort.id}>
 											<p
-												key={sort.id}
 												onClick={() => {
-													setIsOpenBooksType(false);
 													setSortSelected(sort.sort);
+
 													setCurrentPage(1);
 													setAllBooks([]);
+													setIsOpenBooksType(false);
 												}}
 											>
 												{sort.sortName}
 											</p>
 											<hr />
-										</>
+										</div>
 									))}
 								</div>
 							</div>
@@ -201,7 +219,7 @@ const VendorsBooks: FC = () => {
 						<div className={scss.noBooksYet}>
 							<div className={scss.noBooksYetContent}>
 								<h1>Здесь появятся добавленные вами книги.</h1>
-								<img src={girl_img} alt="Girl with books" />
+								<img src="" alt="Girl with books" />
 							</div>
 						</div>
 					)}
@@ -219,6 +237,21 @@ const VendorsBooks: FC = () => {
 					) : null}
 				</div>
 			</div>
+			<Modal
+				visible={isModalOpen}
+				onOk={handleOk}
+				onCancel={handleCancel}
+				footer={null}
+				className={scss.delete_modal}
+			>
+				<div className={scss.delete_modal}>
+					<p>Вы уверены, что хотите удалить?</p>
+					<div className={scss.bt_modal}>
+						<button onClick={handleCancel}>Отменить</button>
+						<button onClick={handleOk}>Удалить</button>
+					</div>
+				</div>
+			</Modal>
 		</section>
 	);
 };

@@ -1,6 +1,6 @@
 import scss from './LayoutAuth.module.scss';
 import { Routes, Route } from 'react-router-dom';
-import test from '../../../assets/authBacground/141525-777930401_large.mp4';
+// import test from '../../../assets/authBacground/141525-777930401_large.mp4';
 import HomePage from '../pages/HomePage';
 import Login from '../pages/login/Login';
 import Registration from '../pages/registration/Registration';
@@ -17,7 +17,7 @@ const LayoutAuth = () => {
 					id="background-video"
 					className={scss['background-video']}
 				>
-					<source src={test} type="video/mp4" />
+					<source src={''} type="video/mp4" />
 				</video>
 				<main>
 					<Routes>

@@ -56,7 +56,7 @@ const SearchSection = () => {
 	const [menufilters, setMenuFilters] = useState(false);
 
 	const [totalBooks, setTotalBooks] = useState<number>();
-	const [page, setPage] = useState<number>(1);
+	const [page, setPage] = useState<number>(8);
 
 	const [postFillter] = usePostSortBookMutation();
 	const [addBookFavorite] = usePostFavoriteUnFavoriteMutation();
@@ -264,7 +264,9 @@ const SearchSection = () => {
 	const typeBooksFunc = (id: number) => {
 		setTypesBookData((prev) =>
 			prev.map((item) =>
-				item.typeId === id ? { ...item, isRadio: !item.isRadio } : item
+				item.typeId === id
+					? { ...item, isRadio: true }
+					: { ...item, isRadio: false }
 			)
 		);
 	};
@@ -315,8 +317,8 @@ const SearchSection = () => {
 			sort: sortValue
 		};
 		const pagination = {
-			page: page,
-			size: 12
+			page: 1,
+			size: page
 		};
 
 		const result = await postFillter({ newData, pagination });
@@ -670,17 +672,17 @@ const SearchSection = () => {
 									</div>
 								</div>
 							))}
-							{dataBooks.length >= 12 ? (
+							{totalBooks && totalBooks > 12 && (
 								<div className={scss.btn_morebook}>
 									<button
 										onClick={() => {
-											setPage(page + 1);
+											setPage(page + 12);
 										}}
 									>
 										Смотреть больше
 									</button>
 								</div>
-							) : null}
+							)}
 						</div>
 					</div>
 				</div>
