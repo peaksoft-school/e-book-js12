@@ -6,7 +6,9 @@ import ThreeDotIcon from '@/src/assets/icons/icon-threeDot';
 import UpIcon from '@/src/assets/icons/icon-upIcon';
 import { IconArrowBottom, IconWhiteLike } from '@/src/assets/icons';
 import { IconPencil, IconX } from '@tabler/icons-react';
-import { useGetAllVendorBooksQuery } from '@/src/redux/api/book';
+import {
+	useGetAllVendorBooksQuery,
+} from '@/src/redux/api/book';
 import { useDeleteVendorProfileMutation } from '@/src/redux/api/vendors';
 import { useNavigate, useParams } from 'react-router-dom';
 
@@ -20,6 +22,7 @@ const AboutVendorsBooks = () => {
 	const navigate = useNavigate();
 	const { name } = useParams<{ name: string }>();
 	const vendorId = Number(name);
+
 
 	const filterBooks = [
 		{ id: 1, label: 'ALL', type: 'Все' },
@@ -82,6 +85,8 @@ const AboutVendorsBooks = () => {
 		setIsOpen((prev) => (prev && idBook === id ? false : true));
 		setIdBook(id);
 	};
+
+
 
 	return (
 		<section className={scss.AboutVendorsBooks}>
@@ -150,7 +155,7 @@ const AboutVendorsBooks = () => {
 											<span>
 												<IconX />
 											</span>
-											Отклонить
+											Удалить
 										</li>
 									</ul>
 								</div>

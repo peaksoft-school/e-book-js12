@@ -13,7 +13,7 @@ import scss from './VendorsBooks.module.scss';
 
 const VendorsBooks: FC = () => {
 	const [isOpen, setIsOpen] = useState<boolean>(false);
-	const [bookId, setBookId] = useState<number | null>(null); // Fixed type
+	const [bookId, setBookId] = useState<number | null>(null);
 	const navigate = useNavigate();
 	const [sortSelected, setSortSelected] = useState('ALL');
 	const [isOpenBooksType, setIsOpenBooksType] = useState(false);
@@ -184,7 +184,7 @@ const VendorsBooks: FC = () => {
 				<div className={scss.delete_modal}>
 					<p>Вы уверены, что хотите удалить?</p>
 					<div className={scss.bt_modal}>
-						<button  onClick={handleCancel}>Отменить</button>
+						<button onClick={handleCancel}>Отменить</button>
 						<button onClick={handleOk}>Удалить</button>
 					</div>
 				</div>

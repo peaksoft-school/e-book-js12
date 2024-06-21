@@ -31,7 +31,8 @@ const ProfileHistory = () => {
 
 						<div className={scss.info_tes_two}>
 							<p className={scss.item_two}>Фото</p>
-							<th></th><th></th>
+							<th></th>
+							<th></th>
 							<p className={scss.item_tree}>Название/Автор</p>
 							<div className={scss.item_flex}>
 								<p className={scss.item_four}>Кол-во</p>
@@ -133,7 +134,9 @@ const ProfileHistory = () => {
 																Промокод {item.discount}%
 															</p>
 															<div className={scss.scitd}>
-																<p className={scss.promo_pro}>(-{item.priceWithDiscount})</p>
+																<p className={scss.promo_pro}>
+																	(-{item.priceWithDiscount})
+																</p>
 																<p className={scss.book_price}>{item.price}</p>
 															</div>
 														</div>
@@ -156,7 +159,7 @@ const ProfileHistory = () => {
 													src={item.imageUrl}
 													alt="book"
 												/>
-												<div className={scss.book_flex}>
+												<div className={scss.book_flex_x}>
 													<div className={scss.flex_book}>
 														<div className={scss.book_name_end}>
 															<p>{item.title}</p>
@@ -165,7 +168,7 @@ const ProfileHistory = () => {
 															</p>
 														</div>
 													</div>
-													<div className={scss.flex_book}>
+													<div className={scss.flex_book_x}>
 														<p className={scss.book_quantity}>
 															{item.quantity}
 														</p>

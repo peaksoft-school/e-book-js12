@@ -73,7 +73,7 @@ const InformationBook: FC = () => {
 									>
 										Главная
 									</span>{' '}
-									/ <span>{data.genre}</span>
+									/<span>{data.genre}</span>
 								</p>
 								/ <h4>{data.title}</h4>
 							</div>

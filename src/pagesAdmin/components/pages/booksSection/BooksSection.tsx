@@ -10,6 +10,7 @@ import {
 	useDeleteBookMutation,
 	useFilterBooksMutation
 } from '@/src/redux/api/book';
+import { Modal } from 'antd';
 
 type Book = {
 	bookId: number;
@@ -169,6 +170,26 @@ const BooksSection: React.FC = () => {
 			? genreBook.find((g) => g.englishName === selectedGenre[0])?.genreName
 			: 'Жанры';
 
+			const [selectedBook ,setSelectedBook]= useState<number | null>(null)
+			const [isModalOpen, setIsModalOpen] = useState(false);
+
+	const showModal = (bookId: number) => {
+		setSelectedBook(bookId);
+		setIsModalOpen(true);
+	};
+
+	const handleOk = async () => {
+		if (selectedBook !== null) {
+			await handleDeleteBook(selectedBook);
+		}
+		setIsModalOpen(false);
+		setSelectedBook(null);
+	};
+
+	const handleCancel = () => {
+		setIsModalOpen(false);
+		setSelectedBook(null);
+	};
 	return (
 		<section className={scss.BooksSection}>
 			<div className={scss.container}>
@@ -309,7 +330,8 @@ const BooksSection: React.FC = () => {
 										</li>
 										<li
 											onClick={() => {
-												handleDeleteBook(book.bookId);
+												showModal(book.bookId);
+
 												setOpenState(!openState);
 											}}
 										>
@@ -340,6 +362,21 @@ const BooksSection: React.FC = () => {
 					))}
 				</div>
 			</div>
+			<Modal
+				visible={isModalOpen}
+				onOk={handleOk}
+				onCancel={handleCancel}
+				footer={null}
+				className={scss.delete_modal}
+			>
+				<div className={scss.delete_modal}>
+					<p>Вы уверены, что хотите удалить?</p>
+					<div className={scss.bt_modal}>
+						<button onClick={handleCancel}>Отменить</button>
+						<button onClick={handleOk}>Удалить</button>
+					</div>
+				</div>
+			</Modal>
 		</section>
 	);
 };
