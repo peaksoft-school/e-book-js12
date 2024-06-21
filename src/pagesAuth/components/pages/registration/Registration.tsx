@@ -55,7 +55,7 @@ const Registration = () => {
 				};
 				const results = await postUser(newData);
 				if ('data' in results) {
-					if (results.data.message === 'OK') {
+					if (results.data.httpStatus === 'OK') {
 						setEmail(data.email);
 						setConfirmModa(true);
 					} else if (results.data.httpStatus === 'ALREADY_REPORTED') {

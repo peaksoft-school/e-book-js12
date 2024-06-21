@@ -52,11 +52,11 @@ const VendorsBooks: FC = () => {
 		}
 	]);
 
-	const [currentPage, setCurrentPage] = useState(1);
+	const [currentPage, setCurrentPage] = useState<number>(1);
 	const { data, isLoading } = useGetAllBookVedorQuery({
 		bookOperationType: sortSelected,
 		page: currentPage,
-		pageSize: 8
+		pageSize: 12
 	});
 
 	const [deleteBook] = useDeleteBookMutation();
