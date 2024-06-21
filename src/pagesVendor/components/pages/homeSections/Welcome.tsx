@@ -83,7 +83,7 @@ const secondData = [
 const Welcome: FC = () => {
 	const navigate = useNavigate();
 	const handelChangeProfile = () => {
-		const vendor = localStorage.getItem('isVendor');
+		const vendor = localStorage.getItem('vendor');
 
 		if (vendor) {
 			navigate('/vendor/profile');

@@ -24,7 +24,7 @@ const Login = () => {
 				const { firstName } = results.data;
 				localStorage.setItem('NameClient', firstName);
 				localStorage.setItem('token', token);
-				localStorage.setItem('isAuth', 'true');
+				localStorage.setItem('client', 'true');
 				localStorage.setItem('vendor', 'false');
 				localStorage.setItem('admin', 'false');
 				reset();
@@ -32,17 +32,17 @@ const Login = () => {
 			} else if (results.data?.role === 'VENDOR') {
 				const { token } = results.data;
 				localStorage.setItem('token', token);
-				localStorage.setItem('isAuth', 'false');
-				localStorage.setItem('isVendor', 'true');
-				localStorage.setItem('isAdmin', 'false');
+				localStorage.setItem('client', 'false');
+				localStorage.setItem('vendor', 'true');
+				localStorage.setItem('admin', 'false');
 				reset();
 				navigate('/vendor/home');
 			} else if (results.data?.role === 'ADMIN') {
 				const { token } = results.data;
 				localStorage.setItem('token', token);
-				localStorage.setItem('isAuth', 'false');
-				localStorage.setItem('isVendor', 'false');
-				localStorage.setItem('isAdmin', 'true');
+				localStorage.setItem('client', 'false');
+				localStorage.setItem('vendor', 'false');
+				localStorage.setItem('admin', 'true');
 				reset();
 				navigate('/admin');
 			}

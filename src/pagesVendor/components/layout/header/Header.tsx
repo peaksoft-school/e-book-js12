@@ -9,6 +9,7 @@ import CustomGenreInput from '@/src/ui/customInpute/CustomGenreInput';
 import scss from './Header.module.scss';
 import { usePostPromoCodeMutation } from '@/src/redux/api/promo';
 import { useSearchBooksQuery } from '@/src/redux/api/search';
+// import { Bounce, ToastContainer, toast } from 'react-toastify';
 
 const Header = () => {
 	const [headerScroll, setHeaderScroll] = useState<boolean>(false);
@@ -38,7 +39,6 @@ const Header = () => {
 				setHeaderScroll(false);
 			}
 		};
-
 		changeHeader();
 		window.addEventListener('scroll', changeHeader);
 
@@ -71,19 +71,35 @@ const Header = () => {
 		if ('data' in result) {
 			const data = result.data;
 			console.log(data);
-			if (data!.httpStatus === 'OK') {
+			if (data?.httpStatus === 'OK') {
+				setIsModalOpen(false);
 				setTimeout(() => {
 					setModalSuccess(true);
 				}, 600);
 			}
 		}
+		// else {
+		// 	const message = result.error?.data?.message;
+		// 	if (message) {
+		// 		toast(message, {
+		// 			position: 'top-right',
+		// 			autoClose: 5000,
+		// 			hideProgressBar: false,
+		// 			closeOnClick: true,
+		// 			pauseOnHover: false,
+		// 			draggable: true,
+		// 			progress: undefined,
+		// 			theme: 'light',
+		// 			transition: Bounce
+		// 		});
+		// 	}
+		// }
 	};
-
 	const HandleExitVendor = () => {
 		setUserExit(!userExit);
-		localStorage.setItem('isVendor', 'false');
-		localStorage.setItem('isAdmin', 'false');
-		localStorage.setItem('isAuth', 'false');
+		localStorage.setItem('vendor', 'false');
+		localStorage.setItem('admin', 'false');
+		localStorage.setItem('client', 'false');
 		localStorage.removeItem('token');
 	};
 
@@ -184,24 +200,22 @@ const Header = () => {
 											<IconUserCircle />
 										</p>
 									</div>
-									{isUser && (
-										<div className={scss.user_drop}>
-											<ul>
-												<li onClick={() => navigate('/vendor/profile')}>
-													Профиль
-												</li>
-												<hr />
-												<li
-													onClick={() => {
-														HandleExitVendor();
-														setIsUser(false);
-													}}
-												>
-													Выйти
-												</li>
-											</ul>
-										</div>
-									)}
+									<div className={isUser ? scss.user_drop : scss.user_down}>
+										<ul>
+											<li onClick={() => navigate('/vendor/profile')}>
+												Профиль
+											</li>
+											<hr />
+											<li
+												onClick={() => {
+													HandleExitVendor();
+													setIsUser(false);
+												}}
+											>
+												Выйти
+											</li>
+										</ul>
+									</div>
 									<Modal
 										open={userExit}
 										className={scss.modal_exit}
@@ -300,6 +314,7 @@ const Header = () => {
 												<label>Дата начала</label>
 												<input
 													type="date"
+													min={new Date().toISOString().split('T')[0]}
 													value={dateStart}
 													onChange={(e) => setDateStart(e.target.value)}
 												/>
@@ -308,9 +323,9 @@ const Header = () => {
 												<label>Дата завершения</label>
 												<input
 													type="date"
+													min={new Date().toISOString().split('T')[0]}
 													value={dateEnd}
 													onChange={handleDateEndChange}
-													min={currentDate}
 												/>
 											</div>
 											<div

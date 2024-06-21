@@ -431,16 +431,41 @@
 									opacity: 0;
 								}
 							}
-							p {
-								display: flex;
-								justify-content: end;
-								margin-top: 10px;
-								color: rgb(181, 181, 181);
+							.textarea_error {
+								resize: none;
+								margin-top: 12px;
+								padding: 16px 15px;
+								color-scheme: white;
+								border: solid 1px #ff0000;
+								background-color: #ff000028;
+								outline: none;
+								font-family: Open Sans;
 								font-size: 16px;
 								font-weight: 400;
-								line-height: 22px;
-								letter-spacing: 0%;
-								text-align: center;
+								line-height: 130%;
+								letter-spacing: 0px;
+								text-align: start;
+								color: rgb(34, 34, 34);
+								max-height: 264px;
+								max-width: 636px;
+								&:focus::placeholder {
+									opacity: 0;
+								}
+							}
+							.deg_info {
+								display: flex;
+								justify-content: space-between;
+								p {
+									display: flex;
+									justify-content: end;
+									margin-top: 10px;
+									color: rgb(181, 181, 181);
+									font-size: 16px;
+									font-weight: 400;
+									line-height: 22px;
+									letter-spacing: 0%;
+									text-align: center;
+								}
 							}
 						}
 					}
@@ -602,11 +627,24 @@
 									padding: 10px 18px 10px 18px;
 									margin-top: 12px;
 								}
+								.input_error {
+									background-color: #ff000028;
+									border: 1px solid red;
+									display: flex;
+									flex-direction: row-reverse;
+									align-items: center;
+									justify-content: start;
+									padding: 10px 18px 10px 18px;
+									margin-top: 12px;
+									input {
+										background-color: transparent;
+									}
+								}
 								input {
 									background-color: #f8f8f8;
 									color-scheme: white;
 									outline: none;
-									border: none;
+									border: 1px solid transparent;
 									font-family: Open Sans;
 									font-size: 16px;
 									font-weight: 400;
@@ -652,6 +690,19 @@
 									background-color: #f8f8f8;
 									padding: 10px 18px 10px 18px;
 									margin-top: 12px;
+								}
+								.input_error {
+									background-color: #ff000028;
+									border: 1px solid red;
+									display: flex;
+									flex-direction: row-reverse;
+									align-items: center;
+									justify-content: start;
+									padding: 10px 18px 10px 18px;
+									margin-top: 12px;
+									input {
+										background-color: transparent;
+									}
 								}
 								input {
 									background-color: #f8f8f8;
@@ -701,6 +752,19 @@
 									background-color: #f8f8f8;
 									padding: 10px 18px 10px 18px;
 									margin-top: 12px;
+								}
+								.input_error {
+									background-color: #ff000028;
+									border: 1px solid red;
+									display: flex;
+									flex-direction: row-reverse;
+									align-items: center;
+									justify-content: start;
+									padding: 10px 18px 10px 18px;
+									margin-top: 12px;
+									input {
+										background-color: transparent;
+									}
 								}
 								input {
 									background-color: #f8f8f8;
@@ -904,6 +968,19 @@
 									position: relative;
 									z-index: 5;
 								}
+								.input_error {
+									background-color: #ff000028;
+									border: 1px solid red;
+									display: flex;
+									flex-direction: row-reverse;
+									align-items: center;
+									justify-content: start;
+									padding: 10px 18px 10px 18px;
+									margin-top: 12px;
+									input {
+										background-color: transparent;
+									}
+								}
 								input {
 									background-color: #f8f8f8;
 									color-scheme: white;
@@ -949,6 +1026,19 @@
 									background-color: #f8f8f8;
 									padding: 10px 18px 10px 18px;
 									margin-top: 12px;
+								}
+								.input_error {
+									background-color: #ff000028;
+									border: 1px solid red;
+									display: flex;
+									flex-direction: row-reverse;
+									align-items: center;
+									justify-content: start;
+									padding: 10px 18px 10px 18px;
+									margin-top: 12px;
+									input {
+										background-color: transparent;
+									}
 								}
 								input {
 									background-color: #f8f8f8;
@@ -1014,6 +1104,19 @@
 									background-color: #f8f8f8;
 									padding: 10px 18px 10px 18px;
 									margin-top: 12px;
+								}
+								.input_error {
+									background-color: #ff000028;
+									border: 1px solid red;
+									display: flex;
+									flex-direction: row-reverse;
+									align-items: center;
+									justify-content: start;
+									padding: 10px 18px 10px 18px;
+									margin-top: 12px;
+									input {
+										background-color: transparent;
+									}
 								}
 								input {
 									background-color: #f8f8f8;

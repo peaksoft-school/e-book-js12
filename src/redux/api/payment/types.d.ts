@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 namespace PAYMENT {
 	type CreatePaymentResponse = {
@@ -5,7 +6,11 @@ namespace PAYMENT {
 		message: string;
 	};
 
-	type CreatePaymentRequest = void;
+	type CreatePaymentRequest = {
+		token: string;
+		test: number;
+		newData: any;
+	};
 
 	type ComformPaymentResponse = {
 		httpStatus: string;

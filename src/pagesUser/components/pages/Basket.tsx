@@ -1,9 +1,15 @@
+import { FC } from 'react';
 import BasketSection from './basketSection/BasketSection';
 
-const Basket = () => {
+interface TypeProps {
+	setIsPayment: React.Dispatch<React.SetStateAction<boolean>>;
+	setTotalCost: React.Dispatch<React.SetStateAction<number | undefined>>;
+}
+
+const Basket: FC<TypeProps> = ({ setIsPayment, setTotalCost }) => {
 	return (
 		<>
-			<BasketSection />
+			<BasketSection setIsPayment={setIsPayment} setTotalCost={setTotalCost} />
 		</>
 	);
 };

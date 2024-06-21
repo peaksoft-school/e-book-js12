@@ -10,6 +10,7 @@ import {
 	useDeleteBookMutation,
 	useGetAllBookVedorQuery
 } from '@/src/redux/api/book';
+import CustomSeeMoreButton from '@/src/ui/customButton/CustomSeeMoreButton';
 
 const VendorsBooks: FC = () => {
 	const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -18,6 +19,7 @@ const VendorsBooks: FC = () => {
 	const [allBooks, setAllBooks] = useState<any[]>([]);
 	const navigate = useNavigate();
 	const [sortSelected, setSortSelected] = useState('ALL');
+	const [sizePage, setSizePage] = useState(12);
 	const [sortBookData] = useState([
 		{
 			id: 1,
@@ -57,6 +59,10 @@ const VendorsBooks: FC = () => {
 
 	const deleteBookChange = async (id: number) => {
 		await deleteBook(id);
+	};
+
+	const hadnlePageSizeBook = () => {
+		return setSizePage(sizePage + 12);
 	};
 
 	const [isOpenBooksType, setIsOpenBooksType] = useState(false);
@@ -199,14 +205,17 @@ const VendorsBooks: FC = () => {
 							</div>
 						</div>
 					)}
-					{!isLoading && data && data.length >= 8 ? (
-						<div className={scss.btn_morebook}>
-							<button
-								onClick={() => setCurrentPage((prevPage) => prevPage + 1)}
-							>
-								Смотреть больше
-							</button>
-						</div>
+					{data?.length === 12 ? (
+						<>
+							<div className={scss.see_more_button}>
+								<CustomSeeMoreButton
+									children="Смотреть больше"
+									onClick={() => {
+										hadnlePageSizeBook();
+									}}
+								/>
+							</div>
+						</>
 					) : null}
 				</div>
 			</div>

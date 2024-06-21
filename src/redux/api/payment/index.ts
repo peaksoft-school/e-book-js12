@@ -2,11 +2,14 @@ import { api as index } from '..';
 
 const api = index.injectEndpoints({
 	endpoints: (build) => ({
-		CreatePayment: build.mutation({
-			query: ({ newData, token, totalAmount }) => (
+		CreatePayment: build.mutation<
+			PAYMENT.CreatePaymentResponse,
+			PAYMENT.CreatePaymentRequest
+		>({
+			query: ({ newData, token, test }) => (
 				console.log(token),
 				{
-					url: `/api/stripe/create/payment?token=${'tok_visa'}&totalAmount=${totalAmount}`,
+					url: `/api/stripe/create/payment?token=${'tok_createDispute'}&totalAmount=${test}`,
 					method: 'POST',
 					body: newData
 				}
