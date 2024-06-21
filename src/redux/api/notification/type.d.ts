@@ -2,6 +2,7 @@
 namespace NOTIFICATION {
 	type GetNotificationRequest = void;
 	type GetNotificationResponse = {
+		isNew: boolean;
 		id: number;
 		createdAt: number;
 		vendorId: number;

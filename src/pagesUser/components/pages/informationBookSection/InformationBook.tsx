@@ -36,6 +36,63 @@ interface BookData {
 	statusBook: string;
 }
 
+const genres = [
+	{
+		genreId: 1,
+		genreName: 'ХУДОЖЕСТВЕННАЯ ЛИТЕРАТУРА',
+		englishName: 'ARTISTIC_LITERATURE',
+		isChecked: false
+	},
+	{
+		genreId: 2,
+		genreName: 'ОБРАЗОВАНИЕ',
+		englishName: 'EDUCATION',
+		isChecked: false
+	},
+	{
+		genreId: 3,
+		genreName: 'КНИГИ ДЛЯ ДЕТЕЙ',
+		englishName: 'BOOKS_FOR_CHILDREN',
+		isChecked: false
+	},
+	{
+		genreId: 4,
+		genreName: 'НАУКА И ТЕХНОЛОГИЯ',
+		englishName: 'SCIENCE_AND_TECHNOLOGY',
+		isChecked: false
+	},
+	{
+		genreId: 5,
+		genreName: 'СООБЩЕСТВО',
+		englishName: 'COMMUNITY',
+		isChecked: false
+	},
+	{
+		genreId: 6,
+		genreName: 'БИЗНЕС ЛИТЕРАТУРА',
+		englishName: 'BUSINESS_LITERATURE',
+		isChecked: false
+	},
+	{
+		genreId: 7,
+		genreName: 'КРАСОТА, ЗДОРОВЬЕ, СПОРТ',
+		englishName: 'BEAUTY_HEALTH_SPORT',
+		isChecked: false
+	},
+	{
+		genreId: 8,
+		genreName: 'УВЛЕЧЕНИЯ',
+		englishName: 'HOBBIES',
+		isChecked: false
+	},
+	{
+		genreId: 9,
+		genreName: 'ПСИХОЛОГИЯ',
+		englishName: 'PSYCHOLOGY',
+		isChecked: false
+	}
+];
+
 const InformationBook: FC = () => {
 	const [showBookInfo, setShowBookInfo] = useState(false);
 
@@ -53,6 +110,8 @@ const InformationBook: FC = () => {
 	const handleAddBookToFavorite = async (id: number) => {
 		await addBookToFavorite(id);
 	};
+
+	const genreBook = genres.find((item) => item.genreId === bookId);
 
 	return (
 		<section className={scss.InformationBookSection}>
@@ -72,15 +131,18 @@ const InformationBook: FC = () => {
 										}}
 									>
 										Главная
-									</span>{' '}
-									/<span>{data.genre}</span>
+									</span>
+									/{' '}
+									<span>
+										{genreBook ? genreBook.genreName : 'Жанр не найден'}
+									</span>
 								</p>
 								/ <h4>{data.title}</h4>
 							</div>
 							<div className={scss.contents_book}>
 								<div className={scss.section_about_book}>
 									<div className={scss.woman_book}>
-										<img src={data.imageUrlFirst} alt="Harry Potter" />
+										<img src={data.imageUrlFirst} alt="book" />
 									</div>
 								</div>
 								<div className={scss.section_content_text}>

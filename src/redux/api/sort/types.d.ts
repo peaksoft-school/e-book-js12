@@ -20,6 +20,7 @@ export namespace SORT {
 		books: TypeDataBook[];
 	};
 	type TypeDataBook = {
+		inBasket: boolean;
 		id: number;
 		cover: string;
 		title: string;
