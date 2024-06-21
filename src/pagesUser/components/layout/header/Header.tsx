@@ -20,7 +20,7 @@ const Header = () => {
 	const [userExit, setUserExit] = useState<boolean>(false);
 
 	const localName = localStorage.getItem('NameClient');
-	const localAuth = localStorage.getItem('isAuth');
+	const localAuth = localStorage.getItem('client');
 	const location = useLocation();
 	const { data: countBasket } = useGetCountInBasketQuery();
 	const [searchTerm, setSearchTerm] = useState<string>('');
@@ -88,9 +88,11 @@ const Header = () => {
 										navigate('/');
 									}}
 								>
-									<LogoeBook navigateToHome={() => {
-										navigate('/')
-									}} />
+									<LogoeBook
+										navigateToHome={() => {
+											navigate('/');
+										}}
+									/>
 								</div>
 								<div className={scss.searchResults}>
 									<div className={scss.search}>

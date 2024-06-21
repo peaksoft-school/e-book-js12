@@ -16,6 +16,7 @@ const VendorsBooks: FC = () => {
 	const [bookId, setBookId] = useState<null | number>(null); // Исправлено: было bookoId
 	const navigate = useNavigate();
 	const [sortSelected, setSortSelected] = useState('ALL');
+	const [sizePage, setSizePage] = useState(12);
 	const [sortBookData] = useState([
 		{
 			id: 1,
@@ -46,13 +47,17 @@ const VendorsBooks: FC = () => {
 	const { data } = useGetAllBookVedorQuery({
 		bookOperationType: sortSelected,
 		page: 1,
-		pageSize: 12
+		pageSize: sizePage
 	});
 
 	const [deleteBook] = useDeleteBookMutation();
 
 	const deleteBookChange = async (id: number) => {
 		await deleteBook(id);
+	};
+
+	const hadnlePageSizeBook = () => {
+		return setSizePage(sizePage + 12);
 	};
 
 	const [isOpenBooksType, setIsOpenBooksType] = useState(false);
@@ -173,12 +178,18 @@ const VendorsBooks: FC = () => {
 							</div>
 						))}
 					</div>
-					<div className={scss.see_more_button}>
-						<CustomSeeMoreButton
-							children="Смотреть больше"
-							onClick={function (): void {}}
-						/>
-					</div>
+					{data?.length === 12 ? (
+						<>
+							<div className={scss.see_more_button}>
+								<CustomSeeMoreButton
+									children="Смотреть больше"
+									onClick={() => {
+										hadnlePageSizeBook();
+									}}
+								/>
+							</div>
+						</>
+					) : null}
 				</div>
 			</div>
 		</section>

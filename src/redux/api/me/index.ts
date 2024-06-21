@@ -24,6 +24,17 @@ const api = index.injectEndpoints({
 			}),
 			invalidatesTags: ['me']
 		}),
+		ConfirmEmail: build.mutation<
+			AUTHORIZATION.ConfirmEmailResponse,
+			AUTHORIZATION.ConfirmEmailRequest
+		>({
+			query: (newData) => ({
+				url: '/api/auth/confirmEmail',
+				method: 'POST',
+				body: newData
+			}),
+			invalidatesTags: ['me']
+		}),
 		postWithGoogle: build.mutation({
 			query: (data) => ({
 				url: `/api/auth/authWithGoogle?Token=${data.idToken}`,
@@ -49,5 +60,6 @@ export const {
 	usePostRegistrationMutation,
 	usePostLoginMutation,
 	usePostWithGoogleMutation,
-	usePostVendorRegistrationMutation
+	usePostVendorRegistrationMutation,
+	useConfirmEmailMutation
 } = api;

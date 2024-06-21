@@ -5,6 +5,7 @@ import EyeSeeIcon from '@/src/assets/icons/icon-eyeSee';
 import EyeClose from '@/src/assets/icons/icon-eyeClose';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import {
+	useConfirmEmailMutation,
 	usePostRegistrationMutation,
 	usePostWithGoogleMutation
 } from '@/src/redux/api/me';
@@ -12,6 +13,7 @@ import { signInWithPopup } from 'firebase/auth';
 import { auth, provider } from '@/src/configs/firebase';
 import { IconGoogleLogo } from '@/src/assets/icons';
 import { ToastContainer, toast } from 'react-toastify';
+import { Modal, message } from 'antd';
 
 interface TypeData {
 	email: string;
@@ -24,8 +26,13 @@ const Registration = () => {
 	const [isPassword, setIsPassword] = useState(false);
 	const [isLogPassword, setLogPassword] = useState(false);
 	const [password, setPassword] = useState('');
-	const [postUser] = usePostRegistrationMutation();
+	const [postUser, { isLoading }] = usePostRegistrationMutation();
 	const [postGoogleToken] = usePostWithGoogleMutation();
+	const [email, setEmail] = useState('');
+	const [code, setCode] = useState<number | string>('');
+	const [confirmCode] = useConfirmEmailMutation();
+	const [confirmModal, setConfirmModa] = useState(false);
+	const [messageApi, contextHolder] = message.useMessage();
 	const navigate = useNavigate();
 
 	const {
@@ -39,37 +46,84 @@ const Registration = () => {
 	});
 
 	const onHandleChange: SubmitHandler<TypeData> = async (data) => {
-		if (data.confirmPassword === data.password) {
-			const newData = {
-				firstName: data.name,
-				email: data.email,
-				password: data.password
-			};
-			const results = await postUser(newData);
-			if ('data' in results) {
-				const { token } = results.data!;
-				const { firstName } = results.data!;
-				localStorage.setItem('NameClient', firstName);
-				localStorage.setItem('token', token!);
-				localStorage.setItem('isAuth', 'true');
-				localStorage.setItem('vendor', 'false');
-				localStorage.setItem('admin', 'false');
-				console.log(firstName);
-
-				reset();
-				navigate('/');
+		if (!isLoading) {
+			if (data.confirmPassword === data.password) {
+				const newData = {
+					firstName: data.name,
+					email: data.email,
+					password: data.password
+				};
+				const results = await postUser(newData);
+				if ('data' in results) {
+					if (results.data.message === 'OK') {
+						setEmail(data.email);
+						setConfirmModa(true);
+					} else if (results.data.httpStatus === 'ALREADY_REPORTED') {
+						messageApi.open({
+							type: 'warning',
+							content:
+								'Электронная почта: ibrahimorunbaev59@gmail.com уже существует!'
+						});
+					}
+				}
+				// else if ('data' in results?.error) {
+				// 	console.log(results.error.data);
+				// 	const str = results.error.data.message;
+				// 	if (
+				// 		str.includes(
+				// 			' Пароль должен быть длиной ' ||
+				// 				'электронное письмо содержит @.com'
+				// 		)
+				// 	) {
+				// 		messageApi.open({
+				// 			type: 'warning',
+				// 			content:
+				// 				'Пароль дожен минимум 8 символов, заглавные буквы и цифры а также  не забывайте добавлять @gmail.com'
+				// 		});
+				// 	} else if (str.includes('Пароль должен быть длиной')) {
+				// 		messageApi.open({
+				// 			type: 'warning',
+				// 			content:
+				// 				'Пароль дожен минимум 8 символов, заглавные буквы и цифры'
+				// 		});
+				// 	} else if (str.includes('электронное письмо содержит @.com')) {
+				// 		messageApi.open({
+				// 			type: 'warning',
+				// 			content: '  не забывайте добавлять @gmail.com'
+				// 		});
+				// 	}
+				// }
+			} else {
+				toast(`Подтвердите пароль`, {
+					position: 'top-right',
+					autoClose: 5000,
+					hideProgressBar: false,
+					closeOnClick: true,
+					pauseOnHover: true,
+					draggable: true,
+					progress: undefined,
+					theme: 'light'
+				});
 			}
-		} else {
-			toast(`Подтвердите пароль`, {
-				position: 'top-right',
-				autoClose: 5000,
-				hideProgressBar: false,
-				closeOnClick: true,
-				pauseOnHover: true,
-				draggable: true,
-				progress: undefined,
-				theme: 'light'
-			});
+		}
+	};
+
+	const handleConfirmCode = async () => {
+		const newData = {
+			email: email,
+			code: code
+		};
+		const result = await confirmCode(newData);
+		if ('data' in result) {
+			const { token } = result.data;
+			const { firstName } = result.data;
+			localStorage.setItem('NameClient', firstName);
+			localStorage.setItem('token', token!);
+			localStorage.setItem('client', 'true');
+			localStorage.setItem('vendor', 'false');
+			localStorage.setItem('admin', 'false');
+			reset();
+			navigate('/');
 		}
 	};
 	const signInWithGoogleHandler = async () => {
@@ -96,6 +150,7 @@ const Registration = () => {
 		<div onSubmit={handleSubmit(onHandleChange)} className={scss.Registration}>
 			<div className="container">
 				<div className={scss.content}>
+					{contextHolder}
 					<div className={scss.headline}>
 						<Link to="/auth/login">Войти</Link>
 						<Link to="/auth/registration">Регистрация</Link>
@@ -122,7 +177,7 @@ const Registration = () => {
 								className={
 									errors.email ? `${scss.input_error}` : `${scss.input}`
 								}
-								type="text"
+								type="email"
 								placeholder="Напишите ваш email"
 								{...register('email', { minLength: 4, required: true })}
 							/>
@@ -138,7 +193,7 @@ const Registration = () => {
 								type={isPassword ? 'text' : 'password'}
 								placeholder="Напишите пароль"
 								{...register('password', {
-									minLength: 4,
+									minLength: 9,
 									required: true,
 									onChange(event) {
 										setPassword(event.target.value);
@@ -178,9 +233,8 @@ const Registration = () => {
 								type={isLogPassword ? 'text' : 'password'}
 								placeholder="Подтвердите пароль"
 								{...register('confirmPassword', {
-									minLength: 4,
+									minLength: 9,
 									required: true,
-
 									validate: (value) => {
 										return value === password || 'Пароль не совпадает';
 									}
@@ -230,6 +284,41 @@ const Registration = () => {
 					</div>
 				</div>
 			</div>
+			<Modal
+				open={confirmModal}
+				onCancel={() => setConfirmModa(false)}
+				footer={false}
+			>
+				<div className={scss.confirm_email}>
+					<div className={scss.title}>
+						<p>Пожалуйста, введите код, который вы получили на почту</p>
+					</div>
+					<div className={scss.code_confirm}>
+						<input
+							type="text"
+							onKeyPress={(e) => {
+								if (e.key === 'Enter') {
+									handleConfirmCode();
+								}
+							}}
+							value={code}
+							onChange={(e) => {
+								setCode(+e.target.value);
+							}}
+							placeholder="Введите код"
+						/>
+					</div>
+					<div className={scss.btn}>
+						<button
+							onClick={() => {
+								handleConfirmCode();
+							}}
+						>
+							Отправить
+						</button>
+					</div>
+				</div>
+			</Modal>
 		</div>
 	);
 };

@@ -25,7 +25,7 @@ const api = index.injectEndpoints({
 		>({
 			query: (id) => ({
 				url: `/api/basket/addBookToBasket?bookId=${id}`,
-				method: 'PUT'
+				method: 'POST'
 			}),
 			invalidatesTags: ['basket']
 		}),
