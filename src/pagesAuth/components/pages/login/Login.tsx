@@ -4,19 +4,16 @@ import CustomPasswordInput from '@/src/ui/customInpute/CustomPasswordInput';
 import { Link, useNavigate } from 'react-router-dom';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { usePostLoginMutation } from '@/src/redux/api/me';
-import { useState } from 'react';
 interface IFormInput {
 	email: string;
 	password: string;
 }
 const Login = () => {
-	const [postLogin] = usePostLoginMutation();
+	const [postLogin, { isLoading }] = usePostLoginMutation();
 	const navigate = useNavigate();
 	const { register, reset, handleSubmit } = useForm<IFormInput>();
-	const [isLoading, setIsLoading] = useState<boolean>(false);
 
 	const onSubmit: SubmitHandler<IFormInput> = async (data) => {
-		setIsLoading(true);
 		const results = await postLogin(data);
 		if ('data' in results) {
 			if (results.data?.role === 'CLIENT') {
@@ -89,8 +86,8 @@ const Login = () => {
 							/>
 						</div>
 						<div className={scss.btn_login}>
-							<button type="submit" disabled={isLoading || isLoading}>
-								{isLoading || isLoading ? 'Вход...' : 'Войти'}
+							<button type="submit" disabled={isLoading ? true : false}>
+								{isLoading ? 'Вход...' : 'Войти'}
 							</button>
 						</div>
 					</form>

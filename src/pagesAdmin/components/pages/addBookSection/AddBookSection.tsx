@@ -10,14 +10,19 @@ import {
 	IconWhiteCircle,
 	IconWhiteSquare
 } from '@/src/assets/icons';
-import { ChangeEvent, useEffect, useState } from 'react';
+import { ChangeEvent, useEffect, useRef, useState } from 'react';
 import CustomUserNameInput from '@/src/ui/customInpute/CustomUserNameInput';
 import { Modal } from 'antd';
 import CustomBasketButton from '@/src/ui/customButton/CustomBasketButton';
 import CustomAudioDownloadInput from '@/src/ui/customAudioInput/CustomAudioDownloadInput';
 import CustomPDFDownloadInput from '@/src/ui/customPDFInput/CustomPDFDownloadInput';
 import { Link } from 'react-router-dom';
-import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
+import {
+	FieldErrors,
+	FieldValues,
+	SubmitHandler,
+	useForm
+} from 'react-hook-form';
 import {
 	useAddBookVendorMutation,
 	usePostFileMutation
@@ -76,7 +81,12 @@ const AddBookSection = () => {
 	const [description, setDescription] = useState('');
 
 	const [pdfFile, setPdfFile] = useState(' ');
-	const { register, handleSubmit, reset } = useForm();
+	const {
+		register,
+		handleSubmit,
+		reset,
+		formState: { errors }
+	} = useForm();
 
 	const [fragment, setFragment] = useState(' ');
 
@@ -199,6 +209,8 @@ const AddBookSection = () => {
 			setPdfFileName(null);
 		}
 	};
+	const errorRef = useRef<FieldErrors<FormValues>>(errors);
+
 	const handleFileChange = async (file: File) => {
 		setPdfFileName(file);
 		const result = await postFile(file);
@@ -433,6 +445,8 @@ const AddBookSection = () => {
 										<label>
 											Название книги
 											<CustomUserNameInput
+												refError={errorRef.current.title}
+												validateError={errors.title}
 												placeholder="Напишите полное название книги"
 												registerName="title"
 												register={register}
@@ -441,6 +455,8 @@ const AddBookSection = () => {
 										<label>
 											ФИО автора
 											<CustomUserNameInput
+												refError={errorRef.current.authorsFullName}
+												validateError={errors.authorsFullName}
 												placeholder="Напишите ФИО автора"
 												registerName="authorsFullName"
 												register={register}
@@ -499,6 +515,8 @@ const AddBookSection = () => {
 											<CustomUserNameInput
 												placeholder="Напишите название издательства"
 												registerName="publishingHouse"
+												refError={errorRef.current.publishingHouse}
+												validateError={errors.publishingHouse}
 												register={register}
 											/>
 										</label>
@@ -642,6 +660,8 @@ const AddBookSection = () => {
 									<label>
 										Название книги
 										<CustomUserNameInput
+											refError={errorRef.current.title}
+											validateError={errors.title}
 											placeholder="Напишите полное название книги"
 											registerName="title"
 											register={register}
@@ -650,6 +670,8 @@ const AddBookSection = () => {
 									<label>
 										ФИО автора
 										<CustomUserNameInput
+											refError={errorRef.current.authorsFullName}
+											validateError={errors.authorsFullName}
 											placeholder="Напишите ФИО автора"
 											registerName="authorsFullName"
 											register={register}
@@ -824,6 +846,7 @@ const AddBookSection = () => {
 											Загрузите фрагмент аудиозаписи
 											<div className={scss.audio_input}>
 												<CustomAudioFragmentInput
+													isFileUploaded
 													setDuration={setDurationFragment}
 													accept="audio/*"
 													onChange={(e) => {
@@ -837,6 +860,7 @@ const AddBookSection = () => {
 											Загрузите аудиозапись
 											<div className={scss.audio_input}>
 												<CustomAudioDownloadInput
+													isFileUploaded
 													setDuration={setDuration}
 													accept="audio/*"
 													onChange={(e) => {
@@ -858,6 +882,8 @@ const AddBookSection = () => {
 										<label>
 											Название книги
 											<CustomUserNameInput
+												refError={errorRef.current.title}
+												validateError={errors.title}
 												placeholder="Напишите полное название книги"
 												registerName="title"
 												register={register}
@@ -866,6 +892,8 @@ const AddBookSection = () => {
 										<label>
 											ФИО автора
 											<CustomUserNameInput
+												refError={errorRef.current.authorsFullName}
+												validateError={errors.authorsFullName}
 												placeholder="Напишите ФИО автора"
 												registerName="authorsFullName"
 												register={register}
@@ -922,6 +950,8 @@ const AddBookSection = () => {
 										<label>
 											Издательство
 											<CustomUserNameInput
+												refError={errorRef.current.publishingHouse}
+												validateError={errors.publishingHouse}
 												placeholder="Напишите название издательства"
 												registerName="publishingHouse"
 												register={register}
@@ -1046,6 +1076,7 @@ const AddBookSection = () => {
 											</div>
 											<div className={scss.box_last}>
 												<CustomPDFDownloadInput
+													isFileUploaded
 													onChange={handleFileChange}
 													accept="application/pdf"
 												/>

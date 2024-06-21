@@ -19,6 +19,7 @@ namespace AUTHORIZATION {
 		id: number;
 		email: string;
 		role: string;
+		firstName: string;
 	};
 
 	type ConfirmEmailResponse = {
