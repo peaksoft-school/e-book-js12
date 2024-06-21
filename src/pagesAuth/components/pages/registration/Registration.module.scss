@@ -217,3 +217,50 @@
 		}
 	}
 }
+.confirm_email {
+	display: flex;
+	flex-direction: column;
+	gap: 20px 0px;
+	.title {
+		p {
+			color: rgb(34, 34, 34);
+			font-family: Open Sans;
+			font-size: 14px;
+			font-weight: 600;
+			line-height: 22px;
+			letter-spacing: 0px;
+			text-align: left;
+		}
+	}
+	.code_confirm {
+		display: flex;
+		justify-content: start;
+
+		input {
+			border: 1.5px solid rgb(186, 179, 179);
+			outline: none;
+			padding: 10px 12px;
+			width: 100%;
+			color: black;
+			font-family: Open Sans;
+			font-size: 14px;
+			font-weight: 500;
+			background-color: #f8f8f8;
+			&:focus {
+				&::placeholder {
+					opacity: 0;
+				}
+			}
+		}
+	}
+	.btn {
+		display: flex;
+		justify-content: end;
+		button {
+			padding: 10px 18px;
+			background-color: black;
+			border: none;
+			outline: none;
+		}
+	}
+}

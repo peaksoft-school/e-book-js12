@@ -1,5 +1,6 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import scss from './BasketPage.module.scss';
 import CustomPromoInput from '@/src/ui/customInpute/CustomPromoInput';
 import {
@@ -21,11 +22,14 @@ import {
 import { ToastContainer, toast, Bounce } from 'react-toastify';
 import { usePostFavoriteUnFavoriteMutation } from '@/src/redux/api/favorite';
 import { IconInfoCircle } from '@tabler/icons-react';
-// import Payment from '@/src/payment/Payment';
 
-const BasketPage: React.FC = () => {
+interface TypeProps {
+	setIsPayment: React.Dispatch<React.SetStateAction<boolean>>;
+	setTotalCost: React.Dispatch<React.SetStateAction<number | undefined>>;
+}
+
+const BasketPage: React.FC<TypeProps> = ({ setIsPayment, setTotalCost }) => {
 	const [isPromo, setIsPromo] = useState(false);
-
 	const { data } = useGetCountInBasketQuery();
 	const [clearBookPage] = useDeleteClearBasketMutation();
 	const [deleteBook] = useDeleteBookIdMutation();
@@ -35,10 +39,9 @@ const BasketPage: React.FC = () => {
 	const { data: TotalCost, isLoading } = useTotalCostQuery();
 	const [isModalVisible, setIsModalVisible] = useState(false);
 	const [promoCode, setPromoValue] = useState<string>('');
-	const [isPayment, setIsPayment] = useState(false);
 	const [bookId, setBookId] = useState<null | number>(null);
 
-	console.log(isPayment);
+	const navigate = useNavigate();
 
 	const showModal = () => {
 		setIsModalVisible(true);
@@ -122,6 +125,10 @@ const BasketPage: React.FC = () => {
 			}, 3000);
 		}
 	}, [isModalVisible]);
+
+	useEffect(() => {
+		setTotalCost(TotalCost?.totalAmount);
+	}, [TotalCost]);
 
 	const amountTotalDiscountPrice = (price: number, amount: number) => {
 		const totalDiscount = price * amount;
@@ -400,6 +407,7 @@ const BasketPage: React.FC = () => {
 							<CustomAuthButton
 								onClick={() => {
 									setIsPayment(true);
+									navigate('/payment');
 								}}
 							>
 								Оформить заказ
@@ -407,11 +415,6 @@ const BasketPage: React.FC = () => {
 						</div>
 					</div>
 				</div>
-				{/* <Payment
-					openModal={isPayment}
-					setOpenModal={setIsPayment}
-					totalAmount={TotalCost!.totalAmount}
-				/> */}
 			</div>
 		</section>
 	);

@@ -46,9 +46,9 @@ const VendorRegistration = () => {
 			if ('data' in results) {
 				const token = results.data?.token;
 				localStorage.setItem('token', token!);
-				localStorage.setItem('isAuth', 'false');
-				localStorage.setItem('isVendor', 'true');
-				localStorage.setItem('isAdmin', 'false');
+				localStorage.setItem('client', 'false');
+				localStorage.setItem('vendor', 'true');
+				localStorage.setItem('admin', 'false');
 				reset();
 				navigate('/vendor/home');
 				setPassword('');

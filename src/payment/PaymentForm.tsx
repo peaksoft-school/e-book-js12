@@ -1,7 +1,7 @@
 import { CardElement, useElements, useStripe } from '@stripe/react-stripe-js';
-import { Modal } from 'antd';
 import { FC, FormEvent } from 'react';
 import { useCreatePaymentMutation } from '../redux/api/payment';
+import scss from './PaymentForm.module.scss';
 
 const CARD_OPTIONS = {
 	iconStyle: 'solid' as 'default' | 'solid',
@@ -36,9 +36,11 @@ const PaymentForm: FC<TypeProps> = ({
 
 	const hadnleCreatePayment = async (token: string) => {
 		const newData = {
-			'2': 'Ebook123'
+			'6': 'Ebook123456'
 		};
-		const result = await createPayment({ newData, token, totalAmount });
+		const totalTest = totalAmount.toFixed();
+		const test = Number(totalTest);
+		const result = await createPayment({ newData, token, test });
 		console.log(result, 'payment');
 	};
 
@@ -69,15 +71,31 @@ const PaymentForm: FC<TypeProps> = ({
 	};
 
 	return (
-		<Modal open={openModal} footer={null} onCancel={() => setOpenModal(false)}>
-			<form onSubmit={handleSubmit}>
-				<p className="heading">BOOK YOUR TRIP</p>
-				<CardElement className="card-element" options={CARD_OPTIONS} />
-				<button type="submit" className="book-button" disabled={!stripe}>
-					BOOK
-				</button>
-			</form>
-		</Modal>
+		<>
+			<div className={scss.Payment}>
+				<div className="container">
+					<div className={scss.content}>
+						<div className={scss.payment_container}>
+							<form onSubmit={handleSubmit}>
+								<p className={scss.heading}>Place your order</p>
+								<CardElement
+									className={scss.card_element}
+									options={CARD_OPTIONS}
+								/>
+								<button
+									type="submit"
+									className={scss.book_button}
+									disabled={!stripe}
+								>
+									BOOK
+								</button>
+							</form>
+							<div className={scss.total_amount}></div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</>
 	);
 };
 
