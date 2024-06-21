@@ -6,19 +6,23 @@ interface TypeProps {
 	placeholder: string;
 	registerName: string;
 	register: any;
+	refError: any;
+	validateError: any;
 }
 
 const CustomUserNameInput: FC<TypeProps> = ({
 	placeholder,
 	registerName,
-	register
+	register,
+	refError,
+	validateError
 }) => {
 	return (
 		<input
 			type="text"
 			placeholder={placeholder}
-			className={scss.user_name_input}
-			{...register(registerName)}
+			className={validateError ? scss.input_error : scss.user_name_input}
+			{...register(registerName, { require: true, minLength: 4 })}
 		/>
 	);
 };

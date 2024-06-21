@@ -20,10 +20,38 @@ const VendorsBooks: FC = () => {
 	const [isModalOpen, setIsModalOpen] = useState(false);
 	const [selectedBook, setSelectedBook] = useState<number | null>(null);
 
+	const [sizePage, setSizePage] = useState(12);
+	const [sortBookData] = useState([
+		{
+			id: 1,
+			sort: 'ALL',
+			sortName: 'Все'
+		},
+		{
+			id: 2,
+			sort: 'IN_FAVORITE',
+			sortName: 'В избранном'
+		},
+		{
+			id: 3,
+			sort: 'IN_BASKET',
+			sortName: 'В корзине'
+		},
+		{
+			id: 4,
+			sort: 'SOLD',
+			sortName: 'Проданы'
+		},
+		{
+			id: 5,
+			sort: 'WITH_DISCOUNT',
+			sortName: 'Со скидками'
+		}
+	]);
 	const { data } = useGetAllBookVedorQuery({
 		bookOperationType: sortSelected,
 		page: 1,
-		pageSize: 12
+		pageSize: sizePage
 	});
 
 	const [deleteBook] = useDeleteBookMutation();
@@ -31,14 +59,6 @@ const VendorsBooks: FC = () => {
 	const deleteBookChange = async (id: number) => {
 		await deleteBook(id);
 	};
-
-	const sortBookData = [
-		{ id: 1, sort: 'ALL', sortName: 'Все' },
-		{ id: 2, sort: 'IN_FAVORITE', sortName: 'В избранном' },
-		{ id: 3, sort: 'IN_BASKET', sortName: 'В корзине' },
-		{ id: 4, sort: 'SOLD', sortName: 'Проданы' },
-		{ id: 5, sort: 'WITH_DISCOUNT', sortName: 'Со скидками' }
-	];
 
 	const showModal = (bookId: number) => {
 		setSelectedBook(bookId);
@@ -56,6 +76,9 @@ const VendorsBooks: FC = () => {
 	const handleCancel = () => {
 		setIsModalOpen(false);
 		setSelectedBook(null);
+	};
+	const hadnlePageSizeBook = () => {
+		return setSizePage(sizePage + 12);
 	};
 
 	return (
@@ -167,11 +190,18 @@ const VendorsBooks: FC = () => {
 							</div>
 						))}
 					</div>
-					<div className={scss.see_more_button}>
-						<CustomSeeMoreButton onClick={() => {}}>
-							Смотреть больше
-						</CustomSeeMoreButton>
-					</div>
+					{data?.length === 12 ? (
+						<>
+							<div className={scss.see_more_button}>
+								<CustomSeeMoreButton
+									children="Смотреть больше"
+									onClick={() => {
+										hadnlePageSizeBook();
+									}}
+								/>
+							</div>
+						</>
+					) : null}
 				</div>
 			</div>
 			<Modal

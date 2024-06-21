@@ -36,8 +36,8 @@ const Header = () => {
 
 	const handleExitAdmin = () => {
 		localStorage.removeItem('token');
-		localStorage.setItem('isAuth', 'false');
-		localStorage.setItem('isVendor', 'false');
+		localStorage.setItem('client', 'false');
+		localStorage.setItem('vendor', 'false');
 		localStorage.setItem('admin', 'false');
 		navigate('/auth/login');
 	};

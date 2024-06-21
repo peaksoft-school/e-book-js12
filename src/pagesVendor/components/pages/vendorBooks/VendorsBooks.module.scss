@@ -217,8 +217,8 @@
 		.books_content {
 			display: flex;
 			flex-wrap: wrap;
-			justify-content: flex-start;
-			gap: 20px 10px;
+			justify-content: start;
+			gap: 20px;
 			width: 100%;
 
 			@media (max-width: 440px) {
@@ -594,7 +594,6 @@
 			}
 		}
 	}
-
 }
 .delete_modal {
 	display: flex;

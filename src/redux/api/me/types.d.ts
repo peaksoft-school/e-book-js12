@@ -2,9 +2,8 @@
 
 namespace AUTHORIZATION {
 	type RegistrationResponse = {
-		token: string;
-		simpleResponse: SimpleResponse;
-		firstName: string;
+		httpStatus: string;
+		message: string;
 	};
 	type SimpleResponse = {
 		httpStatus: string;
@@ -20,8 +19,24 @@ namespace AUTHORIZATION {
 		id: number;
 		email: string;
 		role: string;
-		firstName;
 	};
+
+	type ConfirmEmailResponse = {
+		token: string;
+		firstName: string;
+		simpleResponse: SimpleResponse;
+	};
+
+	type SimpleResponse = {
+		httpStatus: string;
+		message: string;
+	};
+
+	type ConfirmEmailRequest = {
+		email: string;
+		code: number | string;
+	};
+
 	type LoginRequest = {
 		email: string;
 		password: string;

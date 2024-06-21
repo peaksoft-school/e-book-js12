@@ -170,8 +170,8 @@ const BooksSection: React.FC = () => {
 			? genreBook.find((g) => g.englishName === selectedGenre[0])?.genreName
 			: 'Жанры';
 
-			const [selectedBook ,setSelectedBook]= useState<number | null>(null)
-			const [isModalOpen, setIsModalOpen] = useState(false);
+	const [selectedBook, setSelectedBook] = useState<number | null>(null);
+	const [isModalOpen, setIsModalOpen] = useState(false);
 
 	const showModal = (bookId: number) => {
 		setSelectedBook(bookId);

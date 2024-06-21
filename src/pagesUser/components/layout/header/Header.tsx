@@ -20,7 +20,7 @@ const Header = () => {
 	const [userExit, setUserExit] = useState<boolean>(false);
 
 	const localName = localStorage.getItem('NameClient');
-	const localAuth = localStorage.getItem('isAuth');
+	const localAuth = localStorage.getItem('client');
 	const location = useLocation();
 	const { data: countBasket } = useGetCountInBasketQuery();
 	const [searchTerm, setSearchTerm] = useState<string>('');

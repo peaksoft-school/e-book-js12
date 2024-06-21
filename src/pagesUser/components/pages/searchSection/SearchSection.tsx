@@ -64,55 +64,55 @@ const SearchSection = () => {
 	const [jenreData, setJenreData] = useState([
 		{
 			jenreId: 1,
-			jenreName: 'ХУДОЖЕСТВЕННАЯ ЛИТЕРАТУРА',
+			jenreName: 'Художественная литература',
 			englishName: 'ARTISTIC_LITERATURE',
 			isCheked: false
 		},
 		{
 			jenreId: 2,
-			jenreName: 'ОБРАЗОВАНИЕ',
+			jenreName: 'Образование',
 			englishName: 'EDUCATION',
 			isCheked: false
 		},
 		{
 			jenreId: 3,
-			jenreName: 'КНИГИ ДЛЯ ДЕТЕЙ',
+			jenreName: 'Книги для детей',
 			englishName: 'BOOKS_FOR_CHILDREN',
 			isCheked: false
 		},
 		{
 			jenreId: 4,
-			jenreName: 'НАУКА И ТЕХНОЛОГИЯ',
+			jenreName: 'Наука и технология',
 			englishName: 'SCIENCE_AND_TECHNOLOGY',
 			isCheked: false
 		},
 		{
 			jenreId: 5,
-			jenreName: 'СООБЩЕСТВО',
+			jenreName: 'Сообщество',
 			englishName: 'COMMUNITY',
 			isCheked: false
 		},
 		{
 			jenreId: 6,
-			jenreName: 'БИЗНЕС ЛИТЕРАТУРА',
+			jenreName: 'Бизнес литература',
 			englishName: 'BUSINESS_LITERATURE',
 			isCheked: false
 		},
 		{
 			jenreId: 7,
-			jenreName: 'КРАСОТА ЗДОРОВЬЕ СПОРТ',
+			jenreName: 'Красота здоровье спорт',
 			englishName: 'BEAUTY_HEALTH_SPORT',
 			isCheked: false
 		},
 		{
 			jenreId: 8,
-			jenreName: 'УВЛЕЧЕНИЯ',
+			jenreName: 'Увлечения',
 			englishName: 'HOBBIES',
 			isCheked: false
 		},
 		{
 			jenreId: 9,
-			jenreName: 'ПСИХОЛОГИЯ',
+			jenreName: 'Психология',
 			englishName: 'PSYCHOLOGY',
 			isCheked: false
 		}
@@ -219,7 +219,6 @@ const SearchSection = () => {
 				});
 			}
 		}
-		handleChangeFillter();
 	};
 
 	const deleteIsFalseJenre = (id: number) => {
