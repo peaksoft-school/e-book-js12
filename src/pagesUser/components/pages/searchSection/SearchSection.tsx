@@ -648,26 +648,39 @@ const SearchSection = () => {
 										<p>{item.price} с</p>
 									</div>
 									<div className={scss.btn_basket}>
-										<CustomBasketButton
-											nameClass=""
-											onClick={() => {
-												handleAddBookToBasket(item.id);
-											}}
-										>
-											<p>Добавить в корзину</p>
-										</CustomBasketButton>
+										{item.inBasket ? (
+											<CustomBasketButton
+												nameClass=""
+												onClick={() => {
+													navigate('/basket');
+												}}
+											>
+												<p>Перейти в корзину</p>
+											</CustomBasketButton>
+										) : (
+											<CustomBasketButton
+												nameClass=""
+												onClick={() => {
+													handleAddBookToBasket(item.id);
+												}}
+											>
+												<p>Добавить в корзину</p>
+											</CustomBasketButton>
+										)}
 									</div>
 								</div>
 							))}
-							<div className={scss.btn_morebook}>
-								<button
-									onClick={() => {
-										setPage(page + 1);
-									}}
-								>
-									Смотреть больше
-								</button>
-							</div>
+							{dataBooks.length >= 12 ? (
+								<div className={scss.btn_morebook}>
+									<button
+										onClick={() => {
+											setPage(page + 1);
+										}}
+									>
+										Смотреть больше
+									</button>
+								</div>
+							) : null}
 						</div>
 					</div>
 				</div>
