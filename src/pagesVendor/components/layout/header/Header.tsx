@@ -70,7 +70,6 @@ const Header = () => {
 		const result = await createNewPromo(newData);
 		if ('data' in result) {
 			const data = result.data;
-			console.log(data);
 			if (data?.httpStatus === 'OK') {
 				setIsModalOpen(false);
 				setTimeout(() => {
@@ -159,7 +158,7 @@ const Header = () => {
 											placeholder="Искать жанр, книги, авторов, издательства..."
 										/>
 									</div>
-									<div>
+									<div className={scss.lii}>
 										{showResults && searchResults && (
 											<div className={scss.searchResultsLi}>
 												<ul>

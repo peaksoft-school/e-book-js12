@@ -98,6 +98,8 @@ const ProfileVendor: React.FC = () => {
 											placeholder="Напишите ваше имя"
 											register={register}
 											registerName="firstName"
+											refError={undefined}
+											validateError={undefined}
 										/>
 									) : (
 										<p>{profileData?.firstName}</p>
@@ -110,6 +112,8 @@ const ProfileVendor: React.FC = () => {
 											placeholder="Введите вашу фамилию"
 											register={register}
 											registerName="lastName"
+											refError={undefined}
+											validateError={undefined}
 										/>
 									) : (
 										<p>{profileData?.lastName}</p>
@@ -122,6 +126,8 @@ const ProfileVendor: React.FC = () => {
 											placeholder="+996 (___) __ __ __"
 											register={register}
 											registerName="phoneNumber"
+											refError={undefined}
+											validateError={undefined}
 										/>
 									) : (
 										<p>{profileData?.phoneNumber}</p>
@@ -134,6 +140,8 @@ const ProfileVendor: React.FC = () => {
 											placeholder="Напишите ваш Email"
 											register={register}
 											registerName="email"
+											refError={undefined}
+											validateError={undefined}
 										/>
 									) : (
 										<p>{profileData?.email}</p>

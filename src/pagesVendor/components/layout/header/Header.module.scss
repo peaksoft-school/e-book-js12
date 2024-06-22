@@ -1,7 +1,6 @@
 .Header {
 	width: 100%;
 	z-index: 999;
-	margin-bottom: 10px;
 
 	.scroll {
 		transition:
@@ -23,7 +22,6 @@
 		}
 	}
 	.content {
-		margin-bottom: 40px;
 		.header_content {
 			display: flex;
 			justify-content: space-between;
@@ -47,23 +45,40 @@
 				flex-direction: column;
 				position: relative;
 
-				.searchResultsLi {
+				.lii {
 					position: absolute;
+					top: 40px;
+					width: 100%;
+				}
+
+				.searchResultsLi {
 					z-index: 999;
 					ul {
 						max-width: 895px;
 						width: 100%;
 						display: flex;
 						flex-direction: column;
-						gap: 5px;
 						background-color: white;
+						margin-top: 2px;
 						li {
-							max-width: 895px;
+							max-width: 860px;
 							width: 100%;
 							max-height: 30px;
-							padding: 20px 20px;
+							padding: 15px 15px;
 							text-align: start;
 							border-bottom: 1px solid rgb(168, 165, 165);
+							padding-bottom: 30px;
+
+							p {
+								max-width: 895px;
+								width: 100%;
+								font-size: clamp(6px, 7vw, 14px);
+								font-weight: 400;
+								line-height: 16px;
+								overflow: hidden;
+								white-space: nowrap;
+								text-overflow: ellipsis;
+							}
 						}
 					}
 				}

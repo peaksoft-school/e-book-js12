@@ -175,12 +175,17 @@
 					width: 100%;
 				}
 				.title_book {
+					max-width: 300px;
+					width: 100%;
 					font-size: 16px;
 					font-weight: 600;
 					line-height: 20.8px;
 					text-align: left;
 					color: #d1d1d1;
 					padding: 20px 0;
+					overflow: hidden;
+					white-space: nowrap;
+					text-overflow: ellipsis;
 				}
 				.about_book {
 					font-size: 16px;
@@ -190,6 +195,11 @@
 					color: #d1d1d1;
 					overflow: auto;
 					padding: 30px 0;
+					overflow: hidden;
+					white-space: nowrap;
+					text-overflow: ellipsis;
+					max-width: 250px;
+					width: 100%;
 				}
 				.about_book_footer {
 					display: flex;
