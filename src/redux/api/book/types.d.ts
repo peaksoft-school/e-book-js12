@@ -235,4 +235,36 @@ namespace BOOK {
 		genres: string[];
 		bookTypes: string[];
 	};
+
+	type getByIdVendorResponse = {
+		bookId: number;
+		imageUrlFirst: string;
+		imageUrlLast: string;
+		bookType: string;
+		title: string;
+		authorsFullName: string;
+		genre: string;
+		publishingHouse: string;
+		description: string;
+		fragment: string;
+		language: string;
+		publishedYear: number;
+		volume: number;
+		discount: number;
+		price: number;
+		priceWithDiscount: number;
+		fragmentAudUrl: string;
+		audBookUrl: string;
+		fileForBook: string;
+		duration: string;
+		durationFragmentAud: string;
+		durationAudFragment: number;
+		statusBook: string;
+		bestseller: boolean;
+		amountOfBook: number;
+		countFavorite: number;
+		countBasket: number;
+	};
+
+	type getByIdVendorRequest = number;
 }
