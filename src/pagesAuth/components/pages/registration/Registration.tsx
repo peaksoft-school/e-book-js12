@@ -44,7 +44,7 @@ const Registration = () => {
 	const [postGoogleToken] = usePostWithGoogleMutation();
 	const [email, setEmail] = useState('');
 	const [code, setCode] = useState<number | string>('');
-	const [confirmCode, {error: errorEmail}] = useConfirmEmailMutation();
+	const [confirmCode, { error: errorEmail }] = useConfirmEmailMutation();
 	const [confirmModal, setConfirmModa] = useState(false);
 	const [messageApi, contextHolder] = message.useMessage();
 	const navigate = useNavigate();
@@ -134,9 +134,9 @@ const Registration = () => {
 			reset();
 			navigate('/');
 			setCode('');
-		}else if(errorEmail){
-			const confirmEmailError = errorEmail as AUTHORIZATION.ConfirmEmailError
-			if(confirmEmailError){
+		} else if (errorEmail) {
+			const confirmEmailError = errorEmail as AUTHORIZATION.ConfirmEmailError;
+			if (confirmEmailError) {
 				const inputString = confirmEmailError.data.message;
 				const outputString = inputString?.replace(/{/g, '').replace(/}/g, '');
 				messageApi.open({

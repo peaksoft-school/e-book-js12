@@ -6,9 +6,14 @@ interface TypeProps {
 	placeholder: string;
 	value: string;
 	setValue: React.Dispatch<React.SetStateAction<string>>;
-	keyDownFunction: () => void
+	keyDownFunction: () => void;
 }
-const CustomPromoInput: FC<TypeProps> = ({ placeholder, value, setValue, keyDownFunction }) => {
+const CustomPromoInput: FC<TypeProps> = ({
+	placeholder,
+	value,
+	setValue,
+	keyDownFunction
+}) => {
 	const [focus, setIsFocus] = useState(false);
 	return (
 		<div className={scss.promo_container}>
@@ -19,11 +24,11 @@ const CustomPromoInput: FC<TypeProps> = ({ placeholder, value, setValue, keyDown
 				onBlur={() => setIsFocus(false)}
 				value={value}
 				onChange={(e) => setValue(e.target.value)}
-			onKeyDown={(e) => {
-				if(e.key === 'Enter'){
-						keyDownFunction()
-				}
-			}}
+				onKeyDown={(e) => {
+					if (e.key === 'Enter') {
+						keyDownFunction();
+					}
+				}}
 			/>
 			<div className={scss.icon_container}>
 				<div className={focus ? scss.icon : scss.close}>

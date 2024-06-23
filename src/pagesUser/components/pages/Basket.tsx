@@ -1,9 +1,9 @@
 import BasketSection from './basketSection/BasketSection';
 
-const Basket = ( ) => {
+const Basket = () => {
 	return (
 		<>
-			<BasketSection  />
+			<BasketSection />
 		</>
 	);
 };

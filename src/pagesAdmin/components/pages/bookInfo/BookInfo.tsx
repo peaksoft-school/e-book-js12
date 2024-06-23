@@ -3,7 +3,7 @@ import { FC, useState } from 'react';
 import scss from './BookInfo.module.scss';
 import CustomBasketButton from '@/src/ui/customButton/CustomBasketButton';
 import CustomPersonalAreaButton from '@/src/ui/customButton/CustomPersonalArea';
-import { Modal } from 'antd';
+import { Modal, Tooltip } from 'antd';
 import { IconSuccess } from '@/src/assets/icons';
 import {
 	useApproveBookMutation,
@@ -107,7 +107,14 @@ const BookInfo: FC = () => {
 				<div className={scss.content}>
 					<div className={scss.content_text}>
 						{locationFunction()}
-						<h4>/ {book.title}</h4>
+						<Tooltip
+							className={scss.info_hover}
+							title={book.title.length > 10 ? book.title : ''}
+							color="black"
+							placement="bottomLeft"
+						>
+							<h4 className={scss.content_head}>/ {book.title}</h4>
+						</Tooltip>
 					</div>
 					<div className={scss.contents_book}>
 						<div className={scss.section_about_book}>
@@ -117,7 +124,14 @@ const BookInfo: FC = () => {
 						</div>
 						<div className={scss.section_content_text}>
 							<div className={scss.section_title}>
-								<h3>{book.title}</h3>
+								<Tooltip
+									className={scss.info_hover}
+									title={book.title.length > 10 ? book.title : ''}
+									color="black"
+									placement="bottomLeft"
+								>
+									<h3>{book.title}</h3>
+								</Tooltip>
 							</div>
 							<div className={scss.section_mony}>
 								<p>{book.price} с</p>
@@ -143,7 +157,18 @@ const BookInfo: FC = () => {
 									)}
 								</div>
 								<div className={scss.section_info_two}>
-									<p>{book.authorsFullName}</p>
+									<Tooltip
+										className={scss.info_hover}
+										title={
+											book.authorsFullName.length > 20
+												? book.authorsFullName
+												: ''
+										}
+										color="black"
+										placement="bottomLeft"
+									>
+										<p>{book.authorsFullName}</p>
+									</Tooltip>
 									<p>{book.genre}</p>
 									<p>{book.language}</p>
 									<p>{book.publishingHouse}</p>

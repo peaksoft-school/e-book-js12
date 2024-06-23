@@ -15,5 +15,5 @@ namespace PAYMENT {
 		httpStatus: string;
 		message: string;
 	};
-	type ConfirmPaymentRequest = string | null
+	type ConfirmPaymentRequest = string | null;
 }

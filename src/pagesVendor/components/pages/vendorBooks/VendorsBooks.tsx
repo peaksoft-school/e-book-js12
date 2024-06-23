@@ -1,27 +1,26 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { FC,  useState } from 'react';
+import { FC, useState } from 'react';
 import scss from './VendorsBooks.module.scss';
 import { IconPencil } from '@tabler/icons-react';
+import girl_img from '../../../../assets/img/Knowledgecuate.png';
 
 import { useNavigate } from 'react-router-dom';
 import { IconArrowBottom, IconDelete, IconWhiteLike } from '@/src/assets/icons';
 import ThreeDotIcon from '@/src/assets/icons/icon-threeDot';
 import {
 	useDeleteBookMutation,
-	useGetAllBookVedorQuery
+	useGetFindAllBookVedorQuery
 } from '@/src/redux/api/book';
 import CustomSeeMoreButton from '@/src/ui/customButton/CustomSeeMoreButton';
-import { Modal } from 'antd';
+import { Modal, Tooltip } from 'antd';
 
 const VendorsBooks: FC = () => {
 	const [isOpen, setIsOpen] = useState<boolean>(false);
-	const [bookId, setBookId] = useState<null | number>(null); // Исправлено: было bookoId
+	const [bookId, setBookId] = useState<null | number>(null);
 	const navigate = useNavigate();
 	const [sortSelected, setSortSelected] = useState('ALL');
 	const [isOpenBooksType, setIsOpenBooksType] = useState(false);
 	const [isModalOpen, setIsModalOpen] = useState(false);
-	const [selectedBook, setSelectedBook] = useState<number | null>(null);
-	const [allBooks, setAllBooks] = useState<any[]>([]);
 	const [sizePage, setSizePage] = useState(12);
 	const [sortBookData] = useState([
 		{
@@ -51,11 +50,10 @@ const VendorsBooks: FC = () => {
 		}
 	]);
 
-	const [currentPage, setCurrentPage] = useState<number>(1);
-	const { data, isLoading } = useGetAllBookVedorQuery({
+	const { data, isLoading } = useGetFindAllBookVedorQuery({
 		bookOperationType: sortSelected,
-		page: currentPage,
-		pageSize: 12
+		page: 1,
+		pageSize: sizePage
 	});
 
 	const [deleteBook] = useDeleteBookMutation();
@@ -64,24 +62,12 @@ const VendorsBooks: FC = () => {
 		await deleteBook(id);
 	};
 
-
-	const handleOk = async () => {
-		if (selectedBook !== null) {
-			await deleteBookChange(selectedBook);
-		}
-		setIsModalOpen(false);
-		setSelectedBook(null);
-	};
-
 	const handleCancel = () => {
 		setIsModalOpen(false);
-		setSelectedBook(null);
 	};
 	const hadnlePageSizeBook = () => {
 		return setSizePage(sizePage + 12);
 	};
-
-
 
 	if (isLoading) {
 		return <div>Loading...</div>;
@@ -92,7 +78,7 @@ const VendorsBooks: FC = () => {
 			<div className="container">
 				<div className={scss.content}>
 					<div className={scss.books_quantity}>
-						<p>Всего {allBooks.length} книг</p>
+						<p>Всего {data?.length} книг</p>
 						<div className={scss.all_books}>
 							<div className={scss.click}>
 								<p
@@ -126,8 +112,6 @@ const VendorsBooks: FC = () => {
 												onClick={() => {
 													setSortSelected(sort.sort);
 
-													setCurrentPage(1);
-													setAllBooks([]);
 													setIsOpenBooksType(false);
 												}}
 											>
@@ -141,9 +125,9 @@ const VendorsBooks: FC = () => {
 						</div>
 					</div>
 					<hr className={scss.title_hr} />
-					{allBooks.length > 0 ? (
+					{data!.length > 0 ? (
 						<div className={scss.books_content}>
-							{allBooks.map((book) => (
+							{data?.map((book) => (
 								<div key={book.id} className={scss.book}>
 									<div className={scss.book_header}>
 										<div className={scss.hearts}>
@@ -157,7 +141,7 @@ const VendorsBooks: FC = () => {
 									<div
 										className={scss.extra}
 										onClick={() => {
-											setIsOpen(!isOpen);
+											setIsOpen(true);
 											setBookId(book.id);
 										}}
 									>
@@ -175,8 +159,8 @@ const VendorsBooks: FC = () => {
 												<hr />
 												<li
 													onClick={() => {
-														deleteBookChange(book.id);
 														setIsOpen(false);
+														setIsModalOpen(true);
 													}}
 												>
 													<span>
@@ -185,6 +169,26 @@ const VendorsBooks: FC = () => {
 													Удалить
 												</li>
 											</ul>
+											<Modal
+												open={isModalOpen}
+												onCancel={handleCancel}
+												footer={null}
+												className={scss.delete_modal}
+											>
+												<div className={scss.delete_modal}>
+													<p>Вы уверены, что хотите удалить?</p>
+													<div className={scss.bt_modal}>
+														<button onClick={handleCancel}>Отменить</button>
+														<button
+															onClick={() => {
+																deleteBookChange(book.id);
+															}}
+														>
+															Удалить
+														</button>
+													</div>
+												</div>
+											</Modal>
 										</div>
 									)}
 									<div
@@ -195,7 +199,21 @@ const VendorsBooks: FC = () => {
 											<img src={book.imageLink} alt={book.imageLink} />
 										</div>
 										<div className={scss.info_book}>
-											<h3>{book.bookName}</h3>
+											{book.bookName.length > 12 ? (
+												<>
+													<Tooltip
+														className={scss.info_hover}
+														title={book.bookName}
+														color="orangered"
+														placement="bottomLeft"
+													>
+														<h3>{book.bookName}</h3>
+													</Tooltip>
+												</>
+											) : (
+												book.bookName
+											)}
+
 											<div className={scss.date_and_price}>
 												<p>{book.publishedYear}</p>
 												<p className={scss.price}>{book.price} c</p>
@@ -208,8 +226,8 @@ const VendorsBooks: FC = () => {
 					) : (
 						<div className={scss.noBooksYet}>
 							<div className={scss.noBooksYetContent}>
+								<img src={girl_img} alt="Girl with books" />
 								<h1>Здесь появятся добавленные вами книги.</h1>
-								<img src="" alt="Girl with books" />
 							</div>
 						</div>
 					)}
@@ -227,21 +245,6 @@ const VendorsBooks: FC = () => {
 					) : null}
 				</div>
 			</div>
-			<Modal
-				visible={isModalOpen}
-				onOk={handleOk}
-				onCancel={handleCancel}
-				footer={null}
-				className={scss.delete_modal}
-			>
-				<div className={scss.delete_modal}>
-					<p>Вы уверены, что хотите удалить?</p>
-					<div className={scss.bt_modal}>
-						<button onClick={handleCancel}>Отменить</button>
-						<button onClick={handleOk}>Удалить</button>
-					</div>
-				</div>
-			</Modal>
 		</section>
 	);
 };

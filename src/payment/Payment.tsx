@@ -11,7 +11,12 @@ interface TypeProps {
 	test: Record<string, string>;
 }
 
-const Payment: FC<TypeProps> = ({ openModal, setOpenModal, totalAmount, test }) => {
+const Payment: FC<TypeProps> = ({
+	openModal,
+	setOpenModal,
+	totalAmount,
+	test
+}) => {
 	const stripeTestPromise = loadStripe(
 		'pk_test_51PSxn0P9AwzSXbtUejAOIXjKhTxpQmLwHNFjc6yjFOYsXNIK0l8yP1Apg3eF0x2gKy094TEupBQtGfEZogSDWrK600uGVUQfKk'
 	) as Promise<Stripe | any>;

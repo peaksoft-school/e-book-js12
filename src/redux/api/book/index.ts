@@ -2,7 +2,7 @@ import { api as index } from '..';
 
 const api = index.injectEndpoints({
 	endpoints: (build) => ({
-		getAllBookVedor: build.query<
+		GetFindAllBookVedor: build.query<
 			BOOK.GetProductsResponse,
 			BOOK.GetProductsRequest
 		>({
@@ -140,11 +140,20 @@ const api = index.injectEndpoints({
 				};
 			},
 			invalidatesTags: ['book']
+		}),
+		getByIdVendor: build.query<
+			BOOK.getByIdVendorResponse,
+			BOOK.getByIdVendorRequest
+		>({
+			query: (id) => ({
+				url: `/api/book/getByBookId/${id}`,
+				method: 'GET'
+			}),
+			providesTags: ['book']
 		})
 	})
 });
 export const {
-	useGetAllBookVedorQuery,
 	useGetAllVendorBooksQuery,
 	useDeleteBookMutation,
 	useGetBookByIdQuery,
@@ -155,5 +164,7 @@ export const {
 	useRejectBookMutation,
 	useFilterBooksMutation,
 	useGetBookByIdVendorQuery,
-	useEditPhotoUrlMutation
+	useEditPhotoUrlMutation,
+	useGetFindAllBookVedorQuery,
+	useGetByIdVendorQuery
 } = api;

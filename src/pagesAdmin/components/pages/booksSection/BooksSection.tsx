@@ -10,7 +10,7 @@ import {
 	useDeleteBookMutation,
 	useFilterBooksMutation
 } from '@/src/redux/api/book';
-import { Modal } from 'antd';
+import { Modal, Tooltip } from 'antd';
 
 type Book = {
 	bookId: number;
@@ -31,7 +31,7 @@ const BooksSection: React.FC = () => {
 	const [genre, setGenre] = useState<string>('Все');
 	const [books, setBooks] = useState<Book[]>([]);
 	const navigate = useNavigate();
-	const [filterBooks] = useFilterBooksMutation();
+	const [filterBooks, { isLoading }] = useFilterBooksMutation();
 	const [idBook, setIdBook] = useState<null | number>(null);
 	const [deleteBookById] = useDeleteBookMutation();
 	console.log(genre);
@@ -190,194 +190,214 @@ const BooksSection: React.FC = () => {
 		setIsModalOpen(false);
 		setSelectedBook(null);
 	};
+
 	return (
-		<section className={scss.BooksSection}>
-			<div className={scss.container}>
-				<div className={scss.books_page_content}>
-					<div className={scss.books_filter}>
-						<div className={scss.books_genre}>
-							<div className={scss.click}>
-								<p onClick={toggleGenreList}>
-									<span>
-										Жанры
-										<div
-											className={
-												isOpenBooksGenre ? scss.arrow_bottom : scss.arrow_top
-											}
-										>
-											<IconArrowBottom />
-										</div>
-										<></>
-									</span>
-								</p>
-								<div
-									className={
-										isOpenBooksGenre ? scss.genre_list : scss.none_books_genre
-									}
-								>
-									{genreBook.map((data) => (
-										<div
-											key={data.genreId}
-											className={scss.genre_quantity}
-											onClick={() => handleGenreClick(data.englishName)}
-										>
-											<p>{data.genreName}</p>
-											<p>{books.length}</p>
-										</div>
-									))}
-								</div>
-							</div>
-						</div>
-						<div className={scss.types_book}>
-							<div className={scss.click}>
-								<p onClick={toggleTypeList}>
-									<span>{bookTypeText}</span>
-									<div
-										className={
-											isOpenBooksType ? scss.arrow_bottom : scss.arrow_top
-										}
-									>
-										<IconArrowBottom />
-									</div>
-									<></>
-								</p>
-								{
-									<div
-										className={
-											isOpenBooksType ? scss.type_list : scss.none_books_type
-										}
-									>
-										{selectedType !== null ? (
-											<>
-												<p onClick={() => handleTypeSelect(null)}>Все</p>
-												<hr />
-											</>
-										) : null}
-										{bookType.map((bookType) => (
-											<>
-												<p
-													key={bookType.typeId}
-													onClick={() =>
-														handleTypeSelect(bookType.typeNameEnglish)
+		<>
+			{isLoading ? (
+				<>loading</>
+			) : (
+				<section className={scss.BooksSection}>
+					<div className={scss.container}>
+						<div className={scss.books_page_content}>
+							<div className={scss.books_filter}>
+								<div className={scss.books_genre}>
+									<div className={scss.click}>
+										<p onClick={toggleGenreList}>
+											<span>
+												Жанры
+												<div
+													className={
+														isOpenBooksGenre
+															? scss.arrow_bottom
+															: scss.arrow_top
 													}
 												>
-													{bookType.typeName}
-												</p>
-												<hr />
-											</>
-										))}
-									</div>
-								}
-							</div>
-						</div>
-					</div>
-					<div className={scss.add_book_btn}>
-						<CustomAddBookButton
-							children={'+  Добавить книгу'}
-							onClick={() => {
-								navigate('/admin/books/add_book');
-							}}
-						/>
-					</div>
-				</div>
-				<div className={scss.total_quantity}>
-					<p>Всего: {books.length}</p>
-					<div className={scss.janry}>
-						<span>{genreText}</span>
-						<span
-							onClick={() => {
-								setGenre('Все');
-								setSelectedGenre([]);
-							}}
-						>
-							<IconX />
-						</span>
-					</div>
-					<div className={scss.tipy}>
-						<span>
-							<span>{bookTypeText}</span>
-						</span>
-						<span
-							onClick={() => {
-								setSelectedType(null);
-							}}
-						>
-							<IconX />
-						</span>
-					</div>
-				</div>
-				<div className={scss.content}>
-					{books.map((book) => (
-						<div key={book.bookId} className={scss.book}>
-							<div
-								className={scss.extra}
-								onClick={() => {
-									setOpenState(!openState);
-									setIdBook(book.bookId);
-									console.log(book.bookId);
-								}}
-							>
-								<ThreeDotIcon />
-							</div>
-							{idBook === book.bookId ? (
-								<div className={openState ? scss.is_open : scss.on_close}>
-									<ul>
-										<li onClick={() => setOpenState(!openState)}>
-											<span>
-												<IconPencil />
+													<IconArrowBottom />
+												</div>
+												<></>
 											</span>
-											Редактировать
-										</li>
-										<li
-											onClick={() => {
-												showModal(book.bookId);
-
-												setOpenState(!openState);
-											}}
+										</p>
+										<div
+											className={
+												isOpenBooksGenre
+													? scss.genre_list
+													: scss.none_books_genre
+											}
 										>
-											<span>
-												<IconX />
-											</span>
-											Удалить
-										</li>
-									</ul>
+											{genreBook.map((data) => (
+												<div
+													key={data.genreId}
+													className={scss.genre_quantity}
+													onClick={() => handleGenreClick(data.englishName)}
+												>
+													<p>{data.genreName}</p>
+													<p>{books.length}</p>
+												</div>
+											))}
+										</div>
+									</div>
 								</div>
-							) : null}
-							<div
-								className={scss.book_content}
-								onClick={() => handleBookClick(book.bookId)}
-							>
-								<div className={scss.book_img}>
-									<img src={book.imageUrl} alt="" />
-								</div>
-								<div className={scss.info_book}>
-									<h3>{book.title}</h3>
-									<div className={scss.date_and_price}>
-										<p>{book.dataOfDate}</p>
-										<p className={scss.price}>{book.price} c</p>
+								<div className={scss.types_book}>
+									<div className={scss.click}>
+										<p onClick={toggleTypeList}>
+											<span>{bookTypeText}</span>
+											<div
+												className={
+													isOpenBooksType ? scss.arrow_bottom : scss.arrow_top
+												}
+											>
+												<IconArrowBottom />
+											</div>
+											<></>
+										</p>
+										{
+											<div
+												className={
+													isOpenBooksType
+														? scss.type_list
+														: scss.none_books_type
+												}
+											>
+												{selectedType !== null ? (
+													<>
+														<p onClick={() => handleTypeSelect(null)}>Все</p>
+														<hr />
+													</>
+												) : null}
+												{bookType.map((bookType) => (
+													<>
+														<p
+															key={bookType.typeId}
+															onClick={() =>
+																handleTypeSelect(bookType.typeNameEnglish)
+															}
+														>
+															{bookType.typeName}
+														</p>
+														<hr />
+													</>
+												))}
+											</div>
+										}
 									</div>
 								</div>
 							</div>
+							<div className={scss.add_book_btn}>
+								<CustomAddBookButton
+									children={'+  Добавить книгу'}
+									onClick={() => {
+										navigate('/admin/books/add_book');
+									}}
+								/>
+							</div>
 						</div>
-					))}
-				</div>
-			</div>
-			<Modal
-				visible={isModalOpen}
-				onOk={handleOk}
-				onCancel={handleCancel}
-				footer={null}
-				className={scss.delete_modal}
-			>
-				<div className={scss.delete_modal}>
-					<p>Вы уверены, что хотите удалить?</p>
-					<div className={scss.bt_modal}>
-						<button onClick={handleCancel}>Отменить</button>
-						<button onClick={handleOk}>Удалить</button>
+						<div className={scss.total_quantity}>
+							<p>Всего: {books.length}</p>
+							<div className={scss.janry}>
+								<span>{genreText}</span>
+								<span
+									onClick={() => {
+										setGenre('Все');
+										setSelectedGenre([]);
+									}}
+								>
+									<IconX />
+								</span>
+							</div>
+							<div className={scss.tipy}>
+								<span>
+									<span>{bookTypeText}</span>
+								</span>
+								<span
+									onClick={() => {
+										setSelectedType(null);
+									}}
+								>
+									<IconX />
+								</span>
+							</div>
+						</div>
+						<div className={scss.content}>
+							{books.map((book) => (
+								<div key={book.bookId} className={scss.book}>
+									<div
+										className={scss.extra}
+										onClick={() => {
+											setOpenState(!openState);
+											setIdBook(book.bookId);
+											console.log(book.bookId);
+										}}
+									>
+										<ThreeDotIcon />
+									</div>
+									{idBook === book.bookId ? (
+										<div className={openState ? scss.is_open : scss.on_close}>
+											<ul>
+												<li onClick={() => setOpenState(!openState)}>
+													<span>
+														<IconPencil />
+													</span>
+													Редактировать
+												</li>
+												<li
+													onClick={() => {
+														showModal(book.bookId);
+
+														setOpenState(!openState);
+													}}
+												>
+													<span>
+														<IconX />
+													</span>
+													Удалить
+												</li>
+											</ul>
+										</div>
+									) : null}
+									<div
+										className={scss.book_content}
+										onClick={() => handleBookClick(book.bookId)}
+									>
+										<div className={scss.book_img}>
+											<img src={book.imageUrl} alt="" />
+										</div>
+										<div className={scss.info_book}>
+											<Tooltip
+												className={`${scss.info_hover}/${scss.custom_tooltip}`}
+												title={book.title.length > 20 ? book.title : ''}
+												color="black"
+												placement="bottomLeft"
+											>
+												<h3>{book.title}</h3>
+											</Tooltip>
+											<div className={scss.date_and_price}>
+												<p>{book.dataOfDate}</p>
+												<p className={scss.price}>{book.price} c</p>
+											</div>
+										</div>
+									</div>
+								</div>
+							))}
+						</div>
 					</div>
-				</div>
-			</Modal>
-		</section>
+					<Modal
+						visible={isModalOpen}
+						onOk={handleOk}
+						onCancel={handleCancel}
+						footer={null}
+						className={scss.delete_modal}
+					>
+						<div className={scss.delete_modal}>
+							<p>Вы уверены, что хотите удалить?</p>
+							<div className={scss.bt_modal}>
+								<button onClick={handleCancel}>Отменить</button>
+								<button onClick={handleOk}>Удалить</button>
+							</div>
+						</div>
+					</Modal>
+				</section>
+			)}
+		</>
 	);
 };
 

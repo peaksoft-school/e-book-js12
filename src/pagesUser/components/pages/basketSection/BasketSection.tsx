@@ -41,7 +41,6 @@ const BasketPage = () => {
 	const [amount, setAmount] = useState<number | undefined>(0);
 	const [test, setTest] = useState<Record<string, string>>({});
 
-
 	const hadnleOpenModalPromo = () => {
 		setIsPromo(!isPromo);
 	};
@@ -87,7 +86,6 @@ const BasketPage = () => {
 			}
 		}
 	};
-
 
 	const handleAddToFavorite = async (id: number) => {
 		const result = await addToFavorite(id);

@@ -128,14 +128,13 @@ const PaymentForm: FC<TypeProps> = ({
 						<p>description</p>
 					</div>
 					<div className={scss.detals_product}>
-							<p>Detals</p>
-							<div className={scss.info_content}>
-								<div  className={scss.date}>
-									<p>data</p>
-									<p>{Date()}</p>
-								</div>
-								
+						<p>Detals</p>
+						<div className={scss.info_content}>
+							<div className={scss.date}>
+								<p>data</p>
+								<p>{Date()}</p>
 							</div>
+						</div>
 					</div>
 				</div>
 			</Modal>

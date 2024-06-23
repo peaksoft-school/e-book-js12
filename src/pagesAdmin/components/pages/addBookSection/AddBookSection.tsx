@@ -94,7 +94,6 @@ const AddBookSection = () => {
 	} = useForm();
 	const errorRef = useRef<FieldErrors<FormValues>>(errors);
 
-
 	const [fragment, setFragment] = useState(' ');
 
 	const [addBookVendor] = useAddBookVendorMutation();

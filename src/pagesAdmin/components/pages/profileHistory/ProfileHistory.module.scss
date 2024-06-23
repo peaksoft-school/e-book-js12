@@ -122,6 +122,13 @@
 					border-bottom: 1px solid lightgray;
 				}
 
+				.empty_message {
+					display: flex;
+					flex-direction: column;
+					justify-content: center;
+					align-items: center;
+					width: 100%;
+				}
 				.book_map_info {
 					width: 100%;
 					display: flex;
@@ -212,6 +219,18 @@
 						}
 					}
 					.book_name_end {
+						p {
+							max-width: 200px;
+
+							font-size: 14px;
+							font-weight: 600;
+							line-height: 120%;
+							text-align: left;
+							text-transform: uppercase;
+							overflow: hidden;
+							white-space: nowrap;
+							text-overflow: ellipsis;
+						}
 						@media (max-width: 900px) {
 							margin-top: 20px;
 						}
@@ -221,7 +240,18 @@
 							font-weight: 400;
 							line-height: 18.2px;
 							text-align: left;
-
+							max-width: 200px;
+							width: 100%;
+							color: rgb(34, 34, 34);
+							font-family: 'Open Sans', sans-serif;
+							font-size: 14px;
+							font-weight: 600;
+							line-height: 120%;
+							text-align: left;
+							text-transform: uppercase;
+							overflow: hidden;
+							white-space: nowrap;
+							text-overflow: ellipsis;
 							color: #969696;
 						}
 					}

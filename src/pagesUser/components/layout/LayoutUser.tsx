@@ -30,10 +30,7 @@ const LayoutUser = () => {
 						<Route path="/favorite" element={<FavoritePage />} />
 						<Route path="/basket" element={<Basket />} />
 						<Route path="/promo_page" element={<PromoPage />} />
-						<Route
-							path="/confirmPayment"
-							element={<ConfirmPaymentPage />}
-						/>
+						<Route path="/confirmPayment" element={<ConfirmPaymentPage />} />
 					</Routes>
 				</main>
 				{pathname === '/payment' || pathname === '/confirmPayment' ? null : (

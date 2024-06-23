@@ -36,8 +36,6 @@ interface RegistrationResponse {
 	};
 }
 
-
-
 const VendorRegistration = () => {
 	const [isPassword, setIsPassword] = useState(false);
 	const navigate = useNavigate();
