@@ -4,12 +4,12 @@
 			font-size: 12px;
 			display: flex;
 			margin-bottom: 109px;
-			.content_head{
+			.content_head {
 				max-width: 100px;
-						text-transform: uppercase;
-						overflow: hidden;
-						white-space: nowrap;
-						text-overflow: ellipsis;
+				text-transform: uppercase;
+				overflow: hidden;
+				white-space: nowrap;
+				text-overflow: ellipsis;
 			}
 
 			@media (max-width: 500px) {

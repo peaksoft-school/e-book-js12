@@ -95,6 +95,7 @@ const ProfileClient: React.FC = () => {
 											<p className={scss.name_info_text}>Мое имя</p>
 											{isEditMode ? (
 												<CustomUserNameInput
+												
 													placeholder="Напишите ваше имя"
 													register={register}
 													registerName="firstName"
