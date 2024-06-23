@@ -1183,6 +1183,11 @@
 			justify-content: center;
 			text-align: center;
 			p {
+				max-width: 475px;
+				overflow: hidden;
+				white-space: nowrap;
+				text-overflow: ellipsis;
+				font-weight: 600;
 				span {
 					color: black;
 					font-weight: 600;

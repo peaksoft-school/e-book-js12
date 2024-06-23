@@ -71,7 +71,6 @@
 			gap: 22px;
 			width: 100%;
 			margin-bottom: 30px;
-			margin-top: 40px;
 			position: relative;
 			@media (max-width: 360px) {
 				display: flex;
@@ -247,6 +246,10 @@
 				width: 100%;
 				background: rgb(237, 237, 237);
 				margin-bottom: 70px;
+				transition:
+					background-color 0.3s,
+					transform 0.3s;
+
 				@media (max-width: 830px) {
 					max-width: 200px;
 					width: 100%;
@@ -350,6 +353,8 @@
 						flex-direction: column;
 						gap: 7px;
 						h3 {
+							max-width: 150px;
+							width: 100%;
 							color: rgb(34, 34, 34);
 							font-family: 'Open Sans', sans-serif;
 							font-size: 14px;
@@ -357,7 +362,10 @@
 							line-height: 120%;
 							text-align: left;
 							text-transform: uppercase;
-							overflow-wrap: break-word;
+							overflow: hidden;
+							white-space: nowrap;
+							text-overflow: ellipsis;
+
 							@media (max-width: 830px) {
 								font-size: 8px;
 							}
@@ -659,5 +667,33 @@
 				color: white;
 			}
 		}
+	}
+}
+.noBooksYet {
+	width: 100%;
+	.noBooksYetContent {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		width: 100%;
+		img {
+			display: flex;
+			justify-content: center;
+		}
+	}
+}
+:global {
+	.ant-tooltip-inner {
+		background-color: #f8f8f8 !important;
+		color: rgb(150, 150, 150) !important;
+		font-family: Open Sans !important;
+		font-size: 12px !important;
+		font-weight: 400 !important;
+		line-height: 130% !important;
+		letter-spacing: 0px !important;
+		text-align: left !important;
+		max-width: 308px !important;
+		width: 100% !important;
 	}
 }

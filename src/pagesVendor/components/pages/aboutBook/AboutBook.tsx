@@ -8,7 +8,7 @@ import { Link, useNavigate, useParams } from 'react-router-dom';
 import { IconWhiteLike } from '@/src/assets/icons';
 import {
 	useDeleteBookMutation,
-	useGetBookByIdVendorQuery
+	useGetByIdVendorQuery
 } from '@/src/redux/api/book';
 
 const AboutBook = () => {
@@ -20,7 +20,7 @@ const AboutBook = () => {
 
 	const { id } = useParams();
 	const bookId = Number(id);
-	const { data: book, isLoading } = useGetBookByIdVendorQuery(bookId);
+	const { data: book, isLoading } = useGetByIdVendorQuery(bookId);
 	console.log(book);
 
 	const showModal = (book: any) => {
@@ -39,6 +39,81 @@ const AboutBook = () => {
 	};
 	if (isLoading) return <p>Загрузка...</p>;
 	if (!book) return <p>Ошибка загрузки данных книги</p>;
+
+	const language = [
+		{
+			id: 1,
+			name: 'ENGLISH',
+			nameRus: 'Английский язык'
+		},
+		{
+			id: 2,
+			name: 'RUSSIAN',
+			nameRus: 'Русский язык'
+		},
+		{
+			id: 3,
+			name: 'KYRGYZ',
+			nameRus: 'Кыргызский язык'
+		}
+	];
+
+	const genreBook = [
+		{
+			genreId: 1,
+			genreName: 'Художественная литература',
+			englishName: 'ARTISTIC_LITERATURE',
+			isChecked: false
+		},
+		{
+			genreId: 2,
+			genreName: 'Образование',
+			englishName: 'EDUCATION',
+			isChecked: false
+		},
+		{
+			genreId: 3,
+			genreName: 'Книги для детей',
+			englishName: 'BOOKS_FOR_CHILDREN',
+			isChecked: false
+		},
+		{
+			genreId: 4,
+			genreName: 'Наука и технология',
+			englishName: 'SCIENCE_AND_TECHNOLOGY',
+			isChecked: false
+		},
+		{
+			genreId: 5,
+			genreName: 'Сообщество',
+			englishName: 'COMMUNITY',
+			isChecked: false
+		},
+		{
+			genreId: 6,
+			genreName: 'Бизнес литература',
+			englishName: 'BUSINESS_LITERATURE',
+			isChecked: false
+		},
+		{
+			genreId: 7,
+			genreName: 'Красота, здоровье, спорт',
+			englishName: 'BEAUTY_HEALTH_SPORT',
+			isChecked: false
+		},
+		{
+			genreId: 8,
+			genreName: 'Увлечения',
+			englishName: 'HOBBIES',
+			isChecked: false
+		},
+		{
+			genreId: 9,
+			genreName: 'Психология',
+			englishName: 'PSYCHOLOGY',
+			isChecked: false
+		}
+	];
 	return (
 		<section className={scss.AboutBook}>
 			<div className="container">
@@ -57,7 +132,7 @@ const AboutBook = () => {
 					<div className={scss.contents_book}>
 						<div className={scss.section_about_book}>
 							<div className={scss.woman_book}>
-								<img src={book.imageUrlFirst} alt="Harry Potter" />
+								<img src={book.imageUrlFirst} alt={book.title} />
 							</div>
 						</div>
 						<div className={scss.section_content_text}>
@@ -93,13 +168,18 @@ const AboutBook = () => {
 									<p>Язык</p>
 									<p>Издательство</p>
 									<p>Год выпуска</p>
-									<p>Обьем</p>
+									<p>Объем</p>
 								</div>
-								<div></div>
 								<div className={scss.section_info_two}>
-									<p>{book.authorsFullName}</p>
-									<p>{book.genre}</p>
-									<p>{book.language}</p>
+									<p className={scss.authorsFullName}>{book.authorsFullName}</p>
+									<p>
+										{genreBook.find((genre) => genre.englishName === book.genre)
+											?.genreName || book.genre}
+									</p>
+									<p>
+										{language.find((lang) => lang.name === book.language)
+											?.nameRus || book.language}
+									</p>
 									<p>{book.publishingHouse}</p>
 									<p>{book.publishedYear}</p>
 									<p>{book.volume}</p>
@@ -128,7 +208,7 @@ const AboutBook = () => {
 									<div className={scss.modal_delete_content}>
 										<p>
 											Вы уверены, что хотите удалить <br />
-											<span>“Гарри Потер и Тайная комната” ? </span>
+											<span>{book.title}?</span>
 										</p>
 										<div className={scss.modal_delete_btn}>
 											<button
@@ -179,13 +259,9 @@ const AboutBook = () => {
 								</p>
 							</div>
 							{aboutBook ? (
-								<>
-									<p className={scss.book_info}>{book.fragment}</p>
-								</>
+								<p className={scss.book_info}>{book.fragment}</p>
 							) : (
-								<>
-									<p className={scss.book_info}>{book.description}</p>
-								</>
+								<p className={scss.book_info}>{book.description}</p>
 							)}
 						</div>
 						<div className={scss.info_img}>

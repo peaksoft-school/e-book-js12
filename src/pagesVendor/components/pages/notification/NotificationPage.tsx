@@ -44,7 +44,7 @@ const NotificationPage = () => {
 						</Link>
 					</div>
 					<div className={scss.content}>
-						{notifications && notifications.length >= 3 && (
+						{notifications && notifications.length >= 2 && (
 							<div className={scss.handleDeleteAllNotification}>
 								<button onClick={handleDeleteAllNotifications}>
 									Удалить все уведомления
