@@ -15,7 +15,7 @@ import { Modal } from 'antd';
 import CustomBasketButton from '@/src/ui/customButton/CustomBasketButton';
 import CustomAudioDownloadInput from '@/src/ui/customAudioInput/CustomAudioDownloadInput';
 import CustomPDFDownloadInput from '@/src/ui/customPDFInput/CustomPDFDownloadInput';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import {
 	FieldErrors,
 	FieldValues,
@@ -48,6 +48,7 @@ type FormValues = {
 };
 
 const BookAddSection = () => {
+	const navigate = useNavigate();
 	const [nameBook, setNameBook] = useState('');
 	const [clickRadio, setClickRadio] = useState(true);
 	const [audioBook, setAudioBook] = useState(false);
@@ -214,6 +215,9 @@ const BookAddSection = () => {
 			setSecondPhoto('');
 			setDelPhoto(false);
 			setPdfFileName(null);
+			setTimeout(() => {
+				navigate('/vendor/home');
+			}, 2000);
 		}
 	};
 	const handleFileChange = async (file: File) => {
@@ -1304,7 +1308,6 @@ const BookAddSection = () => {
 							{<></>}
 							<Modal
 								className={scss.modal_succes}
-								open={modal}
 								footer={false}
 								onCancel={() => setModal(false)}
 							>
@@ -1312,7 +1315,7 @@ const BookAddSection = () => {
 									<IconSuccess />
 									<div className={scss.info_text}>
 										<p>
-											<span>“{nameBook}”</span> <br />
+											<span>“{nameBook}</span> <br />
 											успешно добавлен!
 										</p>
 									</div>

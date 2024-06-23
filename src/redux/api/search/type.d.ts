@@ -10,6 +10,7 @@ namespace SEARCH {
 		price: number;
 		priceWithDiscount: number;
 		createdAt: string;
+		message: string;
 	}[];
 	type SearchRequest = {
 		searchTerm: string;
