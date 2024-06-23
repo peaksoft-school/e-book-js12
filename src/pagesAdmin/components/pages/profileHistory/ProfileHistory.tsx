@@ -5,7 +5,10 @@ import {
 	useGetBooksInBasketQuery
 } from '@/src/redux/api/userHistory';
 import { useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
+import emptyImage from '@/src/assets/img/Knowledgecuate.png';
+import IconGirl from '@/src/assets/icons/icon-girl';
+import { Tooltip } from 'antd';
 
 const ProfileHistory = () => {
 	const params = useParams();
@@ -14,11 +17,6 @@ const ProfileHistory = () => {
 	const { data: historyData } = useGetAllHistoryActionQuery(locationId);
 	const { data: favoriteData } = useGetAllFavoriteQuery(locationId);
 	const { data: basketData } = useGetBooksInBasketQuery(locationId);
-	const navigate = useNavigate();
-
-	const handleBook = (id: number) => {
-		navigate(`/admin/users/books/${id}`);
-	};
 
 	return (
 		<div className={scss.profile_history}>
@@ -69,125 +67,214 @@ const ProfileHistory = () => {
 						<div className={scss.prof_map_section}>
 							{activeTab === 'history' && (
 								<div>
-									{historyData?.map((item) => (
-										<div key={item.id} className={scss.line}>
-											<div
-												onClick={() => handleBook(item.id)}
-												className={scss.book_map_info}
-											>
-												<img
-													className={scss.book_image}
-													src={item.imageUrl}
-													alt="book"
-												/>
-												<div className={scss.book_flex}>
-													<div className={scss.book_name_end}>
-														<p>{item.title}</p>
-														<p className={scss.book_name_people}>
-															{item.authorsFullName}
-														</p>
-													</div>
-
-													<p className={scss.book_quantity}>{item.quantity}</p>
-													<div className={scss.scitd_one}>
-														<p className={scss.pprom}>
-															Промокод {item.discount}%
-														</p>
-														<div className={scss.scitd}>
-															<p>(-{item.priceWithDiscount})</p>
-															<p className={scss.book_price}>{item.price}</p>
+									{historyData && historyData?.length > 0 ? (
+										historyData?.map((item) => (
+											<div key={item.id} className={scss.line}>
+												<div className={scss.book_map_info}>
+													<img
+														className={scss.book_image}
+														src={item.imageUrl}
+														alt="book"
+													/>
+													<div className={scss.book_flex_x}>
+														<div className={scss.flex_book}>
+															<div className={scss.book_name_end}>
+																<Tooltip
+																	className={scss.info_hover}
+																	title={
+																		item.title.length > 20 ? item.title : ''
+																	}
+																	color="black"
+																	placement="bottomLeft"
+																>
+																	<p>{item.title}</p>
+																</Tooltip>
+																<Tooltip
+																	className={scss.info_hover}
+																	title={
+																		item.authorsFullName.length > 20
+																			? item.authorsFullName
+																			: ''
+																	}
+																	color="black"
+																	placement="bottomLeft"
+																>
+																	<p className={scss.book_name_people}>
+																		{item.authorsFullName}
+																	</p>
+																</Tooltip>
+															</div>
+														</div>
+														<div className={scss.flex_book_x}>
+															<p className={scss.book_quantity}>
+																{item.quantity}
+															</p>
+															<div className={scss.scitd_one}>
+																<p className={scss.pprom}>
+																	Промокод {item.discount}%
+																</p>
+																<div className={scss.scitd}>
+																	<p>(-{item.priceWithDiscount})</p>
+																	<p className={scss.book_price}>
+																		{item.price}
+																	</p>
+																</div>
+															</div>
+															<p className={scss.book_data}>{item.createdAt}</p>
+															<p className={scss.book_state}></p>
 														</div>
 													</div>
-													<p className={scss.book_data}>{item.createdAt}</p>
-													<p className={scss.book_state}>Завершен</p>
 												</div>
 											</div>
+										))
+									) : (
+										<div className={scss.empty_message}>
+											<IconGirl />
+											<p>Нет доступных книг</p>
 										</div>
-									))}
+									)}
 								</div>
 							)}
+
 							{activeTab === 'favorites' && (
 								<div>
-									{favoriteData?.map((item) => (
-										<div key={item.id} className={scss.line}>
-											<div className={scss.book_map_info}>
-												<img
-													className={scss.book_image}
-													src={item.imageUrl}
-													alt="book"
-												/>
-												<div className={scss.book_flexx}>
-													<div className={scss.flex_book}>
-														<div className={scss.book_name_end}>
-															<p>{item.title}</p>
-															<p className={scss.book_name_people}>
-																{item.authorsFullName}
-															</p>
-														</div>
-													</div>
-													<div className={scss.flex_bookk}>
-														<p className={scss.book_quantity}>
-															{item.quantity}
-														</p>
-														<div className={scss.scitd_one}>
-															<p className={scss.pprom}>
-																Промокод {item.discount}%
-															</p>
-															<div className={scss.scitd}>
-																<p className={scss.promo_pro}>
-																	(-{item.priceWithDiscount})
-																</p>
-																<p className={scss.book_price}>{item.price}</p>
+									{favoriteData && favoriteData?.length > 0 ? (
+										favoriteData?.map((item) => (
+											<div key={item.id} className={scss.line}>
+												<div className={scss.book_map_info}>
+													<img
+														className={scss.book_image}
+														src={item.imageUrl}
+														alt="book"
+													/>
+													<div className={scss.book_flex_x}>
+														<div className={scss.flex_book}>
+															<div className={scss.book_name_end}>
+																<Tooltip
+																	className={scss.info_hover}
+																	title={
+																		item.title.length > 20 ? item.title : ''
+																	}
+																	color="black"
+																	placement="bottomLeft"
+																>
+																	<p>{item.title}</p>
+																</Tooltip>
+																<Tooltip
+																	className={scss.info_hover}
+																	title={
+																		item.authorsFullName.length > 20
+																			? item.authorsFullName
+																			: ''
+																	}
+																	color="black"
+																	placement="bottomLeft"
+																>
+																	<p className={scss.book_name_people}>
+																		{item.authorsFullName}
+																	</p>
+																</Tooltip>
 															</div>
 														</div>
-														<p className={scss.book_data}>{item.createdAt}</p>
-														<p className={scss.book_state}></p>
+														<div className={scss.flex_book_x}>
+															<p className={scss.book_quantity}>
+																{item.quantity}
+															</p>
+															<div className={scss.scitd_one}>
+																<p className={scss.pprom}>
+																	Промокод {item.discount}%
+																</p>
+																<div className={scss.scitd}>
+																	<p>(-{item.priceWithDiscount})</p>
+																	<p className={scss.book_price}>
+																		{item.price}
+																	</p>
+																</div>
+															</div>
+															<p className={scss.book_data}>{item.createdAt}</p>
+															<p className={scss.book_state}></p>
+														</div>
 													</div>
 												</div>
 											</div>
+										))
+									) : (
+										<div className={scss.empty_message}>
+											<img src={emptyImage} alt="Empty Image" />
+											<p>Нет доступных книг</p>
 										</div>
-									))}
+									)}
 								</div>
 							)}
+
 							{activeTab === 'cart' && (
 								<div>
-									{basketData?.map((item) => (
-										<div key={item.id} className={scss.line}>
-											<div className={scss.book_map_info}>
-												<img
-													className={scss.book_image}
-													src={item.imageUrl}
-													alt="book"
-												/>
-												<div className={scss.book_flex_x}>
-													<div className={scss.flex_book}>
-														<div className={scss.book_name_end}>
-															<p>{item.title}</p>
-															<p className={scss.book_name_people}>
-																{item.authorsFullName}
-															</p>
-														</div>
-													</div>
-													<div className={scss.flex_book_x}>
-														<p className={scss.book_quantity}>
-															{item.quantity}
-														</p>
-														<div className={scss.scitd_one}>
-															<p className={scss.pprom}>
-																Промокод {item.discount}%
-															</p>
-															<div className={scss.scitd}>
-																<p>(-{item.priceWithDiscount})</p>
-																<p className={scss.book_price}>{item.price}</p>
+									{basketData && basketData?.length > 0 ? (
+										basketData?.map((item) => (
+											<div key={item.id} className={scss.line}>
+												<div className={scss.book_map_info}>
+													<img
+														className={scss.book_image}
+														src={item.imageUrl}
+														alt="book"
+													/>
+													<div className={scss.book_flex_x}>
+														<div className={scss.flex_book}>
+															<div className={scss.book_name_end}>
+																<Tooltip
+																	className={scss.info_hover}
+																	title={
+																		item.title.length > 20 ? item.title : ''
+																	}
+																	color="black"
+																	placement="bottomLeft"
+																>
+																	<p>{item.title}</p>
+																</Tooltip>
+																<Tooltip
+																	className={scss.info_hover}
+																	title={
+																		item.authorsFullName.length > 20
+																			? item.authorsFullName
+																			: ''
+																	}
+																	color="black"
+																	placement="bottomLeft"
+																>
+																	<p className={scss.book_name_people}>
+																		{item.authorsFullName}
+																	</p>
+																</Tooltip>
 															</div>
 														</div>
-														<p className={scss.book_data}>{item.createdAt}</p>
-														<p className={scss.book_state}></p>
+														<div className={scss.flex_book_x}>
+															<p className={scss.book_quantity}>
+																{item.quantity}
+															</p>
+															<div className={scss.scitd_one}>
+																<p className={scss.pprom}>
+																	Промокод {item.discount}%
+																</p>
+																<div className={scss.scitd}>
+																	<p>(-{item.priceWithDiscount})</p>
+																	<p className={scss.book_price}>
+																		{item.price}
+																	</p>
+																</div>
+															</div>
+															<p className={scss.book_data}>{item.createdAt}</p>
+															<p className={scss.book_state}></p>
+														</div>
 													</div>
 												</div>
 											</div>
+										))
+									) : (
+										<div className={scss.empty_message}>
+											<img src={emptyImage} alt="Empty Image" />
+											<p>Нет книг в корзине</p>
 										</div>
-									))}
+									)}
 								</div>
 							)}
 						</div>

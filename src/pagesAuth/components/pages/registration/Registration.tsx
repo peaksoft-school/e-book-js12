@@ -55,10 +55,10 @@ const Registration = () => {
 				};
 				const results = await postUser(newData);
 				if ('data' in results) {
-					if (results.data.httpStatus === 'OK') {
+					if (results.data?.httpStatus === 'OK') {
 						setEmail(data.email);
 						setConfirmModa(true);
-					} else if (results.data.httpStatus === 'ALREADY_REPORTED') {
+					} else if (results.data?.httpStatus === 'ALREADY_REPORTED') {
 						messageApi.open({
 							type: 'warning',
 							content:
