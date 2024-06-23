@@ -6,8 +6,11 @@ import EyeClose from '@/src/assets/icons/icon-eyeClose';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import { PhoneInput } from 'react-international-phone';
 import 'react-international-phone/style.css';
-import { usePostVendorRegistrationMutation } from '@/src/redux/api/me';
-import { ToastContainer, toast } from 'react-toastify';
+import {
+	useConfirmEmailMutation,
+	usePostVendorRegistrationMutation
+} from '@/src/redux/api/me';
+import { Modal, message } from 'antd';
 
 interface TypeData {
 	firstName: string;
@@ -17,6 +20,21 @@ interface TypeData {
 	password: string;
 	confirmPassword: string;
 }
+interface RegistrationResponse {
+	data?: {
+		data: {
+			httpStatus: string;
+			message: string;
+		};
+	};
+	error: {
+		data: {
+			password: string;
+			email: string;
+			phoneNumber: string;
+		};
+	};
+}
 
 const VendorRegistration = () => {
 	const [isPassword, setIsPassword] = useState(false);
@@ -24,7 +42,11 @@ const VendorRegistration = () => {
 	const [isLogPassword, setLogPassword] = useState(false);
 	const [password, setPassword] = useState('');
 	const [postVendor] = usePostVendorRegistrationMutation();
-
+	const [modalConfirm, setModalConfirm] = useState(false);
+	const [valueCode, setValueCode] = useState<string | number>('');
+	const [email, setEmail] = useState('');
+	const [confirmEmail, { error }] = useConfirmEmailMutation();
+	const [messageApi, contextHolder] = message.useMessage();
 	const {
 		formState: { errors },
 		control,
@@ -32,6 +54,8 @@ const VendorRegistration = () => {
 		reset,
 		handleSubmit
 	} = useForm<TypeData>();
+
+	console.log(error);
 
 	const onSubmit: SubmitHandler<TypeData> = async (data) => {
 		if (data.confirmPassword === data.password) {
@@ -42,28 +66,69 @@ const VendorRegistration = () => {
 				email: data.email,
 				password: data.password
 			};
-			const results = await postVendor(newData);
+			const results = (await postVendor(newData)) as RegistrationResponse;
 			if ('data' in results) {
-				const token = results.data?.token;
-				localStorage.setItem('token', token!);
-				localStorage.setItem('client', 'false');
-				localStorage.setItem('vendor', 'true');
-				localStorage.setItem('admin', 'false');
+				setEmail(data.email);
+				setModalConfirm(true);
 				reset();
-				navigate('/vendor/home');
 				setPassword('');
+			} else if (results.error) {
+				if (results.error.data.password) {
+					const inputString = results.error.data.password;
+					const outputString = inputString.replace(/{/g, '').replace(/}/g, '');
+					messageApi.open({
+						type: 'warning',
+						content: outputString
+					});
+				} else if (results.error.data.email) {
+					const inputString = results.error.data.email;
+					const outputString = inputString.replace(/{/g, '').replace(/}/g, '');
+					messageApi.open({
+						type: 'warning',
+						content: outputString
+					});
+				} else if (results.error.data.phoneNumber) {
+					const inputString = results.error.data.phoneNumber;
+					const outputString = inputString.replace(/{/g, '').replace(/}/g, '');
+					messageApi.open({
+						type: 'warning',
+						content: outputString
+					});
+				}
 			}
-		} else {
-			toast(`Подтвердите пароль`, {
-				position: 'top-right',
-				autoClose: 5000,
-				hideProgressBar: false,
-				closeOnClick: true,
-				pauseOnHover: true,
-				draggable: true,
-				progress: undefined,
-				theme: 'light'
-			});
+		}
+	};
+
+	const handleConfirmEmail = async () => {
+		const newData = {
+			email: email,
+			code: valueCode
+		};
+		const response = await confirmEmail(newData);
+
+		if ('data' in response) {
+			const token = response.data?.data.token;
+			localStorage.setItem('token', token);
+			localStorage.setItem('client', 'false');
+			localStorage.setItem('vendor', 'true');
+			localStorage.setItem('admin', 'false');
+			navigate('/vendor/home');
+			setValueCode('');
+		} else if (error) {
+			const responseError = error as AUTHORIZATION.ConfirmEmailError;
+			if (error) {
+				const inputString = responseError.data?.message;
+				const outputString = inputString?.replace(/{/g, '').replace(/}/g, '');
+				messageApi.open({
+					type: 'warning',
+					content: outputString
+				});
+			} else if (responseError.status === 500) {
+				messageApi.open({
+					type: 'warning',
+					content: 'Ошибка сервера'
+				});
+			}
 		}
 	};
 
@@ -71,6 +136,7 @@ const VendorRegistration = () => {
 		<div onSubmit={handleSubmit(onSubmit)} className={scss.Registration}>
 			<div className="container">
 				<div className={scss.content}>
+					{contextHolder}
 					<div className={scss.headline}>
 						<Link to="/auth/login">Войти</Link>
 						<Link to="/auth/registration">Регистрация</Link>
@@ -78,7 +144,10 @@ const VendorRegistration = () => {
 					<form className={scss.form_container}>
 						<label>
 							<div className={scss.label}>
-								Ваше имя<span>*</span>
+								<p>
+									Ваше имя
+									<span>*</span>
+								</p>
 							</div>
 							<input
 								className={
@@ -91,7 +160,10 @@ const VendorRegistration = () => {
 						</label>
 						<label>
 							<div className={scss.label}>
-								Ваша фамилия<span>*</span>
+								<p>
+									Ваша фамилия
+									<span>*</span>
+								</p>
 							</div>
 							<input
 								className={
@@ -104,34 +176,46 @@ const VendorRegistration = () => {
 						</label>
 						<label>
 							<div className={scss.label}>
-								Номер вашего телефона<span>*</span>
+								<p>
+									Номер вашего телефона
+									<span>*</span>
+								</p>
 							</div>
 							<Controller
 								name="phoneNumber"
 								control={control}
-								defaultValue=""
-								rules={{ required: true }}
+								defaultValue="+996"
+								rules={{ required: true, minLength: 5 }}
 								render={({ field }) => (
-									<PhoneInput defaultCountry={'kg'} {...field} />
+									<PhoneInput
+										className={errors.phoneNumber ? scss.input_error : ''}
+										defaultCountry={'kg'}
+										{...register('phoneNumber', { required: true })}
+										{...field}
+									/>
 								)}
 							/>
 						</label>
 						<label>
 							<div className={scss.label}>
-								Email<span>*</span>
+								<p>
+									Email<span>*</span>
+								</p>
 							</div>
 							<input
 								className={
 									errors.email ? `${scss.input_error}` : `${scss.input}`
 								}
-								type="text"
+								type="email"
 								placeholder="Напишите ваш email"
 								{...register('email', { minLength: 4, required: true })}
 							/>
 						</label>
 						<label>
 							<div className={scss.label}>
-								Пароль<span>*</span>
+								<p>
+									Пароль<span>*</span>
+								</p>
 							</div>
 							<input
 								className={
@@ -140,7 +224,7 @@ const VendorRegistration = () => {
 								type={isPassword ? 'text' : 'password'}
 								placeholder="Напишите пароль"
 								{...register('password', {
-									minLength: 4,
+									minLength: 9,
 									required: true,
 									onChange: (event) => {
 										setPassword(event.target.value);
@@ -169,7 +253,9 @@ const VendorRegistration = () => {
 						</label>
 						<label>
 							<div className={scss.label}>
-								Подтвердите пароль<span>*</span>
+								<p>
+									Подтвердите пароль<span>*</span>
+								</p>
 							</div>
 							<input
 								className={
@@ -181,7 +267,7 @@ const VendorRegistration = () => {
 								placeholder="Подтвердите пароль"
 								{...register('confirmPassword', {
 									required: true,
-									minLength: 4,
+									minLength: 9,
 									validate: (value) => {
 										return value === password;
 									}
@@ -207,11 +293,47 @@ const VendorRegistration = () => {
 								</div>
 							)}
 						</label>
-						<ToastContainer />
 						<div className={scss.btn_container}>
 							<button type="submit">Создать аккаунт</button>
 						</div>
 					</form>
+					<Modal
+						open={modalConfirm}
+						onCancel={() => setModalConfirm(false)}
+						footer={false}
+					>
+						<div className={scss.confirm_email}>
+							{contextHolder}
+							<div className={scss.title}>
+								<p>Пожалуйста, введите код, который вы получили на почту</p>
+							</div>
+							<div className={scss.code_confirm}>
+								<input
+									type="text"
+									onKeyPress={(e) => {
+										if (e.key === 'Enter') {
+											handleConfirmEmail();
+										}
+									}}
+									value={valueCode}
+									onChange={(e) => {
+										setValueCode(e.target.value);
+									}}
+									placeholder="Введите код"
+									maxLength={4}
+								/>
+							</div>
+							<div className={scss.btn}>
+								<button
+									onClick={() => {
+										handleConfirmEmail();
+									}}
+								>
+									Отправить
+								</button>
+							</div>
+						</div>
+					</Modal>
 				</div>
 			</div>
 		</div>

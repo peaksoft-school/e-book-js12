@@ -16,11 +16,16 @@ const api = index.injectEndpoints({
 			),
 			invalidatesTags: ['payment']
 		}),
-		ConfirmPayment: build.mutation({
-			query: (newData) => ({
-				url: '/api/stripe/confirm/payment',
+		ConfirmPayment: build.mutation<
+			PAYMENT.ComformPaymentResponse,
+			PAYMENT.ConfirmPaymentRequest
+		>({
+			query: (paymentId) => ({
+				url: `/api/stripe/confirm/payment`,
 				method: 'POST',
-				body: newData
+				params: {
+					paymentId: paymentId
+				}
 			}),
 			invalidatesTags: ['payment']
 		})

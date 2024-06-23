@@ -59,6 +59,8 @@ namespace BASKET {
 		disCount: number;
 		bookDiscount: number;
 		totalAmount: number;
+		bookId: number;
+		getPromoCode: string;
 	};
 
 	type ActivePromoRequest = {

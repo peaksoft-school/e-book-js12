@@ -1,6 +1,7 @@
+/* eslint-disable prefer-const */
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import scss from './BasketPage.module.scss';
 import CustomPromoInput from '@/src/ui/customInpute/CustomPromoInput';
 import {
@@ -22,13 +23,9 @@ import {
 import { ToastContainer, toast, Bounce } from 'react-toastify';
 import { usePostFavoriteUnFavoriteMutation } from '@/src/redux/api/favorite';
 import { IconInfoCircle } from '@tabler/icons-react';
+import Payment from '@/src/payment/Payment';
 
-interface TypeProps {
-	setIsPayment: React.Dispatch<React.SetStateAction<boolean>>;
-	setTotalCost: React.Dispatch<React.SetStateAction<number | undefined>>;
-}
-
-const BasketPage: React.FC<TypeProps> = ({ setIsPayment, setTotalCost }) => {
+const BasketPage = () => {
 	const [isPromo, setIsPromo] = useState(false);
 	const { data } = useGetCountInBasketQuery();
 	const [clearBookPage] = useDeleteClearBasketMutation();
@@ -40,13 +37,9 @@ const BasketPage: React.FC<TypeProps> = ({ setIsPayment, setTotalCost }) => {
 	const [isModalVisible, setIsModalVisible] = useState(false);
 	const [promoCode, setPromoValue] = useState<string>('');
 	const [bookId, setBookId] = useState<null | number>(null);
-
-	const navigate = useNavigate();
-
-	const showModal = () => {
-		setIsModalVisible(true);
-		setIsPromo(false);
-	};
+	const [isPayment, setIsPayment] = useState(false);
+	const [amount, setAmount] = useState<number | undefined>(0);
+	const [test, setTest] = useState<Record<string, string>>({});
 
 	const hadnleOpenModalPromo = () => {
 		setIsPromo(!isPromo);
@@ -77,12 +70,20 @@ const BasketPage: React.FC<TypeProps> = ({ setIsPayment, setTotalCost }) => {
 	};
 
 	const handlePromoCode = async () => {
-		console.log(bookId);
-		const result = await activePromo({ promoCode, id: bookId! });
-		console.log(result);
-		if (result) {
-			showModal();
-			setBookId(null);
+		const response = await activePromo({ promoCode, id: bookId! });
+		console.log(response);
+		if ('data' in response) {
+			if (response.data) {
+				setIsPromo(false);
+				setBookId(null);
+				setIsModalVisible(true);
+				let result: Record<string, string> = {};
+				const bookId = response.data.bookId;
+				result[bookId] = response.data.getPromoCode;
+				setTest((prevState) => {
+					return { ...prevState, ...result };
+				});
+			}
 		}
 	};
 
@@ -117,7 +118,6 @@ const BasketPage: React.FC<TypeProps> = ({ setIsPayment, setTotalCost }) => {
 			}
 		}
 	};
-
 	useEffect(() => {
 		if (isModalVisible) {
 			setTimeout(() => {
@@ -127,7 +127,7 @@ const BasketPage: React.FC<TypeProps> = ({ setIsPayment, setTotalCost }) => {
 	}, [isModalVisible]);
 
 	useEffect(() => {
-		setTotalCost(TotalCost?.totalAmount);
+		setAmount(TotalCost?.totalAmount);
 	}, [TotalCost]);
 
 	const amountTotalDiscountPrice = (price: number, amount: number) => {
@@ -233,7 +233,6 @@ const BasketPage: React.FC<TypeProps> = ({ setIsPayment, setTotalCost }) => {
 																			}}
 																			footer={false}
 																			open={isModalVisible}
-																			visible={isModalVisible}
 																		>
 																			<div className={scss.hover_content}>
 																				<div className={scss.info_price}>
@@ -340,6 +339,7 @@ const BasketPage: React.FC<TypeProps> = ({ setIsPayment, setTotalCost }) => {
 																		</div>
 																		<div className={scss.position_container}>
 																			<CustomPromoInput
+																				keyDownFunction={handlePromoCode}
 																				placeholder="Введите промокод"
 																				setValue={setPromoValue}
 																				value={promoCode}
@@ -363,8 +363,6 @@ const BasketPage: React.FC<TypeProps> = ({ setIsPayment, setTotalCost }) => {
 														</Modal>
 														<button
 															onClick={() => {
-																console.log(book.id, book.title);
-
 																handleAddToFavorite(book.id);
 															}}
 														>
@@ -407,13 +405,18 @@ const BasketPage: React.FC<TypeProps> = ({ setIsPayment, setTotalCost }) => {
 							<CustomAuthButton
 								onClick={() => {
 									setIsPayment(true);
-									navigate('/payment');
 								}}
 							>
 								Оформить заказ
 							</CustomAuthButton>
 						</div>
 					</div>
+					<Payment
+						openModal={isPayment}
+						setOpenModal={setIsPayment}
+						totalAmount={amount}
+						test={test}
+					/>
 				</div>
 			</div>
 		</section>

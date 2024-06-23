@@ -21,6 +21,20 @@ interface TypeData {
 	password: string;
 	confirmPassword: string;
 }
+interface RegistrationResponse {
+	data?: {
+		data: {
+			httpStatus: string;
+			message: string;
+		};
+	};
+	error: {
+		data: {
+			password: string;
+			email: string;
+		};
+	};
+}
 
 const Registration = () => {
 	const [isPassword, setIsPassword] = useState(false);
@@ -30,7 +44,7 @@ const Registration = () => {
 	const [postGoogleToken] = usePostWithGoogleMutation();
 	const [email, setEmail] = useState('');
 	const [code, setCode] = useState<number | string>('');
-	const [confirmCode] = useConfirmEmailMutation();
+	const [confirmCode, { error: errorEmail }] = useConfirmEmailMutation();
 	const [confirmModal, setConfirmModa] = useState(false);
 	const [messageApi, contextHolder] = message.useMessage();
 	const navigate = useNavigate();
@@ -53,46 +67,41 @@ const Registration = () => {
 					email: data.email,
 					password: data.password
 				};
-				const results = await postUser(newData);
+				const results = (await postUser(newData)) as RegistrationResponse;
 				if ('data' in results) {
-					if (results.data?.httpStatus === 'OK') {
+					if (results.data?.data.httpStatus === 'OK') {
 						setEmail(data.email);
 						setConfirmModa(true);
-					} else if (results.data?.httpStatus === 'ALREADY_REPORTED') {
+					} else if (results.data?.data.httpStatus === 'ALREADY_REPORTED') {
 						messageApi.open({
 							type: 'warning',
 							content:
 								'Электронная почта: ibrahimorunbaev59@gmail.com уже существует!'
 						});
 					}
+				} else if ('data' in results.error && results.error.data) {
+					console.log(results.error.data);
+
+					if (results.error.data.password) {
+						const inputString = results.error.data.password;
+						const outputString = inputString
+							.replace(/{/g, '')
+							.replace(/}/g, '');
+						messageApi.open({
+							type: 'warning',
+							content: outputString
+						});
+					} else if (results.error.data.email) {
+						const inputString = results.error.data.email;
+						const outputString = inputString
+							.replace(/{/g, '')
+							.replace(/}/g, '');
+						messageApi.open({
+							type: 'warning',
+							content: outputString
+						});
+					}
 				}
-				// else if ('data' in results?.error) {
-				// 	console.log(results.error.data);
-				// 	const str = results.error.data.message;
-				// 	if (
-				// 		str.includes(
-				// 			' Пароль должен быть длиной ' ||
-				// 				'электронное письмо содержит @.com'
-				// 		)
-				// 	) {
-				// 		messageApi.open({
-				// 			type: 'warning',
-				// 			content:
-				// 				'Пароль дожен минимум 8 символов, заглавные буквы и цифры а также  не забывайте добавлять @gmail.com'
-				// 		});
-				// 	} else if (str.includes('Пароль должен быть длиной')) {
-				// 		messageApi.open({
-				// 			type: 'warning',
-				// 			content:
-				// 				'Пароль дожен минимум 8 символов, заглавные буквы и цифры'
-				// 		});
-				// 	} else if (str.includes('электронное письмо содержит @.com')) {
-				// 		messageApi.open({
-				// 			type: 'warning',
-				// 			content: '  не забывайте добавлять @gmail.com'
-				// 		});
-				// 	}
-				// }
 			} else {
 				toast(`Подтвердите пароль`, {
 					position: 'top-right',
@@ -111,12 +120,12 @@ const Registration = () => {
 	const handleConfirmCode = async () => {
 		const newData = {
 			email: email,
-			code: code
+			code: code!
 		};
 		const result = await confirmCode(newData);
 		if ('data' in result) {
-			const { token } = result.data;
-			const { firstName } = result.data;
+			const { token } = result.data.data;
+			const { firstName } = result.data.data;
 			localStorage.setItem('NameClient', firstName);
 			localStorage.setItem('token', token!);
 			localStorage.setItem('client', 'true');
@@ -124,6 +133,17 @@ const Registration = () => {
 			localStorage.setItem('admin', 'false');
 			reset();
 			navigate('/');
+			setCode('');
+		} else if (errorEmail) {
+			const confirmEmailError = errorEmail as AUTHORIZATION.ConfirmEmailError;
+			if (confirmEmailError) {
+				const inputString = confirmEmailError.data.message;
+				const outputString = inputString?.replace(/{/g, '').replace(/}/g, '');
+				messageApi.open({
+					type: 'warning',
+					content: outputString
+				});
+			}
 		}
 	};
 	const signInWithGoogleHandler = async () => {
@@ -158,7 +178,9 @@ const Registration = () => {
 					<form className={scss.form_container}>
 						<label>
 							<div className={scss.label}>
-								Ваше имя<span>*</span>
+								<p>
+									Ваше имя<span>*</span>
+								</p>
 							</div>
 							<input
 								className={
@@ -171,7 +193,9 @@ const Registration = () => {
 						</label>
 						<label>
 							<div className={scss.label}>
-								Email<span>*</span>
+								<p>
+									Email<span>*</span>
+								</p>
 							</div>
 							<input
 								className={
@@ -184,7 +208,9 @@ const Registration = () => {
 						</label>
 						<label>
 							<div className={scss.label}>
-								Пароль<span>*</span>
+								<p>
+									Пароль<span>*</span>
+								</p>
 							</div>
 							<input
 								className={
@@ -222,7 +248,9 @@ const Registration = () => {
 						</label>
 						<label>
 							<div className={scss.label}>
-								Подтвердите пароль<span>*</span>
+								<p>
+									Подтвердите пароль<span>*</span>
+								</p>
 							</div>
 							<input
 								className={
@@ -303,9 +331,10 @@ const Registration = () => {
 							}}
 							value={code}
 							onChange={(e) => {
-								setCode(+e.target.value);
+								setCode(e.target.value);
 							}}
 							placeholder="Введите код"
+							maxLength={4}
 						/>
 					</div>
 					<div className={scss.btn}>

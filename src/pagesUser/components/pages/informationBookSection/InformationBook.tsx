@@ -137,7 +137,7 @@ const InformationBook: FC = () => {
 										{genreBook ? genreBook.genreName : 'Жанр не найден'}
 									</span>
 								</p>
-								/ <h4>{data.title}</h4>
+								/ <h4>{data?.title}</h4>
 							</div>
 							<div className={scss.contents_book}>
 								<div className={scss.section_about_book}>

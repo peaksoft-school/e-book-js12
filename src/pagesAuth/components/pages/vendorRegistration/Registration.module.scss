@@ -37,9 +37,11 @@
 				flex-direction: column;
 				gap: 8px;
 				position: relative;
-
-				span {
-					color: red;
+				p {
+					color: #ffffff;
+					span {
+						color: red;
+					}
 				}
 
 				input {
@@ -71,12 +73,18 @@
 					}
 				}
 				.input_error {
-					background: rgba(255, 0, 0, 0.11);
+					input {
+						background-color: #ff00001c;
+						border: none;
+						color: white;
+					}
+					background: #ff00001c;
 					border: red 1px solid;
+					color: white;
 					&:focus {
 						background: rgba(255, 0, 0, 0.11);
 						outline: none;
-						color: #222222;
+						color: #ffffff;
 					}
 					&:hover {
 						border: 1px solid rgb(255, 0, 0);
@@ -159,5 +167,52 @@
 	}
 	.react-international-phone-country-selector {
 		display: none;
+	}
+}
+.confirm_email {
+	display: flex;
+	flex-direction: column;
+	gap: 20px 0px;
+	.title {
+		p {
+			color: rgb(34, 34, 34);
+			font-family: Open Sans;
+			font-size: 14px;
+			font-weight: 600;
+			line-height: 22px;
+			letter-spacing: 0px;
+			text-align: left;
+		}
+	}
+	.code_confirm {
+		display: flex;
+		justify-content: start;
+
+		input {
+			border: 1.5px solid rgb(186, 179, 179);
+			outline: none;
+			padding: 10px 15px;
+			width: 100%;
+			color: black;
+			font-family: Open Sans;
+			font-size: 14px;
+			font-weight: 500;
+			background-color: #f8f8f8;
+			&:focus {
+				&::placeholder {
+					opacity: 0;
+				}
+			}
+		}
+	}
+	.btn {
+		display: flex;
+		justify-content: end;
+		button {
+			padding: 10px 18px;
+			background-color: black;
+			border: none;
+			outline: none;
+		}
 	}
 }

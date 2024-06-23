@@ -1,47 +1,62 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { CardElement, useElements, useStripe } from '@stripe/react-stripe-js';
-import { FC, FormEvent } from 'react';
+import { FC, FormEvent, useState } from 'react';
 import { useCreatePaymentMutation } from '../redux/api/payment';
 import scss from './PaymentForm.module.scss';
+import { Modal } from 'antd';
 
 const CARD_OPTIONS = {
 	iconStyle: 'solid' as 'default' | 'solid',
 	style: {
 		base: {
-			iconColor: '#C4C4C4',
+			iconColor: '#ff6200',
 			color: 'black',
 			fontWeight: 500,
-			fontSize: '1rem'
+			fontSize: '16px',
+			fontSmoothing: 'antialiased',
+			'::placeholder': {
+				color: '#8c8e91'
+			}
 		},
 		invalid: {
 			iconColor: 'red',
 			color: 'red'
-		}
+		},
+		hidePostCode: true
 	}
 };
 
 interface TypeProps {
 	openModal: boolean;
 	setOpenModal: (value: boolean | ((prev: boolean) => boolean)) => void;
-	totalAmount: number;
+	totalAmount: number | undefined;
+	newTestObj: Record<string, string>;
 }
 
 const PaymentForm: FC<TypeProps> = ({
 	openModal,
 	setOpenModal,
-	totalAmount
+	totalAmount,
+	newTestObj
 }) => {
 	const stripe = useStripe();
 	const elements = useElements();
 	const [createPayment] = useCreatePaymentMutation();
+	const [sucsessModal, setSucsessModal] = useState(false);
 
 	const hadnleCreatePayment = async (token: string) => {
 		const newData = {
-			'6': 'Ebook123456'
+			...newTestObj
 		};
-		const totalTest = totalAmount.toFixed();
+		const totalTest = totalAmount?.toFixed();
 		const test = Number(totalTest);
 		const result = await createPayment({ newData, token, test });
-		console.log(result, 'payment');
+		if ('data' in result) {
+			if (result.data.httpStatus === 'OK') {
+				setOpenModal(false);
+				setSucsessModal(true);
+			}
+		}
 	};
 
 	const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
@@ -52,6 +67,7 @@ const PaymentForm: FC<TypeProps> = ({
 		}
 		try {
 			const cardElement = elements.getElement(CardElement);
+			console.log(cardElement, 'cardele');
 			if (!cardElement) {
 				console.error('CardElement not found');
 				return;
@@ -59,7 +75,6 @@ const PaymentForm: FC<TypeProps> = ({
 			const result = await stripe.createToken(cardElement);
 			if (result) {
 				if (result.token) {
-					console.log('Token created:', result.token.id);
 					console.log(result.token);
 					setOpenModal((prev) => !prev);
 					hadnleCreatePayment(result.token.id);
@@ -72,12 +87,18 @@ const PaymentForm: FC<TypeProps> = ({
 
 	return (
 		<>
-			<div className={scss.Payment}>
-				<div className="container">
+			<Modal
+				open={openModal}
+				onCancel={() => {
+					setOpenModal(false);
+				}}
+				footer={false}
+			>
+				<div className={scss.Payment}>
 					<div className={scss.content}>
 						<div className={scss.payment_container}>
 							<form onSubmit={handleSubmit}>
-								<p className={scss.heading}>Place your order</p>
+								<p className={scss.heading}>Добавьте карту </p>
 								<CardElement
 									className={scss.card_element}
 									options={CARD_OPTIONS}
@@ -87,14 +108,36 @@ const PaymentForm: FC<TypeProps> = ({
 									className={scss.book_button}
 									disabled={!stripe}
 								>
-									BOOK
+									Продолжить
 								</button>
 							</form>
-							<div className={scss.total_amount}></div>
 						</div>
 					</div>
 				</div>
-			</div>
+			</Modal>
+			<Modal
+				open={sucsessModal}
+				footer={false}
+				onCancel={() => {
+					setSucsessModal(false);
+				}}
+			>
+				<div className={scss.confirm_payment}>
+					<div className={scss.title_content}>
+						<p>confirm to by payment</p>
+						<p>description</p>
+					</div>
+					<div className={scss.detals_product}>
+						<p>Detals</p>
+						<div className={scss.info_content}>
+							<div className={scss.date}>
+								<p>data</p>
+								<p>{Date()}</p>
+							</div>
+						</div>
+					</div>
+				</div>
+			</Modal>
 		</>
 	);
 };

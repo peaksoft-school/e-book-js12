@@ -60,7 +60,6 @@ const VendorsBooks: FC = () => {
 
 	const deleteBookChange = async (id: number) => {
 		await deleteBook(id);
-		setIsModalOpen(false);
 	};
 
 	const handleCancel = () => {
