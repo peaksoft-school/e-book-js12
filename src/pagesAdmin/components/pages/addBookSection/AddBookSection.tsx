@@ -42,6 +42,11 @@ interface TypeLanguage {
 	language: string;
 	languageName: string;
 }
+type FormValues = {
+	title: string;
+	authorsFullName: string;
+	publishingHouse: string;
+};
 const AddBookSection = () => {
 	const [nameBook, setNameBook] = useState('');
 	const [clickRadio, setClickRadio] = useState(true);
@@ -87,6 +92,8 @@ const AddBookSection = () => {
 		reset,
 		formState: { errors }
 	} = useForm();
+	const errorRef = useRef<FieldErrors<FormValues>>(errors);
+
 
 	const [fragment, setFragment] = useState(' ');
 
@@ -209,7 +216,6 @@ const AddBookSection = () => {
 			setPdfFileName(null);
 		}
 	};
-	const errorRef = useRef<FieldErrors<FormValues>>(errors);
 
 	const handleFileChange = async (file: File) => {
 		setPdfFileName(file);

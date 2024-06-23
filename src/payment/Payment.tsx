@@ -7,10 +7,11 @@ import { FC } from 'react';
 interface TypeProps {
 	openModal: boolean;
 	setOpenModal: (value: boolean | ((prev: boolean) => boolean)) => void;
-	totalAmount: number;
+	totalAmount: number | undefined;
+	test: Record<string, string>;
 }
 
-const Payment: FC<TypeProps> = ({ openModal, setOpenModal, totalAmount }) => {
+const Payment: FC<TypeProps> = ({ openModal, setOpenModal, totalAmount, test }) => {
 	const stripeTestPromise = loadStripe(
 		'pk_test_51PSxn0P9AwzSXbtUejAOIXjKhTxpQmLwHNFjc6yjFOYsXNIK0l8yP1Apg3eF0x2gKy094TEupBQtGfEZogSDWrK600uGVUQfKk'
 	) as Promise<Stripe | any>;
@@ -22,6 +23,7 @@ const Payment: FC<TypeProps> = ({ openModal, setOpenModal, totalAmount }) => {
 					totalAmount={totalAmount}
 					openModal={openModal}
 					setOpenModal={setOpenModal}
+					newTestObj={test}
 				/>
 			</Elements>
 		</>

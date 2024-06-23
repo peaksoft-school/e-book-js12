@@ -95,6 +95,8 @@ const ProfileVendor: React.FC = () => {
 									<p className={scss.name_info_text}>Ваше имя</p>
 									{isEditMode ? (
 										<CustomUserNameInput
+											refError={false}
+											validateError={false}
 											placeholder="Напишите ваше имя"
 											register={register}
 											registerName="firstName"
@@ -107,6 +109,8 @@ const ProfileVendor: React.FC = () => {
 									<p className={scss.sor_name_info_text}>Ваша фамилия</p>
 									{isEditMode ? (
 										<CustomUserNameInput
+											refError={false}
+											validateError={false}
 											placeholder="Введите вашу фамилию"
 											register={register}
 											registerName="lastName"
@@ -119,6 +123,8 @@ const ProfileVendor: React.FC = () => {
 									<p className={scss.phone_info_text}>Номер телефона</p>
 									{isEditMode ? (
 										<CustomUserNameInput
+											refError={false}
+											validateError={false}
 											placeholder="+996 (___) __ __ __"
 											register={register}
 											registerName="phoneNumber"
@@ -131,6 +137,8 @@ const ProfileVendor: React.FC = () => {
 									<p className={scss.email_text}>Email</p>
 									{isEditMode ? (
 										<CustomUserNameInput
+											refError={false}
+											validateError={false}
 											placeholder="Напишите ваш Email"
 											register={register}
 											registerName="email"

@@ -115,6 +115,7 @@ namespace BOOK {
 		statusBook: string;
 		bestseller: boolean;
 		countFavorite: number;
+		amountOfBook:number
 		countBasket: number;
 	};
 

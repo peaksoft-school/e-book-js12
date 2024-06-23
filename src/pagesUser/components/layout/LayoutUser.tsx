@@ -9,17 +9,13 @@ import Basket from '../pages/Basket';
 import BookInfoPage from '../pages/BookInfoPage';
 import ProfilePageContainer from '../pages/profilePageContainer/ProfilePageContainer';
 import PromoPage from '../pages/PromoPage';
-import Payment from '@/src/payment/Payment';
-import { useState } from 'react';
+import ConfirmPaymentPage from '../pages/ConfirmPaymentPage';
 const LayoutUser = () => {
-	const [isPayment, setIsPayment] = useState(false);
-	const [totalCost, setTotalCost] = useState<number | undefined>(0);
 	const { pathname } = useLocation();
-
 	return (
 		<>
 			<div className={scss.layout}>
-				{pathname === '/payment' ? null : (
+				{pathname === '/payment' || pathname === '/confirmPayment' ? null : (
 					<>
 						<Header />
 					</>
@@ -32,29 +28,15 @@ const LayoutUser = () => {
 						<Route path="/search_book/:id" element={<BookInfoPage />} />
 						<Route path="/:id" element={<BookInfoPage />} />
 						<Route path="/favorite" element={<FavoritePage />} />
-						<Route
-							path="/basket"
-							element={
-								<Basket
-									setTotalCost={setTotalCost}
-									setIsPayment={setIsPayment}
-								/>
-							}
-						/>
+						<Route path="/basket" element={<Basket />} />
 						<Route path="/promo_page" element={<PromoPage />} />
 						<Route
-							path="/payment"
-							element={
-								<Payment
-									openModal={isPayment}
-									setOpenModal={setIsPayment}
-									totalAmount={totalCost!}
-								/>
-							}
+							path="/confirmPayment"
+							element={<ConfirmPaymentPage />}
 						/>
 					</Routes>
 				</main>
-				{pathname === '/payment' ? null : (
+				{pathname === '/payment' || pathname === '/confirmPayment' ? null : (
 					<>
 						<Footer />
 					</>

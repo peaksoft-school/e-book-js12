@@ -37,9 +37,11 @@
 				flex-direction: column;
 				gap: 8px;
 				position: relative;
-
-				span {
-					color: red;
+				p{
+					color: #fff;
+					span {
+						color: red;
+					}
 				}
 
 				input {
@@ -239,7 +241,7 @@
 		input {
 			border: 1.5px solid rgb(186, 179, 179);
 			outline: none;
-			padding: 10px 12px;
+			padding: 10px 15px;
 			width: 100%;
 			color: black;
 			font-family: Open Sans;

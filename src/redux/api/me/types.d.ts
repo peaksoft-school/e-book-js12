@@ -2,18 +2,30 @@
 
 namespace AUTHORIZATION {
 	type RegistrationResponse = {
+		data: Data;
+		error: ErrorData;
+	};
+
+	type ErrorData = {
+		password: string;
+	};
+
+	type Data = {
 		httpStatus: string;
 		message: string;
 	};
-	type SimpleResponse = {
-		httpStatus: string;
-		message: string;
-	};
+
 	type RegistrationRequest = {
 		firstName: string;
 		email: string;
 		password: string;
 	};
+
+	type SimpleResponse = {
+		httpStatus: string;
+		message: string;
+	};
+
 	type LoginResponse = {
 		token: string;
 		id: number;
@@ -23,14 +35,25 @@ namespace AUTHORIZATION {
 	};
 
 	type ConfirmEmailResponse = {
-		token: string;
-		firstName: string;
-		simpleResponse: SimpleResponse;
+		data: {
+			token: string;
+			firstName: string;
+			simpleResponse: SimpleResponse;
+		};
+		error: ConfirmEmailError;
 	};
 
-	type SimpleResponse = {
-		httpStatus: string;
-		message: string;
+	type ConfirmEmailError = {
+		status: number;
+		data: {
+			timestamp: string;
+			status: number;
+			error: string;
+			message?: string;
+			path: string;
+			httpStatus: string;
+			exceptionClassName: string;
+		};
 	};
 
 	type ConfirmEmailRequest = {
@@ -42,14 +65,12 @@ namespace AUTHORIZATION {
 		email: string;
 		password: string;
 	};
+
 	type VendorRegistrationResponse = {
-		token: string;
-		simpleResponse: SimpleVResponse;
+		data: Data;
+		error: ErrorData;
 	};
-	type SimpleVResponse = {
-		httpStatus: string;
-		message: string;
-	};
+
 	type VendorRegistrationRequest = {
 		firstName: string;
 		lastName: string;

@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { FC, useEffect, useState } from 'react';
+import { FC,  useState } from 'react';
 import scss from './VendorsBooks.module.scss';
 import { IconPencil } from '@tabler/icons-react';
 
@@ -21,7 +21,6 @@ const VendorsBooks: FC = () => {
 	const [isOpenBooksType, setIsOpenBooksType] = useState(false);
 	const [isModalOpen, setIsModalOpen] = useState(false);
 	const [selectedBook, setSelectedBook] = useState<number | null>(null);
-	const [initialLoad, setInitialLoad] = useState<boolean>(true);
 	const [allBooks, setAllBooks] = useState<any[]>([]);
 	const [sizePage, setSizePage] = useState(12);
 	const [sortBookData] = useState([
@@ -65,10 +64,6 @@ const VendorsBooks: FC = () => {
 		await deleteBook(id);
 	};
 
-	const showModal = (bookId: number) => {
-		setSelectedBook(bookId);
-		setIsModalOpen(true);
-	};
 
 	const handleOk = async () => {
 		if (selectedBook !== null) {
@@ -86,14 +81,9 @@ const VendorsBooks: FC = () => {
 		return setSizePage(sizePage + 12);
 	};
 
-	useEffect(() => {
-		if (data) {
-			setAllBooks((prevBooks) => [...prevBooks, ...data]);
-			setInitialLoad(false);
-		}
-	}, [data]);
 
-	if (initialLoad) {
+
+	if (isLoading) {
 		return <div>Loading...</div>;
 	}
 

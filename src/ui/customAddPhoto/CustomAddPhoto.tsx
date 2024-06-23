@@ -30,7 +30,8 @@ const CustomAddPhoto: React.FC<CustomAddPhotoProps> = ({
 
 	const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
 		const file = event.target.files?.[0];
-		if (file) {
+		//добавлнео  file.type.startsWith('image/')
+		if (file && file.type.startsWith('image/')) {
 			const reader = new FileReader();
 			reader.onload = (e) => {
 				if (e.target) {
@@ -69,6 +70,7 @@ const CustomAddPhoto: React.FC<CustomAddPhotoProps> = ({
 				type="file"
 				ref={fileInputRef}
 				style={{ display: 'none' }}
+				accept="image/*"
 				onChange={handleFileChange}
 			/>
 			{image ? null : (

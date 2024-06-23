@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { FC } from 'react';
+import { FC, useEffect } from 'react';
 import scss from './Style.module.scss';
 
 interface TypeProps {
@@ -17,6 +17,9 @@ const CustomUserNameInput: FC<TypeProps> = ({
 	refError,
 	validateError
 }) => {
+	useEffect(() => {
+		console.log(refError);
+	}, [refError]);
 	return (
 		<input
 			type="text"

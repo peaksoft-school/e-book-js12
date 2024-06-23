@@ -12,7 +12,7 @@ import {
 	IconWhiteSquare
 } from '@/src/assets/icons';
 import CustomAddPhoto from '@/src/ui/customAddPhoto/CustomAddPhoto';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import { ChangeEvent, useEffect, useState } from 'react';
 import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
 import {
@@ -61,17 +61,20 @@ const EditBook = () => {
 	const [secondValue, setSecondValue] = useState('');
 	const [pdfFileName, setPdfFileName] = useState<File>();
 	const [selectLanguage, setSelectLanguage] = useState(false);
-	const [bookType, setBookType] = useState('');
-	const [clickBestseller, setClickBestseller] = useState<boolean>(false);
+	const [bookType, setBookType] = useState(data?.bookType);
+	const [clickBestseller, setClickBestseller] = useState<boolean | undefined>(
+		false
+	);
 	const [selectDataJenre, setSelectDataJenre] = useState<TypeJenre | null>();
-	const [description, setDescription] = useState('');
+	const [description, setDescription] = useState<string | undefined>('');
 	const [pdfFile, setPdfFile] = useState(' ');
-	const [fragment, setFragment] = useState('');
-	const [inintialImg, setInitialImg] = useState<string>('');
+	const [fragment, setFragment] = useState<string | undefined>('');
+	const [inintialImg, setInitialImg] = useState<string | undefined>('');
 	const [initialImgSecond, setInitialImgSecond] = useState<string | undefined>(
 		''
 	);
 	const [test, setTest] = useState('');
+	const navigate = useNavigate();
 
 	const [languageSeleced, setLanguageSelected] = useState<
 		TypeLanguage | undefined
@@ -92,7 +95,7 @@ const EditBook = () => {
 			volume: data?.volume,
 			discount: data?.discount,
 			price: data?.price,
-			amountOfBook: ''
+			amountOfBook: data?.amountOfBook
 		}
 	});
 	const [addBookVendor] = useEditBookMutation();
@@ -227,6 +230,9 @@ const EditBook = () => {
 			setFirstPhoto('');
 			setSecondPhoto('');
 			setDelPhoto(false);
+			setTimeout(() => {
+				navigate('/vendor/home');
+			}, 3000);
 		}
 	};
 
@@ -338,11 +344,11 @@ const EditBook = () => {
 		);
 
 		setSelectDataJenre(ganre);
-		setInitialImg(data!.imageUrlFirst);
+		setInitialImg(data?.imageUrlFirst);
 		setInitialImgSecond(data?.imageUrlLast);
-		setClickBestseller(data!.bestseller);
-		setDescription(data!.description);
-		setFragment(data!.fragment);
+		setClickBestseller(data?.bestseller);
+		setDescription(data?.description);
+		setFragment(data?.fragment);
 	}, [data, fragment, description, firstPhoto, secondPhoto]);
 
 	useEffect(() => {
@@ -379,7 +385,7 @@ const EditBook = () => {
 									<CustomAddPhoto
 										onChange={(e) => handlePhotoChange(e)}
 										label="Главное фото"
-										initialState={inintialImg}
+										initialState={inintialImg!}
 										setDelPhoto={setDelPhoto}
 										delPhoto={delPhoto}
 										editPhoto={firstPhoto}
@@ -499,6 +505,8 @@ const EditBook = () => {
 										<label>
 											Название книги
 											<CustomUserNameInput
+												refError={false}
+												validateError={false}
 												placeholder="Напишите полное название книги"
 												registerName="title"
 												register={register}
@@ -507,6 +515,8 @@ const EditBook = () => {
 										<label>
 											ФИО автора
 											<CustomUserNameInput
+												refError={false}
+												validateError={false}
 												placeholder="Напишите ФИО автора"
 												registerName="authorsFullName"
 												register={register}
@@ -545,10 +555,10 @@ const EditBook = () => {
 														iconjenre ? scss.oprions_jenre : scss.close_jenre
 													}
 												>
-													{jenreData.map((jenre) => (
+													{jenreData.map((jenre, index) => (
 														<>
 															<div
-																key={jenre.jenreId}
+																key={index}
 																className={scss.option}
 																onClick={() => {
 																	selectedJenres(jenre.jenreId);
@@ -564,6 +574,8 @@ const EditBook = () => {
 										<label>
 											Издательство
 											<CustomUserNameInput
+												refError={false}
+												validateError={false}
 												placeholder="Напишите название издательства"
 												registerName="publishingHouse"
 												register={register}
@@ -580,7 +592,7 @@ const EditBook = () => {
 												placeholder="Напишите о книге"
 												onChange={(e) => setDescription(e.target.value)}
 											/>
-											<p>{description.length} / 1234</p>
+											<p>{description?.length} / 1234</p>
 										</label>
 										<label>
 											Фрагмент книги
@@ -592,7 +604,7 @@ const EditBook = () => {
 												placeholder="Напишите фрагмент книги"
 												onChange={(e) => setFragment(e.target.value)}
 											/>
-											<p>{fragment.length} / 1234</p>
+											<p>{fragment?.length} / 1234</p>
 										</label>
 									</div>
 									<div className={scss.right_inputs}>
@@ -711,6 +723,8 @@ const EditBook = () => {
 									<label>
 										Название книги
 										<CustomUserNameInput
+											refError={false}
+											validateError={false}
 											placeholder="Напишите полное название книги"
 											registerName="title"
 											register={register}
@@ -719,6 +733,8 @@ const EditBook = () => {
 									<label>
 										ФИО автора
 										<CustomUserNameInput
+											refError={false}
+											validateError={false}
 											placeholder="Напишите ФИО автора"
 											registerName="authorsFullName"
 											register={register}
@@ -782,7 +798,7 @@ const EditBook = () => {
 											placeholder="Напишите о книге"
 											onChange={(e) => setDescription(e.target.value)}
 										/>
-										<p>{description.length} / 1234</p>
+										<p>{description?.length} / 1234</p>
 									</label>
 								</div>
 								<div className={`${scss.right_inputs} ${scss.audio_inputs}`}>
@@ -895,6 +911,7 @@ const EditBook = () => {
 											Загрузите фрагмент аудиозаписи
 											<div className={scss.audio_input}>
 												<CustomAudioDownloadInput
+													isFileUploaded
 													setDuration={() => {}}
 													accept="audio/*"
 													onChange={(e) => {
@@ -908,6 +925,7 @@ const EditBook = () => {
 											Загрузите аудиозапись
 											<div className={scss.audio_input}>
 												<CustomAudioDownloadInput
+													isFileUploaded
 													setDuration={setDuration}
 													accept="audio/*"
 													onChange={(e) => {
@@ -929,6 +947,8 @@ const EditBook = () => {
 										<label>
 											Название книги
 											<CustomUserNameInput
+												refError={false}
+												validateError={false}
 												placeholder="Напишите полное название книги"
 												registerName="title"
 												register={register}
@@ -937,6 +957,8 @@ const EditBook = () => {
 										<label>
 											ФИО автора
 											<CustomUserNameInput
+												refError={false}
+												validateError={false}
 												placeholder="Напишите ФИО автора"
 												registerName="authorsFullName"
 												register={register}
@@ -997,6 +1019,8 @@ const EditBook = () => {
 												placeholder="Напишите название издательства"
 												registerName="publishingHouse"
 												register={register}
+												refError={false}
+												validateError={false}
 											/>
 										</label>
 										<label>
@@ -1009,7 +1033,7 @@ const EditBook = () => {
 												placeholder="Напишите о книге"
 												onChange={(e) => setDescription(e.target.value)}
 											/>
-											<p>{description.length} / 1234</p>
+											<p>{description?.length} / 1234</p>
 										</label>
 										<label>
 											Фрагмент книги
@@ -1021,7 +1045,7 @@ const EditBook = () => {
 												placeholder="Напишите фрагмент книги"
 												onChange={(e) => setFragment(e.target.value)}
 											/>
-											<p>{fragment.length} / 1234</p>
+											<p>{fragment?.length} / 1234</p>
 										</label>
 									</div>
 									<div className={scss.right_inputs}>
@@ -1122,6 +1146,7 @@ const EditBook = () => {
 											<div className={scss.box_last}>
 												<CustomPDFDownloadInput
 													onChange={handleFileChange}
+													isFileUploaded
 													accept="application/pdf"
 												/>
 												{pdfFileName && (
