@@ -60,3 +60,4 @@ export { default as IconGoogleLogo } from './icon-google-logo';
 export { default as IconPromoPage } from './icon-promo-page';
 export { default as CircleXIcon } from './icon-circle-x';
 export { default as IconBuyed } from './icon-buyed.tsx';
+export {default as iconGirlNo} from './icon-girl.tsx'
