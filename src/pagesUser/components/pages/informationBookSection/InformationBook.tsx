@@ -8,6 +8,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { useGetBookByIdQuery } from '@/src/redux/api/book';
 import { useAddBookToBasketMutation } from '@/src/redux/api/basket';
 import { usePostFavoriteUnFavoriteMutation } from '@/src/redux/api/favorite';
+import { Tooltip } from 'antd';
 
 interface TypeGetById {
 	data: BookData;
@@ -40,58 +41,64 @@ const genres = [
 	{
 		genreId: 1,
 		genreName: 'ХУДОЖЕСТВЕННАЯ ЛИТЕРАТУРА',
-		englishName: 'ARTISTIC_LITERATURE',
-		isChecked: false
+		englishName: 'ARTISTIC_LITERATURE'
 	},
 	{
 		genreId: 2,
 		genreName: 'ОБРАЗОВАНИЕ',
-		englishName: 'EDUCATION',
-		isChecked: false
+		englishName: 'EDUCATION'
 	},
 	{
 		genreId: 3,
 		genreName: 'КНИГИ ДЛЯ ДЕТЕЙ',
-		englishName: 'BOOKS_FOR_CHILDREN',
-		isChecked: false
+		englishName: 'BOOKS_FOR_CHILDREN'
 	},
 	{
 		genreId: 4,
 		genreName: 'НАУКА И ТЕХНОЛОГИЯ',
-		englishName: 'SCIENCE_AND_TECHNOLOGY',
-		isChecked: false
+		englishName: 'SCIENCE_AND_TECHNOLOGY'
 	},
 	{
 		genreId: 5,
 		genreName: 'СООБЩЕСТВО',
-		englishName: 'COMMUNITY',
-		isChecked: false
+		englishName: 'COMMUNITY'
 	},
 	{
 		genreId: 6,
 		genreName: 'БИЗНЕС ЛИТЕРАТУРА',
-		englishName: 'BUSINESS_LITERATURE',
-		isChecked: false
+		englishName: 'BUSINESS_LITERATURE'
 	},
 	{
 		genreId: 7,
 		genreName: 'КРАСОТА, ЗДОРОВЬЕ, СПОРТ',
-		englishName: 'BEAUTY_HEALTH_SPORT',
-		isChecked: false
+		englishName: 'BEAUTY_HEALTH_SPORT'
 	},
 	{
 		genreId: 8,
 		genreName: 'УВЛЕЧЕНИЯ',
-		englishName: 'HOBBIES',
-		isChecked: false
+		englishName: 'HOBBIES'
 	},
 	{
 		genreId: 9,
 		genreName: 'ПСИХОЛОГИЯ',
-		englishName: 'PSYCHOLOGY',
-		isChecked: false
+		englishName: 'PSYCHOLOGY'
 	}
 ];
+
+// const languageData = [
+// 	{
+// 		genreName: 'Русский язык',
+// 		englishName: 'RUSSIAN'
+// 	},
+// 	{
+// 		genreName: 'Кыргызский язык',
+// 		englishName: 'KYRGYZ'
+// 	},
+// 	{
+// 		genreName: 'Англизский язык',
+// 		englishName: 'ENGLISH'
+// 	}
+// ];
 
 const InformationBook: FC = () => {
 	const [showBookInfo, setShowBookInfo] = useState(false);
@@ -107,11 +114,15 @@ const InformationBook: FC = () => {
 	const handleAddBookToBasket = async (id: number) => {
 		await addBookToBasket(id);
 	};
+
 	const handleAddBookToFavorite = async (id: number) => {
 		await addBookToFavorite(id);
 	};
 
-	const genreBook = genres.find((item) => item.genreId === bookId);
+	const hadnleGenre = () => {
+		const genreBook = genres.find((item) => item.englishName === data.genre);
+		return genreBook?.genreName;
+	};
 
 	return (
 		<section className={scss.InformationBookSection}>
@@ -132,12 +143,20 @@ const InformationBook: FC = () => {
 									>
 										Главная
 									</span>
-									/{' '}
+									/{''}
 									<span>
-										{genreBook ? genreBook.genreName : 'Жанр не найден'}
+										{hadnleGenre() ? hadnleGenre() : 'Жанр не найден'}
 									</span>
 								</p>
-								/ <h4>{data?.title}</h4>
+								/{' '}
+								<Tooltip
+									className={scss.info_hover}
+									title={data?.title.length > 20 ? data?.title : ''}
+									color="black"
+									placement="bottomLeft"
+								>
+									<h4>{data?.title}</h4>
+								</Tooltip>
 							</div>
 							<div className={scss.contents_book}>
 								<div className={scss.section_about_book}>
@@ -147,7 +166,14 @@ const InformationBook: FC = () => {
 								</div>
 								<div className={scss.section_content_text}>
 									<div className={scss.section_title}>
-										<h3>{data?.title}</h3>
+										<Tooltip
+											className={scss.info_hover}
+											title={data?.title.length > 20 ? data?.title : ''}
+											color="black"
+											placement="bottomLeft"
+										>
+											<h3>{data?.title}</h3>
+										</Tooltip>
 									</div>
 									<div className={scss.section_mony}>
 										<p>{data?.price} с</p>
@@ -187,9 +213,33 @@ const InformationBook: FC = () => {
 												<>
 													<div className={scss.section_info_two} key={data?.id}>
 														<p>{data?.authorsFullName}</p>
+														<p>{hadnleGenre()}</p>
+														<Tooltip
+															className={scss.info_hover}
+															title={
+																data?.authorsFullName.length > 20
+																	? data?.authorsFullName
+																	: ''
+															}
+															color="black"
+															placement="bottomLeft"
+														>
+															<p>{data?.authorsFullName}</p>
+														</Tooltip>
 														<p>{data?.genre}</p>
 														<p>{data?.language}</p>
-														<p>{data?.publishingHouse}</p>
+														<Tooltip
+															className={scss.info_hover}
+															title={
+																data?.publishingHouse.length > 20
+																	? data?.publishingHouse
+																	: ''
+															}
+															color="black"
+															placement="bottomLeft"
+														>
+															<p>{data?.publishingHouse}</p>
+														</Tooltip>
 														<p>{data?.publishedYear}</p>
 														{data.bookType === 'AUDIO_BOOK' ? (
 															<>

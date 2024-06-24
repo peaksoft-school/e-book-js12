@@ -2,7 +2,7 @@ const IconGirl = () => {
 	return (
 		<>
 			<svg
-				width="502.000000"
+				width="100%"
 				height="501.000000"
 				viewBox="0 0 502 501"
 				fill="none"

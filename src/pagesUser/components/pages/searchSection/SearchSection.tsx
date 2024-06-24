@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import scss from './Section.module.scss';
 import WhiteSquareIcon from '@/src/assets/icons/icon-whiteSquare';
 import BlackSquareIcon from '@/src/assets/icons/icon-blackSquare';
@@ -15,7 +15,7 @@ import {
 	IconWhiteLike
 } from '@/src/assets/icons';
 import CustomBasketButton from '@/src/ui/customButton/CustomBasketButton';
-import { Slider, ConfigProvider } from 'antd';
+import { Slider, ConfigProvider, Tooltip } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import { usePostSortBookMutation } from '@/src/redux/api/sort';
 import { usePostFavoriteUnFavoriteMutation } from '@/src/redux/api/favorite';
@@ -56,7 +56,7 @@ const SearchSection = () => {
 	const [menufilters, setMenuFilters] = useState(false);
 
 	const [totalBooks, setTotalBooks] = useState<number>();
-	const [page, setPage] = useState<number>(8);
+	const [page, setPage] = useState<number>(12);
 
 	const [postFillter] = usePostSortBookMutation();
 	const [addBookFavorite] = usePostFavoriteUnFavoriteMutation();
@@ -164,7 +164,16 @@ const SearchSection = () => {
 	// 		: sortData.filter((book) => book.id === selected);
 
 	const [dataBooks, setDataBooks] = useState<SORT.TypeDataBook[]>([]);
+	const searchSectionRef = useRef(null);
 
+	const smoothScroll = (ref: React.RefObject<HTMLElement>) => {
+		if (ref.current) {
+			window.scrollTo({
+				top: ref.current.offsetTop,
+				behavior: 'smooth'
+			});
+		}
+	};
 	const [languageBooksData, setLanguageBooksData] = useState([
 		{
 			languageId: 1,
@@ -206,6 +215,7 @@ const SearchSection = () => {
 					progress: undefined,
 					theme: 'light'
 				});
+				handleChangeFillter();
 			} else if (httpStatus === 'ALREADY_REPORTED') {
 				toast('Вы уже добавили эту книгу в корзину!', {
 					position: 'top-right',
@@ -329,12 +339,19 @@ const SearchSection = () => {
 		}
 	};
 
+	const handleTest = () => {
+		totalBooks; //
+		page; //
+	};
+
+	console.log(handleTest());
+
 	useEffect(() => {
 		handleChangeFillter();
 	}, [jenreData, idSort, typesBookData, languageBooksData, value, page]);
 
 	return (
-		<section className={scss.SearchSection}>
+		<section ref={searchSectionRef} className={scss.SearchSection}>
 			<div className="container">
 				<div className={scss.content}>
 					<ToastContainer />
@@ -645,8 +662,26 @@ const SearchSection = () => {
 										onClick={() => navigate(`/search_book/${item.id}`)}
 										className={scss.card_description}
 									>
-										<h3>{item.title}</h3>
-										<p>{item.authorFullName}</p>
+										<Tooltip
+											className={scss.info_hover}
+											title={item.title.length > 20 ? item.title : ''}
+											color="black"
+											placement="bottomLeft"
+										>
+											<h3>{item.title}</h3>
+										</Tooltip>
+										<Tooltip
+											className={scss.info_hover}
+											title={
+												item.authorFullName.length > 20
+													? item.authorFullName
+													: ''
+											}
+											color="black"
+											placement="bottomLeft"
+										>
+											<p>{item.authorFullName}</p>
+										</Tooltip>
 										<p>{item.price} с</p>
 									</div>
 									<div className={scss.btn_basket}>
@@ -674,13 +709,28 @@ const SearchSection = () => {
 							))}
 							{totalBooks && totalBooks > 12 && (
 								<div className={scss.btn_morebook}>
-									<button
-										onClick={() => {
-											setPage(page + 12);
-										}}
-									>
-										Смотреть больше
-									</button>
+									{totalBooks === dataBooks.length ? (
+										<>
+											<button
+												onClick={() => {
+													setPage(12);
+													smoothScroll(searchSectionRef);
+												}}
+											>
+												Вернутся назад
+											</button>
+										</>
+									) : (
+										<>
+											<button
+												onClick={() => {
+													setPage(page + 12);
+												}}
+											>
+												Смотреть больше
+											</button>
+										</>
+									)}
 								</div>
 							)}
 						</div>

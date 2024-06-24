@@ -21,6 +21,7 @@ const PromoSection = () => {
 	const [foundBooks, setFoundBooks] = useState<Book[]>([]);
 	const [foundBooksCount, setFoundBooksCount] = useState(0);
 	const [promoModal, setPromoModal] = useState(false);
+	const [page, setPage] = useState<number>(12);
 
 	const navigate = useNavigate();
 
@@ -89,7 +90,7 @@ const PromoSection = () => {
 					</div>
 					{foundBooks.length > 0 && (
 						<div className={scss.container_books}>
-							{foundBooks.map((book) => (
+							{foundBooks.slice(0, page).map((book) => (
 								<div
 									onClick={() => navigate(`/${book.id}`)}
 									key={book.id}
@@ -107,6 +108,17 @@ const PromoSection = () => {
 									</div>
 								</div>
 							))}
+						</div>
+					)}
+					{foundBooksCount > page && (
+						<div className={scss.btn_morebookk}>
+							<button
+								onClick={() => {
+									setPage(page + 12);
+								}}
+							>
+								Смотреть больше
+							</button>
 						</div>
 					)}
 				</div>
