@@ -80,7 +80,7 @@ const InnerSection = () => {
 								books?.books.map((book) => (
 									<div
 										key={book.id}
-										className={`${scss.book} ${book.isViewed ? '' : scss.unviewed}`}
+										className={`${book.isViewed ? '' : scss.unviewedStyle} : ${scss.book}`}
 									>
 										<div
 											className={scss.extra}
@@ -94,7 +94,11 @@ const InnerSection = () => {
 										{idBook === book.id && (
 											<div className={isOpen ? scss.is_open : scss.on_close}>
 												<ul>
-													<li>
+													<li
+														onClick={() => {
+															navigate(`/admin/edit/${book.id}`);
+														}}
+													>
 														<span>
 															<IconPencil />
 														</span>
@@ -120,7 +124,7 @@ const InnerSection = () => {
 											className={scss.book_content}
 										>
 											<div className={scss.book_img}>
-												<img src={book.imageUrl1} alt={book.title} />
+												<img src={book.imageUrl} alt={book.title} />
 											</div>
 											<div className={scss.info_book}>
 												<Tooltip
