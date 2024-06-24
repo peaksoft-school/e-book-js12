@@ -51,13 +51,13 @@
 				display: flex;
 				justify-content: space-between;
 				width: 60%;
-				.fallback_container{
+				.fallback_container {
 					display: flex;
 					justify-content: center;
 					align-items: center;
 					flex-direction: column;
-					
-					p{
+
+					p {
 						color: white;
 					}
 				}
@@ -211,8 +211,8 @@
 					max-width: 300px;
 					width: 100%;
 				}
-				.description_text{
-						overflow: hidden;
+				.description_text {
+					overflow: hidden;
 					white-space: nowrap;
 					text-overflow: ellipsis;
 				}

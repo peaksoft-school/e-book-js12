@@ -654,16 +654,17 @@ const SearchSection = () => {
 											<h3>{item.title}</h3>
 										</Tooltip>
 										<Tooltip
-																	className={scss.info_hover}
-																	title={
-																		item.authorFullName.length > 20 ? item.authorFullName : ''
-																	}
-																	color="black"
-																	placement="bottomLeft"
-																>
-																	
-										<p>{item.authorFullName}</p>
-																</Tooltip>
+											className={scss.info_hover}
+											title={
+												item.authorFullName.length > 20
+													? item.authorFullName
+													: ''
+											}
+											color="black"
+											placement="bottomLeft"
+										>
+											<p>{item.authorFullName}</p>
+										</Tooltip>
 										<p>{item.price} с</p>
 									</div>
 									<div className={scss.btn_basket}>
