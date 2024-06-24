@@ -6,6 +6,7 @@ import IconOrangeRightArrow from '@/src/assets/icons/icon-orangeRightArrow';
 import { Link, useNavigate } from 'react-router-dom';
 import { useGetEBookQuery } from '@/src/redux/api/bestsellers';
 import { useKeenSlider } from 'keen-slider/react';
+import IconGirl from '@/src/assets/icons/icon-girl';
 
 const SecondSlider: FC = () => {
 	const { data, error, isLoading } = useGetEBookQuery();
@@ -53,6 +54,9 @@ const SecondSlider: FC = () => {
 		speed: 500,
 		slidesToShow: 3,
 		slidesToScroll: 1,
+		dots: true,
+		autoplay: true,
+		autoplaySpeed: 3000,
 		nextArrow: (
 			<NextArrow
 				onClick={() =>
@@ -102,7 +106,7 @@ const SecondSlider: FC = () => {
 					if (mouseOver) return;
 					timeout = setTimeout(() => {
 						slider.next();
-					}, 3000);
+					}, 5000);
 				}
 
 				slider.on('created', () => {
@@ -135,71 +139,80 @@ const SecondSlider: FC = () => {
 				</Link>
 			</div>
 			<div className="containers">
-				<div>
-					{data?.map((item, idx) => (
-						<div key={item.id} className="description-box">
-							{idx === imageIndex && (
-								<div className="title">
-									<h2 className="name">{item.title}</h2>
-									<div
-										className="favorite_card_descriptions"
-										onClick={() => handleClick(item.id)}
-									>
-										{expandedCards[item.id] ? (
-											<p className="description">{item.description}</p>
-										) : (
-											<p>{item.description.substring(0, 250)}...</p>
-										)}
-									</div>
-									<div className="box">
-										<p
-											className="read-more"
-											onClick={() => navigate(`${item.id}`)}
-										>
-											Подробнее
-										</p>
-										<p className="price">{item.price} c</p>
-									</div>
+				{data && data.length > 0 ? (
+					<>
+						<div>
+							{data.map((item, idx) => (
+								<div key={item.id} className="description-box">
+									{idx === imageIndex && (
+										<div className="title">
+											<h2 className="name">{item.title}</h2>
+											<div
+												className="favorite_card_descriptions"
+												onClick={() => handleClick(item.id)}
+											>
+												{expandedCards[item.id] ? (
+													<p className="description">{item.description}</p>
+												) : (
+													<p>{item.description.substring(0, 250)}...</p>
+												)}
+											</div>
+											<div className="box">
+												<p
+													className="read-more"
+													onClick={() => navigate(`${item.id}`)}
+												>
+													Подробнее
+												</p>
+												<p className="price">{item.price} c</p>
+											</div>
+										</div>
+									)}
 								</div>
+							))}
+						</div>
+						<div className="joc">
+							{isMobile ? (
+								<div ref={keenSliderRef} className="keen-slider">
+									{data.map((item, idx) => (
+										<div
+											key={item.id}
+											className={`keen-slider__slide slide ${idx === imageIndex ? 'activeSlide' : ''}`}
+										>
+											<img src={item.imageUrl} alt="img" />
+										</div>
+									))}
+								</div>
+							) : (
+								<Slider {...settings}>
+									{data.map((item, idx) => (
+										<div
+											key={item.id}
+											className={
+												idx === imageIndex ? 'slide activeSlide' : 'slide'
+											}
+										>
+											<img src={item.imageUrl} alt="img" />
+										</div>
+									))}
+								</Slider>
 							)}
 						</div>
-					))}
-				</div>
-				<div className="joc">
-					{data &&
-						data.length > 0 &&
-						(isMobile ? (
-							<div ref={keenSliderRef} className="keen-slider">
-								{data.map((item, idx) => (
-									<div
-										key={item.id}
-										className={`keen-slider__slide slide ${idx === imageIndex ? 'activeSlide' : ''}`}
-									>
-										<img src={item.imageUrl} alt="img" />
-									</div>
-								))}
+						{data && (
+							<div className="scroll-line">
+								<div
+									className="active-line"
+									style={{
+										width: `${(100 / data.length) * (imageIndex + 1)}%`
+									}}
+								></div>
 							</div>
-						) : (
-							<Slider {...settings}>
-								{data.map((item, idx) => (
-									<div
-										key={item.id}
-										className={
-											idx === imageIndex ? 'slide activeSlide' : 'slide'
-										}
-									>
-										<img src={item.imageUrl} alt="img" />
-									</div>
-								))}
-							</Slider>
-						))}
-				</div>
-				{data && (
-					<div className="scroll-line">
-						<div
-							className="active-line"
-							style={{ width: `${(100 / data.length) * (imageIndex + 1)}%` }}
-						></div>
+						)}
+					</>
+				) : (
+					<div className="fallback-container">
+						<IconGirl />
+						<p>Нет доступных Электронные книги</p>
 					</div>
 				)}
 			</div>

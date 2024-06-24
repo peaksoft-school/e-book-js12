@@ -39,6 +39,12 @@
 		font-weight: 400;
 		text-align: left;
 		color: white;
+
+		max-width: 250px;
+		text-transform: uppercase;
+		overflow: hidden;
+		white-space: nowrap;
+		text-overflow: ellipsis;
 	}
 	.slidee .auth {
 		overflow-wrap: break-word;
@@ -49,6 +55,11 @@
 		font-weight: 400;
 		text-align: left;
 		color: #8c8c8c;
+		max-width: 250px;
+		text-transform: uppercase;
+		overflow: hidden;
+		white-space: nowrap;
+		text-overflow: ellipsis;
 	}
 	.slidee .pri {
 		font-family: Open Sans;
@@ -119,6 +130,18 @@
 		justify-content: space-between;
 		align-items: center;
 		width: 100%;
+	}
+
+	.fallback_container{
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		flex-direction: column;
+		width: 100%;
+	}
+
+	.fallback_container p{
+		color: white;
 	}
 	@media screen and (max-width: 1350px) {
 		.activeSlidee {

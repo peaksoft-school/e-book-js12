@@ -5,6 +5,36 @@
 		justify-content: center;
 		align-items: center;
 		margin-bottom: 179px;
+		.btn_morebookk {
+			margin-bottom: 25px;
+			width: 100%;
+
+			@media (max-width: 850px) {
+				display: grid;
+				grid-column-start: 1;
+				grid-column-end: 3;
+			}
+			button {
+				color: rgb(150, 150, 150);
+				font-family: Open Sans;
+				font-size: 14px;
+				font-weight: 400;
+				line-height: 120%;
+				letter-spacing: 0px;
+				text-align: center;
+				border-radius: 0px;
+				width: 100%;
+				outline: none;
+				border: 1px solid #c4c4c4;
+				background-color: transparent;
+				padding: 10px 0px;
+				cursor: pointer;
+				&:hover {
+					color: #f8f8f8;
+					background-color: #f34901;
+				}
+			}
+		}
 		.promo_content {
 			display: flex;
 			flex-direction: column;
@@ -99,6 +129,7 @@
 			@media (max-width: 700px) {
 				grid-template-columns: 1fr 1fr;
 			}
+
 			.card_book {
 				display: flex;
 				flex-direction: column;

@@ -65,6 +65,14 @@
 			flex-direction: column;
 			gap: 20px;
 			padding-top: 30px;
+
+			.no_favorites {
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				flex-direction: column;
+				width: 100%;
+			}
 			@media (max-width: 616px) {
 				gap: 20px;
 			}

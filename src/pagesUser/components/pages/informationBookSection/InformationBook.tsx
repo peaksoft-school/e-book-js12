@@ -8,6 +8,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { useGetBookByIdQuery } from '@/src/redux/api/book';
 import { useAddBookToBasketMutation } from '@/src/redux/api/basket';
 import { usePostFavoriteUnFavoriteMutation } from '@/src/redux/api/favorite';
+import { Tooltip } from 'antd';
 
 interface TypeGetById {
 	data: BookData;
@@ -132,12 +133,20 @@ const InformationBook: FC = () => {
 									>
 										Главная
 									</span>
-									/{' '}
+									/{''}
 									<span>
 										{genreBook ? genreBook.genreName : 'Жанр не найден'}
 									</span>
 								</p>
-								/ <h4>{data?.title}</h4>
+								/{' '}
+								<Tooltip
+									className={scss.info_hover}
+									title={data?.title.length > 20 ? data?.title : ''}
+									color="black"
+									placement="bottomLeft"
+								>
+									<h4>{data?.title}</h4>
+								</Tooltip>
 							</div>
 							<div className={scss.contents_book}>
 								<div className={scss.section_about_book}>
@@ -147,7 +156,14 @@ const InformationBook: FC = () => {
 								</div>
 								<div className={scss.section_content_text}>
 									<div className={scss.section_title}>
-										<h3>{data?.title}</h3>
+										<Tooltip
+											className={scss.info_hover}
+											title={data?.title.length > 20 ? data?.title : ''}
+											color="black"
+											placement="bottomLeft"
+										>
+											<h3>{data?.title}</h3>
+										</Tooltip>
 									</div>
 									<div className={scss.section_mony}>
 										<p>{data?.price} с</p>
@@ -186,10 +202,32 @@ const InformationBook: FC = () => {
 											{
 												<>
 													<div className={scss.section_info_two} key={data?.id}>
-														<p>{data?.authorsFullName}</p>
+														<Tooltip
+															className={scss.info_hover}
+															title={
+																data?.authorsFullName.length > 20
+																	? data?.authorsFullName
+																	: ''
+															}
+															color="black"
+															placement="bottomLeft"
+														>
+															<p>{data?.authorsFullName}</p>
+														</Tooltip>
 														<p>{data?.genre}</p>
 														<p>{data?.language}</p>
-														<p>{data?.publishingHouse}</p>
+														<Tooltip
+															className={scss.info_hover}
+															title={
+																data?.publishingHouse.length > 20
+																	? data?.publishingHouse
+																	: ''
+															}
+															color="black"
+															placement="bottomLeft"
+														>
+															<p>{data?.publishingHouse}</p>
+														</Tooltip>
 														<p>{data?.publishedYear}</p>
 														{data.bookType === 'AUDIO_BOOK' ? (
 															<>
