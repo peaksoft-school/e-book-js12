@@ -4,13 +4,15 @@ import scss from './LastPublication.module.scss';
 import { IconLongLine, IconShortLine } from '@/src/assets/icons';
 import { Link, useNavigate } from 'react-router-dom';
 import { useGetLastPublicationQuery } from '@/src/redux/api/book';
+import { Tooltip } from 'antd';
+import IconGirl from '@/src/assets/icons/icon-girl';
 
 const LastPublicationSection: FC = () => {
 	const [state, setState] = useState('BUSINESS_LITERATURE');
 	const [expandedCards, setExpandedCards] = useState<{
 		[key: number]: boolean;
 	}>({});
-	const { data } = useGetLastPublicationQuery({
+	const { data, error, isLoading } = useGetLastPublicationQuery({
 		page: 1,
 		size: 1,
 		genre: state
@@ -39,6 +41,9 @@ const LastPublicationSection: FC = () => {
 			[id]: !prevExpanded[id]
 		}));
 	};
+
+	if (isLoading) return <p>Загрузка...</p>;
+	if (error) return <p>Ошибка загрузки данных</p>;
 
 	return (
 		<section className={scss.LastPublicationSection}>
@@ -110,31 +115,52 @@ const LastPublicationSection: FC = () => {
 									</li>
 								</ul>
 							</div>
-							{data?.map((el) => (
-								<div key={el.id} className={scss.main_image}>
-									<div className={scss.image_container}>
-										<IconShortLine />
-										<IconLongLine />
-										<img
-											className={scss.book_image}
-											src={el.imageUrl}
-											alt={el.title}
-										/>
-										<IconLongLine />
-										<IconShortLine />
+							{data && data.length > 0 ? (
+								data.map((el) => (
+									<div key={el.id} className={scss.main_image}>
+										<div className={scss.image_container}>
+											<IconShortLine />
+											<IconLongLine />
+											<img
+												className={scss.book_image}
+												src={el.imageUrl}
+												alt={el.title}
+											/>
+											<IconLongLine />
+											<IconShortLine />
+										</div>
 									</div>
+								))
+							) : (
+								<div className={scss.fallback_container}>
+									<IconGirl />
+									<p>Нет доступных публикаций</p>
 								</div>
-							))}
+							)}
 						</div>
 						{data?.map((el) => (
 							<div key={el.id} className={scss.main_about}>
-								<h2 className={scss.title_book}>{el.title}</h2>
+								<Tooltip
+									className={scss.info_hover}
+									title={el.title.length > 20 ? el.title : ''}
+									color="black"
+									placement="bottomLeft"
+								>
+									<h2 className={scss.title_book}>{el.title}</h2>
+								</Tooltip>
 								<div
 									className={scss.about_book}
 									onClick={() => handleShowFullText(el.id)}
 								>
 									{expandedCards[el.id] ? (
-										<p className="description">{el.description}</p>
+										<Tooltip
+											className={scss.info_hover}
+											title={el.description.length > 20 ? el.description : ''}
+											color="black"
+											placement="bottomLeft"
+										>
+											<p className={scss.description_text}>{el.description}</p>
+										</Tooltip>
 									) : (
 										<p>{el.description.substring(0, 285)}...</p>
 									)}

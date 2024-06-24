@@ -14,9 +14,13 @@ import {
 } from '@/src/assets/icons';
 
 import { useGetAllBooksQuery } from '@/src/redux/api/latestBooks';
+import { Tooltip } from 'antd';
+import { useNavigate } from 'react-router-dom';
+import { IconGrill } from '@tabler/icons-react';
 
 const LatestBookSection: FC = () => {
-	const { data } = useGetAllBooksQuery();
+	const { data, error, isLoading } = useGetAllBooksQuery();
+	const navigate = useNavigate();
 
 	const NextArrow: FC<{ onClick: () => void }> = ({ onClick }) => (
 		<div className="arrow next" onClick={onClick}>
@@ -39,6 +43,10 @@ const LatestBookSection: FC = () => {
 		slidesToShow: 3,
 		centerMode: true,
 		centerPadding: '0',
+		dots: true,
+		autoplay: true,
+		autoplaySpeed: 3000,
+		pauseOnHover: true,
 		nextArrow: <NextArrow />,
 		prevArrow: <PrevArrow />,
 		beforeChange: (current, next) => setImageIndex(next),
@@ -57,6 +65,9 @@ const LatestBookSection: FC = () => {
 		]
 	};
 
+	if (isLoading) return <p>Загрузка...</p>;
+	if (error) return <p>Ошибка загрузки данных</p>;
+
 	return (
 		<section className="LatestBooksSection">
 			<div className="container">
@@ -65,31 +76,51 @@ const LatestBookSection: FC = () => {
 						<IconBackgroundLine />
 					</div>
 					<div className="slider_container">
-						<Slider {...settings}>
-							{data?.map((item, idx) => (
-								<div
-									key={idx}
-									className={
-										idx === imageIndex ? 'slidee activeSlidee' : 'slidee'
-									}
-								>
-									<img src={item.imageUrl} alt="img" />
-									{idx === imageIndex && (
-										<div className="sli">
-											<div className="tro">
-												<div className="tros">
-													<h1 className="names">{item.title}</h1>
+						{data && data.length > 0 ? (
+							<Slider {...settings}>
+								{data.map((item, idx) => (
+									<div
+										key={idx}
+										onClick={() => navigate(`/search_book/${item.id}`)}
+										className={
+											idx === imageIndex ? 'slidee activeSlidee' : 'slidee'
+										}
+									>
+										<img src={item.imageUrl} alt="img" />
+										{idx === imageIndex && (
+											<div className="sli">
+												<div className="tro">
+													<div className="tros">
+														<Tooltip
+															title={item.title.length > 20 ? item.title : ''}
+															color="black"
+															placement="bottomLeft"
+														>
+															<h1 className="names">{item.title}</h1>
+														</Tooltip>
+													</div>
+													<Tooltip
+														title={item.title.length > 20 ? item.title : ''}
+														color="black"
+														placement="bottomLeft"
+													>
+														<p className="auth">{item.authorsFullName}</p>
+													</Tooltip>
 												</div>
-												<p className="auth">{item.authorsFullName}</p>
+												<div className="prii">
+													<p className="pri">{item.price} c</p>
+												</div>
 											</div>
-											<div className="prii">
-												<p className="pri">{item.price} c</p>
-											</div>
-										</div>
-									)}
-								</div>
-							))}
-						</Slider>
+										)}
+									</div>
+								))}
+							</Slider>
+						) : (
+							<div className="fallback_container">
+								<IconGrill />
+								<p>Нет доступных книг</p>
+							</div>
+						)}
 					</div>
 				</div>
 			</div>

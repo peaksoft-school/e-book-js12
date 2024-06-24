@@ -13,7 +13,7 @@ const ConfirmPayment = () => {
 	const handleConfirmPayment = async () => {
 		const response = await confirmPayment(paymentId);
 		if ('data' in response) {
-			if (response.data.httpStatus === 'OK') {
+			if (response.data?.httpStatus === 'OK') {
 				setModal(true);
 			}
 		}

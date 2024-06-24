@@ -15,7 +15,7 @@ import {
 	IconWhiteLike
 } from '@/src/assets/icons';
 import CustomBasketButton from '@/src/ui/customButton/CustomBasketButton';
-import { Slider, ConfigProvider } from 'antd';
+import { Slider, ConfigProvider, Tooltip } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import { usePostSortBookMutation } from '@/src/redux/api/sort';
 import { usePostFavoriteUnFavoriteMutation } from '@/src/redux/api/favorite';
@@ -645,8 +645,25 @@ const SearchSection = () => {
 										onClick={() => navigate(`/search_book/${item.id}`)}
 										className={scss.card_description}
 									>
-										<h3>{item.title}</h3>
+										<Tooltip
+											className={scss.info_hover}
+											title={item.title.length > 20 ? item.title : ''}
+											color="black"
+											placement="bottomLeft"
+										>
+											<h3>{item.title}</h3>
+										</Tooltip>
+										<Tooltip
+																	className={scss.info_hover}
+																	title={
+																		item.authorFullName.length > 20 ? item.authorFullName : ''
+																	}
+																	color="black"
+																	placement="bottomLeft"
+																>
+																	
 										<p>{item.authorFullName}</p>
+																</Tooltip>
 										<p>{item.price} с</p>
 									</div>
 									<div className={scss.btn_basket}>

@@ -7,9 +7,11 @@ import IconOrangeLeftArrow from '@/src/assets/icons/icon-orangeLeftArrow';
 import IconOrangeRightArrow from '@/src/assets/icons/icon-orangeRightArrow';
 import { useGetAllBestsellersQuery } from '@/src/redux/api/bestsellers';
 import { Link, useNavigate } from 'react-router-dom';
+import { Tooltip } from 'antd';
+import IconGirl from '@/src/assets/icons/icon-girl';
 
 const BestsellersSection: FC = () => {
-	const { data } = useGetAllBestsellersQuery();
+	const { data, error, isLoading } = useGetAllBestsellersQuery();
 	const navigate = useNavigate();
 	const [expandedCards, setExpandedCards] = useState<{
 		[key: number]: boolean;
@@ -53,6 +55,9 @@ const BestsellersSection: FC = () => {
 		speed: 400,
 		slidesToShow: 3,
 		slidesToScroll: 1,
+		dots: true,
+		autoplay: true,
+		autoplaySpeed: 2000,
 		nextArrow: (
 			<NextArrow
 				onClick={() =>
@@ -125,6 +130,9 @@ const BestsellersSection: FC = () => {
 		]
 	);
 
+	if (isLoading) return <p>Загрузка...</p>;
+	if (error) return <p>Ошибка загрузки данных</p>;
+
 	return (
 		<section className="BestsellersSection">
 			<div className="container">
@@ -135,71 +143,83 @@ const BestsellersSection: FC = () => {
 					</Link>
 				</div>
 				<div className="containerss">
-					<div>
-						{data &&
-							data.map((item, idx) => (
-								<div key={item.id} className="description-box_box">
-									{idx === imageIndex && (
-										<div className="title_box_box">
-											<h2 className="name">{item.title}</h2>
-											<div onClick={() => handleClick(item.id)}>
-												{expandedCards[item.id] ? (
-													<p className="description">{item.description}</p>
-												) : (
-													<p>{item.description.substring(0, 250)}...</p>
-												)}
-											</div>
-											<div className="box_box">
-												<p
-													className="read-more"
-													onClick={() => {
-														navigate(`/${item.id}`);
-													}}
+					{data && data.length > 0 ? (
+						<>
+							<div>
+								{data.map((item, idx) => (
+									<div key={item.id} className="description-box_box">
+										{idx === imageIndex && (
+											<div className="title_box_box">
+												<Tooltip
+													title={item.title.length > 20 ? item.title : ''}
+													color="black"
+													placement="bottomLeft"
 												>
-													Подробнее
-												</p>
-												<p className="price">{item.price} c</p>
+													<h2 className="name">{item.title}</h2>
+												</Tooltip>
+												<div onClick={() => handleClick(item.id)}>
+													{expandedCards[item.id] ? (
+														<p className="description">{item.description}</p>
+													) : (
+														<p>{item.description.substring(0, 250)}...</p>
+													)}
+												</div>
+												<div className="box_box">
+													<p
+														className="read-more"
+														onClick={() => {
+															navigate(`/${item.id}`);
+														}}
+													>
+														Подробнее
+													</p>
+													<p className="price">{item.price} c</p>
+												</div>
 											</div>
-										</div>
-									)}
-								</div>
-							))}
-					</div>
-					<div className="jo">
-						{data &&
-							data.length > 0 &&
-							(isMobile ? (
-								<div ref={keenSliderRef} className="keen-slider">
-									{data.map((item, idx) => (
-										<div
-											key={item.id}
-											className={`keen-slider__slide slider ${idx === imageIndex ? 'activeSlider' : ''}`}
-										>
-											<img src={item.imageUrl} alt="img" />
-										</div>
-									))}
-								</div>
-							) : (
-								<Slider {...slickSettings}>
-									{data.map((item, idx) => (
-										<div
-											key={item.id}
-											className={
-												idx === imageIndex ? 'slider activeSlider' : 'slider'
-											}
-										>
-											<img src={item.imageUrl} alt="img" />
-										</div>
-									))}
-								</Slider>
-							))}
-					</div>
-					{data && (
-						<div className="scroll-lines">
-							<div
-								className="active-line"
-								style={{ width: `${(100 / data.length) * (imageIndex + 1)}%` }}
-							></div>
+										)}
+									</div>
+								))}
+							</div>
+							<div className="jo">
+								{isMobile ? (
+									<div ref={keenSliderRef} className="keen-slider">
+										{data.map((item, idx) => (
+											<div
+												key={item.id}
+												className={`keen-slider__slide slider ${idx === imageIndex ? 'activeSlider' : ''}`}
+											>
+												<img src={item.imageUrl} alt="img" />
+											</div>
+										))}
+									</div>
+								) : (
+									<Slider {...slickSettings}>
+										{data.map((item, idx) => (
+											<div
+												key={item.id}
+												className={
+													idx === imageIndex ? 'slider activeSlider' : 'slider'
+												}
+											>
+												<img src={item.imageUrl} alt="img" />
+											</div>
+										))}
+									</Slider>
+								)}
+							</div>
+							<div className="scroll-lines">
+								<div
+									className="active-line"
+									style={{
+										width: `${(100 / data.length) * (imageIndex + 1)}%`
+									}}
+								></div>
+							</div>
+						</>
+					) : (
+						<div className="fallback_container">
+							<IconGirl />
+							<p>Нет доступных книг</p>
 						</div>
 					)}
 				</div>

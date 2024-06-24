@@ -20,7 +20,14 @@
 	margin-top: 5%;
 	width: 100%;
 }
-
+.fallback-container{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+	width: 100%;
+	
+}
 .slick-list {
 	width: 54rem;
 	padding-left: -3rem;
