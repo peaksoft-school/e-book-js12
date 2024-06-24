@@ -11,6 +11,7 @@ import {
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useAddBookToBasketMutation } from '@/src/redux/api/basket';
+import IconGirl from '@/src/assets/icons/icon-girl';
 
 const FavoritSection: FC = () => {
 	const [expandedCards, setExpandedCards] = useState<{
@@ -21,13 +22,12 @@ const FavoritSection: FC = () => {
 	const [clearFavorite] = useClearFavoriteMutation();
 	const [deleteFavoriteBook] = usePostFavoriteUnFavoriteMutation();
 	const [addBookToBasket] = useAddBookToBasketMutation();
-
 	const navigate = useNavigate();
 
 	const handleClick = (id: number) => {
 		setExpandedCards((prevExpanded) => ({
 			...prevExpanded,
-			[id]: !prevExpanded[id] || false
+			[id]: !prevExpanded[id]
 		}));
 	};
 
@@ -35,14 +35,13 @@ const FavoritSection: FC = () => {
 		await clearFavorite();
 	};
 
-	const handleAddFavoriteBook = async (id: number) => {
+	const handleRemoveFavoriteBook = async (id: number) => {
 		await deleteFavoriteBook(id);
 	};
 
 	const handleAddToBasket = async (id: number) => {
 		const result = await addBookToBasket(id);
 		if ('data' in result) {
-			console.log(result);
 			const { httpStatus } = result.data!;
 			if (httpStatus === 'OK') {
 				toast.success('Успешно добавили в корзину!', {
@@ -56,7 +55,7 @@ const FavoritSection: FC = () => {
 					theme: 'light'
 				});
 			} else if (httpStatus === 'ALREADY_REPORTED') {
-				toast('Вы уже добавили эту книгу в корзину!', {
+				toast.info('Вы уже добавили эту книгу в корзину!', {
 					position: 'top-right',
 					autoClose: 5000,
 					hideProgressBar: false,
@@ -76,9 +75,9 @@ const FavoritSection: FC = () => {
 				<div className="container">
 					<div className={scss.content}>
 						<div className={scss.favorite_nav_link}>
-							<NavLink to={'/'}>Главная</NavLink>
+							<NavLink to="/">Главная</NavLink>
 							<span>/</span>
-							<NavLink to={'/favorite'} className={scss.active}>
+							<NavLink to="/favorite" className={scss.active}>
 								Избранные
 							</NavLink>
 						</div>
@@ -97,16 +96,14 @@ const FavoritSection: FC = () => {
 							<ToastContainer />
 						</div>
 						<div className={scss.favorite_card_container}>
-							{data?.map((item) => (
-								<>
-									<hr />
+							{data && data.length > 0 ? (
+								data.map((item) => (
 									<div className={scss.favorite_card_content} key={item.id}>
+										<hr />
 										<div className={scss.btn_delete}>
 											<button
 												className={scss.close_button}
-												onClick={() => {
-													handleAddFavoriteBook(item.id);
-												}}
+												onClick={() => handleRemoveFavoriteBook(item.id)}
 											>
 												<IconX />
 											</button>
@@ -146,16 +143,19 @@ const FavoritSection: FC = () => {
 										<div className={scss.favorite_card_buttons}>
 											<button
 												className={scss.button_to_busket}
-												onClick={() => {
-													handleAddToBasket(item.id);
-												}}
+												onClick={() => handleAddToBasket(item.id)}
 											>
 												Добавить в корзину
 											</button>
 										</div>
 									</div>
-								</>
-							))}
+								))
+							) : (
+								<div className={scss.no_favorites}>
+									<IconGirl />
+									<p>У вас нет избранных книг.</p>
+								</div>
+							)}
 						</div>
 					</div>
 				</div>

@@ -51,6 +51,14 @@
 			position: relative;
 			gap: 0px 93px;
 
+			.fallback_container {
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				flex-direction: column;
+				width: 100%;
+			}
+
 			@media (max-width: 1200px) {
 				width: 100%;
 				display: flex;

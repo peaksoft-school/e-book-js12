@@ -4,13 +4,15 @@ import scss from './LastPublication.module.scss';
 import { IconLongLine, IconShortLine } from '@/src/assets/icons';
 import { Link, useNavigate } from 'react-router-dom';
 import { useGetLastPublicationQuery } from '@/src/redux/api/book';
+import { Tooltip } from 'antd';
+import IconGirl from '@/src/assets/icons/icon-girl';
 
 const LastPublicationSection: FC = () => {
 	const [state, setState] = useState('BUSINESS_LITERATURE');
 	const [expandedCards, setExpandedCards] = useState<{
 		[key: number]: boolean;
 	}>({});
-	const { data } = useGetLastPublicationQuery({
+	const { data, error, isLoading } = useGetLastPublicationQuery({
 		page: 1,
 		size: 1,
 		genre: state
@@ -40,6 +42,9 @@ const LastPublicationSection: FC = () => {
 		}));
 	};
 
+	if (isLoading) return <p>Загрузка...</p>;
+	if (error) return <p>Ошибка загрузки данных</p>;
+
 	return (
 		<section className={scss.LastPublicationSection}>
 			<div className="container">
@@ -54,83 +59,108 @@ const LastPublicationSection: FC = () => {
 						<div className={scss.content_book}>
 							<div className={scss.main_nav}>
 								<ul>
-									<li onClick={() => handleClick('BUSINESS_LITERATURE')}>
+									<li>
 										<button
+											onClick={() => handleClick('BUSINESS_LITERATURE')}
 											className={
-												navClicked === 'BUSINESS_LITERATURE' ? scss.active : ''
+												navClicked === 'BUSINESS_LITERATURE' ? 'active' : ''
 											}
 										>
 											Бизнес-литература
 										</button>
 									</li>
-									<li onClick={() => handleClick('BOOKS_FOR_CHILDREN')}>
+									<li>
 										<button
+											onClick={() => handleClick('BOOKS_FOR_CHILDREN')}
 											className={
-												navClicked === 'BOOKS_FOR_CHILDREN' ? scss.active : ''
+												navClicked === 'BOOKS_FOR_CHILDREN' ? 'active' : ''
 											}
 										>
 											Детские книги
 										</button>
 									</li>
-									<li onClick={() => handleClick('HOBBIES')}>
+									<li>
 										<button
-											className={navClicked === 'HOBBIES' ? scss.active : ''}
+											onClick={() => handleClick('HOBBIES')}
+											className={navClicked === 'HOBBIES' ? 'active' : ''}
 										>
-											Хобби
+											Хобби и досуг
 										</button>
 									</li>
-									<li onClick={() => handleClick('COMMUNITY')}>
+									<li>
 										<button
-											className={navClicked === 'COMMUNITY' ? scss.active : ''}
+											onClick={() => handleClick('COMMUNITY')}
+											className={navClicked === 'COMMUNITY' ? 'active' : ''}
 										>
 											Сообщество
 										</button>
 									</li>
-									<li onClick={() => handleClick('ARTISTIC_LITERATURE')}>
+									<li>
 										<button
+											onClick={() => handleClick('ARTISTIC_LITERATURE')}
 											className={
-												navClicked === 'ARTISTIC_LITERATURE' ? scss.active : ''
+												navClicked === 'ARTISTIC_LITERATURE' ? 'active' : ''
 											}
 										>
 											Художественная литература
 										</button>
 									</li>
-									<li onClick={() => handleClick('EDUCATION')}>
+									<li>
 										<button
-											className={navClicked === 'EDUCATION' ? scss.active : ''}
+											onClick={() => handleClick('EDUCATION')}
+											className={navClicked === 'EDUCATION' ? 'active' : ''}
 										>
 											Образование
 										</button>
 									</li>
 								</ul>
 							</div>
-							{data?.map((el) => (
-								<div key={el.id} className={scss.main_image}>
-									<div className={scss.image_container}>
-										<IconShortLine />
-										<IconLongLine />
-
-										<img
-											className={scss.book_image}
-											src={el.imageUrl}
-											alt={el.title}
-										/>
-
-										<IconLongLine />
-										<IconShortLine />
+							{data && data.length > 0 ? (
+								data.map((el) => (
+									<div key={el.id} className={scss.main_image}>
+										<div className={scss.image_container}>
+											<IconShortLine />
+											<IconLongLine />
+											<img
+												className={scss.book_image}
+												src={el.imageUrl}
+												alt={el.title}
+											/>
+											<IconLongLine />
+											<IconShortLine />
+										</div>
 									</div>
+								))
+							) : (
+								<div className={scss.fallback_container}>
+									<IconGirl />
+									<p>Нет доступных публикаций</p>
 								</div>
-							))}
+							)}
 						</div>
 						{data?.map((el) => (
 							<div key={el.id} className={scss.main_about}>
-								<h2 className={scss.title_book}>{el.title}</h2>
+								<Tooltip
+									className={scss.info_hover}
+									title={el.title.length > 20 ? el.title : ''}
+									color="black"
+									placement="bottomLeft"
+								>
+									<h2 className={scss.title_book}>{el.title}</h2>
+								</Tooltip>
 								<div
 									className={scss.about_book}
 									onClick={() => handleShowFullText(el.id)}
 								>
 									{expandedCards[el.id] ? (
-										<p className="description">{el.description}</p>
+										<Tooltip
+											className={scss.info_hover}
+											title={el.description.length > 20 ? el.description : ''}
+											color="black"
+											placement="bottomLeft"
+										>
+											<p className={scss.description_text}>{el.description}</p>
+										</Tooltip>
 									) : (
 										<p>{el.description.substring(0, 285)}...</p>
 									)}
