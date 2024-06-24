@@ -51,13 +51,13 @@
 				display: flex;
 				justify-content: space-between;
 				width: 60%;
-				.fallback_container{
+				.fallback_container {
 					display: flex;
 					justify-content: center;
 					align-items: center;
 					flex-direction: column;
-					
-					p{
+
+					p {
 						color: white;
 					}
 				}
@@ -79,18 +79,21 @@
 							color: #969696;
 							background-color: transparent;
 							border: none;
-							&:focus::before {
-								content: '';
-								display: inline-block;
-								width: 50px;
-								height: 1px;
-								background-color: rgb(255, 255, 255);
-								margin-right: 5px;
-								vertical-align: middle;
-							}
-							&:focus {
-								color: white;
-							}
+							text-transform: capitalize;
+							transition: 0.3s;
+						}
+					}
+					.active {
+						color: white;
+						transition: 0.3s;
+						&::before {
+							content: '';
+							display: inline-block;
+							width: 50px;
+							height: 1px;
+							background-color: rgb(255, 255, 255);
+							margin-right: 5px;
+							vertical-align: middle;
 						}
 					}
 				}
@@ -211,8 +214,8 @@
 					max-width: 300px;
 					width: 100%;
 				}
-				.description_text{
-						overflow: hidden;
+				.description_text {
+					overflow: hidden;
 					white-space: nowrap;
 					text-overflow: ellipsis;
 				}

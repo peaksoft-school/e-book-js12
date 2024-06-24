@@ -41,58 +41,64 @@ const genres = [
 	{
 		genreId: 1,
 		genreName: 'ХУДОЖЕСТВЕННАЯ ЛИТЕРАТУРА',
-		englishName: 'ARTISTIC_LITERATURE',
-		isChecked: false
+		englishName: 'ARTISTIC_LITERATURE'
 	},
 	{
 		genreId: 2,
 		genreName: 'ОБРАЗОВАНИЕ',
-		englishName: 'EDUCATION',
-		isChecked: false
+		englishName: 'EDUCATION'
 	},
 	{
 		genreId: 3,
 		genreName: 'КНИГИ ДЛЯ ДЕТЕЙ',
-		englishName: 'BOOKS_FOR_CHILDREN',
-		isChecked: false
+		englishName: 'BOOKS_FOR_CHILDREN'
 	},
 	{
 		genreId: 4,
 		genreName: 'НАУКА И ТЕХНОЛОГИЯ',
-		englishName: 'SCIENCE_AND_TECHNOLOGY',
-		isChecked: false
+		englishName: 'SCIENCE_AND_TECHNOLOGY'
 	},
 	{
 		genreId: 5,
 		genreName: 'СООБЩЕСТВО',
-		englishName: 'COMMUNITY',
-		isChecked: false
+		englishName: 'COMMUNITY'
 	},
 	{
 		genreId: 6,
 		genreName: 'БИЗНЕС ЛИТЕРАТУРА',
-		englishName: 'BUSINESS_LITERATURE',
-		isChecked: false
+		englishName: 'BUSINESS_LITERATURE'
 	},
 	{
 		genreId: 7,
 		genreName: 'КРАСОТА, ЗДОРОВЬЕ, СПОРТ',
-		englishName: 'BEAUTY_HEALTH_SPORT',
-		isChecked: false
+		englishName: 'BEAUTY_HEALTH_SPORT'
 	},
 	{
 		genreId: 8,
 		genreName: 'УВЛЕЧЕНИЯ',
-		englishName: 'HOBBIES',
-		isChecked: false
+		englishName: 'HOBBIES'
 	},
 	{
 		genreId: 9,
 		genreName: 'ПСИХОЛОГИЯ',
-		englishName: 'PSYCHOLOGY',
-		isChecked: false
+		englishName: 'PSYCHOLOGY'
 	}
 ];
+
+// const languageData = [
+// 	{
+// 		genreName: 'Русский язык',
+// 		englishName: 'RUSSIAN'
+// 	},
+// 	{
+// 		genreName: 'Кыргызский язык',
+// 		englishName: 'KYRGYZ'
+// 	},
+// 	{
+// 		genreName: 'Англизский язык',
+// 		englishName: 'ENGLISH'
+// 	}
+// ];
 
 const InformationBook: FC = () => {
 	const [showBookInfo, setShowBookInfo] = useState(false);
@@ -108,11 +114,15 @@ const InformationBook: FC = () => {
 	const handleAddBookToBasket = async (id: number) => {
 		await addBookToBasket(id);
 	};
+
 	const handleAddBookToFavorite = async (id: number) => {
 		await addBookToFavorite(id);
 	};
 
-	const genreBook = genres.find((item) => item.genreId === bookId);
+	const hadnleGenre = () => {
+		const genreBook = genres.find((item) => item.englishName === data.genre);
+		return genreBook?.genreName;
+	};
 
 	return (
 		<section className={scss.InformationBookSection}>
@@ -135,7 +145,7 @@ const InformationBook: FC = () => {
 									</span>
 									/{''}
 									<span>
-										{genreBook ? genreBook.genreName : 'Жанр не найден'}
+										{hadnleGenre() ? hadnleGenre() : 'Жанр не найден'}
 									</span>
 								</p>
 								/{' '}
@@ -202,6 +212,8 @@ const InformationBook: FC = () => {
 											{
 												<>
 													<div className={scss.section_info_two} key={data?.id}>
+														<p>{data?.authorsFullName}</p>
+														<p>{hadnleGenre()}</p>
 														<Tooltip
 															className={scss.info_hover}
 															title={
