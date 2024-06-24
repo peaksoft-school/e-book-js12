@@ -54,56 +54,50 @@ const LastPublicationSection: FC = () => {
 						<div className={scss.content_book}>
 							<div className={scss.main_nav}>
 								<ul>
-									<li>
+									<li onClick={() => handleClick('BUSINESS_LITERATURE')}>
 										<button
-											onClick={() => handleClick('BUSINESS_LITERATURE')}
 											className={
-												navClicked === 'BUSINESS_LITERATURE' ? 'active' : ''
+												navClicked === 'BUSINESS_LITERATURE' ? scss.active : ''
 											}
 										>
 											Бизнес-литература
 										</button>
 									</li>
-									<li>
+									<li onClick={() => handleClick('BOOKS_FOR_CHILDREN')}>
 										<button
-											onClick={() => handleClick('BOOKS_FOR_CHILDREN')}
 											className={
-												navClicked === 'BOOKS_FOR_CHILDREN' ? 'active' : ''
+												navClicked === 'BOOKS_FOR_CHILDREN' ? scss.active : ''
 											}
 										>
 											Детские книги
 										</button>
 									</li>
-									<li>
+									<li onClick={() => handleClick('HOBBIES')}>
 										<button
-											onClick={() => handleClick('HOBBIES')}
-											className={navClicked === 'HOBBIES' ? 'active' : ''}
+											className={navClicked === 'HOBBIES' ? scss.active : ''}
 										>
-											Хобби и досуг
+											Хобби
 										</button>
 									</li>
-									<li>
+									<li onClick={() => handleClick('COMMUNITY')}>
 										<button
-											onClick={() => handleClick('COMMUNITY')}
-											className={navClicked === 'COMMUNITY' ? 'active' : ''}
+											className={navClicked === 'COMMUNITY' ? scss.active : ''}
 										>
 											Сообщество
 										</button>
 									</li>
-									<li>
+									<li onClick={() => handleClick('ARTISTIC_LITERATURE')}>
 										<button
-											onClick={() => handleClick('ARTISTIC_LITERATURE')}
 											className={
-												navClicked === 'ARTISTIC_LITERATURE' ? 'active' : ''
+												navClicked === 'ARTISTIC_LITERATURE' ? scss.active : ''
 											}
 										>
 											Художественная литература
 										</button>
 									</li>
-									<li>
+									<li onClick={() => handleClick('EDUCATION')}>
 										<button
-											onClick={() => handleClick('EDUCATION')}
-											className={navClicked === 'EDUCATION' ? 'active' : ''}
+											className={navClicked === 'EDUCATION' ? scss.active : ''}
 										>
 											Образование
 										</button>
@@ -115,11 +109,13 @@ const LastPublicationSection: FC = () => {
 									<div className={scss.image_container}>
 										<IconShortLine />
 										<IconLongLine />
+
 										<img
 											className={scss.book_image}
 											src={el.imageUrl}
 											alt={el.title}
 										/>
+
 										<IconLongLine />
 										<IconShortLine />
 									</div>

@@ -10,6 +10,7 @@ import { Modal } from 'antd';
 import { useSearchBooksQuery } from '@/src/redux/api/search';
 import BlackLikeIcon from '@/src/assets/icons/icon-blackLike';
 import { useGetCountInBasketQuery } from '@/src/redux/api/basket';
+import { useGetCountOfBooksInFavoriteQuery } from '@/src/redux/api/favorite';
 // import { useGetCountOfBooksInFavoriteQuery } from '@/src/redux/api/favorite';
 
 const Header = () => {
@@ -31,7 +32,7 @@ const Header = () => {
 		{ skip: !searchTerm }
 	);
 
-	// const [favorite] = useGetCountOfBooksInFavoriteQuery();
+	const { data: countOfFavorite } = useGetCountOfBooksInFavoriteQuery();
 
 	const scrollToSection = () => {
 		const element = document.getElementById(test);
@@ -145,7 +146,7 @@ const Header = () => {
 												</span>
 
 												<span>
-													<IconRedDot />
+													{countOfFavorite !== 0 ? <IconRedDot /> : null}
 												</span>
 											</>
 										)}
@@ -154,7 +155,15 @@ const Header = () => {
 										className={scss.basket}
 										onClick={() => navigate('/basket')}
 									>
-										<p>Корзина ({countBasket?.totalNumberOfBooks})</p>
+										{countBasket?.totalNumberOfBooks !== 0 ? (
+											<>
+												<p>Корзина ({countBasket?.totalNumberOfBooks})</p>
+											</>
+										) : (
+											<>
+												<p>Корзина</p>
+											</>
+										)}
 									</div>
 								</div>
 							</div>
