@@ -150,7 +150,7 @@ const AboutBook = () => {
 								<div className={scss.book_header}>
 									<div className={scss.hearts}>
 										<IconWhiteLike />
-										<p>({book.countBasket > 0 ? book.countFavorite : 0})</p>
+										<p>({book.countFavorite > 0 ? book.countFavorite : 0})</p>
 									</div>
 									<div className={scss.in_basket}>
 										<p>
@@ -168,11 +168,14 @@ const AboutBook = () => {
 							</div>
 							<div className={scss.section_mony}>
 								<p>365 c</p>
-								<div>
+
+								{/* {book.bookType === ' AUDIO_BOOK' ? ( */}
+								<div className={scss.audioBook}>
 									<audio id="audioPlayer" controls>
-										<source src={book.fragmentAudUrl} type="audio/mpeg" />
+										<source src="audio.mp3" type="audio/mpeg" />
 									</audio>
 								</div>
+								{/* ) : null} */}
 							</div>
 							<div className={scss.section_info}>
 								<div className={scss.section_info_name}>

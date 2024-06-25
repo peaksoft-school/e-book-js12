@@ -2,22 +2,29 @@ import scss from './innerSection.module.scss';
 import ThreeDotIcon from '@/src/assets/icons/icon-threeDot';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
-import { IconPencil, IconX } from '@tabler/icons-react';
+import { IconX } from '@tabler/icons-react';
 import { useGetReceiptRequestedBooksQuery } from '@/src/redux/api/innerPage';
-import { useRejectBookMutation } from '@/src/redux/api/book';
+import {
+	useApproveBookMutation,
+	useRejectBookMutation
+} from '@/src/redux/api/book';
 import { Modal, Tooltip } from 'antd';
 import IconGirl from '@/src/assets/icons/icon-girl';
+import { useDispatch } from 'react-redux';
+import { IconSuccess } from '@/src/assets/icons';
 
 const InnerSection = () => {
 	const navigate = useNavigate();
 	const [isOpen, setIsOpen] = useState(false);
 	const [idBook, setIdBook] = useState<null | number>(null);
+	const [modalSuccess, setModalSuccess] = useState(false);
 	const {
 		data: books,
 		refetch,
 		isLoading
 	} = useGetReceiptRequestedBooksQuery();
 	const [rejectBookById] = useRejectBookMutation();
+	const [approveBook] = useApproveBookMutation();
 
 	const handleBookClick = (id: number) => {
 		navigate(`/admin/inner/${id}`);
@@ -35,6 +42,7 @@ const InnerSection = () => {
 	const [selectedBook, setSelectedBook] = useState<number | null>(null);
 	const [isModalOpen, setIsModalOpen] = useState(false);
 	const [rejectReason, setRejectReason] = useState('');
+	const dispatch = useDispatch();
 
 	const showModal = (bookId: number) => {
 		setSelectedBook(bookId);
@@ -54,6 +62,19 @@ const InnerSection = () => {
 		setIsModalOpen(false);
 		setSelectedBook(null);
 		setRejectReason('');
+	};
+
+	const handleApproveBook = async (id: number) => {
+		await approveBook(id);
+		setModalSuccess(true);
+		dispatch({
+			type: 'ADD_NOTIFICATION',
+			payload: {
+				message: `Book "${books?.title}" approved successfully!`,
+				createdAt: Date.now(),
+				notificationType: 'success'
+			}
+		});
 	};
 
 	return (
@@ -81,7 +102,7 @@ const InnerSection = () => {
 									
 									<div
 										key={book.id}
-										className={`${scss.book} ${book.isViewed ? '' : scss.unviewed}`}
+										className={`${book.isViewed ? '' : scss.unviewedStyle} : ${scss.book}`}
 									>
 										<div
 											className={scss.extra}
@@ -95,13 +116,27 @@ const InnerSection = () => {
 										{idBook === book.id && (
 											<div className={isOpen ? scss.is_open : scss.on_close}>
 												<ul>
-													<li>
+													<li onClick={() => handleApproveBook(book.id)}>
 														<span>
-															<IconPencil />
+															<IconSuccess />
 														</span>
-														Редактировать
+														Принять
 													</li>
-													<hr />
+													<Modal
+														open={modalSuccess}
+														footer={false}
+														onCancel={() => setModalSuccess(false)}
+													>
+														<div className={scss.modal_container}>
+															<IconSuccess />
+															<div className={scss.info_text}>
+																<p>
+																	<span>“{book.title}”</span> <br />
+																	успешно добавлен!
+																</p>
+															</div>
+														</div>
+													</Modal>
 													<li
 														onClick={() => {
 															setIsOpen(false);
@@ -116,6 +151,7 @@ const InnerSection = () => {
 												</ul>
 											</div>
 										)}
+
 										<div
 											onClick={() => handleBookClick(book.id)}
 											className={scss.book_content}
@@ -147,6 +183,7 @@ const InnerSection = () => {
 							)}
 						</div>
 					</div>
+
 					<Modal
 						visible={isModalOpen}
 						onOk={handleOk}
@@ -156,11 +193,6 @@ const InnerSection = () => {
 					>
 						<div className={scss.delete_modal}>
 							<p>Вы уверены, что хотите отклонить?</p>
-							<textarea
-								value={rejectReason}
-								onChange={(e) => setRejectReason(e.target.value)}
-								placeholder="Причина отклонения"
-							/>
 							<div className={scss.bt_modal}>
 								<button onClick={handleCancel}>Отменить</button>
 								<button onClick={handleOk}>Удалить</button>

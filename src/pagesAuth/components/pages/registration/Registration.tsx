@@ -1,3 +1,4 @@
+/* eslint-disable no-unsafe-optional-chaining */
 import { Link, useNavigate } from 'react-router-dom';
 import scss from './Registration.module.scss';
 import { useState } from 'react';
@@ -23,10 +24,8 @@ interface TypeData {
 }
 interface RegistrationResponse {
 	data?: {
-		data: {
-			httpStatus: string;
-			message: string;
-		};
+		httpStatus: string;
+		message: string;
 	};
 	error: {
 		data: {
@@ -69,17 +68,21 @@ const Registration = () => {
 				};
 				const results = (await postUser(newData)) as RegistrationResponse;
 				if ('data' in results) {
-					if (results.data?.data.httpStatus === 'OK') {
+					if (results.data?.httpStatus === 'OK') {
 						setEmail(data.email);
 						setConfirmModa(true);
-					} else if (results.data?.data.httpStatus === 'ALREADY_REPORTED') {
+					}
+					if (results.data?.httpStatus === 'ALREADY_REPORTED') {
 						messageApi.open({
 							type: 'warning',
-							content:
-								'Электронная почта: ibrahimorunbaev59@gmail.com уже существует!'
+							content: results.data.message
+							// 'Электронная почта: ibrahimorunbaev59@gmail.com уже существует!'
 						});
 					}
-				} else if ('data' in results.error && results.error.data) {
+				}
+				console.log(results);
+
+				if ('data' in results.error && results.error.data) {
 					console.log(results.error.data);
 
 					if (results.error.data.password) {
@@ -123,9 +126,12 @@ const Registration = () => {
 			code: code!
 		};
 		const result = await confirmCode(newData);
+
 		if ('data' in result) {
-			const { token } = result.data.data;
-			const { firstName } = result.data.data;
+			const { token } = result.data?.data.token;
+			console.log(result.data?.data.token);
+
+			const { firstName } = result.data.data.firstName;
 			localStorage.setItem('NameClient', firstName);
 			localStorage.setItem('token', token!);
 			localStorage.setItem('client', 'true');
