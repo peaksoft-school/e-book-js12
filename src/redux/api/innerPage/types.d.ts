@@ -9,18 +9,16 @@ namespace ALLBOOKS {
 	type GetAllBooksResponse = {
 		totalNumberOfBooks: number;
 		numberOfUnViewed: number;
-		books: books[];
+		books: Book[];
 	};
 
-	type books = {
+	type Book = {
 		id: number;
 		title: string;
 		createdAt: string;
 		price: number;
 		imageUrl: string;
 		isViewed: boolean;
-		totalNumberOfBooks: number;
-		numberOfUnViewed: number;
 	};
 
 	type GetAllBooksRequest = void;

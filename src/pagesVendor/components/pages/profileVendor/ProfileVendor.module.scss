@@ -253,29 +253,73 @@
 				outline: none;
 			}
 		}
-		.custom_black_button {
-			width: 136px;
-			height: 42px;
-			left: 1225px;
-			right: 79px;
-			top: 721px;
-			bottom: 363px;
+		.custom_white_black {
+			display: flex;
+			gap: 20px;
 
-			font-weight: 600;
-			border: none;
-			color: rgb(255, 255, 255);
-			font-family: Open Sans;
-			font-size: 16px;
-			font-weight: 600;
-			line-height: 22px;
-			cursor: pointer;
-			background: rgb(28, 28, 28);
+			.custom_black_button {
+				width: 136px;
+				height: 42px;
+				left: 1225px;
+				right: 79px;
+				top: 721px;
+				bottom: 363px;
+
+				font-weight: 600;
+				border: none;
+				color: rgb(255, 255, 255);
+				font-family: Open Sans;
+				font-size: 16px;
+				font-weight: 600;
+				line-height: 22px;
+				cursor: pointer;
+				background: rgb(28, 28, 28);
+			}
 		}
 
 		.button_note {
 			margin-right: 30px;
 			@media (max-width: 400px) {
 				margin-right: 10px;
+			}
+		}
+	}
+}
+.delete_modal {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 33px 0px;
+	p {
+		color: rgb(0, 0, 0);
+		font-family: Open Sans;
+		font-size: 18px;
+		font-weight: 400;
+		line-height: 130%;
+		letter-spacing: 0px;
+		text-align: center;
+		max-width: 323px;
+	}
+	.buttons_modal {
+		display: flex;
+		justify-content: space-between;
+		max-width: 278px;
+		width: 100%;
+		button {
+			border: none;
+			outline: none;
+			background-color: transparent;
+			color: rgb(163, 163, 163);
+			padding: 10px 24px;
+			font-family: Open Sans;
+			font-size: 16px;
+			font-weight: 600;
+			line-height: 22px;
+			letter-spacing: 0px;
+			text-align: left;
+			&:last-child {
+				background-color: black;
+				color: white;
 			}
 		}
 	}

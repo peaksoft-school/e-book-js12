@@ -71,6 +71,8 @@ namespace BOOK {
 		fragmentAudUrl: string;
 		duration: Duration;
 		statusBook: string;
+		bestseller: boolean;
+		amountOfBook: number;
 	};
 	type Duration = {
 		seconds: number;

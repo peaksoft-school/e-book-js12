@@ -1,3 +1,4 @@
+/* eslint-disable no-unsafe-optional-chaining */
 import { Link, useNavigate } from 'react-router-dom';
 import scss from './Registration.module.scss';
 import { useState } from 'react';
@@ -82,7 +83,10 @@ const Registration = () => {
 							content: results.data?.message
 						});
 					}
-				} else if ('data' in results.error && results.error.data) {
+				}
+				console.log(results);
+
+				if ('data' in results.error && results.error.data) {
 					console.log(results.error.data);
 
 					if (results.error.data.password) {

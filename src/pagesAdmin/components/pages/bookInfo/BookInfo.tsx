@@ -135,13 +135,13 @@ const BookInfo: FC = () => {
 							</div>
 							<div className={scss.section_mony}>
 								<p>{book.price} с</p>
-								{book.bookType === 'AUDIO_BOOK' && (
-									<div className={scss.audio_container}>
-										<audio id="audioPlayer" controls>
-											<source src={book.fragmentAudUrl} type="audio/mpeg" />
-										</audio>
-									</div>
-								)}
+								{/* {book.bookType === ' AUDIO_BOOK' ? ( */}
+								<div className={scss.audioBook}>
+									<audio id="audioPlayer" controls>
+										<source src="audio.mp3" type="audio/mpeg" />
+									</audio>
+								</div>
+								{/* ) : null} */}
 							</div>
 							<div className={scss.section_info}>
 								<div className={scss.section_info_name}>
@@ -248,14 +248,16 @@ const BookInfo: FC = () => {
 					</div>
 					<div className={scss.section_text_books}>
 						<div className={scss.section_show_info}>
-							{/* <div className={scss.show_info_book}>
-								{book.bookType === 'PAPER_BOOK' && (
+							<div className={scss.show_info_book}>
+								{(book.bookType === 'PAPER_BOOK' ||
+									'AUDIO_BOOK' ||
+									book.bookType === 'ONLINE_BOOK') && (
 									<p
 										className={!showBookInfo ? scss.color_text : ''}
 										onClick={() => setShowBookInfo(false)}
 									>
 										О книге
-									</p>	
+									</p>
 								)}
 								<p
 									className={showBookInfo ? scss.color_text : ''}
@@ -263,25 +265,8 @@ const BookInfo: FC = () => {
 								>
 									Читать фрагмент
 								</p>
-							</div> */}
-
-							<div className={scss.show_info_book}>
-								{book.bookType === 'PAPER_BOOK' ||
-									(book.bookType === 'ONLINE_BOOK' && (
-										<p
-											className={!showBookInfo ? scss.color_text : ''}
-											onClick={() => setShowBookInfo(false)}
-										>
-											О книге
-										</p>
-									))}
-								<p
-									className={showBookInfo ? scss.color_text : ''}
-									onClick={() => setShowBookInfo(true)}
-								>
-									Читать фрагмент
-								</p>
 							</div>
+
 							<p className={scss.book_info}>
 								{showBookInfo ? book.fragment || '' : book.description}
 							</p>
