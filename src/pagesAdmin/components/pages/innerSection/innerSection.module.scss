@@ -239,10 +239,12 @@
 			}
 
 			.is_open {
-				padding: 20px;
+				padding: 10px;
 				display: flex;
 				flex-direction: column;
-				gap: 7px;
+				max-width: 180px;
+				width: 100%;
+				// gap: 7px;
 				position: absolute;
 				top: 30px;
 				right: 30px;
@@ -283,31 +285,35 @@
 					gap: 10px;
 					width: 100%;
 					li {
+						// max-width: 300px;
+						width: 100%;
 						display: flex;
 						align-items: center;
 						justify-content: center;
 						gap: 10px;
 						color: rgb(35, 35, 35);
 						font-family: Open Sans;
-						font-size: 14px;
+						font-size: 16px;
 						font-weight: 400;
 						line-height: 130%;
 						letter-spacing: 0px;
-						text-align: left;
 						border-bottom: 0.5px solid rgb(196, 196, 196);
 						&:last-child {
 							border: none;
 						}
-						&:first-child {
-							padding-bottom: 10px;
-						}
+
 						@media (max-width: 830px) {
 							font-size: 8px;
 							gap: 5px;
 						}
 
 						span {
+							display: flex;
+							align-items: center;
 							svg {
+								max-width: 25px;
+								width: 100%;
+
 								@media (max-width: 768px) {
 									max-width: 20px;
 									width: 100%;
@@ -380,6 +386,12 @@
 		.unviewedStyle {
 			background-color: rgba(255, 77, 0, 0.145);
 		}
+
+		.no_books {
+			width: 100%;
+			display: flex;
+			align-items: center;
+		}
 	}
 }
 
@@ -419,6 +431,96 @@
 			&:last-child {
 				background-color: black;
 				color: white;
+			}
+		}
+	}
+}
+
+.modal_container {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 23px 0px;
+	.info_text {
+		p {
+			color: rgb(0, 0, 0);
+			font-family: Open Sans;
+			font-size: 18px;
+			font-weight: 400;
+			line-height: 130%;
+			letter-spacing: 0px;
+			text-align: center;
+			width: 100%;
+			overflow: hidden;
+			white-space: nowrap;
+			text-overflow: ellipsis;
+		}
+	}
+}
+
+.modal_devation {
+	display: flex;
+	flex-direction: column;
+	gap: 18px;
+	.text_devation {
+		color: #222222;
+		font-family: Open Sans;
+		font-size: 16px;
+		font-weight: 600;
+		line-height: 130%;
+		letter-spacing: 0px;
+		text-align: left;
+		margin: 0px;
+	}
+	.input_devatoin {
+		max-width: 483px;
+		width: 100%;
+		outline: none;
+		padding: 8px 13px;
+		height: 100%;
+		background-color: #ffffff;
+		color: #222222;
+		border: 1px solid rgb(196, 196, 196);
+	}
+	.btn_devation {
+		border: none;
+		outline: none;
+		align-self: flex-end;
+		padding: 10px 24px;
+		color: rgb(255, 255, 255);
+		font-family: Open Sans;
+		font-size: 16px;
+		font-weight: 600;
+		line-height: 22px;
+		letter-spacing: 0px;
+		text-align: left;
+		background-color: black;
+		max-width: 140px;
+		width: 100%;
+	}
+}
+
+.delete_modal {
+	.bt_modal {
+		width: 100%;
+		display: flex;
+		justify-content: space-around;
+		button {
+			padding: 10px 24px;
+			color: rgb(255, 255, 255);
+			font-family: Open Sans;
+			font-size: 16px;
+			font-weight: 600;
+			line-height: 22px;
+			letter-spacing: 0px;
+			text-align: left;
+			background-color: black;
+			max-width: 140px;
+			width: 100%;
+			border: none;
+			&:last-child {
+				background-color: rgb(255, 77, 0);
+				color: rgb(255, 255, 255);
 			}
 		}
 	}

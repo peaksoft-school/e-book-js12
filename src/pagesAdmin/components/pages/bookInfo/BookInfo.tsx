@@ -135,13 +135,13 @@ const BookInfo: FC = () => {
 							</div>
 							<div className={scss.section_mony}>
 								<p>{book.price} с</p>
-								{book.bookType === 'AUDIO_BOOK' && (
-									<div className={scss.audio_container}>
-										<audio id="audioPlayer" controls>
-											<source src={book.fragmentAudUrl} type="audio/mpeg" />
-										</audio>
-									</div>
-								)}
+								{/* {book.bookType === ' AUDIO_BOOK' ? ( */}
+								<div className={scss.audioBook}>
+									<audio id="audioPlayer" controls>
+										<source src="audio.mp3" type="audio/mpeg" />
+									</audio>
+								</div>
+								{/* ) : null} */}
 							</div>
 							<div className={scss.section_info}>
 								<div className={scss.section_info_name}>

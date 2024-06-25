@@ -24,7 +24,7 @@ import CustomBasketButton from '@/src/ui/customButton/CustomBasketButton';
 import CustomPDFDownloadInput from '@/src/ui/customPDFInput/CustomPDFDownloadInput';
 import {
 	useEditPhotoUrlMutation,
-	useGetBookByIdVendorQuery
+	useGetBookByIdQuery
 } from '@/src/redux/api/book';
 
 interface TypeJenre {
@@ -43,7 +43,7 @@ interface TypeLanguage {
 const EditBookAdmin = () => {
 	const paramsId = useParams();
 	const bookId = Number(paramsId.id);
-	const { data } = useGetBookByIdVendorQuery(bookId);
+	const { data } = useGetBookByIdQuery(bookId);
 	const [peperBook, setPeperBook] = useState(true);
 	const [audioBook, setAudioBook] = useState(false);
 	const [ebook, setEBook] = useState(false);
@@ -231,7 +231,7 @@ const EditBookAdmin = () => {
 			setDelPhoto(false);
 			setTimeout(() => {
 				navigate('/admin');
-			}, 3000);
+			}, 2000);
 		}
 	};
 
