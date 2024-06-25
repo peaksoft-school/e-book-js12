@@ -10,6 +10,7 @@ import {
 	useDeletVendorProfileMutation
 } from '@/src/redux/api/updateProfile';
 import { Link, useNavigate } from 'react-router-dom';
+import { Modal } from 'antd';
 
 const ProfileVendor: React.FC = () => {
 	const { register, handleSubmit, reset, setValue } = useForm();
@@ -19,6 +20,7 @@ const ProfileVendor: React.FC = () => {
 	const { data: profileData, refetch } = useGetProfileQuery();
 	const [updatePassword] = useUpdatePasswordMutation();
 	const [handleDelVendorProfile] = useDeletVendorProfileMutation();
+	const [isModalOpen, setIsModalOpen] = useState(false);
 
 	const navigate = useNavigate();
 
@@ -72,6 +74,18 @@ const ProfileVendor: React.FC = () => {
 		refetch();
 		setIsEditMode(false);
 		setIsPasswordMode(false);
+	};
+
+	const showModal = () => {
+		setIsModalOpen(true);
+	};
+
+	const handleOk = () => {
+		setIsModalOpen(false);
+	};
+
+	const handleCancel = () => {
+		setIsModalOpen(false);
 	};
 
 	return (
@@ -148,10 +162,7 @@ const ProfileVendor: React.FC = () => {
 									)}
 								</div>
 								<div>
-									<p
-										onClick={() => handleDeletNavigate()}
-										className={scss.delete_profile_vendor}
-									>
+									<p onClick={showModal} className={scss.delete_profile_vendor}>
 										Удалить профиль?
 									</p>
 								</div>
@@ -217,7 +228,7 @@ const ProfileVendor: React.FC = () => {
 								</>
 							)}
 							{isEditMode && (
-								<div>
+								<div className={scss.custom_white_black}>
 									<button
 										type="button"
 										className={scss.custom_white_button}
@@ -231,7 +242,7 @@ const ProfileVendor: React.FC = () => {
 								</div>
 							)}
 							{isPasswordMode && (
-								<div>
+								<div className={scss.custom_white_black}>
 									<button
 										type="button"
 										className={scss.custom_white_button}
@@ -247,6 +258,33 @@ const ProfileVendor: React.FC = () => {
 						</div>
 					</div>
 				</div>
+				<Modal
+					open={isModalOpen}
+					onOk={handleOk}
+					onCancel={handleCancel}
+					footer={false}
+				>
+					<div className={scss.delete_modal}>
+						<p>Вы уверены, что хотите удалить профиль?</p>
+						<div className={scss.buttons_modal}>
+							<button
+								onClick={() => {
+									setIsModalOpen(false);
+								}}
+							>
+								Отменить
+							</button>
+							<button
+								onClick={() => {
+									setIsModalOpen(false);
+									handleDeletNavigate();
+								}}
+							>
+								Удалить
+							</button>
+						</div>
+					</div>
+				</Modal>
 			</form>
 		</div>
 	);

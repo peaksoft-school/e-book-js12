@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState } from 'react';
-import { Modal } from 'antd';
+import { Modal, Tooltip } from 'antd';
 import scss from './AboutBook.module.scss';
 import CustomBasketButton from '@/src/ui/customButton/CustomBasketButton';
 import CustomPersonalAreaButton from '@/src/ui/customButton/CustomPersonalArea';
@@ -127,7 +127,14 @@ const AboutBook = () => {
 						>
 							Главная
 						</Link>
-						/<span className={scss.link_to_vendor_page}>{book.title}</span>
+						/
+						<Tooltip
+							title={book.title.length > 20 ? book.title : ''}
+							color="black"
+							placement="bottomLeft"
+						>
+							<span className={scss.link_to_vendor_page}>{book.title}</span>
+						</Tooltip>
 					</div>
 					<div className={scss.contents_book}>
 						<div className={scss.section_about_book}>
@@ -151,7 +158,13 @@ const AboutBook = () => {
 										</p>
 									</div>
 								</div>
-								<h3>{book.title}</h3>
+								<Tooltip
+									title={book.title.length > 20 ? book.title : ''}
+									color="black"
+									placement="bottomLeft"
+								>
+									<h3>{book.title}</h3>
+								</Tooltip>
 							</div>
 							<div className={scss.section_mony}>
 								<p>365 c</p>
@@ -171,7 +184,19 @@ const AboutBook = () => {
 									<p>Объем</p>
 								</div>
 								<div className={scss.section_info_two}>
-									<p className={scss.authorsFullName}>{book.authorsFullName}</p>
+									<Tooltip
+										title={
+											book.authorsFullName.length > 20
+												? book.authorsFullName
+												: ''
+										}
+										color="black"
+										placement="bottomLeft"
+									>
+										<p className={scss.authorsFullName}>
+											{book.authorsFullName}
+										</p>
+									</Tooltip>
 									<p>
 										{genreBook.find((genre) => genre.englishName === book.genre)
 											?.genreName || book.genre}
