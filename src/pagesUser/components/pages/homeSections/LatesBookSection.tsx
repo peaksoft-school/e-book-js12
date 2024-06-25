@@ -81,7 +81,6 @@ const LatestBookSection: FC = () => {
 								{data.map((item, idx) => (
 									<div
 										key={idx}
-										onClick={() => navigate(`/search_book/${item.id}`)}
 										className={
 											idx === imageIndex ? 'slidee activeSlidee' : 'slidee'
 										}

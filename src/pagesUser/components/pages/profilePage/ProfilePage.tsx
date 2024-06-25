@@ -10,6 +10,7 @@ import {
 	useDeletUserProfileMutation
 } from '@/src/redux/api/userProfile';
 import { useNavigate } from 'react-router-dom';
+import { Modal } from 'antd';
 
 const ProfileClient: React.FC = () => {
 	const { register, handleSubmit, reset, setValue } = useForm();
@@ -19,6 +20,7 @@ const ProfileClient: React.FC = () => {
 	const { data: profileData, refetch } = useClientGetProfileQuery();
 	const [updatePassword] = useUpdatePasswordUserMutation();
 	const [handleDeleteProfile] = useDeletUserProfileMutation();
+	const [isModalOpen, setIsModalOpen] = useState(false);
 
 	const navigate = useNavigate();
 
@@ -79,6 +81,17 @@ const ProfileClient: React.FC = () => {
 		} catch (error) {
 			console.error('Error updating profile:', error);
 		}
+	};
+	const showModal = () => {
+		setIsModalOpen(true);
+	};
+
+	const handleOk = () => {
+		setIsModalOpen(false);
+	};
+
+	const handleCancel = () => {
+		setIsModalOpen(false);
 	};
 
 	return (
@@ -163,10 +176,7 @@ const ProfileClient: React.FC = () => {
 								</div>
 								<div className={scss.button_section}>
 									<div>
-										<p
-											className={scss.delete_user_profile}
-											onClick={() => handleDeleteAndNavigate()}
-										>
+										<p className={scss.delete_user_profile} onClick={showModal}>
 											Удалить профиль?
 										</p>
 									</div>
@@ -229,6 +239,33 @@ const ProfileClient: React.FC = () => {
 								</div>
 							</div>
 						</div>
+						<Modal
+							open={isModalOpen}
+							onOk={handleOk}
+							onCancel={handleCancel}
+							footer={false}
+						>
+							<div className={scss.delete_modal}>
+								<p>Вы уверены, что хотите удалить профиль?</p>
+								<div className={scss.buttons_modal}>
+									<button
+										onClick={() => {
+											setIsModalOpen(false);
+										}}
+									>
+										Отменить
+									</button>
+									<button
+										onClick={() => {
+											setIsModalOpen(false);
+											handleDeleteAndNavigate();
+										}}
+									>
+										Удалить
+									</button>
+								</div>
+							</div>
+						</Modal>
 					</form>
 				</div>
 			</div>

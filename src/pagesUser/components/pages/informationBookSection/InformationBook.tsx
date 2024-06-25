@@ -85,23 +85,12 @@ const genres = [
 	}
 ];
 
-// const languageData = [
-// 	{
-// 		genreName: 'Русский язык',
-// 		englishName: 'RUSSIAN'
-// 	},
-// 	{
-// 		genreName: 'Кыргызский язык',
-// 		englishName: 'KYRGYZ'
-// 	},
-// 	{
-// 		genreName: 'Англизский язык',
-// 		englishName: 'ENGLISH'
-// 	}
-// ];
-
 const InformationBook: FC = () => {
 	const [showBookInfo, setShowBookInfo] = useState(false);
+	const [isFavorite, setIsFavorite] = useState(false);
+	const [isInBasket, setIsInBasket] = useState(false);
+	const [favoriteClickCount, setFavoriteClickCount] = useState(0);
+	const [basketClickCount, setBasketClickCount] = useState(0);
 
 	const { id } = useParams();
 	const bookId = Number(id);
@@ -112,11 +101,23 @@ const InformationBook: FC = () => {
 	const [addBookToFavorite] = usePostFavoriteUnFavoriteMutation();
 
 	const handleAddBookToBasket = async (id: number) => {
-		await addBookToBasket(id);
+		if (basketClickCount === 0) {
+			await addBookToBasket(id);
+			setIsInBasket(true);
+		} else {
+			navigate('/basket');
+		}
+		setBasketClickCount((prevCount) => prevCount + 1);
 	};
 
 	const handleAddBookToFavorite = async (id: number) => {
-		await addBookToFavorite(id);
+		if (favoriteClickCount === 0) {
+			await addBookToFavorite(id);
+			setIsFavorite(true);
+		} else {
+			navigate('/favorite');
+		}
+		setFavoriteClickCount((prevCount) => prevCount + 1);
 	};
 
 	const hadnleGenre = () => {
@@ -212,8 +213,6 @@ const InformationBook: FC = () => {
 											{
 												<>
 													<div className={scss.section_info_two} key={data?.id}>
-														<p>{data?.authorsFullName}</p>
-														<p>{hadnleGenre()}</p>
 														<Tooltip
 															className={scss.info_hover}
 															title={
@@ -226,6 +225,7 @@ const InformationBook: FC = () => {
 														>
 															<p>{data?.authorsFullName}</p>
 														</Tooltip>
+
 														<p>{data?.genre}</p>
 														<p>{data?.language}</p>
 														<Tooltip
@@ -264,7 +264,9 @@ const InformationBook: FC = () => {
 												handleAddBookToFavorite(bookId);
 											}}
 										>
-											<p className={scss.boot_one}>В избранное</p>
+											<p className={scss.boot_one}>
+												{isFavorite ? 'Перейти в избранном' : 'В избранное'}
+											</p>
 										</CustomPersonalAreaButton>
 										<CustomBasketButton
 											nameClass={scss.basket_btn}
@@ -272,7 +274,11 @@ const InformationBook: FC = () => {
 												handleAddBookToBasket(bookId);
 											}}
 										>
-											<p className={scss.boot_one}>Добавить в корзину</p>
+											<p className={scss.boot_one}>
+												{isInBasket
+													? ' Перейти в корзине'
+													: 'Добавить в корзину'}
+											</p>
 										</CustomBasketButton>
 									</div>
 								</div>

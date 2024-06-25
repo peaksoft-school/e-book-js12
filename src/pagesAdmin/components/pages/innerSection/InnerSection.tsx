@@ -78,6 +78,7 @@ const InnerSection = () => {
 						<div className={scss.content}>
 							{books?.books.length ? (
 								books?.books.map((book) => (
+									
 									<div
 										key={book.id}
 										className={`${scss.book} ${book.isViewed ? '' : scss.unviewed}`}
@@ -120,7 +121,7 @@ const InnerSection = () => {
 											className={scss.book_content}
 										>
 											<div className={scss.book_img}>
-												<img src={book.imageUrl1} alt={book.title} />
+												<img src={book.imageUrl} alt={book.title} />
 											</div>
 											<div className={scss.info_book}>
 												<Tooltip
