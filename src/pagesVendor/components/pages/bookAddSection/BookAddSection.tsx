@@ -11,7 +11,7 @@ import {
 } from '@/src/assets/icons';
 import { ChangeEvent, useEffect, useRef, useState } from 'react';
 import CustomUserNameInput from '@/src/ui/customInpute/CustomUserNameInput';
-import { Modal } from 'antd';
+import { Modal, message } from 'antd';
 import CustomBasketButton from '@/src/ui/customButton/CustomBasketButton';
 import CustomAudioDownloadInput from '@/src/ui/customAudioInput/CustomAudioDownloadInput';
 import CustomPDFDownloadInput from '@/src/ui/customPDFInput/CustomPDFDownloadInput';
@@ -67,9 +67,7 @@ const BookAddSection = () => {
 	const [durationFragment, setDurationFragment] = useState<number>(0);
 	const [pdfFileName, setPdfFileName] = useState<File | null>();
 	const [postFile] = usePostFileMutation();
-
 	const [selectLanguage, setSelectLanguage] = useState(false);
-
 	const [languageSeleced, setLanguageSelected] = useState<
 		TypeLanguage | undefined
 	>({
@@ -88,6 +86,7 @@ const BookAddSection = () => {
 	const [isFileUploadedFragment, setIsFileUploadedFragment] = useState(false);
 	const [isFileUploaded, setIsFileUploaded] = useState(false);
 	const [isPdfFileUploaded, setIsPdfFileUploaded] = useState(false);
+	const [messageApi, contextHolder] = message.useMessage();
 
 	const [pdfFile, setPdfFile] = useState(' ');
 	const {
@@ -98,6 +97,7 @@ const BookAddSection = () => {
 	} = useForm();
 	const errorRef = useRef<FieldErrors<FormValues>>(errors);
 	const [fragment, setFragment] = useState(' ');
+
 	const [addBookVendor] = useAddBookVendorMutation();
 	const jenreData = [
 		{
@@ -175,7 +175,6 @@ const BookAddSection = () => {
 
 	const onSubmit: SubmitHandler<FieldValues> = async (book) => {
 		setNameBook(book.title);
-		console.log(book);
 
 		const newUpDateBook = {
 			imageUrls: [firstPhoto, secondPhoto],
@@ -196,30 +195,50 @@ const BookAddSection = () => {
 			bestseller: clickBestseller,
 			durationFragment: durationFragment
 		};
-		const result = await addBookVendor({
+		const result = (await addBookVendor({
 			newUpDateBook,
 			genre: selectDataJenre!.englishName,
 			language: languageSeleced!.language,
 			bookType: bookType
-		}).unwrap();
-		if (result.httpStatus === 'OK') {
-			setModal(true);
-			reset();
-			setClickBestseller(false);
-			setFragment('');
-			setDescription('');
-			setPdfFile('');
-			setAudioFile('');
-			setAudioFileFragment('');
-			setFirstPhoto('');
-			setSecondPhoto('');
-			setDelPhoto(false);
-			setPdfFileName(null);
-			setTimeout(() => {
-				navigate('/vendor/home');
-			}, 2000);
+		})) as ADDBOOKVENDOR.AddBookVendorResponse;
+
+		if (result.error) {
+			if (result.error.status === 400) {
+				if (result.error.data.authorsFullName) {
+					messageApi.open({
+						type: 'warning',
+						content: result.error.data.authorsFullName
+					});
+				} else if (result.error.data.publishedYear) {
+					messageApi.open({
+						type: 'warning',
+						content: result.error.data.publishedYear
+					});
+				} else if (result.error.data.price) {
+					messageApi.open({
+						type: 'warning',
+						content: result.error.data.price
+					});
+				}
+			}
+		} else {
+			if (result.data.httpStatus === 'OK') {
+				setModal(true);
+				reset();
+				setClickBestseller(false);
+				setFragment('');
+				setDescription('');
+				setPdfFile('');
+				setAudioFile('');
+				setAudioFileFragment('');
+				setFirstPhoto('');
+				setSecondPhoto('');
+				setDelPhoto(false);
+				setPdfFileName(null);
+			}
 		}
 	};
+
 	const handleFileChange = async (file: File) => {
 		setPdfFileName(file);
 		const result = await postFile(file);
@@ -300,6 +319,7 @@ const BookAddSection = () => {
 	if (modal === true) {
 		setTimeout(() => {
 			setModal(false);
+			navigate('/vendor/home');
 		}, 3000);
 	}
 
@@ -310,6 +330,7 @@ const BookAddSection = () => {
 	return (
 		<section className={scss.AddBookSection}>
 			<div className={scss.container}>
+				{contextHolder}
 				<form onSubmit={handleSubmit(onSubmit)} className={scss.content}>
 					<div className={scss.links}>
 						<Link
@@ -458,17 +479,17 @@ const BookAddSection = () => {
 										<label>
 											Название книги
 											<CustomUserNameInput
-												refError={errorRef.current.title}
+												refError={errorRef}
+												validateError={errors.title}
 												placeholder="Напишите полное название книги"
 												registerName="title"
 												register={register}
-												validateError={errors.title}
 											/>
 										</label>
 										<label>
 											ФИО автора
 											<CustomUserNameInput
-												refError={errorRef.current.authorsFullName}
+												refError={errorRef}
 												placeholder="Напишите ФИО автора"
 												registerName="authorsFullName"
 												register={register}
@@ -526,14 +547,13 @@ const BookAddSection = () => {
 										<label>
 											Издательство
 											<CustomUserNameInput
-												refError={errorRef.current.publishingHouse}
+												refError={errorRef}
+												validateError={errors.publishingHouse}
 												placeholder="Напишите название издательства"
 												registerName="publishingHouse"
 												register={register}
-												validateError={errors.publishingHouse}
 											/>
 										</label>
-										{}
 										<label>
 											О книге
 											<textarea
@@ -542,6 +562,7 @@ const BookAddSection = () => {
 												}
 												rows={636}
 												cols={264}
+												required={true}
 												maxLength={1234}
 												placeholder="Напишите о книге"
 												{...register('description', {
@@ -569,6 +590,7 @@ const BookAddSection = () => {
 											<textarea
 												className={errors.fragment ? scss.textarea_error : ''}
 												rows={636}
+												required={true}
 												cols={264}
 												maxLength={1234}
 												placeholder="Напишите фрагмент книги"
@@ -649,6 +671,8 @@ const BookAddSection = () => {
 												>
 													<span>стр.</span>
 													<input
+														required={true}
+														minLength={4}
 														type="text"
 														{...register('volume', {
 															required: true,
@@ -668,6 +692,8 @@ const BookAddSection = () => {
 												>
 													<span>сом</span>
 													<input
+														required={true}
+														minLength={3}
 														type="text"
 														{...register('price', {
 															required: true,
@@ -708,6 +734,9 @@ const BookAddSection = () => {
 												>
 													<span>гг</span>
 													<input
+														required={true}
+														minLength={4}
+														maxLength={4}
 														type="text"
 														{...register('publishedYear', {
 															required: true,
@@ -728,6 +757,8 @@ const BookAddSection = () => {
 													<span>шт.</span>
 													<input
 														type="text"
+														required={true}
+														minLength={1}
 														{...register('amountOfBook', {
 															required: true,
 															minLength: 1,
@@ -767,7 +798,7 @@ const BookAddSection = () => {
 									<label>
 										Название книги
 										<CustomUserNameInput
-											refError={errorRef.current.title}
+											refError={errorRef}
 											validateError={errors.title}
 											placeholder="Напишите полное название книги"
 											registerName="title"
@@ -777,7 +808,7 @@ const BookAddSection = () => {
 									<label>
 										ФИО автора
 										<CustomUserNameInput
-											refError={errorRef.current.authorsFullName}
+											refError={errorRef}
 											validateError={errors.authorsFullName}
 											placeholder="Напишите ФИО автора"
 											registerName="authorsFullName"
@@ -906,6 +937,9 @@ const BookAddSection = () => {
 												<span>гг</span>
 												<input
 													type="text"
+													required={true}
+													minLength={4}
+													maxLength={4}
 													{...register('publishedYear', {
 														required: true,
 														minLength: 4,
@@ -959,6 +993,8 @@ const BookAddSection = () => {
 											>
 												<span>сом</span>
 												<input
+													required={true}
+													minLength={3}
 													type="text"
 													{...register('price', {
 														required: true,
@@ -1028,7 +1064,7 @@ const BookAddSection = () => {
 										<label>
 											Название книги
 											<CustomUserNameInput
-												refError={errorRef.current.title}
+												refError={errorRef}
 												validateError={errors.title}
 												placeholder="Напишите полное название книги"
 												registerName="title"
@@ -1038,7 +1074,7 @@ const BookAddSection = () => {
 										<label>
 											ФИО автора
 											<CustomUserNameInput
-												refError={errorRef.current.authorsFullName}
+												refError={errorRef}
 												validateError={errors.authorsFullName}
 												placeholder="Напишите ФИО автора"
 												registerName="authorsFullName"
@@ -1096,7 +1132,7 @@ const BookAddSection = () => {
 										<label>
 											Издательство
 											<CustomUserNameInput
-												refError={errorRef.current.publishingHouse}
+												refError={errorRef}
 												validateError={errors.publishingHouse}
 												placeholder="Напишите название издательства"
 												registerName="publishingHouse"
@@ -1199,6 +1235,9 @@ const BookAddSection = () => {
 														<span>гг</span>
 														<input
 															type="text"
+															required={true}
+															maxLength={4}
+															minLength={4}
 															{...register('publishedYear', {
 																required: true,
 																minLength: 4,
@@ -1220,6 +1259,8 @@ const BookAddSection = () => {
 														<span>стр.</span>
 														<input
 															type="text"
+															required={true}
+															minLength={4}
 															{...register('volume', {
 																required: true,
 																minLength: 4,
@@ -1255,6 +1296,8 @@ const BookAddSection = () => {
 														<span>сом</span>
 														<input
 															type="text"
+															required={true}
+															minLength={3}
 															{...register('price', {
 																required: true,
 																minLength: 3,
@@ -1307,6 +1350,7 @@ const BookAddSection = () => {
 							/>
 							{<></>}
 							<Modal
+								open={modal}
 								className={scss.modal_succes}
 								footer={false}
 								onCancel={() => setModal(false)}

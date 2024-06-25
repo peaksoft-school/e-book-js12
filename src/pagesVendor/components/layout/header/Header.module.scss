@@ -457,10 +457,6 @@
 	.ant-modal {
 		max-width: 523px !important;
 		width: 100% !important;
-		div {
-			max-width: 100%;
-			width: 100%;
-		}
 	}
 	.ant-modal-content {
 		max-width: 523px !important;
@@ -575,6 +571,10 @@
 			cursor: default;
 		}
 	}
+}
+.container_toast {
+	max-width: 320px !important;
+	width: 100% !important;
 }
 
 .button_add_promo {

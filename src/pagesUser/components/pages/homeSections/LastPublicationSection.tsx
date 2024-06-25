@@ -5,7 +5,6 @@ import { IconLongLine, IconShortLine } from '@/src/assets/icons';
 import { Link, useNavigate } from 'react-router-dom';
 import { useGetLastPublicationQuery } from '@/src/redux/api/book';
 import { Tooltip } from 'antd';
-import IconGirl from '@/src/assets/icons/icon-girl';
 
 const LastPublicationSection: FC = () => {
 	const [state, setState] = useState('BUSINESS_LITERATURE');
@@ -63,7 +62,7 @@ const LastPublicationSection: FC = () => {
 										<button
 											onClick={() => handleClick('BUSINESS_LITERATURE')}
 											className={
-												navClicked === 'BUSINESS_LITERATURE' ? 'active' : ''
+												navClicked === 'BUSINESS_LITERATURE' ? scss.active : ''
 											}
 										>
 											Бизнес-литература
@@ -73,7 +72,7 @@ const LastPublicationSection: FC = () => {
 										<button
 											onClick={() => handleClick('BOOKS_FOR_CHILDREN')}
 											className={
-												navClicked === 'BOOKS_FOR_CHILDREN' ? 'active' : ''
+												navClicked === 'BOOKS_FOR_CHILDREN' ? scss.active : ''
 											}
 										>
 											Детские книги
@@ -82,7 +81,7 @@ const LastPublicationSection: FC = () => {
 									<li>
 										<button
 											onClick={() => handleClick('HOBBIES')}
-											className={navClicked === 'HOBBIES' ? 'active' : ''}
+											className={navClicked === 'HOBBIES' ? scss.active : ''}
 										>
 											Хобби и досуг
 										</button>
@@ -90,7 +89,7 @@ const LastPublicationSection: FC = () => {
 									<li>
 										<button
 											onClick={() => handleClick('COMMUNITY')}
-											className={navClicked === 'COMMUNITY' ? 'active' : ''}
+											className={navClicked === 'COMMUNITY' ? scss.active : ''}
 										>
 											Сообщество
 										</button>
@@ -99,7 +98,7 @@ const LastPublicationSection: FC = () => {
 										<button
 											onClick={() => handleClick('ARTISTIC_LITERATURE')}
 											className={
-												navClicked === 'ARTISTIC_LITERATURE' ? 'active' : ''
+												navClicked === 'ARTISTIC_LITERATURE' ? scss.active : ''
 											}
 										>
 											Художественная литература
@@ -108,35 +107,30 @@ const LastPublicationSection: FC = () => {
 									<li>
 										<button
 											onClick={() => handleClick('EDUCATION')}
-											className={navClicked === 'EDUCATION' ? 'active' : ''}
+											className={navClicked === 'EDUCATION' ? scss.active : ''}
 										>
 											Образование
 										</button>
 									</li>
 								</ul>
 							</div>
-							{data && data.length > 0 ? (
-								data.map((el) => (
-									<div key={el.id} className={scss.main_image}>
-										<div className={scss.image_container}>
-											<IconShortLine />
-											<IconLongLine />
-											<img
-												className={scss.book_image}
-												src={el.imageUrl}
-												alt={el.title}
-											/>
-											<IconLongLine />
-											<IconShortLine />
+							{data && data.length > 0
+								? data.map((el) => (
+										<div key={el.id} className={scss.main_image}>
+											<div className={scss.image_container}>
+												<IconShortLine />
+												<IconLongLine />
+												<img
+													className={scss.book_image}
+													src={el.imageUrl}
+													alt={el.title}
+												/>
+												<IconLongLine />
+												<IconShortLine />
+											</div>
 										</div>
-									</div>
-								))
-							) : (
-								<div className={scss.fallback_container}>
-									<IconGirl />
-									<p>Нет доступных публикаций</p>
-								</div>
-							)}
+									))
+								: null}
 						</div>
 						{data?.map((el) => (
 							<div key={el.id} className={scss.main_about}>

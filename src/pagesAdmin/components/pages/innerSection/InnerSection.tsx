@@ -12,11 +12,7 @@ const InnerSection = () => {
 	const navigate = useNavigate();
 	const [isOpen, setIsOpen] = useState(false);
 	const [idBook, setIdBook] = useState<null | number>(null);
-	const {
-		data: books,
-		refetch,
-		isLoading
-	} = useGetReceiptRequestedBooksQuery();
+	const { data: books, refetch } = useGetReceiptRequestedBooksQuery();
 	const [rejectBookById] = useRejectBookMutation();
 
 	const handleBookClick = (id: number) => {
@@ -55,29 +51,50 @@ const InnerSection = () => {
 		setSelectedBook(null);
 		setRejectReason('');
 	};
+	// const [style, setStyle] = useState({ width: 268, height: 409 });
+
+	// const updateStyle = () => {
+	// 	const width = window.innerWidth;
+	// 	if (width <= 576) {
+	// 		setStyle({ width: 100, height: 200 });
+	// 	} else if (width <= 768) {
+	// 		setStyle({ width: 150, height: 250 });
+	// 	} else if (width <= 992) {
+	// 		setStyle({ width: 180, height: 300 });
+	// 	} else if (width <= 1200) {
+	// 		setStyle({ width: 230, height: 360 });
+	// 	} else {
+	// 		setStyle({ width: 268, height: 409 });
+	// 	}
+	// };
+
+	// useEffect(() => {
+	// 	window.addEventListener('resize', updateStyle);
+	// 	updateStyle();
+
+	// 	return () => window.removeEventListener('resize', updateStyle);
+	// }, []);
 
 	return (
 		<>
-			{isLoading ? (
-				<>loading</>
-			) : (
-				<section className={scss.InnerSection}>
-					<div className={scss.container}>
-						<div className={scss.total_quantity}>
-							<p className={scss.books_quantity}>
-								<span>Всего:</span>
-								<span>{books?.books.length || 0}</span>
-							</p>
-							<p className={scss.books_unvie}>
-								<span>Непросмотренные:</span>
-								<span>
-									{books?.books.filter((book) => !book.isViewed).length || 0}
-								</span>
-							</p>
-						</div>
-						<div className={scss.content}>
-							{books?.books.length ? (
-								books?.books.map((book) => (
+			<section className={scss.InnerSection}>
+				<div className={scss.container}>
+					<div className={scss.total_quantity}>
+						<p className={scss.books_quantity}>
+							<span>Всего:</span>
+							<span>{books?.books.length || 0}</span>
+						</p>
+						<p className={scss.books_unvie}>
+							<span>Непросмотренные:</span>
+							<span>
+								{books?.books.filter((book) => !book.isViewed).length || 0}
+							</span>
+						</p>
+					</div>
+					<div className={scss.content}>
+						{books?.books.length ? (
+							books?.books.map((book) => (
+								<>
 									<div
 										key={book.id}
 										className={`${scss.book} ${book.isViewed ? '' : scss.unviewed}`}
@@ -120,7 +137,7 @@ const InnerSection = () => {
 											className={scss.book_content}
 										>
 											<div className={scss.book_img}>
-												<img src={book.imageUrl1} alt={book.title} />
+												<img src={book.imageUrl} alt={book.title} />
 											</div>
 											<div className={scss.info_book}>
 												<Tooltip
@@ -138,36 +155,36 @@ const InnerSection = () => {
 											</div>
 										</div>
 									</div>
-								))
-							) : (
-								<div className={scss.no_books}>
-									<IconGirl />
-								</div>
-							)}
+								</>
+							))
+						) : (
+							<div className={scss.no_books}>
+								<IconGirl />
+							</div>
+						)}
+					</div>
+				</div>
+				<Modal
+					visible={isModalOpen}
+					onOk={handleOk}
+					onCancel={handleCancel}
+					footer={null}
+					className={scss.delete_modal}
+				>
+					<div className={scss.delete_modal}>
+						<p>Вы уверены, что хотите отклонить?</p>
+						<textarea
+							value={rejectReason}
+							onChange={(e) => setRejectReason(e.target.value)}
+							placeholder="Причина отклонения"
+						/>
+						<div className={scss.bt_modal}>
+							<button onClick={handleCancel}>Отменить</button>
+							<button onClick={handleOk}>Удалить</button>
 						</div>
 					</div>
-					<Modal
-						visible={isModalOpen}
-						onOk={handleOk}
-						onCancel={handleCancel}
-						footer={null}
-						className={scss.delete_modal}
-					>
-						<div className={scss.delete_modal}>
-							<p>Вы уверены, что хотите отклонить?</p>
-							<textarea
-								value={rejectReason}
-								onChange={(e) => setRejectReason(e.target.value)}
-								placeholder="Причина отклонения"
-							/>
-							<div className={scss.bt_modal}>
-								<button onClick={handleCancel}>Отменить</button>
-								<button onClick={handleOk}>Удалить</button>
-							</div>
-						</div>
-					</Modal>
-				</section>
-			)}
+				</Modal>
+			</section>
 		</>
 	);
 };

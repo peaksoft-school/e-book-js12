@@ -13,8 +13,8 @@ const firstData = [
 			Мы рады приветствовать вас на нашей инновационной платформе, предназначенной для покупки и продажи книг в различных форматах.
 			На Ebook вы можете приобрести книги в следующих форматах:
 			1.Печатная книга — для любителей классического чтения и бумажных изданий.
-			 2.Аудиокнига — для тех, кто предпочитает слушать книги в любое удобное время.
-			 3.Электронная книга — для ценителей удобства и мобильности цифрового чтения.
+			2.Аудиокнига — для тех, кто предпочитает слушать книги в любое удобное время.
+		3.Электронная книга — для ценителей удобства и мобильности цифрового чтения.
 			Чтобы начать продавать свои книги на Ebook, вам нужно пройти быструю и простую регистрацию для продавцов. Это позволит вам незамедлительно начать делиться своими изданиями с широкой аудиторией.
 			Присоединяйтесь к нашему сообществу и откройте новые возможности для распространения и приобретения книг!
 			Ebook — ваш надежный партнёр в мире книг.
@@ -24,9 +24,7 @@ const firstData = [
 		image:
 			'https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEggTu7DsNwN06djRJalUksB-4Ev7Od5gqiLK3tGUianJl7nbaRoUcOpxpOSlfVMmt4l2bBQejcsUfEqP_AJp0j_fZDzXftR7fz_wZ2-SBFA1NaaFVBSVQAyMZR6NJO14iRApHY7mW5NYbg/w1200-h630-p-k-no-nu/Library.png',
 		description: `Чтобы начать продавать свои книги на Ebook, вам нужно пройти быструю и простую регистрацию для продавцов. Это позволит вам незамедлительно начать делиться своими изданиями с широкой аудиторией.
- 
 			Присоединяйтесь к нашему сообществу и откройте новые возможности для распространения и приобретения книг!
-			 
 			Ebook — ваш надежный партнёр в мире книг.
 			`
 	},
@@ -85,20 +83,24 @@ const Welcome: FC = () => {
 	const handelChangeProfile = () => {
 		const vendor = localStorage.getItem('vendor');
 
-		if (vendor) {
+		if (vendor === 'true') {
 			navigate('/vendor/profile');
 		} else {
 			navigate('/auth/vendor/registration');
 		}
 	};
+
 	return (
 		<>
-			<section className={scss.Welcome}>
+			<section id="headerVendor" className={scss.Welcome}>
 				<div className="container">
 					<header>
 						<div>
 							<LogoeBook
 								navigateToHome={() => {
+									if (localStorage.getItem('vendor') === 'true') {
+										navigate('/vendor/home');
+									}
 									navigate('/vendor');
 								}}
 							/>

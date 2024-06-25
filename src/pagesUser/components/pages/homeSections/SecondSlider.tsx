@@ -131,7 +131,7 @@ const SecondSlider: FC = () => {
 	if (error) return <p>Ошибка загрузки данных</p>;
 
 	return (
-		<div className="container">
+		<div className="container" id="eBook">
 			<div className="content">
 				<h2>Электронные книги</h2>
 				<Link to={'/search_book'} className="see_orange">

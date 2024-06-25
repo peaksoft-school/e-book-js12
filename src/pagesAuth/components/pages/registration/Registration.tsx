@@ -12,7 +12,6 @@ import {
 import { signInWithPopup } from 'firebase/auth';
 import { auth, provider } from '@/src/configs/firebase';
 import { IconGoogleLogo } from '@/src/assets/icons';
-import { ToastContainer, toast } from 'react-toastify';
 import { Modal, message } from 'antd';
 
 interface TypeData {
@@ -23,10 +22,8 @@ interface TypeData {
 }
 interface RegistrationResponse {
 	data?: {
-		data: {
-			httpStatus: string;
-			message: string;
-		};
+		httpStatus: string;
+		message: string;
 	};
 	error: {
 		data: {
@@ -69,14 +66,20 @@ const Registration = () => {
 				};
 				const results = (await postUser(newData)) as RegistrationResponse;
 				if ('data' in results) {
-					if (results.data?.data.httpStatus === 'OK') {
+					console.log(results.data);
+
+					if (results.data?.httpStatus === 'OK') {
 						setEmail(data.email);
 						setConfirmModa(true);
-					} else if (results.data?.data.httpStatus === 'ALREADY_REPORTED') {
+					} else if (results.data?.httpStatus === 'ALREADY_REPORTED') {
 						messageApi.open({
 							type: 'warning',
-							content:
-								'Электронная почта: ibrahimorunbaev59@gmail.com уже существует!'
+							content: results.data.message
+						});
+					} else {
+						messageApi.open({
+							type: 'warning',
+							content: results.data?.message
 						});
 					}
 				} else if ('data' in results.error && results.error.data) {
@@ -101,51 +104,63 @@ const Registration = () => {
 							content: outputString
 						});
 					}
+				} else {
+					messageApi.open({
+						type: 'warning',
+						content: 'Ошибка сервера'
+					});
 				}
-			} else {
-				toast(`Подтвердите пароль`, {
-					position: 'top-right',
-					autoClose: 5000,
-					hideProgressBar: false,
-					closeOnClick: true,
-					pauseOnHover: true,
-					draggable: true,
-					progress: undefined,
-					theme: 'light'
-				});
 			}
 		}
 	};
 
 	const handleConfirmCode = async () => {
-		const newData = {
-			email: email,
-			code: code!
-		};
-		const result = await confirmCode(newData);
-		if ('data' in result) {
-			const { token } = result.data.data;
-			const { firstName } = result.data.data;
-			localStorage.setItem('NameClient', firstName);
-			localStorage.setItem('token', token!);
-			localStorage.setItem('client', 'true');
-			localStorage.setItem('vendor', 'false');
-			localStorage.setItem('admin', 'false');
-			reset();
-			navigate('/');
-			setCode('');
-		} else if (errorEmail) {
-			const confirmEmailError = errorEmail as AUTHORIZATION.ConfirmEmailError;
-			if (confirmEmailError) {
-				const inputString = confirmEmailError.data.message;
-				const outputString = inputString?.replace(/{/g, '').replace(/}/g, '');
+		if (code !== '') {
+			const newData = {
+				email: email,
+				code: code!
+			};
+			const result = await confirmCode(newData);
+			if ('data' in result) {
+				console.log(result);
+
+				const { token } = result.data.data;
+				const { firstName } = result.data.data;
+				localStorage.setItem('NameClient', firstName);
+				localStorage.setItem('token', token!);
+				localStorage.setItem('client', 'true');
+				localStorage.setItem('vendor', 'false');
+				localStorage.setItem('admin', 'false');
+				reset();
+				navigate('/');
+				setCode('');
+			} else if (errorEmail) {
+				const confirmEmailError = errorEmail as AUTHORIZATION.ConfirmEmailError;
+				if (confirmEmailError) {
+					const inputString = confirmEmailError.data.message;
+					const outputString = inputString?.replace(/{/g, '').replace(/}/g, '');
+					messageApi.open({
+						type: 'warning',
+						content: outputString
+					});
+				} else {
+					messageApi.open({
+						type: 'warning',
+						content: 'Ошибка сервера'
+					});
+				}
+			}
+			if (code.toString().length <= 3) {
 				messageApi.open({
 					type: 'warning',
-					content: outputString
+					content: 'Код должен содежать 4 цифр'
 				});
 			}
 		}
 	};
+
+	console.log(code.toString().length <= 3);
+
 	const signInWithGoogleHandler = async () => {
 		const result = await signInWithPopup(auth, provider);
 		const user = result.user;
@@ -288,11 +303,13 @@ const Registration = () => {
 								</div>
 							)}
 						</label>
-						<div className={scss.btn_container}>
+						<div
+							className={scss.btn_container}
+							onClick={() => setConfirmModa(confirmModal)}
+						>
 							<button type="submit">Создать аккаунт</button>
 						</div>
 					</form>
-					<ToastContainer />
 					<div className={scss.btn_with_google}>
 						<button onClick={signInWithGoogleHandler}>
 							<div className={scss.content_btn}>

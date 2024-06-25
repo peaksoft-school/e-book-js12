@@ -26,8 +26,30 @@ namespace PROMO {
 		dateEnd: string;
 		disCount: number | string;
 	};
-	type CreatePromoCodeResponse = {
-		httpStatus: string;
-		message: string;
+	type CreatePromoCodeSuccessResponse = {
+		data: {
+			httpStatus: string;
+			message: string;
+		};
+		error: {
+			data?: {
+				promoCode?: string;
+				message?: string;
+			};
+			status: number;
+		};
 	};
+
+	type CreatePromoCodeErrorResponse = {
+		error: {
+			data?: {
+				promoCode?: string;
+				message?: string;
+			};
+			status: number;
+		};
+	};
+	type CreatePromoCodeResponse =
+		| CreatePromoCodeSuccessResponse
+		| CreatePromoCodeErrorResponse;
 }

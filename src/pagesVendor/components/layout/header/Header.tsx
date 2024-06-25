@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { ConfigProvider, Modal, Tooltip } from 'antd';
 import { IconInfoCircle, IconUserCircle } from '@tabler/icons-react';
 import { IconRedDot, IconSuccess, IconTest } from '@/src/assets/icons';
@@ -9,6 +9,8 @@ import CustomGenreInput from '@/src/ui/customInpute/CustomGenreInput';
 import scss from './Header.module.scss';
 import { usePostPromoCodeMutation } from '@/src/redux/api/promo';
 import { useSearchBooksQuery } from '@/src/redux/api/search';
+import { useGetNotificationQuery } from '@/src/redux/api/notification';
+import { Bounce, ToastContainer, toast } from 'react-toastify';
 // import { Bounce, ToastContainer, toast } from 'react-toastify';
 
 const Header = () => {
@@ -29,7 +31,10 @@ const Header = () => {
 		{ searchTerm },
 		{ skip: !searchTerm }
 	);
+	const { data } = useGetNotificationQuery();
+
 	const navigate = useNavigate();
+	const location = useLocation();
 
 	useEffect(() => {
 		const changeHeader = () => {
@@ -67,32 +72,43 @@ const Header = () => {
 			dateEnd,
 			disCount
 		};
-		const result = await createNewPromo(newData);
+		const result = (await createNewPromo(
+			newData
+		)) as PROMO.CreatePromoCodeResponse;
 		if ('data' in result) {
-			const data = result.data;
-			if (data?.httpStatus === 'OK') {
+			if (result.data.httpStatus === 'OK') {
 				setIsModalOpen(false);
 				setTimeout(() => {
 					setModalSuccess(true);
 				}, 600);
 			}
+		} else {
+			console.log(result);
+			toast(result.error.data?.promoCode, {
+				position: 'top-right',
+				autoClose: 5000,
+				hideProgressBar: false,
+				closeOnClick: true,
+				pauseOnHover: false,
+				draggable: true,
+				progress: undefined,
+				theme: 'light',
+				transition: Bounce
+			});
 		}
-		// else {
-		// 	const message = result.error?.data?.message;
-		// 	if (message) {
-		// 		toast(message, {
-		// 			position: 'top-right',
-		// 			autoClose: 5000,
-		// 			hideProgressBar: false,
-		// 			closeOnClick: true,
-		// 			pauseOnHover: false,
-		// 			draggable: true,
-		// 			progress: undefined,
-		// 			theme: 'light',
-		// 			transition: Bounce
-		// 		});
-		// 	}
-		// }
+		if (result.error?.status === 400) {
+			toast(result.error?.data?.message, {
+				position: 'top-right',
+				autoClose: 5000,
+				hideProgressBar: false,
+				closeOnClick: true,
+				pauseOnHover: false,
+				draggable: true,
+				progress: undefined,
+				theme: 'light',
+				transition: Bounce
+			});
+		}
 	};
 	const HandleExitVendor = () => {
 		setUserExit(!userExit);
@@ -114,15 +130,6 @@ const Header = () => {
 		refetch();
 	};
 
-	const hndleAddPromoCode = () => {
-		if (dateStart === '' || dateEnd === '' || promoCode === '') {
-			alert('Заполните все поля!');
-			setIsModalOpen(true);
-		} else {
-			setIsModalOpen(false);
-		}
-	};
-
 	const handleDateEndChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const selectedDate = e.target.value;
 		if (selectedDate < currentDate) {
@@ -131,10 +138,19 @@ const Header = () => {
 			setDateEnd(selectedDate);
 		}
 	};
+	const scrollToHeaderSection = () => {
+		const element = document.getElementById('headerVendor');
+		if (element) {
+			window.scrollTo({
+				top: element.offsetTop,
+				behavior: 'smooth'
+			});
+		}
+	};
 
 	return (
 		<>
-			<header className={scss.Header}>
+			<header id="headerVendor" className={scss.Header}>
 				<div
 					className={
 						headerScroll ? `${scss.scroll} ${scss.active}` : `${scss.scroll}`
@@ -146,7 +162,12 @@ const Header = () => {
 								<div className={scss.logo_content}>
 									<LogoeBook
 										navigateToHome={() => {
-											navigate('/vendor');
+											if (location.pathname !== '/vendor/home') {
+												navigate('/vendor/home');
+												setTimeout(() => {
+													scrollToHeaderSection();
+												}, 300);
+											}
 										}}
 									/>
 								</div>
@@ -188,7 +209,11 @@ const Header = () => {
 											<IconTest />
 										</span>
 										<span>
-											<IconRedDot />
+											{data?.length !== 0 ? (
+												<>
+													<IconRedDot />
+												</>
+											) : null}
 										</span>
 									</div>
 									<div
@@ -290,7 +315,6 @@ const Header = () => {
 												type="submit"
 												key="submit"
 												onClick={() => {
-													hndleAddPromoCode();
 													onSubmitAddPromo();
 												}}
 											>
@@ -298,6 +322,8 @@ const Header = () => {
 											</button>
 										]}
 									>
+										<div className={scss.container_toast}></div>
+										<ToastContainer />
 										<div className={scss.promocode}>
 											<label>Промокод</label>
 											<input

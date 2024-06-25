@@ -175,7 +175,10 @@ namespace BOOK {
 		duration: string;
 		anew: boolean;
 	}[];
-	type GetAudioBookRequest = void;
+	type GetAudioBookRequest = {
+		page: number;
+		size: number;
+	};
 
 	type GetLastPublicationResponse = {
 		id: number;
