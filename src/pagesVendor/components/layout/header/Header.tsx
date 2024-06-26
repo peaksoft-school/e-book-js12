@@ -228,7 +228,7 @@ const Header = () => {
 										<ul>
 											<li
 												onClick={() => {
-													setIsUser(false)
+													setIsUser(false);
 													navigate('/vendor/profile');
 												}}
 											>

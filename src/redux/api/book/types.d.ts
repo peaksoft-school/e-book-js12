@@ -11,7 +11,7 @@ namespace BOOK {
 		quantityOfBasket: number;
 		discount: number;
 		priceWithDiscount: number;
-	}[]
+	}[];
 	type GetProductsRequest = {
 		bookOperationType: string;
 		page: number;

@@ -114,6 +114,19 @@ const AboutBook = () => {
 			isChecked: false
 		}
 	];
+
+	// const locationFunction = () => {
+	// 	if (/^\/vendor\/notification\/\d+$/.test(location.pathname)) {
+	// 		return (
+	// 			<p onClick={() => navigate('/vendor/notification')}>Уведомление</p>
+	// 		);
+	// 	} else if (/^\/vendor\/notification\/books\/\d+$/.test(location.pathname)) {
+	// 		// исправлено
+	// 		return <p onClick={() => navigate('/notification/')}>test</p>;
+	// 	}
+	// 	return null;
+	// };
+
 	return (
 		<section className={scss.AboutBook}>
 			<div className="container">
@@ -125,6 +138,7 @@ const AboutBook = () => {
 								location.pathname === '/vendor/' ? scss.link_to_home_active : ''
 							}`}
 						>
+							{/* {locationFunction()} */}
 							Главная
 						</Link>
 						/

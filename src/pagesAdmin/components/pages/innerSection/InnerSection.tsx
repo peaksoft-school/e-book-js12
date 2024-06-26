@@ -75,7 +75,8 @@ const InnerSection = () => {
 			payload: {
 				message: `Book "${titleBook?.title}" approved successfully!`,
 				createdAt: Date.now(),
-				notificationType: 'success'
+				notificationType: 'success',
+				bookId: id
 			}
 		});
 	};

@@ -222,7 +222,7 @@ const BookAddSection = () => {
 				}
 			}
 		} else {
-			if (result.data.httpStatus === 'OK') {
+			if (result.data?.httpStatus === 'OK') {
 				setModal(true);
 				reset();
 				setClickBestseller(false);
