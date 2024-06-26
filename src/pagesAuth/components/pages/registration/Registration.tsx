@@ -127,12 +127,9 @@ const Registration = () => {
 				newData
 			)) as AUTHORIZATION.ConfirmEmailResponse;
 			if ('data' in result) {
-				console.log(result);
-				console.log(result.data.token);
-				console.log(result.data);
-				const { token } = result.data;
-				const { firstName } = result.data;
-				localStorage.setItem('NameClient', firstName);
+				const token = result.data?.token;
+				const firstName = result.data?.firstName;
+				localStorage.setItem('NameClient', firstName!);
 				localStorage.setItem('token', token!);
 				localStorage.setItem('client', 'true');
 				localStorage.setItem('vendor', 'false');

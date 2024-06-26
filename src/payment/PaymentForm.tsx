@@ -52,7 +52,7 @@ const PaymentForm: FC<TypeProps> = ({
 		const test = Number(totalTest);
 		const result = await createPayment({ newData, token, test });
 		if ('data' in result) {
-			if (result.data.httpStatus === 'OK') {
+			if (result.data?.httpStatus === 'OK') {
 				setOpenModal(false);
 				setSucsessModal(true);
 			}

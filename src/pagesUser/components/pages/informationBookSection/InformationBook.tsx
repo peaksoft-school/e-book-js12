@@ -144,8 +144,6 @@ const InformationBook: FC = () => {
 		return languageName?.genreName;
 	};
 
-	
-
 	return (
 		<section className={scss.InformationBookSection}>
 			<div className="container">
@@ -322,7 +320,6 @@ const InformationBook: FC = () => {
 										)}
 									</div>
 									<p className={scss.book_info}>
-										
 										{showBookInfo ? data.fragment || '' : data.description}
 									</p>
 								</div>
