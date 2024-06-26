@@ -33,6 +33,7 @@ const LayoutVendor = () => {
 						<Route path="/profile" element={<ProfilePage />} />
 						<Route path="/home/editBook/:id" element={<EditBookPage />} />
 						<Route path="vendor/notification" element={<Notification />} />
+						<Route path="vendor/notification/:id" element={<AboutBookPage />} />
 					</Routes>
 				</main>
 				{location.pathname === '/vendor/registration' ||

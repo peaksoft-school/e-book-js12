@@ -27,14 +27,14 @@ namespace AUTHORIZATION {
 	};
 
 	type LoginResponse = {
-		data: {
+		data?: {
 			token: string;
 			id: number;
 			email: string;
 			role: string;
 			firstName: string;
-		}
-		error: {
+		};
+		error?: {
 			data: {
 				httpStatus: string;
 				message: string;
@@ -43,7 +43,7 @@ namespace AUTHORIZATION {
 	};
 
 	type ConfirmEmailResponse = {
-		data: {
+		data?: {
 			token: string;
 			firstName: string;
 			simpleResponse: SimpleResponse;

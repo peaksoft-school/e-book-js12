@@ -2,7 +2,7 @@
 
 namespace SUBSCRIBE {
 	type SubscribeResponse = {
-		data: {
+		data?: {
 			success: boolean;
 			message: string;
 		};

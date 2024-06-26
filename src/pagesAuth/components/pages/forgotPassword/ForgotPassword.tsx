@@ -38,7 +38,7 @@ const ForgotPassword = () => {
 								{...register('email', { required: true, minLength: 4 })}
 							/>
 						</label>
-						<button type='submit'>Отправить</button>
+						<button type="submit">Отправить</button>
 					</form>
 				</div>
 			</div>

@@ -2,7 +2,7 @@ import {
 	useDeleteNotificationMutation,
 	useGetNotificationQuery
 } from '@/src/redux/api/notification';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { CircleXIcon, IconBuyed, IconSuccess } from '@/src/assets/icons';
 import scss from './NotificationPage.module.scss';
 
@@ -10,6 +10,7 @@ const NotificationPage = () => {
 	const { data: notifications, isLoading, error } = useGetNotificationQuery();
 	const [deleteNotification] = useDeleteNotificationMutation();
 	const location = useLocation();
+	const navigate = useNavigate();
 
 	const handleDeleteNotification = (notificationId: number) => {
 		deleteNotification({ notificationId });
@@ -64,7 +65,10 @@ const NotificationPage = () => {
 										key={notification.id}
 									>
 										<div className={scss.test}>
-											<div className={scss.createdAt}>
+											<div
+												className={scss.createdAt}
+												onClick={() => navigate(`${notification.bookId}`)}
+											>
 												<div className={scss.message}>
 													<p>
 														{notification.notificationType === 'REJECT'
