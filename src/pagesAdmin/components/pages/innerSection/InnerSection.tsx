@@ -72,7 +72,8 @@ const InnerSection = () => {
 			payload: {
 				message: `Book "${books?.title}" approved successfully!`,
 				createdAt: Date.now(),
-				notificationType: 'success'
+				notificationType: 'success',
+				bookId: id
 			}
 		});
 	};
@@ -99,7 +100,6 @@ const InnerSection = () => {
 						<div className={scss.content}>
 							{books?.books.length ? (
 								books?.books.map((book) => (
-									
 									<div
 										key={book.id}
 										className={`${book.isViewed ? '' : scss.unviewedStyle} : ${scss.book}`}

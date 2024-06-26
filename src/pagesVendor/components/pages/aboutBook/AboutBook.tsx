@@ -114,6 +114,19 @@ const AboutBook = () => {
 			isChecked: false
 		}
 	];
+
+	// const locationFunction = () => {
+	// 	if (/^\/vendor\/notification\/\d+$/.test(location.pathname)) {
+	// 		return (
+	// 			<p onClick={() => navigate('/vendor/notification')}>Уведомление</p>
+	// 		);
+	// 	} else if (/^\/vendor\/notification\/books\/\d+$/.test(location.pathname)) {
+	// 		// исправлено
+	// 		return <p onClick={() => navigate('/notification/')}>test</p>;
+	// 	}
+	// 	return null;
+	// };
+
 	return (
 		<section className={scss.AboutBook}>
 			<div className="container">
@@ -125,6 +138,7 @@ const AboutBook = () => {
 								location.pathname === '/vendor/' ? scss.link_to_home_active : ''
 							}`}
 						>
+							{/* {locationFunction()} */}
 							Главная
 						</Link>
 						/
@@ -169,13 +183,13 @@ const AboutBook = () => {
 							<div className={scss.section_mony}>
 								<p>365 c</p>
 
-								{/* {book.bookType === ' AUDIO_BOOK' ? ( */}
-								<div className={scss.audioBook}>
-									<audio id="audioPlayer" controls>
-										<source src="audio.mp3" type="audio/mpeg" />
-									</audio>
-								</div>
-								{/* ) : null} */}
+								{book.bookType === ' AUDIO_BOOK' ? (
+									<div className={scss.audioBook}>
+										<audio id="audioPlayer" controls>
+											<source src="audio.mp3" type="audio/mpeg" />
+										</audio>
+									</div>
+								) : null}
 							</div>
 							<div className={scss.section_info}>
 								<div className={scss.section_info_name}>
