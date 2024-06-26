@@ -183,7 +183,7 @@ const VendorsBooks: FC = () => {
 									</div>
 									<hr className={scss.title_hr} />
 									<div className={scss.test}>
-										{booksData!.length > 0 ? (
+										{booksData?.length && booksData.length > 0 ? (
 											<>
 												<div className={scss.books_content}>
 													{booksData?.map((book) => (
@@ -206,12 +206,18 @@ const VendorsBooks: FC = () => {
 															>
 																<ThreeDotIcon />
 															</div>
-															{/* {bookId === book.id ? ( */}
 															<div
 																className={` ${book.id === bookId ? (isOpen ? scss.is_open : scss.close) : scss.close}`}
 															>
 																<ul>
-																	<li onClick={() => setIsOpen(false)}>
+																	<li
+																		onClick={() => {
+																			setIsOpen(false);
+																			navigate(
+																				`/vendor/home/editBook/${book.id}`
+																			);
+																		}}
+																	>
 																		<span>
 																			<IconPencil />
 																		</span>
@@ -253,7 +259,6 @@ const VendorsBooks: FC = () => {
 																	</div>
 																</Modal>
 															</div>
-															{/* ) : null} */}
 															<div
 																onClick={() => navigate(`${book.id}`)}
 																className={scss.book_content}

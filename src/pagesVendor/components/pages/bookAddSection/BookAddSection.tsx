@@ -185,7 +185,7 @@ const BookAddSection = () => {
 			title: book.title,
 			authorsFullName: book.authorsFullName,
 			publishingHouse: book.publishingHouse !== '' ? book.publishingHouse : ' ',
-			description: book.description,
+			description: description,
 			fragment: book.fragment,
 			publishedYear: book.publishedYear,
 			volume: book.volume !== ' ' ? book.volume : 0,

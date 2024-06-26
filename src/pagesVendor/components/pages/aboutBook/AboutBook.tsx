@@ -143,9 +143,6 @@ const AboutBook = () => {
 							</div>
 						</div>
 						<div className={scss.section_content_text}>
-							<div>
-								<p></p>
-							</div>
 							<div className={scss.section_title}>
 								<div className={scss.book_header}>
 									<div className={scss.hearts}>
@@ -168,14 +165,13 @@ const AboutBook = () => {
 							</div>
 							<div className={scss.section_mony}>
 								<p>365 c</p>
-
-								{/* {book.bookType === ' AUDIO_BOOK' ? ( */}
-								<div className={scss.audioBook}>
-									<audio id="audioPlayer" controls>
-										<source src="audio.mp3" type="audio/mpeg" />
-									</audio>
-								</div>
-								{/* ) : null} */}
+								{book.bookType === 'AUDIO_BOOK' ? (
+									<div className={scss.audioBook}>
+										<audio id="audioPlayer" controls>
+											<source src={book.fragmentAudUrl} type="audio/mpeg" />
+										</audio>
+									</div>
+								) : null}
 							</div>
 							<div className={scss.section_info}>
 								<div className={scss.section_info_name}>
