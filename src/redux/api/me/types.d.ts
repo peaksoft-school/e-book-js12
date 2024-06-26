@@ -45,7 +45,7 @@ namespace AUTHORIZATION {
 	type ConfirmEmailResponse = {
 		data?: {
 			token: string;
-			firstName: string | undefined;
+			firstName: string;
 			simpleResponse: SimpleResponse;
 		};
 		error: ConfirmEmailError;

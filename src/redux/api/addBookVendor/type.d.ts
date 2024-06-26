@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 namespace ADDBOOKVENDOR {
 	type AddBookVendorResponse = {
-		data: {
+		data?: {
 			httpStatus: string;
 			message: string;
 		};
