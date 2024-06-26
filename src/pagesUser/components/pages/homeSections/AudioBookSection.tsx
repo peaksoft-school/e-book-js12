@@ -3,7 +3,10 @@ import scss from './AudioBooks.module.scss';
 import IconGirl from '@/src/assets/icons/icon-girl';
 
 const AudioBookSection = () => {
-	const { data, error, isLoading } = useGetAudioBookQuery();
+	const { data, error, isLoading } = useGetAudioBookQuery({
+		page: 1,
+		size: 3
+	});
 	console.log(data);
 
 	if (isLoading) return <p>Загрузка...</p>;

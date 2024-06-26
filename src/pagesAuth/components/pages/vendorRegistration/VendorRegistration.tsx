@@ -100,34 +100,43 @@ const VendorRegistration = () => {
 	};
 
 	const handleConfirmEmail = async () => {
-		const newData = {
-			email: email,
-			code: valueCode
-		};
-		const response = await confirmEmail(newData);
+		if (valueCode !== '') {
+			const newData = {
+				email: email,
+				code: valueCode
+			};
+			const response = await confirmEmail(newData);
 
-		if ('data' in response) {
-			const token = response.data?.data.token;
-			localStorage.setItem('token', token);
-			localStorage.setItem('client', 'false');
-			localStorage.setItem('vendor', 'true');
-			localStorage.setItem('admin', 'false');
-			navigate('/vendor/home');
-			setValueCode('');
-		} else if (error) {
-			const responseError = error as AUTHORIZATION.ConfirmEmailError;
+			if ('data' in response) {
+				const token = response.data?.data.token;
+				localStorage.setItem('token', token);
+				localStorage.setItem('client', 'false');
+				localStorage.setItem('vendor', 'true');
+				localStorage.setItem('admin', 'false');
+				navigate('/vendor/home');
+				setValueCode('');
+			}
 			if (error) {
-				const inputString = responseError.data?.message;
-				const outputString = inputString?.replace(/{/g, '').replace(/}/g, '');
-				messageApi.open({
-					type: 'warning',
-					content: outputString
-				});
-			} else if (responseError.status === 500) {
-				messageApi.open({
-					type: 'warning',
-					content: 'Ошибка сервера'
-				});
+				const responseError = error as AUTHORIZATION.ConfirmEmailError;
+				if (error) {
+					const inputString = responseError.data?.message;
+					const outputString = inputString?.replace(/{/g, '').replace(/}/g, '');
+					messageApi.open({
+						type: 'warning',
+						content: outputString
+					});
+				} else if (responseError.status === 500) {
+					messageApi.open({
+						type: 'warning',
+						content: 'Ошибка сервера'
+					});
+				}
+				if (valueCode.toString().length <= 3) {
+					messageApi.open({
+						type: 'warning',
+						content: 'Код должен содержать 4 цифр'
+					});
+				}
 			}
 		}
 	};

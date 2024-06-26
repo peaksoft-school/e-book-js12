@@ -22,25 +22,11 @@ import { usePostFavoriteUnFavoriteMutation } from '@/src/redux/api/favorite';
 import { ToastContainer, toast } from 'react-toastify';
 import { SORT } from '@/src/redux/api/sort/types';
 import { useAddBookToBasketMutation } from '@/src/redux/api/basket';
+import useDebounce from '@/src/hooks/useDebounce';
 
 const SearchSection = () => {
-	// 	const useDebounce = (value:number[], delay: number) => {
-	// 		const [debouncedValue, setDebouncedValue] = useState(value);
-
-	// 		useEffect(() => {
-	// 			const handler = setTimeout(() => {
-	// 				setDebouncedValue(value);
-	// 			}, delay);
-
-	// 			return () => {
-	// 				clearTimeout(handler);
-	// 			};
-	// 		}, [value, delay]);
-
-	// 		return debouncedValue;
-	// 	};
 	const [value, setValue] = useState<number[]>([100, 9990]);
-	// const debouncedValue = useDebounce(value, 1000);
+	const debouncedValue = useDebounce(value, 1000);
 
 	const [isGenre, setIsGenre] = useState(false);
 	const [isSort, setIsSort] = useState(false);
@@ -339,16 +325,16 @@ const SearchSection = () => {
 		}
 	};
 
-	const handleTest = () => {
-		totalBooks; //
-		page; //
-	};
-
-	console.log(handleTest());
-
 	useEffect(() => {
 		handleChangeFillter();
-	}, [jenreData, idSort, typesBookData, languageBooksData, value, page]);
+	}, [
+		jenreData,
+		idSort,
+		typesBookData,
+		languageBooksData,
+		debouncedValue,
+		page
+	]);
 
 	return (
 		<section ref={searchSectionRef} className={scss.SearchSection}>
@@ -469,7 +455,6 @@ const SearchSection = () => {
 								</div>
 								<></>
 							</div>
-							<hr />
 							<>
 								<div className={`${isGenre ? scss.fillters : scss.none}`}>
 									{jenreData.map((jenre) => (
@@ -512,7 +497,6 @@ const SearchSection = () => {
 								</div>
 								<></>
 							</div>
-							<hr />
 							<div
 								onClick={() => setClickRadio(!clickRadio)}
 								className={`${filterType ? scss.fillters : scss.none}`}
@@ -553,7 +537,6 @@ const SearchSection = () => {
 								</div>
 								<></>
 							</div>
-							<hr />
 							<div className={`${priceGenre ? scss.fillters : scss.none}`}>
 								<div className={scss.checkbox}>
 									<div className={scss.price_value_content}>
@@ -579,7 +562,7 @@ const SearchSection = () => {
 												onChange={(event) => {
 													setValue(event);
 												}}
-												tooltip={{ visible: false }}
+												tooltip={{ color: '#f34901' }}
 												value={value}
 												defaultValue={value}
 												className={scss.price_range}
@@ -600,7 +583,6 @@ const SearchSection = () => {
 								</div>
 								<></>
 							</div>
-							<hr />
 							<>
 								<div className={`${language ? scss.fillters : scss.none}`}>
 									{languageBooksData.map((long) => (

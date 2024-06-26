@@ -68,9 +68,12 @@ const api = index.injectEndpoints({
 			BOOK.GetAudioBookResponse,
 			BOOK.GetAudioBookRequest
 		>({
-			query: () => ({
+			query: (params) => ({
 				url: '/api/book/getAllPopularAudBooks',
-				method: 'GET'
+				method: 'GET',
+				params: {
+					...params
+				}
 			}),
 			providesTags: ['book']
 		}),

@@ -2,9 +2,17 @@
 
 namespace SUBSCRIBE {
 	type SubscribeResponse = {
-		success: boolean;
-		message: string;
-	}[];
+		data: {
+			success: boolean;
+			message: string;
+		};
+		error: {
+			data: {
+				success: boolean;
+				message: string;
+			};
+		};
+	};
 
 	type SubscribeRequest = {
 		clientEmail: string;

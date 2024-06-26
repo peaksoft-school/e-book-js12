@@ -1,9 +1,20 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 namespace ADDBOOKVENDOR {
 	type AddBookVendorResponse = {
-		httpStatus: string;
-		message: string;
+		data: {
+			httpStatus: string;
+			message: string;
+		};
+		error: {
+			data: {
+				authorsFullName: string;
+				publishedYear: string;
+				price: string;
+			};
+			status: number;
+		};
 	};
+
 	type AddBookVendorRequest = {
 		newUpDateBook: dataBook;
 		genre: string;

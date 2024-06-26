@@ -134,7 +134,7 @@ const BestsellersSection: FC = () => {
 	if (error) return <p>Ошибка загрузки данных</p>;
 
 	return (
-		<section className="BestsellersSection">
+		<section className="BestsellersSection" id="bestsellers">
 			<div className="container">
 				<div className="content">
 					<h2>Бестселлеры</h2>
