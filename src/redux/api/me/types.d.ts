@@ -27,11 +27,19 @@ namespace AUTHORIZATION {
 	};
 
 	type LoginResponse = {
-		token: string;
-		id: number;
-		email: string;
-		role: string;
-		firstName: string;
+		data: {
+			token: string;
+			id: number;
+			email: string;
+			role: string;
+			firstName: string;
+		}
+		error: {
+			data: {
+				httpStatus: string;
+				message: string;
+			};
+		};
 	};
 
 	type ConfirmEmailResponse = {

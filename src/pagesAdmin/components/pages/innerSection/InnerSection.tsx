@@ -67,16 +67,42 @@ const InnerSection = () => {
 	const handleApproveBook = async (id: number) => {
 		await approveBook(id);
 		setModalSuccess(true);
+		const titleBook = books?.books.find((item) =>
+			item.id === id ? item.title : item
+		);
 		dispatch({
 			type: 'ADD_NOTIFICATION',
 			payload: {
-				message: `Book "${books?.title}" approved successfully!`,
+				message: `Book "${titleBook?.title}" approved successfully!`,
 				createdAt: Date.now(),
 				notificationType: 'success',
 				bookId: id
 			}
 		});
 	};
+	// const [style, setStyle] = useState({ width: 268, height: 409 });
+
+	// const updateStyle = () => {
+	// 	const width = window.innerWidth;
+	// 	if (width <= 576) {
+	// 		setStyle({ width: 100, height: 200 });
+	// 	} else if (width <= 768) {
+	// 		setStyle({ width: 150, height: 250 });
+	// 	} else if (width <= 992) {
+	// 		setStyle({ width: 180, height: 300 });
+	// 	} else if (width <= 1200) {
+	// 		setStyle({ width: 230, height: 360 });
+	// 	} else {
+	// 		setStyle({ width: 268, height: 409 });
+	// 	}
+	// };
+
+	// useEffect(() => {
+	// 	window.addEventListener('resize', updateStyle);
+	// 	updateStyle();
+
+	// 	return () => window.removeEventListener('resize', updateStyle);
+	// }, []);
 
 	return (
 		<>

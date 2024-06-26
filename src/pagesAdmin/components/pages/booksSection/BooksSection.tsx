@@ -10,7 +10,7 @@ import {
 	useDeleteBookMutation,
 	useFilterBooksMutation
 } from '@/src/redux/api/book';
-import { Modal, Tooltip } from 'antd';
+import { Modal, Skeleton, Tooltip } from 'antd';
 
 type Book = {
 	bookId: number;
@@ -28,13 +28,11 @@ const BooksSection: React.FC = () => {
 	const [selectedType, setSelectedType] = useState<string | null>(null);
 	const [isOpenBooksGenre, setIsOpenBooksGenre] = useState<boolean>(false);
 	const [selectedGenre, setSelectedGenre] = useState<string[]>([]);
-	const [genre, setGenre] = useState<string>('Все');
 	const [books, setBooks] = useState<Book[]>([]);
 	const navigate = useNavigate();
 	const [filterBooks, { isLoading }] = useFilterBooksMutation();
 	const [idBook, setIdBook] = useState<null | number>(null);
 	const [deleteBookById] = useDeleteBookMutation();
-	console.log(genre);
 
 	const bookType = [
 		{
@@ -156,7 +154,6 @@ const BooksSection: React.FC = () => {
 	const handleGenreClick = (genre: string | null): void => {
 		if (genre !== null) {
 			setSelectedGenre([genre]);
-			setGenre(genre);
 		}
 		setIsOpenBooksGenre(false);
 	};
@@ -191,10 +188,42 @@ const BooksSection: React.FC = () => {
 		setSelectedBook(null);
 	};
 
+	const [style, setStyle] = useState({ width: 268, height: 409 });
+
+	const updateStyle = () => {
+		const width = window.innerWidth;
+		if (width <= 576) {
+			setStyle({ width: 100, height: 200 });
+		} else if (width <= 768) {
+			setStyle({ width: 150, height: 250 });
+		} else if (width <= 992) {
+			setStyle({ width: 180, height: 300 });
+		} else if (width <= 1200) {
+			setStyle({ width: 230, height: 360 });
+		} else {
+			setStyle({ width: 268, height: 409 });
+		}
+	};
+
+	useEffect(() => {
+		window.addEventListener('resize', updateStyle);
+		updateStyle();
+
+		return () => window.removeEventListener('resize', updateStyle);
+	}, []);
+
 	return (
 		<>
 			{isLoading ? (
-				<>loading</>
+				<>
+					<div className={scss.skeleton}>
+						{books.map((item) => (
+							<>
+								<Skeleton.Button key={item.bookId} active block style={style} />
+							</>
+						))}
+					</div>
+				</>
 			) : (
 				<section className={scss.BooksSection}>
 					<div className={scss.container}>
@@ -297,7 +326,6 @@ const BooksSection: React.FC = () => {
 								<span>{genreText}</span>
 								<span
 									onClick={() => {
-										setGenre('Все');
 										setSelectedGenre([]);
 									}}
 								>

@@ -1,7 +1,19 @@
 import { FC } from 'react';
 import scss from './Footer.module.scss';
+import { useNavigate } from 'react-router-dom';
 
 const Footer: FC = () => {
+	const navigate = useNavigate();
+
+	const scrollToHeaderSection = () => {
+		const element = document.getElementById('headerVendor');
+		if (element) {
+			window.scrollTo({
+				top: element.offsetTop,
+				behavior: 'smooth'
+			});
+		}
+	};
 	return (
 		<>
 			<footer className={scss.Footer}>
@@ -9,7 +21,21 @@ const Footer: FC = () => {
 					<div className={scss.content}>
 						<div className={scss.footerBox}>
 							<div className={scss.firstContent}>
-								<div className={scss.logoeBook}>eBook</div>
+								<div
+									className={scss.logoeBook}
+									onClick={() => {
+										if (localStorage.getItem('vendor') === 'true') {
+											navigate('/vendor/home');
+											setTimeout(() => {
+												scrollToHeaderSection();
+											}, 300);
+										} else {
+											navigate('/vendor');
+										}
+									}}
+								>
+									eBook
+								</div>
 								<a href="#">Политика конфиденциальности</a>
 							</div>
 						</div>

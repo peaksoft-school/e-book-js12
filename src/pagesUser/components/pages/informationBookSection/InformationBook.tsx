@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable no-irregular-whitespace */
 import scss from './Information.module.scss';
 import { FC, useState } from 'react';
 import CustomBasketButton from '@/src/ui/customButton/CustomBasketButton';
@@ -13,7 +11,6 @@ import { Tooltip } from 'antd';
 interface TypeGetById {
 	data: BookData;
 	isLoading: boolean;
-	error: any;
 }
 
 interface BookData {
@@ -40,48 +37,63 @@ interface BookData {
 const genres = [
 	{
 		genreId: 1,
-		genreName: 'ХУДОЖЕСТВЕННАЯ ЛИТЕРАТУРА',
+		genreName: 'Художественная литература',
 		englishName: 'ARTISTIC_LITERATURE'
 	},
 	{
 		genreId: 2,
-		genreName: 'ОБРАЗОВАНИЕ',
+		genreName: 'Образование',
 		englishName: 'EDUCATION'
 	},
 	{
 		genreId: 3,
-		genreName: 'КНИГИ ДЛЯ ДЕТЕЙ',
+		genreName: 'Книги для детей',
 		englishName: 'BOOKS_FOR_CHILDREN'
 	},
 	{
 		genreId: 4,
-		genreName: 'НАУКА И ТЕХНОЛОГИЯ',
+		genreName: 'Наука и технология',
 		englishName: 'SCIENCE_AND_TECHNOLOGY'
 	},
 	{
 		genreId: 5,
-		genreName: 'СООБЩЕСТВО',
+		genreName: 'Сообщество',
 		englishName: 'COMMUNITY'
 	},
 	{
 		genreId: 6,
-		genreName: 'БИЗНЕС ЛИТЕРАТУРА',
+		genreName: 'Бизнес литература',
 		englishName: 'BUSINESS_LITERATURE'
 	},
 	{
 		genreId: 7,
-		genreName: 'КРАСОТА, ЗДОРОВЬЕ, СПОРТ',
+		genreName: 'Красота, здоровье, спорт',
 		englishName: 'BEAUTY_HEALTH_SPORT'
 	},
 	{
 		genreId: 8,
-		genreName: 'УВЛЕЧЕНИЯ',
+		genreName: 'Увлечения',
 		englishName: 'HOBBIES'
 	},
 	{
 		genreId: 9,
-		genreName: 'ПСИХОЛОГИЯ',
+		genreName: 'Психология',
 		englishName: 'PSYCHOLOGY'
+	}
+];
+
+const languageData = [
+	{
+		genreName: 'Русский язык',
+		englishName: 'RUSSIAN'
+	},
+	{
+		genreName: 'Кыргызский язык',
+		englishName: 'KYRGYZ'
+	},
+	{
+		genreName: 'Англизский язык',
+		englishName: 'ENGLISH'
 	}
 ];
 
@@ -124,6 +136,15 @@ const InformationBook: FC = () => {
 		const genreBook = genres.find((item) => item.englishName === data.genre);
 		return genreBook?.genreName;
 	};
+
+	const handleCheckedLanguage = () => {
+		const languageName = languageData.find(
+			(item) => item.englishName === data.language
+		);
+		return languageName?.genreName;
+	};
+
+	
 
 	return (
 		<section className={scss.InformationBookSection}>
@@ -223,11 +244,10 @@ const InformationBook: FC = () => {
 															color="black"
 															placement="bottomLeft"
 														>
-															<p>{data?.authorsFullName}</p>
+															<p>{data.title}</p>
 														</Tooltip>
-
-														<p>{data?.genre}</p>
-														<p>{data?.language}</p>
+														<p>{hadnleGenre()}</p>
+														<p>{handleCheckedLanguage()}</p>
 														<Tooltip
 															className={scss.info_hover}
 															title={
@@ -302,6 +322,7 @@ const InformationBook: FC = () => {
 										)}
 									</div>
 									<p className={scss.book_info}>
+										
 										{showBookInfo ? data.fragment || '' : data.description}
 									</p>
 								</div>

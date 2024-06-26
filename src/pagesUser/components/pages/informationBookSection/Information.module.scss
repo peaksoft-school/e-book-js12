@@ -215,6 +215,7 @@
 							text-transform: uppercase;
 							overflow: hidden;
 							white-space: nowrap;
+							text-transform: capitalize;
 							text-overflow: ellipsis;
 							@media (max-width: 650px) {
 								font-size: 12px;
@@ -381,8 +382,10 @@
 					width: 100%;
 					margin-bottom: 149px;
 					margin-top: 84px;
+					max-width: 676px;
+					word-wrap: break-word;
+					float: left;
 
-					text-overflow: ellipsis;
 					@media (max-width: 768px) {
 						max-width: 450px;
 						max-height: 300px;
@@ -400,6 +403,7 @@
 				width: fit-content;
 				height: fit-content;
 				margin-bottom: 107px;
+				max-width: 385px;
 				img {
 					width: 100%;
 				}

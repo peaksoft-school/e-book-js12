@@ -11,14 +11,12 @@ import { useSearchBooksQuery } from '@/src/redux/api/search';
 import BlackLikeIcon from '@/src/assets/icons/icon-blackLike';
 import { useGetCountInBasketQuery } from '@/src/redux/api/basket';
 import { useGetCountOfBooksInFavoriteQuery } from '@/src/redux/api/favorite';
-// import { useGetCountOfBooksInFavoriteQuery } from '@/src/redux/api/favorite';
 
 const Header = () => {
 	const [headerScroll, setHeaderScroll] = useState<boolean>(false);
 	const [isGenre, setIsGenre] = useState<boolean>(false);
 	const [isNavBar, setIsNavBar] = useState<boolean>(false);
 	const [isUser, setIsUser] = useState<boolean>(false);
-	const [test, setTest] = useState('');
 	const [userExit, setUserExit] = useState<boolean>(false);
 	const localName = localStorage.getItem('NameClient');
 	const localAuth = localStorage.getItem('client');
@@ -34,16 +32,23 @@ const Header = () => {
 
 	const { data: countOfFavorite } = useGetCountOfBooksInFavoriteQuery();
 
-	const scrollToSection = () => {
-		const element = document.getElementById(test);
+	const scrollToAudioSection = () => {
+		const element = document.getElementById('audioBook');
 		if (element) {
 			window.scrollTo({
 				top: element.offsetTop,
 				behavior: 'smooth'
 			});
-			if (test.length > 0) {
-				setTest('');
-			}
+		}
+	};
+
+	const scrollToESection = () => {
+		const element = document.getElementById('eBook');
+		if (element) {
+			window.scrollTo({
+				top: element.offsetTop,
+				behavior: 'smooth'
+			});
 		}
 	};
 
@@ -75,9 +80,17 @@ const Header = () => {
 		refetch();
 	};
 
+	useEffect(() => {
+		if (isUser) {
+			localStorage.setItem('stateIsUser', 'true');
+		} else {
+			localStorage.setItem('stateIsUser', 'false');
+		}
+	}, [isUser]);
+
 	return (
 		<>
-			<header className={scss.Header}>
+			<header id="headerClient" className={scss.Header}>
 				<div
 					className={
 						headerScroll ? `${scss.scroll} ${scss.active}` : `${scss.scroll}`
@@ -98,7 +111,7 @@ const Header = () => {
 										}}
 									/>
 								</div>
-								<div className={scss.searchResults}>
+								<div className={scss.input_content}>
 									<div className={scss.search}>
 										<CustomGenreInput
 											onChange={handleSearchChange}
@@ -193,15 +206,11 @@ const Header = () => {
 											<ul>
 												<li
 													onClick={() => {
-														scrollToSection();
-														setTest('Ebook');
 														if (location.pathname !== '/') {
 															navigate('/');
-															if (location.pathname === '/') {
-																setTimeout(() => {
-																	setTest('Ebook');
-																}, 300);
-															}
+															setTimeout(() => {
+																scrollToESection();
+															}, 300);
 														}
 													}}
 												>
@@ -209,15 +218,11 @@ const Header = () => {
 												</li>
 												<li
 													onClick={() => {
-														scrollToSection();
-														setTest('audioBook');
 														if (location.pathname !== '/') {
 															navigate('/');
-															if (location.pathname === '/') {
-																setTimeout(() => {
-																	setTest('audioBook');
-																}, 300);
-															}
+															setTimeout(() => {
+																scrollToAudioSection();
+															}, 300);
 														}
 													}}
 												>
@@ -232,7 +237,7 @@ const Header = () => {
 												</li>
 												<li
 													onClick={() => {
-														navigate('/vendor/');
+														navigate('/vendor');
 													}}
 												>
 													Начать продавать на eBook
@@ -252,15 +257,12 @@ const Header = () => {
 										<ul>
 											<li
 												onClick={() => {
-													scrollToSection();
-													setTest('Ebook');
 													if (location.pathname !== '/') {
 														navigate('/');
-														if (location.pathname === '/') {
-															setTimeout(() => {
-																setTest('Ebook');
-															}, 300);
-														}
+
+														setTimeout(() => {
+															scrollToESection();
+														}, 300);
 													}
 												}}
 											>
@@ -268,12 +270,10 @@ const Header = () => {
 											</li>
 											<li
 												onClick={() => {
-													scrollToSection();
-													setTest('audioBook');
 													if (location.pathname !== '/') {
 														navigate('/');
 														setTimeout(() => {
-															setTest('audioBook');
+															scrollToAudioSection();
 														}, 300);
 													}
 												}}
@@ -338,6 +338,7 @@ const Header = () => {
 												<li
 													onClick={() => {
 														setUserExit(!userExit);
+														setIsUser(false);
 														localStorage.removeItem('token');
 														localStorage.setItem('isAuth', 'false');
 														localStorage.setItem('isVendor', 'false');

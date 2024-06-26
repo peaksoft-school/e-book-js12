@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import scss from './SubscribePage.module.scss';
 import { useSubscribeMutation } from '@/src/redux/api/subscribeApi';
+import { Bounce, ToastContainer, toast } from 'react-toastify';
 
 const SubscribeSection: React.FC = () => {
 	const [clientEmail, setClientEmail] = useState('');
@@ -8,11 +9,37 @@ const SubscribeSection: React.FC = () => {
 
 	const handleSubmit = async (e: React.FormEvent) => {
 		e.preventDefault();
-		try {
-			await subscribe({ clientEmail }).unwrap();
-			alert('Вы успешно подписались на рассылку!');
-		} catch (err) {
-			alert('Ошибка при подписке на рассылку');
+
+		const response = (await subscribe({
+			clientEmail
+		})) as SUBSCRIBE.SubscribeResponse;
+		console.log(response);
+		if ('data' in response) {
+			toast(response.data?.message, {
+				position: 'top-right',
+				autoClose: 5000,
+				hideProgressBar: false,
+				closeOnClick: true,
+				pauseOnHover: false,
+				draggable: true,
+				progress: undefined,
+				theme: 'light',
+				transition: Bounce
+			});
+			setClientEmail('');
+		}
+		if (response.error) {
+			toast(response.error.data.message, {
+				position: 'top-right',
+				autoClose: 5000,
+				hideProgressBar: false,
+				closeOnClick: true,
+				pauseOnHover: false,
+				draggable: true,
+				progress: undefined,
+				theme: 'light',
+				transition: Bounce
+			});
 		}
 	};
 
@@ -20,6 +47,7 @@ const SubscribeSection: React.FC = () => {
 		<section className={scss.SubscribePageSection}>
 			<div className="container">
 				<div className={scss.content}>
+					<ToastContainer />
 					<div className={scss.title}>
 						<h2>Подписаться на рассылку</h2>
 					</div>

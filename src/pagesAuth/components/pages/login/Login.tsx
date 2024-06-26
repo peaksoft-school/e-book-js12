@@ -4,6 +4,7 @@ import CustomPasswordInput from '@/src/ui/customInpute/CustomPasswordInput';
 import { Link, useNavigate } from 'react-router-dom';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { usePostLoginMutation } from '@/src/redux/api/me';
+import { message } from 'antd';
 interface IFormInput {
 	email: string;
 	password: string;
@@ -12,9 +13,10 @@ const Login = () => {
 	const [postLogin, { isLoading }] = usePostLoginMutation();
 	const navigate = useNavigate();
 	const { register, reset, handleSubmit } = useForm<IFormInput>();
+	const [messageApi, handleMessage] = message.useMessage();
 
 	const onSubmit: SubmitHandler<IFormInput> = async (data) => {
-		const results = await postLogin(data);
+		const results = (await postLogin(data)) as AUTHORIZATION.LoginResponse;
 		if ('data' in results) {
 			if (results.data?.role === 'CLIENT') {
 				const { token } = results.data;
@@ -44,12 +46,19 @@ const Login = () => {
 				navigate('/admin');
 			}
 		}
+		if (results.error) {
+			messageApi.open({
+				type: 'warning',
+				content: results.error.data.message
+			});
+		}
 	};
 
 	return (
 		<div className={scss.Login}>
 			<div className="container">
 				<div className={scss.content}>
+					{handleMessage}
 					<div className={scss.headline}>
 						<Link to="/auth/login">Войти</Link>
 						<Link to="/auth/registration">Регистрация</Link>
@@ -91,6 +100,14 @@ const Login = () => {
 							</button>
 						</div>
 					</form>
+					<button
+						className={scss.forgot_password}
+						onClick={() => {
+							navigate('/auth/forgot-password');
+						}}
+					>
+						Забыли пароль ?
+					</button>
 				</div>
 			</div>
 		</div>
