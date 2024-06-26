@@ -80,6 +80,14 @@ const Header = () => {
 		refetch();
 	};
 
+	useEffect(() => {
+		if (isUser) {
+			localStorage.setItem('stateIsUser', 'true');
+		} else {
+			localStorage.setItem('stateIsUser', 'false');
+		}
+	}, [isUser]);
+
 	return (
 		<>
 			<header id="headerClient" className={scss.Header}>
@@ -198,12 +206,11 @@ const Header = () => {
 											<ul>
 												<li
 													onClick={() => {
-														scrollToESection();
 														if (location.pathname !== '/') {
 															navigate('/');
-															if (location.pathname === '/') {
-																setTimeout(() => {}, 300);
-															}
+															setTimeout(() => {
+																scrollToESection();
+															}, 300);
 														}
 													}}
 												>
@@ -211,12 +218,11 @@ const Header = () => {
 												</li>
 												<li
 													onClick={() => {
-														scrollToAudioSection();
 														if (location.pathname !== '/') {
 															navigate('/');
-															if (location.pathname === '/') {
-																setTimeout(() => {}, 300);
-															}
+															setTimeout(() => {
+																scrollToAudioSection();
+															}, 300);
 														}
 													}}
 												>
@@ -251,13 +257,12 @@ const Header = () => {
 										<ul>
 											<li
 												onClick={() => {
-													scrollToESection();
-
 													if (location.pathname !== '/') {
 														navigate('/');
-														if (location.pathname === '/') {
-															setTimeout(() => {}, 300);
-														}
+
+														setTimeout(() => {
+															scrollToESection();
+														}, 300);
 													}
 												}}
 											>
@@ -265,11 +270,11 @@ const Header = () => {
 											</li>
 											<li
 												onClick={() => {
-													scrollToAudioSection();
-
 													if (location.pathname !== '/') {
 														navigate('/');
-														setTimeout(() => {}, 300);
+														setTimeout(() => {
+															scrollToAudioSection();
+														}, 300);
 													}
 												}}
 											>

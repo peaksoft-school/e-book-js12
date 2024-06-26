@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable no-irregular-whitespace */
 import scss from './Information.module.scss';
 import { FC, useState } from 'react';
 import CustomBasketButton from '@/src/ui/customButton/CustomBasketButton';
@@ -13,7 +11,6 @@ import { Tooltip } from 'antd';
 interface TypeGetById {
 	data: BookData;
 	isLoading: boolean;
-	error: any;
 }
 
 interface BookData {
@@ -147,6 +144,8 @@ const InformationBook: FC = () => {
 		return languageName?.genreName;
 	};
 
+	
+
 	return (
 		<section className={scss.InformationBookSection}>
 			<div className="container">
@@ -245,8 +244,10 @@ const InformationBook: FC = () => {
 															color="black"
 															placement="bottomLeft"
 														>
-															<p>{handleCheckedLanguage()}</p>
+															<p>{data.title}</p>
 														</Tooltip>
+														<p>{hadnleGenre()}</p>
+														<p>{handleCheckedLanguage()}</p>
 														<Tooltip
 															className={scss.info_hover}
 															title={
@@ -321,6 +322,7 @@ const InformationBook: FC = () => {
 										)}
 									</div>
 									<p className={scss.book_info}>
+										
 										{showBookInfo ? data.fragment || '' : data.description}
 									</p>
 								</div>

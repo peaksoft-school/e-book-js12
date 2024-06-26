@@ -1,4 +1,3 @@
-/* eslint-disable no-unsafe-optional-chaining */
 import { Link, useNavigate } from 'react-router-dom';
 import scss from './Registration.module.scss';
 import { useState } from 'react';
@@ -72,6 +71,7 @@ const Registration = () => {
 					if (results.data?.httpStatus === 'OK') {
 						setEmail(data.email);
 						setConfirmModa(true);
+						reset();
 					} else if (results.data?.httpStatus === 'ALREADY_REPORTED') {
 						messageApi.open({
 							type: 'warning',
@@ -84,7 +84,6 @@ const Registration = () => {
 						});
 					}
 				}
-				console.log(results);
 
 				if ('data' in results.error && results.error.data) {
 					console.log(results.error.data);
@@ -124,23 +123,26 @@ const Registration = () => {
 				email: email,
 				code: code!
 			};
-			const result = await confirmCode(newData);
+			const result = (await confirmCode(
+				newData
+			)) as AUTHORIZATION.ConfirmEmailResponse;
 			if ('data' in result) {
 				console.log(result);
-
-				const { token } = result.data.data;
-				const { firstName } = result.data.data;
+				console.log(result.data.token);
+				console.log(result.data);
+				const { token } = result.data;
+				const { firstName } = result.data;
 				localStorage.setItem('NameClient', firstName);
 				localStorage.setItem('token', token!);
 				localStorage.setItem('client', 'true');
 				localStorage.setItem('vendor', 'false');
 				localStorage.setItem('admin', 'false');
-				reset();
 				navigate('/');
 				setCode('');
+				setConfirmModa(false);
 			} else if (errorEmail) {
 				const confirmEmailError = errorEmail as AUTHORIZATION.ConfirmEmailError;
-				if (confirmEmailError) {
+				if (confirmEmailError.data) {
 					const inputString = confirmEmailError.data.message;
 					const outputString = inputString?.replace(/{/g, '').replace(/}/g, '');
 					messageApi.open({
@@ -154,6 +156,8 @@ const Registration = () => {
 					});
 				}
 			}
+			console.log(result);
+
 			if (code.toString().length <= 3) {
 				messageApi.open({
 					type: 'warning',
@@ -162,8 +166,6 @@ const Registration = () => {
 			}
 		}
 	};
-
-	console.log(code.toString().length <= 3);
 
 	const signInWithGoogleHandler = async () => {
 		const result = await signInWithPopup(auth, provider);

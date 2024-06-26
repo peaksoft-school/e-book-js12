@@ -101,6 +101,40 @@ const BookInfo: FC = () => {
 		return null;
 	};
 
+	const hadnleGenre = () => {
+		switch (book.genre) {
+			case 'ARTISTIC_LITERATURE':
+				return 'Художественная литература';
+			case 'EDUCATION':
+				return 'Образование';
+			case 'BOOKS_FOR_CHILDREN':
+				return 'Книги для детей';
+			case 'SCIENCE_AND_TECHNOLOGY':
+				return 'Наука и технология';
+			case 'COMMUNITY':
+				return 'Сообщество';
+			case 'BUSINESS_LITERATURE':
+				return 'Бизнес литература';
+			case 'BEAUTY_HEALTH_SPORT':
+				return 'Красота, здоровье, спорт';
+			case 'HOBBIES':
+				return 'Увлечения';
+			case 'PSYCHOLOGY':
+				return 'Психология';
+		}
+	};
+
+	const filltredLanguage = () => {
+		switch (book.language) {
+			case 'KYRGYZ':
+				return 'Кыргызский язык';
+			case 'RUSSIAN':
+				return 'Русский язык';
+			case 'ENGLISH':
+				return 'Английский язык';
+		}
+	};
+
 	return (
 		<section className={scss.Book_info}>
 			<div className="container">
@@ -135,13 +169,13 @@ const BookInfo: FC = () => {
 							</div>
 							<div className={scss.section_mony}>
 								<p>{book.price} с</p>
-								{/* {book.bookType === ' AUDIO_BOOK' ? ( */}
-								<div className={scss.audioBook}>
-									<audio id="audioPlayer" controls>
-										<source src="audio.mp3" type="audio/mpeg" />
-									</audio>
-								</div>
-								{/* ) : null} */}
+								{book.bookType === ' AUDIO_BOOK' ? (
+									<div className={scss.audioBook}>
+										<audio id="audioPlayer" controls>
+											<source src="audio.mp3" type="audio/mpeg" />
+										</audio>
+									</div>
+								) : null}
 							</div>
 							<div className={scss.section_info}>
 								<div className={scss.section_info_name}>
@@ -169,8 +203,8 @@ const BookInfo: FC = () => {
 									>
 										<p>{book.authorsFullName}</p>
 									</Tooltip>
-									<p>{book.genre}</p>
-									<p>{book.language}</p>
+									<p>{hadnleGenre()}</p>
+									<p>{filltredLanguage()}</p>
 									<p>{book.publishingHouse}</p>
 									<p>{book.publishedYear}</p>
 									{book.bookType === 'AUDIO_BOOK' ? (

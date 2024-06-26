@@ -38,6 +38,7 @@ const PromoSection = () => {
 		}
 	}, [data]);
 
+
 	const handleActivateClick = async () => {
 		try {
 			await trigger({ promoCode }).unwrap();
@@ -46,6 +47,7 @@ const PromoSection = () => {
 			setPromoModal(true);
 		}
 	};
+
 
 	return (
 		<section className={scss.PromoSection}>
