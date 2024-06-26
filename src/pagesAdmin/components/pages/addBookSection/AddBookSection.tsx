@@ -200,7 +200,7 @@ const AddBookSection = () => {
 			language: languageSeleced!.language,
 			bookType: bookType
 		}).unwrap();
-		if (result.data.httpStatus === 'OK') {
+		if (result.data?.httpStatus === 'OK') {
 			setModal(true);
 			reset();
 			setClickBestseller(false);

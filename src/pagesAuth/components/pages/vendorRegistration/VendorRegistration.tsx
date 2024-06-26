@@ -108,8 +108,8 @@ const VendorRegistration = () => {
 			const response = await confirmEmail(newData);
 
 			if ('data' in response) {
-				const token = response.data?.data.token;
-				localStorage.setItem('token', token);
+				const token = response.data?.data?.token;
+				localStorage.setItem('token', token!);
 				localStorage.setItem('client', 'false');
 				localStorage.setItem('vendor', 'true');
 				localStorage.setItem('admin', 'false');

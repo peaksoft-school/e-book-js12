@@ -226,7 +226,12 @@ const Header = () => {
 									</div>
 									<div className={isUser ? scss.user_drop : scss.user_down}>
 										<ul>
-											<li onClick={() => navigate('/vendor/profile')}>
+											<li
+												onClick={() => {
+													setIsUser(false);
+													navigate('/vendor/profile');
+												}}
+											>
 												Профиль
 											</li>
 											<hr />

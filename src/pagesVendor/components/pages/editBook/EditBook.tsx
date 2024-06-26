@@ -43,7 +43,7 @@ interface TypeLanguage {
 const EditBook = () => {
 	const paramsId = useParams();
 	const bookId = Number(paramsId.id);
-	const { data } = useGetBookByIdVendorQuery(bookId);
+	const { data, isSuccess } = useGetBookByIdVendorQuery(bookId);
 
 	const [peperBook, setPeperBook] = useState(true);
 	const [audioBook, setAudioBook] = useState(false);
@@ -56,6 +56,7 @@ const EditBook = () => {
 	const [audioFileFragment, setAudioFileFragment] = useState('');
 	const [audioFile, setAudioFile] = useState('');
 	const [duration, setDuration] = useState(0);
+	const [durationFragment, setDuratoinFragment] = useState(0);
 	const [hourValue, setHourValue] = useState('');
 	const [minutsValue, setMinutsValue] = useState('');
 	const [secondValue, setSecondValue] = useState('');
@@ -86,6 +87,8 @@ const EditBook = () => {
 
 	const [postFile] = usePostFileMutation();
 	const [updatePhoto] = useEditPhotoUrlMutation();
+	console.log(data, 'data');
+
 	const { register, handleSubmit, reset } = useForm({
 		defaultValues: {
 			title: data?.title,
@@ -99,6 +102,24 @@ const EditBook = () => {
 		}
 	});
 	const [addBookVendor] = useEditBookMutation();
+
+	useEffect(() => {
+		if (isSuccess) {
+			reset({
+				title: data?.title,
+				authorsFullName: data?.authorsFullName,
+				publishingHouse: data?.publishingHouse,
+				publishedYear: data?.publishedYear,
+				volume: data?.volume,
+				discount: data?.discount,
+				price: data?.price,
+				amountOfBook: data?.amountOfBook
+			});
+		}
+	}, [isSuccess]);
+
+	const [isFileUploadedFragment, setIsFileUploadedFragment] = useState(false);
+	const [isFileUploaded, setIsFileUploaded] = useState(false);
 
 	const jenreData = [
 		{
@@ -207,7 +228,8 @@ const EditBook = () => {
 			amountOfBook: book.amountOfBook,
 			discount: book.discount,
 			price: book.price,
-			bestseller: clickBestseller
+			bestseller: clickBestseller,
+			durationFragment: durationFragment
 		};
 
 		const result = await addBookVendor({
@@ -287,6 +309,7 @@ const EditBook = () => {
 		if ('data' in result) {
 			if (result.data!.httpStatus === 'OK') {
 				setAudioFileFragment(result.data!.message);
+				setIsFileUploadedFragment(true);
 			}
 		}
 	};
@@ -296,6 +319,7 @@ const EditBook = () => {
 		if ('data' in result) {
 			if (result.data!.httpStatus === 'OK') {
 				setAudioFile(result.data!.message);
+				setIsFileUploaded(true);
 			}
 		}
 	};
@@ -326,11 +350,11 @@ const EditBook = () => {
 			setAudioBook(false);
 			setEBook(false);
 		} else if (data?.bookType === 'AUDIO_BOOK') {
-			setAudioBook(!audioBook);
+			setAudioBook(true);
 			setPeperBook(false);
 			setEBook(false);
 		} else if (data?.bookType === 'ONLINE_BOOK') {
-			setEBook(!ebook);
+			setEBook(true);
 			setAudioBook(false);
 			setPeperBook(false);
 		}
@@ -908,11 +932,11 @@ const EditBook = () => {
 									</div>
 									<div className={scss.box_last}>
 										<label>
-											Загрузите фрагмент аудиозаписи
+											Загрузите фрагмент аудиозаписи для редактировании
 											<div className={scss.audio_input}>
 												<CustomAudioDownloadInput
-													isFileUploaded
-													setDuration={() => {}}
+													isFileUploaded={isFileUploadedFragment}
+													setDuration={setDuratoinFragment}
 													accept="audio/*"
 													onChange={(e) => {
 														handleAudioFragmetChange(e);
@@ -922,10 +946,10 @@ const EditBook = () => {
 											</div>
 										</label>
 										<label>
-											Загрузите аудиозапись
+											Загрузите аудиозапись для редактировании
 											<div className={scss.audio_input}>
 												<CustomAudioDownloadInput
-													isFileUploaded
+													isFileUploaded={isFileUploaded}
 													setDuration={setDuration}
 													accept="audio/*"
 													onChange={(e) => {
