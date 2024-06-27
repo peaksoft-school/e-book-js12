@@ -49,15 +49,6 @@ const InnerSection = () => {
 		setIsModalOpen(true);
 	};
 
-	const handleOk = async () => {
-		if (selectedBook !== null) {
-			await handleRejectBook(selectedBook, rejectReason);
-		}
-		setIsModalOpen(false);
-		setSelectedBook(null);
-		setRejectReason('');
-	};
-
 	const handleCancel = () => {
 		setIsModalOpen(false);
 		setSelectedBook(null);
@@ -65,7 +56,12 @@ const InnerSection = () => {
 	};
 
 	const handleApproveBook = async (id: number) => {
-		await approveBook(id);
+		const result = await approveBook(id);
+		if ('data' in result) {
+			if (result.data?.httpStatus === 'OK') {
+				navigate('/admin');
+			}
+		}
 		setTimeout(() => {
 			setModalSuccess(true);
 			refetch();
@@ -83,6 +79,20 @@ const InnerSection = () => {
 				bookId: id
 			}
 		});
+	};
+
+	const handleOk = async () => {
+		if (selectedBook !== null) {
+			const result = await handleRejectBook(selectedBook, rejectReason);
+			if ('data' in result) {
+				if (result.data?.httpStatus === 'OK') {
+					navigate('/admin');
+				}
+			}
+		}
+		setIsModalOpen(false);
+		setSelectedBook(null);
+		setRejectReason('');
 	};
 	// const [style, setStyle] = useState({ width: 268, height: 409 });
 
@@ -143,8 +153,16 @@ const InnerSection = () => {
 										>
 											<ThreeDotIcon />
 										</div>
-										{idBook === book.id && (
-											<div className={isOpen ? scss.is_open : scss.on_close}>
+										<>
+											<div
+												className={
+													idBook === book.id
+														? isOpen
+															? scss.is_open
+															: scss.on_close
+														: scss.on_close
+												}
+											>
 												<ul>
 													<li onClick={() => handleApproveBook(book.id)}>
 														<span>
@@ -180,7 +198,7 @@ const InnerSection = () => {
 													</li>
 												</ul>
 											</div>
-										)}
+										</>
 
 										<div
 											onClick={() => handleBookClick(book.id)}
