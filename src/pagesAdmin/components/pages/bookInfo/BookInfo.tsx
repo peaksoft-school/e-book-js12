@@ -7,6 +7,7 @@ import { Modal, Tooltip } from 'antd';
 import { IconSuccess } from '@/src/assets/icons';
 import {
 	useApproveBookMutation,
+	useDeleteBookMutation,
 	useGetBookByIdQuery,
 	useRejectBookMutation
 } from '@/src/redux/api/book';
@@ -48,21 +49,35 @@ const BookInfo: FC = () => {
 	const { id } = useParams();
 	const bookId = Number(id);
 	const { data: book, isLoading } = useGetBookByIdQuery<GetResponse>(bookId);
+
+	const [deleteBook] = useDeleteBookMutation();
 	const [approveBook] = useApproveBookMutation();
 	const [rejectBook] = useRejectBookMutation();
 	const navigate = useNavigate();
 	const location = useLocation();
 	const dispatch = useDispatch();
 
+	const deleteBookId = async (bookId: number) => {
+		await deleteBook(bookId);
+	};
 	const handleApproveBook = async (id: number) => {
-		await approveBook(id);
+		const result = await approveBook(id);
+		if (result.data) {
+			if (result.data.httpStatus === 'OK') {
+				navigate('/admin');
+			}
+		}
+		setTimeout(() => {
+			setModalSuccess(false);
+		}, 2000);
 		setModalSuccess(true);
 		dispatch({
 			type: 'ADD_NOTIFICATION',
 			payload: {
 				message: `Book "${book?.title}" approved successfully!`,
 				createdAt: Date.now(),
-				notificationType: 'success'
+				notificationType: 'success',
+				bookId: id
 			}
 		});
 	};
@@ -71,7 +86,12 @@ const BookInfo: FC = () => {
 		const newData = {
 			rejectReason: value
 		};
-		await rejectBook({ newData, id });
+		const result = await rejectBook({ newData, id });
+		if (result.data) {
+			if (result.data.httpStatus === 'OK') {
+				navigate('/admin');
+			}
+		}
 		setDeviationModal(false);
 		dispatch({
 			type: 'ADD_NOTIFICATION',
@@ -216,14 +236,26 @@ const BookInfo: FC = () => {
 							</div>
 
 							<div className={scss.section_book}>
-								<CustomPersonalAreaButton
-									nameClass={`${scss.favorite_btn}`}
-									onClick={() => {
-										setDeviationModal(true);
-									}}
-								>
-									<p className={scss.boot1}>Отклонить</p>
-								</CustomPersonalAreaButton>
+								{location.pathname === `/admin/books/${id}` ? (
+									<CustomPersonalAreaButton
+										nameClass={`${scss.favorite_btn}`}
+										onClick={() => {
+											deleteBookId(bookId);
+										}}
+									>
+										<p className={scss.boot1}>Удалить</p>
+									</CustomPersonalAreaButton>
+								) : (
+									<CustomPersonalAreaButton
+										nameClass={`${scss.favorite_btn}`}
+										onClick={() => {
+											setDeviationModal(true);
+										}}
+									>
+										<p className={scss.boot1}>Отклонить</p>
+									</CustomPersonalAreaButton>
+								)}
+
 								<Modal
 									open={deviationModal}
 									footer={false}
@@ -252,14 +284,24 @@ const BookInfo: FC = () => {
 										</button>
 									</div>
 								</Modal>
+								{location.pathname === `/admin/books/${id}` ? (
+									<CustomBasketButton
+										nameClass={scss.basket_btn}
+										onClick={() => {}}
+										type="button"
+									>
+										<p className={scss.boot1}>Редактировать</p>
+									</CustomBasketButton>
+								) : (
+									<CustomBasketButton
+										nameClass={scss.basket_btn}
+										onClick={() => handleApproveBook(bookId)}
+										type="button"
+									>
+										<p className={scss.boot1}>Принять</p>
+									</CustomBasketButton>
+								)}
 
-								<CustomBasketButton
-									nameClass={scss.basket_btn}
-									onClick={() => handleApproveBook(bookId)}
-									type="button"
-								>
-									<p className={scss.boot1}>Принять</p>
-								</CustomBasketButton>
 								<Modal
 									open={modalSuccess}
 									footer={false}

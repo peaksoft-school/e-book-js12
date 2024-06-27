@@ -15,7 +15,7 @@ import { Modal, Skeleton, Tooltip } from 'antd';
 import {
 	useActivedBookPromocodeMutation,
 	useCountBookBasketMutation,
-	useDeleteBookIdMutation,
+	useDeleteBasketBookIdMutation,
 	useDeleteClearBasketMutation,
 	useGetCountInBasketQuery,
 	useTotalCostQuery
@@ -29,7 +29,7 @@ const BasketPage = () => {
 	const [isPromo, setIsPromo] = useState(false);
 	const { data } = useGetCountInBasketQuery();
 	const [clearBookPage] = useDeleteClearBasketMutation();
-	const [deleteBook] = useDeleteBookIdMutation();
+	const [deleteBook] = useDeleteBasketBookIdMutation();
 	const [addToFavorite] = usePostFavoriteUnFavoriteMutation();
 	const [countBookBasket] = useCountBookBasketMutation();
 	const [activePromo] = useActivedBookPromocodeMutation();

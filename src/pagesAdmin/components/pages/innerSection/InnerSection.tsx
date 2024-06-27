@@ -66,6 +66,10 @@ const InnerSection = () => {
 
 	const handleApproveBook = async (id: number) => {
 		await approveBook(id);
+		setTimeout(() => {
+			setModalSuccess(true);
+			refetch();
+		}, 2000);
 		setModalSuccess(true);
 		const titleBook = books?.books.find((item) =>
 			item.id === id ? item.title : item
@@ -221,7 +225,7 @@ const InnerSection = () => {
 							<p>Вы уверены, что хотите отклонить?</p>
 							<div className={scss.bt_modal}>
 								<button onClick={handleCancel}>Отменить</button>
-								<button onClick={handleOk}>Удалить</button>
+								<button onClick={handleOk}>Отклонить</button>
 							</div>
 						</div>
 					</Modal>
