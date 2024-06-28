@@ -281,14 +281,15 @@ const BookInfo: FC = () => {
 										<p className={scss.text_deviation}>
 											Причина вашего отклонения
 										</p>
-										<input
+										<textarea
 											className={scss.input_deviation}
-											type="text"
-											placeholder="Причина вашего отклонения"
+											placeholder="Причина вашего отклонения..."
 											value={value}
 											onChange={(e) => {
 												setValue(e.target.value);
 											}}
+											rows={483}
+											cols={108}
 										/>
 										<button
 											onClick={() => handleRejectBook(bookId)}
@@ -326,7 +327,12 @@ const BookInfo: FC = () => {
 									<div className={scss.modal_container}>
 										<IconSuccess />
 										<div className={scss.info_text}>
-											{messageRejected && <span>“{messageRejected}”</span>}
+											{messageRejected && (
+												<span>
+													<p>”{book.title}” </p>
+													{messageRejected}
+												</span>
+											)}
 											{messageApproeved && <span>“{messageApproeved}”</span>}
 										</div>
 									</div>

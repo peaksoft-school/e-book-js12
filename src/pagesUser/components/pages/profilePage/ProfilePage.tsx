@@ -185,7 +185,7 @@ const ProfileClient: React.FC = () => {
 										Удалить профиль?
 									</button>
 									{(isEditMode || isPasswordMode) && (
-										<div>
+										<div className={scss.update_buttons}>
 											<button
 												type="button"
 												className={scss.custom_white_button}

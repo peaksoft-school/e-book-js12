@@ -464,6 +464,8 @@
 	align-items: center;
 	gap: 23px 0px;
 	.info_text {
+		display: flex;
+		justify-content: center;
 		p {
 			color: rgb(0, 0, 0);
 			font-family: Open Sans;
@@ -535,18 +537,26 @@
 		margin-bottom: 18px;
 	}
 	.input_deviation {
-		width: 483px;
-		height: 108px;
+		resize: none;
+		max-width: 483px;
+		width: 100%;
 		background-color: #fff;
 		border: 1px solid rgb(196, 196, 196);
 		padding: 10px;
 		box-sizing: border-box;
 		text-align: left;
+		outline: none;
 		color: black;
 		margin-bottom: 18px;
+		text-align: start;
+		&:focus {
+			&::placeholder {
+				opacity: 0;
+			}
+		}
 		&::placeholder {
-			text-align: start;
-			vertical-align: top;
+			text-align: top;
+			vertical-align: middle;
 		}
 	}
 	button {
@@ -558,11 +568,7 @@
 		top: 185px;
 		bottom: 20px;
 		background: rgb(28, 28, 28);
-		display: flex;
 		border: none;
-		flex-direction: row;
-		justify-content: flex-end;
-		align-items: flex-end;
 		padding: 10px 24px 10px 24px;
 	}
 }
