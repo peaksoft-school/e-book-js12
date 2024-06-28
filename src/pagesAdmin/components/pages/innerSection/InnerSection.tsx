@@ -1,17 +1,23 @@
-import scss from './innerSection.module.scss';
-import ThreeDotIcon from '@/src/assets/icons/icon-threeDot';
-import { useNavigate } from 'react-router-dom';
-import { useState } from 'react';
-import { IconX } from '@tabler/icons-react';
-import { useGetReceiptRequestedBooksQuery } from '@/src/redux/api/innerPage';
 import {
 	useApproveBookMutation,
 	useRejectBookMutation
 } from '@/src/redux/api/book';
-import { Modal, Tooltip } from 'antd';
-import IconGirl from '@/src/assets/icons/icon-girl';
+import { useGetReceiptRequestedBooksQuery } from '@/src/redux/api/innerPage';
+import { useState } from 'react';
 import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import scss from './innerSection.module.scss';
+import { IconX } from '@tabler/icons-react';
 import { IconSuccess } from '@/src/assets/icons';
+import { Modal, Tooltip } from 'antd';
+import ThreeDotIcon from '@/src/assets/icons/icon-threeDot';
+import IconGirl from '@/src/assets/icons/icon-girl';
+
+interface RejectBookResponse {
+	data: {
+		httpStatus: string;
+	};
+}
 
 const InnerSection = () => {
 	const navigate = useNavigate();
@@ -31,12 +37,41 @@ const InnerSection = () => {
 		refetch();
 	};
 
-	const handleRejectBook = async (id: number, rejectReason: string) => {
-		const newData = {
-			rejectReason
-		};
-		await rejectBookById({ newData, id });
-		refetch();
+	const handleRejectBook = async (
+		id: number,
+		rejectReason: string
+	): Promise<RejectBookResponse> => {
+		const newData = { rejectReason };
+		const result = await rejectBookById({ newData, id }).unwrap();
+
+		setTimeout(() => {
+			setModalSuccess(true);
+			refetch();
+		}, 2000);
+
+		if ('data' in result) {
+			if (result.data?.httpStatus === 'OK') {
+				setTimeout(() => {
+					navigate('/admin');
+				}, 2000);
+			}
+		}
+
+		const titleBook = books?.books.find((item) =>
+			item.id === id ? item.title : item
+		);
+
+		dispatch({
+			type: 'ADD_NOTIFICATION',
+			payload: {
+				message: `Book "${titleBook?.title}" rejected successfully! Reason: ${rejectReason}`,
+				createdAt: Date.now(),
+				notificationType: 'error',
+				bookId: id
+			}
+		});
+
+		return result;
 	};
 
 	const [selectedBook, setSelectedBook] = useState<number | null>(null);
@@ -57,19 +92,21 @@ const InnerSection = () => {
 
 	const handleApproveBook = async (id: number) => {
 		const result = await approveBook(id);
+		console.log(result.data?.status);
+
 		if ('data' in result) {
 			if (result.data?.httpStatus === 'OK') {
-				navigate('/admin');
+				setModalSuccess(true);
+				setTimeout(() => {
+					navigate('/admin');
+				}, 2000);
 			}
 		}
-		setTimeout(() => {
-			setModalSuccess(true);
-			refetch();
-		}, 2000);
-		setModalSuccess(true);
+
 		const titleBook = books?.books.find((item) =>
 			item.id === id ? item.title : item
 		);
+
 		dispatch({
 			type: 'ADD_NOTIFICATION',
 			payload: {
@@ -79,6 +116,10 @@ const InnerSection = () => {
 				bookId: id
 			}
 		});
+
+		setTimeout(() => {
+			refetch();
+		}, 2000);
 	};
 
 	const handleOk = async () => {
@@ -94,6 +135,7 @@ const InnerSection = () => {
 		setSelectedBook(null);
 		setRejectReason('');
 	};
+
 	// const [style, setStyle] = useState({ width: 268, height: 409 });
 
 	// const updateStyle = () => {

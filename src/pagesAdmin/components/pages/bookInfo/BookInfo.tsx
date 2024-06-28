@@ -53,6 +53,8 @@ const BookInfo: FC = () => {
 	const [deleteBook] = useDeleteBookMutation();
 	const [approveBook] = useApproveBookMutation();
 	const [rejectBook] = useRejectBookMutation();
+	const [messageRejected, setRejectedMessage] = useState('');
+	const [messageApproeved, setApprovedMessage] = useState('');
 	const navigate = useNavigate();
 	const location = useLocation();
 	const dispatch = useDispatch();
@@ -62,15 +64,20 @@ const BookInfo: FC = () => {
 	};
 	const handleApproveBook = async (id: number) => {
 		const result = await approveBook(id);
-		if (result.data) {
-			if (result.data.httpStatus === 'OK') {
-				navigate('/admin');
+
+		if ('data' in result) {
+			console.log(result);
+			if (result.data?.httpStatus === 'OK') {
+				setApprovedMessage(result.data.message);
+				setModalSuccess(true);
+				setTimeout(() => {
+					navigate('/admin');
+				}, 2000);
 			}
 		}
 		setTimeout(() => {
 			setModalSuccess(false);
 		}, 2000);
-		setModalSuccess(true);
 		dispatch({
 			type: 'ADD_NOTIFICATION',
 			payload: {
@@ -87,9 +94,14 @@ const BookInfo: FC = () => {
 			rejectReason: value
 		};
 		const result = await rejectBook({ newData, id });
+		console.log(result);
 		if (result.data) {
 			if (result.data.httpStatus === 'OK') {
-				navigate('/admin');
+				setModalSuccess(true);
+				setRejectedMessage(result.data.message);
+				setTimeout(() => {
+					// navigate('/admin');
+				}, 2000);
 			}
 		}
 		setDeviationModal(false);
@@ -102,6 +114,8 @@ const BookInfo: FC = () => {
 			}
 		});
 	};
+	console.log(messageRejected);
+	console.log(messageApproeved);
 
 	if (isLoading) return <p>Загрузка...</p>;
 	if (!book) return <p>Ошибка загрузки данных книги</p>;
@@ -312,10 +326,8 @@ const BookInfo: FC = () => {
 									<div className={scss.modal_container}>
 										<IconSuccess />
 										<div className={scss.info_text}>
-											<p>
-												<span>“{book.title}”</span> <br />
-												успешно добавлен!
-											</p>
+											{messageRejected && <span>“{messageRejected}”</span>}
+											{messageApproeved && <span>“{messageApproeved}”</span>}
 										</div>
 									</div>
 								</Modal>

@@ -97,7 +97,7 @@
 
 				img {
 					width: 309px;
-					height: 309px;
+					height: 380px;
 				}
 
 				@media (max-width: 1200px) {
@@ -220,7 +220,7 @@
 					}
 				}
 				&:nth-child(2n) {
-					max-width: 441px;
+					max-width: 600px;
 					width: 100%;
 					display: flex;
 					flex-direction: column;
@@ -257,7 +257,7 @@
 
 					img {
 						width: 441px;
-						height: 441px;
+						height: 551px;
 
 						max-width: 441px;
 						width: 100%;
@@ -418,7 +418,7 @@
 
 					img {
 						width: 344px;
-						height: 305px;
+						height: 490px;
 						top: 2992px;
 						left: 1016px;
 					}
