@@ -62,6 +62,7 @@ const Header = () => {
 	const handleBookClick = (id: number) => {
 		navigate(`/admin/books/${id}`);
 		setShowResults(false);
+		setSearchTerm('');
 	};
 
 	const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -81,10 +82,10 @@ const Header = () => {
 								<CustomGenreInput
 									onChange={handleSearchChange}
 									value={searchTerm}
-									placeholder={'Искать жанр, книги, авторов, издательства... '}
+									placeholder="Искать жанр, книги, авторов, издательства..."
 								/>
 							</div>
-							<div ref={searchResultsRef}>
+							<div className={scss.lii}>
 								{showResults && searchResults && (
 									<div className={scss.searchResultsLi}>
 										<ul>

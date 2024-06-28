@@ -13,12 +13,6 @@ import { Modal, Tooltip } from 'antd';
 import ThreeDotIcon from '@/src/assets/icons/icon-threeDot';
 import IconGirl from '@/src/assets/icons/icon-girl';
 
-interface RejectBookResponse {
-	data: {
-		httpStatus: string;
-	};
-}
-
 const InnerSection = () => {
 	const navigate = useNavigate();
 	const [isOpen, setIsOpen] = useState(false);
@@ -37,12 +31,9 @@ const InnerSection = () => {
 		refetch();
 	};
 
-	const handleRejectBook = async (
-		id: number,
-		rejectReason: string
-	): Promise<RejectBookResponse> => {
+	const handleRejectBook = async (id: number, rejectReason: string) => {
 		const newData = { rejectReason };
-		const result = await rejectBookById({ newData, id }).unwrap();
+		const result = await rejectBookById({ newData, id });
 
 		setTimeout(() => {
 			setModalSuccess(true);
@@ -70,8 +61,6 @@ const InnerSection = () => {
 				bookId: id
 			}
 		});
-
-		return result;
 	};
 
 	const [selectedBook, setSelectedBook] = useState<number | null>(null);
@@ -124,12 +113,7 @@ const InnerSection = () => {
 
 	const handleOk = async () => {
 		if (selectedBook !== null) {
-			const result = await handleRejectBook(selectedBook, rejectReason);
-			if ('data' in result) {
-				if (result.data?.httpStatus === 'OK') {
-					navigate('/admin');
-				}
-			}
+			handleRejectBook(selectedBook, rejectReason);
 		}
 		setIsModalOpen(false);
 		setSelectedBook(null);

@@ -34,37 +34,40 @@
 			display: flex;
 			flex-direction: column;
 			position: relative;
-			.searchResultsLi {
+
+			.lii {
 				position: absolute;
+				top: 40px;
 				width: 100%;
+			}
+
+			.searchResultsLi {
+				z-index: 999;
 				ul {
-					max-width: 859px;
+					max-width: 895px;
 					width: 100%;
 					display: flex;
 					flex-direction: column;
-					gap: 5px;
 					background-color: white;
+					margin-top: 2px;
 					li {
+						max-width: 860px;
 						width: 100%;
 						max-height: 30px;
-						padding: 20px 20px;
-						display: flex;
-						align-items: center;
+						padding: 15px 15px;
 						text-align: start;
 						border-bottom: 1px solid rgb(168, 165, 165);
-						a {
-							color: red;
-							font-size: clamp(6px, 7vw, 16px);
-							font-weight: 600;
-							line-height: 22px;
-							letter-spacing: 0%;
-							text-align: left;
-							@media (max-width: 768px) {
-								font-size: 13px;
-							}
-							@media (max-width: 520px) {
-								display: none;
-							}
+						padding-bottom: 30px;
+
+						p {
+							max-width: 895px;
+							width: 100%;
+							font-size: clamp(6px, 7vw, 14px);
+							font-weight: 400;
+							line-height: 16px;
+							overflow: hidden;
+							white-space: nowrap;
+							text-overflow: ellipsis;
 						}
 					}
 				}

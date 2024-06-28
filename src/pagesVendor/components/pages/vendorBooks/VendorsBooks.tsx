@@ -192,6 +192,26 @@ const VendorsBooks: FC = () => {
 														</div>
 													</div>
 												</div>
+												<Modal
+													open={isModalOpen}
+													onCancel={handleCancel}
+													footer={null}
+													className={scss.delete_modal}
+												>
+													<div className={scss.delete_modal}>
+														<p>Вы уверены, что хотите удалить?</p>
+														<div className={scss.bt_modal}>
+															<button onClick={handleCancel}>Отменить</button>
+															<button
+																onClick={() => {
+																	deleteBookChange(book.id);
+																}}
+															>
+																Удалить
+															</button>
+														</div>
+													</div>
+												</Modal>
 											</div>
 										))}
 									</div>
@@ -216,20 +236,6 @@ const VendorsBooks: FC = () => {
 					</div>
 				</section>
 			)}
-			<Modal
-				open={isModalOpen}
-				onCancel={handleCancel}
-				footer={null}
-				className={scss.delete_modal}
-			>
-				<div className={scss.delete_modal}>
-					<p>Вы уверены, что хотите удалить?</p>
-					<div className={scss.bt_modal}>
-						<button onClick={handleCancel}>Отменить</button>
-						<button onClick={() => deleteBookChange(bookId)}>Удалить</button>
-					</div>
-				</div>
-			</Modal>
 		</>
 	);
 };
