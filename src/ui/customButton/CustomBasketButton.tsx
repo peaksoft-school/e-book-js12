@@ -4,7 +4,7 @@ import scss from './Style.module.scss';
 
 interface CustomBasketProps {
 	children: ReactNode;
-	onClick: any
+	onClick: any;
 	nameClass: string;
 
 	type?: React.ButtonHTMLAttributes<HTMLButtonElement>['type'];

@@ -23,9 +23,7 @@ import {
 import CustomAudioDownloadInput from '@/src/ui/customAudioInput/CustomAudioDownloadInput';
 import CustomBasketButton from '@/src/ui/customButton/CustomBasketButton';
 import CustomPDFDownloadInput from '@/src/ui/customPDFInput/CustomPDFDownloadInput';
-import {
-	useGetBookByIdQuery
-} from '@/src/redux/api/book';
+import { useGetBookByIdQuery } from '@/src/redux/api/book';
 
 interface TypeJenre {
 	jenreId: number;

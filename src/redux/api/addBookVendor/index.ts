@@ -51,7 +51,7 @@ const api = index.injectEndpoints({
 			ADDBOOKVENDOR.UpdatePhotoResponse,
 			ADDBOOKVENDOR.UpdatePhotoRequest
 		>({
-			query: ( {newData, bookId }) => {
+			query: ({ newData, bookId }) => {
 				return {
 					url: `/api/book/updatePhoto?bookId=${bookId}`,
 					method: 'PATCH',
