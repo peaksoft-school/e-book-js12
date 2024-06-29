@@ -146,192 +146,145 @@ const InformationBook: FC = () => {
 
 	return (
 		<section className={scss.InformationBookSection}>
-			<div className="container">
-				<div className={scss.content}>
-					{isLoading ? (
-						<>
-							<h1>IsLoading...</h1>
-						</>
-					) : (
-						<>
-							<div className={scss.content_text}>
-								<p>
-									<span
-										onClick={() => {
-											navigate('/');
-										}}
-									>
-										Главная
-									</span>
-									/{''}
-									<span>
-										{hadnleGenre() ? hadnleGenre() : 'Жанр не найден'}
-									</span>
-								</p>
-								/{' '}
-								<Tooltip
-									className={scss.info_hover}
-									title={data?.title.length > 20 ? data?.title : ''}
-									color="black"
-									placement="bottomLeft"
-								>
-									<h4>{data?.title}</h4>
-								</Tooltip>
-							</div>
-							<div className={scss.contents_book}>
-								<div className={scss.section_about_book}>
-									<div className={scss.woman_book}>
-										<img src={data.imageUrlFirst} alt="book" />
-									</div>
+		<div className="container">
+			<div className={scss.content}>
+				{isLoading ? (
+					<>
+						<h1>IsLoading...</h1>
+					</>
+				) : (
+					<>
+						<div className={scss.content_text}>
+							<p>
+								<span onClick={() => navigate('/')}>Главная</span>/{' '}
+								<span>{hadnleGenre() ? hadnleGenre() : 'Жанр не найден'}</span>
+							</p>
+							/{' '}
+							<Tooltip
+								className={scss.info_hover}
+								title={data?.title.length > 20 ? data?.title : ''}
+								color="black"
+								placement="bottomLeft"
+							>
+								<h4>{data?.title}</h4>
+							</Tooltip>
+						</div>
+						<div className={scss.contents_book}>
+							<div className={scss.section_about_book}>
+								<div className={scss.woman_book}>
+									<img src={data.imageUrlFirst} alt="book" />
 								</div>
-								<div className={scss.section_content_text}>
-									<div className={scss.section_title}>
-										<Tooltip
-											className={scss.info_hover}
-											title={data?.title.length > 20 ? data?.title : ''}
-											color="black"
-											placement="bottomLeft"
-										>
-											<h3>{data?.title}</h3>
-										</Tooltip>
+							</div>
+							<div className={scss.section_content_text}>
+								<div className={scss.section_title}>
+									<Tooltip
+										className={scss.info_hover}
+										title={data?.title.length > 20 ? data?.title : ''}
+										color="black"
+										placement="bottomLeft"
+									>
+										<h3>{data?.title}</h3>
+									</Tooltip>
+								</div>
+								<div className={scss.section_mony}>
+									<p>{data?.price} с</p>
+									{data.bookType === 'AUDIO_BOOK' ? (
+										<>
+											<div>
+												<audio id="audioPlayer" controls>
+													<source src={data.fragmentAudUrl} type="audio/mpeg" />
+												</audio>
+											</div>
+										</>
+									) : null}
+								</div>
+								<div className={scss.section_info}>
+									<div className={scss.section_info_name}>
+										<p>Автор</p>
+										<p>Жанр</p>
+										<p>Язык</p>
+										{data.bookType !== 'AUDIO_BOOK' && <p>Издательство</p>}
+										<p>Год выпуска</p>
+										{data.bookType === 'AUDIO_BOOK' ? <p>Длительность</p> : <p>Объем</p>}
 									</div>
-									<div className={scss.section_mony}>
-										<p>{data?.price} с</p>
-										{data.bookType === 'AUDIO_BOOK' ? (
-											<>
-												<div>
-													<audio id="audioPlayer" controls>
-														<source
-															src={data.fragmentAudUrl}
-															type="audio/mpeg"
-														/>
-													</audio>
-												</div>
-											</>
-										) : null}
-									</div>
-
-									<div className={scss.section_info}>
-										<div className={scss.section_info_name}>
-											<p>Автор</p>
-											<p>Жанр</p>
-											<p>Язык</p>
-											<p>Издательство</p>
-											<p>Год выпуска</p>
+									<div className={scss.section_info_two}>
+										<div className={scss.section_info_two} key={data?.id}>
+											<Tooltip
+												className={scss.info_hover}
+												title={data?.authorsFullName.length > 20 ? data?.authorsFullName : ''}
+												color="black"
+												placement="bottomLeft"
+											>
+												<p>{data.title}</p>
+											</Tooltip>
+											<p>{hadnleGenre()}</p>
+											<p>{handleCheckedLanguage()}</p>
+											{data.bookType !== 'AUDIO_BOOK' && (
+												<Tooltip
+													className={scss.info_hover}
+													title={data?.publishingHouse.length > 20 ? data?.publishingHouse : ''}
+													color="black"
+													placement="bottomLeft"
+												>
+													<p>{data?.publishingHouse}</p>
+												</Tooltip>
+											)}
+											<p>{data?.publishedYear}</p>
 											{data.bookType === 'AUDIO_BOOK' ? (
-												<>
-													<p>Длительность</p>
-												</>
+												<p>{data?.duration === null ? 0 : data.duration}</p>
 											) : (
-												<>
-													<p>Объем</p>
-												</>
+												<p>{data?.volume}</p>
 											)}
 										</div>
-										<div className={scss.section_info_two}>
-											{
-												<>
-													<div className={scss.section_info_two} key={data?.id}>
-														<Tooltip
-															className={scss.info_hover}
-															title={
-																data?.authorsFullName.length > 20
-																	? data?.authorsFullName
-																	: ''
-															}
-															color="black"
-															placement="bottomLeft"
-														>
-															<p>{data.title}</p>
-														</Tooltip>
-														<p>{hadnleGenre()}</p>
-														<p>{handleCheckedLanguage()}</p>
-														<Tooltip
-															className={scss.info_hover}
-															title={
-																data?.publishingHouse.length > 20
-																	? data?.publishingHouse
-																	: ''
-															}
-															color="black"
-															placement="bottomLeft"
-														>
-															<p>{data?.publishingHouse}</p>
-														</Tooltip>
-														<p>{data?.publishedYear}</p>
-														{data.bookType === 'AUDIO_BOOK' ? (
-															<>
-																<p>
-																	{data?.duration === null ? 0 : data.duration}
-																</p>
-															</>
-														) : (
-															<>
-																<p>{data?.volume}</p>
-															</>
-														)}
-													</div>
-												</>
-											}
-										</div>
-									</div>
-									<div className={scss.section_boot}>
-										<CustomPersonalAreaButton
-											nameClass={scss.favorite_btn}
-											onClick={() => {
-												handleAddBookToFavorite(bookId);
-											}}
-										>
-											<p className={scss.boot_one}>
-												{isFavorite ? 'Перейти в избранном' : 'В избранное'}
-											</p>
-										</CustomPersonalAreaButton>
-										<CustomBasketButton
-											nameClass={scss.basket_btn}
-											onClick={() => {
-												handleAddBookToBasket(bookId);
-											}}
-										>
-											<p className={scss.boot_one}>
-												{isInBasket
-													? ' Перейти в корзине'
-													: 'Добавить в корзину'}
-											</p>
-										</CustomBasketButton>
 									</div>
 								</div>
+								<div className={scss.section_boot}>
+									<CustomPersonalAreaButton
+										nameClass={scss.favorite_btn}
+										onClick={() => handleAddBookToFavorite(bookId)}
+									>
+										<p className={scss.boot_one}>{isFavorite ? 'Перейти в избранном' : 'В избранное'}</p>
+									</CustomPersonalAreaButton>
+									<CustomBasketButton
+										nameClass={scss.basket_btn}
+										onClick={() => handleAddBookToBasket(bookId)}
+									>
+										<p className={scss.boot_one}>{isInBasket ? ' Перейти в корзине' : 'Добавить в корзину'}</p>
+									</CustomBasketButton>
+								</div>
 							</div>
-							<div className={scss.section_text_books}>
-								<div className={scss.section_show_info}>
-									<div className={scss.show_info_book}>
-										<p
-											className={!showBookInfo ? scss.color_text : ''}
-											onClick={() => setShowBookInfo(false)}
-										>
-											О книге
-										</p>
-										{data.bookType === 'PAPER_BOOK' && (
-											<p
-												className={showBookInfo ? scss.color_text : ''}
-												onClick={() => setShowBookInfo(true)}
-											>
-												Читать фрагмент
-											</p>
-										)}
-									</div>
-									<p className={scss.book_info}>
-										{showBookInfo ? data.fragment || '' : data.description}
+						</div>
+						<div className={scss.section_text_books}>
+							<div className={scss.section_show_info}>
+								<div className={scss.show_info_book}>
+									<p
+										className={!showBookInfo ? scss.color_text : ''}
+										onClick={() => setShowBookInfo(false)}
+									>
+										О книге
 									</p>
+									{data.bookType === 'PAPER_BOOK' && (
+										<p
+											className={showBookInfo ? scss.color_text : ''}
+											onClick={() => setShowBookInfo(true)}
+										>
+											Читать фрагмент
+										</p>
+									)}
 								</div>
-								<div className={scss.info_img}>
-									<img src={data.imageUrlLast} alt="Book List" />
-								</div>
+								<p className={scss.book_info}>
+									{showBookInfo ? data.fragment || '' : data.description}
+								</p>
 							</div>
-						</>
-					)}
-				</div>
+							<div className={scss.info_img}>
+								<img src={data.imageUrlLast} alt="Book List" />
+							</div>
+						</div>
+					</>
+				)}
 			</div>
-		</section>
+		</div>
+	</section>
 	);
 };
 

@@ -157,11 +157,31 @@ const BestsellersSection: FC = () => {
 												>
 													<h2 className="name">{item.title}</h2>
 												</Tooltip>
-												<div onClick={() => handleClick(item.id)}>
-													{expandedCards[item.id] ? (
-														<p className="description">{item.description}</p>
+												<div>
+													{item.description.length > 250 ? (
+														expandedCards[item.id] ? (
+															<p className="description">
+																{item.description}
+																<span
+																	className="description-span"
+																	onClick={() => handleClick(item.id)}
+																>
+																	Свернуть
+																</span>
+															</p>
+														) : (
+															<p className="description">
+																{item.description.substring(0, 250)}...
+																<span
+																	className="description-span"
+																	onClick={() => handleClick(item.id)}
+																>
+																	Читать дальше
+																</span>
+															</p>
+														)
 													) : (
-														<p>{item.description.substring(0, 250)}...</p>
+														<p className="description">{item.description}</p>
 													)}
 												</div>
 												<div className="box_box">
