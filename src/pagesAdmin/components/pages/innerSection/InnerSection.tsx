@@ -81,8 +81,6 @@ const InnerSection = () => {
 
 	const handleApproveBook = async (id: number) => {
 		const result = await approveBook(id);
-		console.log(result.data?.status);
-
 		if ('data' in result) {
 			if (result.data?.httpStatus === 'OK') {
 				setModalSuccess(true);

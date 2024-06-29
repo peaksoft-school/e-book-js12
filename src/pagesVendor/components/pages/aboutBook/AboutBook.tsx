@@ -192,7 +192,11 @@ const AboutBook = () => {
 									<p>Автор</p>
 									<p>Жанр</p>
 									<p>Язык</p>
-									<p>Издательство</p>
+									{book.bookType === 'AUDIO_BOOK' ? null : (
+										<>
+											<p>Издательство</p>
+										</>
+									)}
 									<p>Год выпуска</p>
 									<p>Объем</p>
 								</div>
@@ -218,7 +222,11 @@ const AboutBook = () => {
 										{language.find((lang) => lang.name === book.language)
 											?.nameRus || book.language}
 									</p>
-									<p>{book.publishingHouse}</p>
+									{book.bookType === 'AUDIO_BOOK' ? null : (
+										<>
+											<p>{book.publishingHouse}</p>
+										</>
+									)}
 									<p>{book.publishedYear}</p>
 									<p>{book.volume}</p>
 								</div>
@@ -281,20 +289,31 @@ const AboutBook = () => {
 					<div className={scss.section_text_books}>
 						<div className={scss.section_show_info}>
 							<div className={scss.show_info_book}>
-								{book.bookType === 'PAPER_BOOK' && (
-									<p
-										className={!aboutBook ? scss.color_text : ''}
-										onClick={() => setAboutBook(false)}
-									>
-										О книге
-									</p>
+								{book.bookType === 'AUDIO_BOOK' ? (
+									<>
+										<p
+											className={!aboutBook ? scss.color_text : ''}
+											onClick={() => setAboutBook(false)}
+										>
+											О книге
+										</p>
+									</>
+								) : (
+									<>
+										<p
+											className={!aboutBook ? scss.color_text : ''}
+											onClick={() => setAboutBook(false)}
+										>
+											О книге
+										</p>
+										<p
+											className={aboutBook ? scss.color_text : ''}
+											onClick={() => setAboutBook(true)}
+										>
+											Читать фрагмент
+										</p>
+									</>
 								)}
-								<p
-									className={aboutBook ? scss.color_text : ''}
-									onClick={() => setAboutBook(true)}
-								>
-									Читать фрагмент
-								</p>
 							</div>
 							{aboutBook ? (
 								<p className={scss.book_info}>{book.fragment}</p>

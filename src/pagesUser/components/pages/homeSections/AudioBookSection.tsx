@@ -20,9 +20,11 @@ const AudioBookSection = () => {
 					<div>
 						<div className={scss.title_audio_books}>
 							<h5>Аудиокниги</h5>
-							
-								<Link to={'/search_book'} className={scss.pi}> Смотреть все</Link>
-							
+
+							<Link to={'/search_book'} className={scss.pi}>
+								{' '}
+								Смотреть все
+							</Link>
 						</div>
 						<div className={scss.books_container}>
 							{data && data.length > 0 ? (

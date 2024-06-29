@@ -95,12 +95,12 @@ const BookInfo: FC = () => {
 		};
 		const result = await rejectBook({ newData, id });
 		console.log(result);
-		if (result.data) {
+		if ('data' in result) {
 			if (result.data.httpStatus === 'OK') {
 				setModalSuccess(true);
 				setRejectedMessage(result.data.message);
 				setTimeout(() => {
-					// navigate('/admin');
+					navigate('/admin');
 				}, 2000);
 			}
 		}
