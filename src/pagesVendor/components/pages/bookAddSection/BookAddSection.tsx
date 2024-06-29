@@ -324,8 +324,8 @@ const BookAddSection = () => {
 	}
 
 	useEffect(() => {
-		convertSecondsToHoursMinutesAndSeconds(duration);
-	}, [duration]);
+		convertSecondsToHoursMinutesAndSeconds(durationFragment);
+	}, [durationFragment]);
 
 	return (
 		<section className={scss.AddBookSection}>
@@ -1146,7 +1146,16 @@ const BookAddSection = () => {
 												cols={40}
 												maxLength={1234}
 												placeholder="Напишите о книге"
-												onChange={(e) => setDescription(e.target.value)}
+												{...register('description', {
+													required: true,
+													minLength: {
+														value: 20,
+														message: 'Минимальная длина описании 20 слов'
+													},
+													onChange(e) {
+														setDescription(e.target.value);
+													}
+												})}
 											/>
 											<div className={scss.deg_info}>
 												<p>
@@ -1164,7 +1173,16 @@ const BookAddSection = () => {
 												cols={40}
 												maxLength={1234}
 												placeholder="Напишите фрагмент книги"
-												onChange={(e) => setFragment(e.target.value)}
+												{...register('fragment', {
+													required: true,
+													minLength: {
+														value: 20,
+														message: 'Минимальная длина фрагмента 20 слов'
+													},
+													onChange(event) {
+														setFragment(event.target.value);
+													}
+												})}
 											/>
 											<div className={scss.deg_info}>
 												<p>

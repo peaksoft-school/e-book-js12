@@ -19,14 +19,14 @@ import {
 	useEditBookMutation,
 	useEditPhotoUrlMutation,
 	usePostFileMutation,
-	useUpDateAudioFileMutation
+	useUpDateAudioFileMutation,
+	useUpDateFragmentAudioFileMutation,
+	useUpDatePdfMutation
 } from '@/src/redux/api/addBookVendor';
 import CustomAudioDownloadInput from '@/src/ui/customAudioInput/CustomAudioDownloadInput';
 import CustomBasketButton from '@/src/ui/customButton/CustomBasketButton';
 import CustomPDFDownloadInput from '@/src/ui/customPDFInput/CustomPDFDownloadInput';
 import { useGetBookByIdVendorQuery } from '@/src/redux/api/book';
-import warning from 'antd/es/_util/warning';
-import useMessage from 'antd/es/message/useMessage';
 
 interface TypeJenre {
 	jenreId: number;
@@ -54,8 +54,6 @@ const EditBook = () => {
 	const [iconjenre, setIconJenre] = useState(false);
 	const [firstPhoto, setFirstPhoto] = useState<string>('');
 	const [secondPhoto, setSecondPhoto] = useState<string>('');
-	const [audioFileFragment, setAudioFileFragment] = useState('');
-	const [audioFile, setAudioFile] = useState('');
 	const [duration, setDuration] = useState(0);
 	const [durationFragment, setDuratoinFragment] = useState(0);
 	const [hourValue, setHourValue] = useState('');
@@ -75,10 +73,12 @@ const EditBook = () => {
 	const [initialImgSecond, setInitialImgSecond] = useState<string | undefined>(
 		''
 	);
-
+	const [isUploadedPdfFile, setIsUploadedPdfFile] = useState(false);
 	const navigate = useNavigate();
 
-	const [UpdateAudioFile] = useUpDateAudioFileMutation();
+	const [updateAudioFile] = useUpDateAudioFileMutation();
+	const [updateFragmentAudioFile] = useUpDateFragmentAudioFileMutation();
+	const [updatePdfFile] = useUpDatePdfMutation();
 
 	const [languageSeleced, setLanguageSelected] = useState<
 		TypeLanguage | undefined
@@ -90,6 +90,9 @@ const EditBook = () => {
 
 	const [postFile] = usePostFileMutation();
 	const [updatePhoto] = useEditPhotoUrlMutation();
+
+	console.log(durationFragment, 'fragment');
+	console.log(duration, 'original');
 
 	const { register, handleSubmit, reset, getValues } = useForm();
 	useEffect(() => {
@@ -253,7 +256,6 @@ const EditBook = () => {
 
 	const onSubmit: SubmitHandler<FieldValues> = async () => {
 		const book = getValues();
-		console.log(book);
 
 		const newUpDateBook = {
 			title: book.title,
@@ -287,8 +289,6 @@ const EditBook = () => {
 			setFragment('');
 			setDescription('');
 			setPdfFile('');
-			setAudioFile('');
-			setAudioFileFragment('');
 			setFirstPhoto('');
 			setSecondPhoto('');
 			setDelPhoto(false);
@@ -297,6 +297,7 @@ const EditBook = () => {
 			}, 3000);
 		}
 	};
+	console.log(pdfFile);
 
 	const handleFileChange = async (file: File) => {
 		setPdfFileName(file);
@@ -305,9 +306,19 @@ const EditBook = () => {
 			const status = result.data!.httpStatus;
 			if (status === 'OK') {
 				setPdfFile(result.data!.message);
+				setIsUploadedPdfFile(true);
 			}
 		}
 	};
+	useEffect(() => {
+		const editPdfFile = async () => {
+			if (pdfFile !== '') {
+				const result = await updatePdfFile({ pdfFile, id: bookId });
+				console.log(result);
+			}
+		};
+		editPdfFile();
+	}, [pdfFile]);
 
 	const handlePhotoChange = async (e: ChangeEvent<HTMLInputElement>) => {
 		console.log('first');
@@ -351,7 +362,6 @@ const EditBook = () => {
 		const result = await postFile(e);
 		if ('data' in result) {
 			if (result.data!.httpStatus === 'OK') {
-				setAudioFileFragment(result.data!.message);
 				setFragmentNewAudioFile(result.data.message);
 				setIsFileUploadedFragment(true);
 			}
@@ -362,7 +372,6 @@ const EditBook = () => {
 		const result = await postFile(e);
 		if ('data' in result) {
 			if (result.data!.httpStatus === 'OK') {
-				setAudioFile(result.data!.message);
 				setNewAudioFile(result.data.message);
 				setIsFileUploaded(true);
 			}
@@ -374,7 +383,7 @@ const EditBook = () => {
 				audFullUrl: newAudioFile,
 				duration: duration
 			};
-			await UpdateAudioFile({ newData, bookId });
+			await updateAudioFile({ newData, bookId });
 		}
 	};
 
@@ -382,9 +391,9 @@ const EditBook = () => {
 		if (fragmentNewAudioFile !== '') {
 			const newData = {
 				audFullUrl: fragmentNewAudioFile,
-				duration: duration
+				duration: durationFragment
 			};
-			await UpdateAudioFile({ newData, bookId });
+			await updateFragmentAudioFile({ newData, bookId });
 		}
 	};
 
@@ -434,7 +443,7 @@ const EditBook = () => {
 		editAudioFile();
 		editFragmentAudioFile();
 
-		convertSecondsToHoursMinutesAndSeconds(duration);
+		convertSecondsToHoursMinutesAndSeconds(durationFragment);
 	}, [
 		data,
 		fragment,
@@ -1249,7 +1258,7 @@ const EditBook = () => {
 											<div className={scss.box_last}>
 												<CustomPDFDownloadInput
 													onChange={handleFileChange}
-													isFileUploaded
+													isFileUploaded={isUploadedPdfFile}
 													accept="application/pdf"
 												/>
 												{pdfFileName && (

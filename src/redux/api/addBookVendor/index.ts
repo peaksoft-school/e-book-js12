@@ -71,7 +71,7 @@ const api = index.injectEndpoints({
 			),
 			invalidatesTags: ['add_book']
 		}),
-		UpDateAudioFragmentFile: build.mutation({
+		UpDateFragmentAudioFile: build.mutation({
 			query: ({ newData, bookId }) => ({
 				url: `/api/book/updateFragment?bookId=${bookId}`,
 				method: 'PATCH',
@@ -83,14 +83,17 @@ const api = index.injectEndpoints({
 			invalidatesTags: ['add_book']
 		}),
 		UpDatePdf: build.mutation({
-			query: ({ newData, id }) => ({
-				url: '/api/book/updatePdf',
-				method: 'PATCH',
-				params: {
-					bookId: id,
-					pdfUrl: { ...newData }
+			query: ({ pdfFile, id }) => (
+				console.log(pdfFile, 'sdfsdfsdfsdf'),
+				{
+					url: '/api/book/updatePdf',
+					method: 'PATCH',
+					params: {
+						bookId: id,
+						pdfUrl: pdfFile
+					}
 				}
-			}),
+			),
 			invalidatesTags: ['add_book']
 		})
 	})
@@ -101,5 +104,7 @@ export const {
 	usePostFileMutation,
 	useEditBookMutation,
 	useEditPhotoUrlMutation,
-	useUpDateAudioFileMutation
+	useUpDateAudioFileMutation,
+	useUpDateFragmentAudioFileMutation,
+	useUpDatePdfMutation
 } = api;
