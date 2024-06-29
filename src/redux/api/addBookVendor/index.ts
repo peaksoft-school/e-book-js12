@@ -46,6 +46,52 @@ const api = index.injectEndpoints({
 				};
 			},
 			invalidatesTags: ['add_book']
+		}),
+		EditPhotoUrl: build.mutation<
+			ADDBOOKVENDOR.UpdatePhotoResponse,
+			ADDBOOKVENDOR.UpdatePhotoRequest
+		>({
+			query: ( {newData, bookId }) => {
+				return {
+					url: `/api/book/updatePhoto?bookId=${bookId}`,
+					method: 'PATCH',
+					body: newData
+				};
+			},
+			invalidatesTags: ['add_book']
+		}),
+		UpDateAudioFile: build.mutation({
+			query: ({ newData, bookId }) => (
+				console.log(newData),
+				{
+					url: `/api/book/updateAudFull?bookId=${bookId}`,
+					method: 'PATCH',
+					body: newData
+				}
+			),
+			invalidatesTags: ['add_book']
+		}),
+		UpDateAudioFragmentFile: build.mutation({
+			query: ({ newData, bookId }) => ({
+				url: `/api/book/updateFragment?bookId=${bookId}`,
+				method: 'PATCH',
+				body: newData,
+				params: {
+					...newData
+				}
+			}),
+			invalidatesTags: ['add_book']
+		}),
+		UpDatePdf: build.mutation({
+			query: ({ newData, id }) => ({
+				url: '/api/book/updatePdf',
+				method: 'PATCH',
+				params: {
+					bookId: id,
+					pdfUrl: { ...newData }
+				}
+			}),
+			invalidatesTags: ['add_book']
 		})
 	})
 });
@@ -53,5 +99,7 @@ const api = index.injectEndpoints({
 export const {
 	useAddBookVendorMutation,
 	usePostFileMutation,
-	useEditBookMutation
+	useEditBookMutation,
+	useEditPhotoUrlMutation,
+	useUpDateAudioFileMutation
 } = api;

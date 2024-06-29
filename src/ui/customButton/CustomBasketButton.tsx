@@ -1,9 +1,10 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { FC, ReactNode } from 'react';
 import scss from './Style.module.scss';
 
 interface CustomBasketProps {
 	children: ReactNode;
-	onClick: () => void;
+	onClick: any
 	nameClass: string;
 
 	type?: React.ButtonHTMLAttributes<HTMLButtonElement>['type'];
