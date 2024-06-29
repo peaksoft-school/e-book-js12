@@ -21,7 +21,8 @@ const api = baseApi.injectEndpoints({
 				url: '/api/promoCode/creatingPromotionalCode',
 				method: 'POST',
 				body: newData
-			})
+			}),
+			invalidatesTags: ['promo']
 		})
 	})
 });

@@ -25,7 +25,7 @@ import {
 import {
 	useAddBookVendorMutation,
 	usePostFileMutation
-} from '@/src/redux/api/addBookVendor';
+} from '@/src/redux/api/addBook';
 import CustomAddPhoto from '@/src/ui/customAddPhoto/CustomAddPhoto';
 import CustomAudioFragmentInput from '@/src/ui/customAudioInput/CustomAudioFragmenInput';
 interface TypeJenre {

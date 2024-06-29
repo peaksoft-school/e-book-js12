@@ -8,19 +8,20 @@ interface ProtectRouteProps {
 export const ProtectRoute: FC<ProtectRouteProps> = ({ children }) => {
 	const navigate = useNavigate();
 	const { pathname } = useLocation();
-	const isAuth = Boolean(localStorage.getItem('auth_token'));
+	const isAuth = Boolean(localStorage.getItem('client'));
 	useEffect(() => {
 		// switch (pathname) {
-		// 	case '/login':
-		// 	case '/registration':
+		// 	case '/auth/login':
+		// 	case '/auth/registration':
+		// 	case '/auth/vendorRegistration':
 		// 		if (isAuth) {
 		// 			navigate('/');
 		// 		}
 		// 		break;
 		// 	case '/':
-		// 	case '/product':
+		// 	case '/search_book':
 		// 		if (!isAuth) {
-		// 			navigate('/login');
+		// 			navigate('/auth/login');
 		// 		}
 		// 		break;
 		// 	default:
@@ -29,3 +30,20 @@ export const ProtectRoute: FC<ProtectRouteProps> = ({ children }) => {
 	}, [isAuth, pathname, navigate]);
 	return children;
 };
+
+// switch (pathname) {
+// 	case '/login':
+// 	case '/registration':
+// 		if (isAuth) {
+// 			navigate('/');
+// 		}
+// 		break;
+// 	case '/':
+// 	case '/product':
+// 		if (!isAuth) {
+// 			navigate('/auth/login');
+// 		}
+// 		break;
+// 	default:
+// 		break;
+// }

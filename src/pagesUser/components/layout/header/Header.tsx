@@ -106,6 +106,15 @@ const Header = () => {
 		};
 	}, []);
 
+	const handleExitClient = () => {
+		localStorage.removeItem('token');
+		localStorage.setItem('client', 'false');
+		localStorage.setItem('vendor', 'false');
+		localStorage.setItem('admin', 'false');
+		localStorage.removeItem('NameClient');
+		navigate('/auth/login');
+	};
+
 	return (
 		<>
 			<header id="headerClient" className={scss.Header}>
@@ -314,7 +323,7 @@ const Header = () => {
 									</div>
 								</div>
 								<div className={scss.right_nav_content}>
-									{localAuth ? (
+									{localAuth === 'true' ? (
 										<>
 											<button onClick={() => setIsUser(!isUser)}>
 												<p>
@@ -355,10 +364,6 @@ const Header = () => {
 													onClick={() => {
 														setUserExit(!userExit);
 														setIsUser(false);
-														localStorage.removeItem('token');
-														localStorage.setItem('isAuth', 'false');
-														localStorage.setItem('isVendor', 'false');
-														localStorage.setItem('admin', 'false');
 													}}
 												>
 													Выйти
@@ -379,7 +384,7 @@ const Header = () => {
 											<button
 												onClick={() => {
 													setUserExit(false);
-													navigate('/auth/login');
+													handleExitClient();
 												}}
 											>
 												Выйти

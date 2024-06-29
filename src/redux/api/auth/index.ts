@@ -52,6 +52,23 @@ const api = index.injectEndpoints({
 				body: data
 			}),
 			invalidatesTags: ['me']
+		}),
+		SendEmailForgotPassword: build.query({
+			query: (email) => ({
+				url: '/api/user/send/email',
+				mthod: 'GET',
+				params: {
+					toEmail: email
+				}
+			}),
+			providesTags: ['me']
+		}),
+		ResetPassword: build.mutation({
+			query: (newData) => ({
+				url: '/api/user/reset/password',
+				method: 'PUT',
+				body: newData
+			})
 		})
 	})
 });
@@ -61,5 +78,7 @@ export const {
 	usePostLoginMutation,
 	usePostWithGoogleMutation,
 	usePostVendorRegistrationMutation,
-	useConfirmEmailMutation
+	useConfirmEmailMutation,
+	useSendEmailForgotPasswordQuery,
+	useResetPasswordMutation
 } = api;

@@ -22,7 +22,7 @@ import {
 	useUpDateAudioFileMutation,
 	useUpDateFragmentAudioFileMutation,
 	useUpDatePdfMutation
-} from '@/src/redux/api/addBookVendor';
+} from '@/src/redux/api/addBook';
 import CustomAudioDownloadInput from '@/src/ui/customAudioInput/CustomAudioDownloadInput';
 import CustomBasketButton from '@/src/ui/customButton/CustomBasketButton';
 import CustomPDFDownloadInput from '@/src/ui/customPDFInput/CustomPDFDownloadInput';

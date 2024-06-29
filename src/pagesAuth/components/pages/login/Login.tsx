@@ -3,7 +3,7 @@ import scss from './Login.module.scss';
 import CustomPasswordInput from '@/src/ui/customInpute/CustomPasswordInput';
 import { Link, useNavigate } from 'react-router-dom';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { usePostLoginMutation } from '@/src/redux/api/me';
+import { usePostLoginMutation } from '@/src/redux/api/auth';
 import { message } from 'antd';
 interface IFormInput {
 	email: string;
