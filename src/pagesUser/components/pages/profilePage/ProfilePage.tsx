@@ -21,7 +21,6 @@ const ProfileClient: React.FC = () => {
 	const [updatePassword] = useUpdatePasswordUserMutation();
 	const [handleDeleteProfile] = useDeletUserProfileMutation();
 	const [isModalOpen, setIsModalOpen] = useState(false);
-
 	const navigate = useNavigate();
 
 	const handleDeleteAndNavigate = async () => {
@@ -30,7 +29,6 @@ const ProfileClient: React.FC = () => {
 			navigate('/auth/login');
 		} catch (error) {
 			console.error('Error deleting profile:', error);
-			return false;
 		}
 	};
 
@@ -55,24 +53,18 @@ const ProfileClient: React.FC = () => {
 	};
 
 	const onSubmit: SubmitHandler<FieldValues> = async (data) => {
-		console.log(data);
-
 		try {
 			if (isEditMode) {
-				const newData = {
+				await updateProfile({
 					firstName: data.firstName,
 					email: data.email
-				};
-				await updateProfile(newData);
+				});
 			} else if (isPasswordMode) {
-				const passwordData = {
+				await updatePassword({
 					currentVendorPassword: data.currentVendorPassword,
-					password: data.Password,
+					password: data.password,
 					confirmPassword: data.confirmPassword
-				};
-				console.log(passwordData);
-
-				await updatePassword(passwordData);
+				});
 			}
 			reset();
 			refetch();
@@ -82,17 +74,10 @@ const ProfileClient: React.FC = () => {
 			console.error('Error updating profile:', error);
 		}
 	};
-	const showModal = () => {
-		setIsModalOpen(true);
-	};
 
-	const handleOk = () => {
-		setIsModalOpen(false);
-	};
-
-	const handleCancel = () => {
-		setIsModalOpen(false);
-	};
+	const showModal = () => setIsModalOpen(true);
+	const handleOk = () => setIsModalOpen(false);
+	const handleCancel = () => setIsModalOpen(false);
 
 	return (
 		<section className={scss.ProfileSection}>
@@ -156,7 +141,7 @@ const ProfileClient: React.FC = () => {
 														type="password"
 														placeholder="Напишите новый пароль"
 														register={register}
-														registerName="Password"
+														registerName="password"
 													/>
 												</div>
 												<div className={scss.input_new_password}>
@@ -175,56 +160,38 @@ const ProfileClient: React.FC = () => {
 									)}
 								</div>
 								<div className={scss.button_section}>
-									<div>
-										<p className={scss.delete_user_profile} onClick={showModal}>
-											Удалить профиль?
-										</p>
-									</div>
 									{!isEditMode && !isPasswordMode && (
-										<>
-											<div className={scss.button_note}>
-												<button
-													type="button"
-													className={scss.custom_white_button}
-													onClick={toggleEditMode}
-												>
-													Изменить профиль
-												</button>
-											</div>
-											<div className={scss.button_note}>
-												<button
-													type="button"
-													className={scss.custom_white_button}
-													onClick={togglePasswordMode}
-												>
-													Изменить пароль
-												</button>
-											</div>
-										</>
-									)}
-									{isEditMode && (
-										<div>
+										<div className={scss.update_buttons}>
 											<button
 												type="button"
 												className={scss.custom_white_button}
 												onClick={toggleEditMode}
 											>
-												Отменить
+												Изменить профиль
 											</button>
-											<button
-												type="submit"
-												className={scss.custom_black_button}
-											>
-												Сохранить
-											</button>
-										</div>
-									)}
-									{isPasswordMode && (
-										<div>
 											<button
 												type="button"
 												className={scss.custom_white_button}
 												onClick={togglePasswordMode}
+											>
+												Изменить пароль
+											</button>
+										</div>
+									)}
+									<button
+										className={scss.delete_user_profile}
+										onClick={showModal}
+									>
+										Удалить профиль?
+									</button>
+									{(isEditMode || isPasswordMode) && (
+										<div className={scss.update_buttons}>
+											<button
+												type="button"
+												className={scss.custom_white_button}
+												onClick={
+													isEditMode ? toggleEditMode : togglePasswordMode
+												}
 											>
 												Отменить
 											</button>
@@ -243,21 +210,15 @@ const ProfileClient: React.FC = () => {
 							open={isModalOpen}
 							onOk={handleOk}
 							onCancel={handleCancel}
-							footer={false}
+							footer={null}
 						>
 							<div className={scss.delete_modal}>
 								<p>Вы уверены, что хотите удалить профиль?</p>
 								<div className={scss.buttons_modal}>
+									<button onClick={handleCancel}>Отменить</button>
 									<button
 										onClick={() => {
-											setIsModalOpen(false);
-										}}
-									>
-										Отменить
-									</button>
-									<button
-										onClick={() => {
-											setIsModalOpen(false);
+											handleCancel();
 											handleDeleteAndNavigate();
 										}}
 									>

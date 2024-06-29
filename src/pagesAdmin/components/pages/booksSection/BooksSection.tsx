@@ -370,7 +370,6 @@ const BooksSection: React.FC = () => {
 												<li
 													onClick={() => {
 														showModal(book.bookId);
-
 														setOpenState(!openState);
 													}}
 												>

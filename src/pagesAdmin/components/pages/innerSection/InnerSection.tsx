@@ -1,17 +1,17 @@
-import scss from './innerSection.module.scss';
-import ThreeDotIcon from '@/src/assets/icons/icon-threeDot';
-import { useNavigate } from 'react-router-dom';
-import { useState } from 'react';
-import { IconX } from '@tabler/icons-react';
-import { useGetReceiptRequestedBooksQuery } from '@/src/redux/api/innerPage';
 import {
 	useApproveBookMutation,
 	useRejectBookMutation
 } from '@/src/redux/api/book';
-import { Modal, Tooltip } from 'antd';
-import IconGirl from '@/src/assets/icons/icon-girl';
+import { useGetReceiptRequestedBooksQuery } from '@/src/redux/api/innerPage';
+import { useState } from 'react';
 import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import scss from './innerSection.module.scss';
+import { IconX } from '@tabler/icons-react';
 import { IconSuccess } from '@/src/assets/icons';
+import { Modal, Tooltip } from 'antd';
+import ThreeDotIcon from '@/src/assets/icons/icon-threeDot';
+import IconGirl from '@/src/assets/icons/icon-girl';
 
 const InnerSection = () => {
 	const navigate = useNavigate();
@@ -32,11 +32,35 @@ const InnerSection = () => {
 	};
 
 	const handleRejectBook = async (id: number, rejectReason: string) => {
-		const newData = {
-			rejectReason
-		};
-		await rejectBookById({ newData, id });
-		refetch();
+		const newData = { rejectReason };
+		const result = await rejectBookById({ newData, id });
+
+		setTimeout(() => {
+			setModalSuccess(true);
+			refetch();
+		}, 2000);
+
+		if ('data' in result) {
+			if (result.data?.httpStatus === 'OK') {
+				setTimeout(() => {
+					navigate('/admin');
+				}, 2000);
+			}
+		}
+
+		const titleBook = books?.books.find((item) =>
+			item.id === id ? item.title : item
+		);
+
+		dispatch({
+			type: 'ADD_NOTIFICATION',
+			payload: {
+				message: `Book "${titleBook?.title}" rejected successfully! Reason: ${rejectReason}`,
+				createdAt: Date.now(),
+				notificationType: 'error',
+				bookId: id
+			}
+		});
 	};
 
 	const [selectedBook, setSelectedBook] = useState<number | null>(null);
@@ -49,15 +73,6 @@ const InnerSection = () => {
 		setIsModalOpen(true);
 	};
 
-	const handleOk = async () => {
-		if (selectedBook !== null) {
-			await handleRejectBook(selectedBook, rejectReason);
-		}
-		setIsModalOpen(false);
-		setSelectedBook(null);
-		setRejectReason('');
-	};
-
 	const handleCancel = () => {
 		setIsModalOpen(false);
 		setSelectedBook(null);
@@ -65,11 +80,22 @@ const InnerSection = () => {
 	};
 
 	const handleApproveBook = async (id: number) => {
-		await approveBook(id);
-		setModalSuccess(true);
+		const result = await approveBook(id);
+		console.log(result.data?.status);
+
+		if ('data' in result) {
+			if (result.data?.httpStatus === 'OK') {
+				setModalSuccess(true);
+				setTimeout(() => {
+					navigate('/admin');
+				}, 2000);
+			}
+		}
+
 		const titleBook = books?.books.find((item) =>
 			item.id === id ? item.title : item
 		);
+
 		dispatch({
 			type: 'ADD_NOTIFICATION',
 			payload: {
@@ -79,7 +105,21 @@ const InnerSection = () => {
 				bookId: id
 			}
 		});
+
+		setTimeout(() => {
+			refetch();
+		}, 2000);
 	};
+
+	const handleOk = async () => {
+		if (selectedBook !== null) {
+			handleRejectBook(selectedBook, rejectReason);
+		}
+		setIsModalOpen(false);
+		setSelectedBook(null);
+		setRejectReason('');
+	};
+
 	// const [style, setStyle] = useState({ width: 268, height: 409 });
 
 	// const updateStyle = () => {
@@ -139,8 +179,16 @@ const InnerSection = () => {
 										>
 											<ThreeDotIcon />
 										</div>
-										{idBook === book.id && (
-											<div className={isOpen ? scss.is_open : scss.on_close}>
+										<>
+											<div
+												className={
+													idBook === book.id
+														? isOpen
+															? scss.is_open
+															: scss.on_close
+														: scss.on_close
+												}
+											>
 												<ul>
 													<li onClick={() => handleApproveBook(book.id)}>
 														<span>
@@ -176,7 +224,7 @@ const InnerSection = () => {
 													</li>
 												</ul>
 											</div>
-										)}
+										</>
 
 										<div
 											onClick={() => handleBookClick(book.id)}
@@ -221,7 +269,7 @@ const InnerSection = () => {
 							<p>Вы уверены, что хотите отклонить?</p>
 							<div className={scss.bt_modal}>
 								<button onClick={handleCancel}>Отменить</button>
-								<button onClick={handleOk}>Удалить</button>
+								<button onClick={handleOk}>Отклонить</button>
 							</div>
 						</div>
 					</Modal>

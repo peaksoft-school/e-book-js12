@@ -4,8 +4,12 @@ import { Modal, Tooltip } from 'antd';
 import scss from './AboutVendorsBooks.module.scss';
 import ThreeDotIcon from '@/src/assets/icons/icon-threeDot';
 import UpIcon from '@/src/assets/icons/icon-upIcon';
-import { IconArrowBottom, IconWhiteLike } from '@/src/assets/icons';
-import { IconPencil, IconX } from '@tabler/icons-react';
+import {
+	IconArrowBottom,
+	IconSuccess,
+	IconWhiteLike
+} from '@/src/assets/icons';
+import { IconPencil } from '@tabler/icons-react';
 import { useGetAllVendorBooksQuery } from '@/src/redux/api/book';
 import { useDeleteVendorProfileMutation } from '@/src/redux/api/vendors';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -144,22 +148,25 @@ const AboutVendorsBooks = () => {
 										{book.id === idBook && isOpen ? (
 											<div className={scss.is_open}>
 												<ul>
-													<li>
-														<span>
-															<IconPencil />
-														</span>
-														Редактировать
-													</li>
-													<hr />
 													<li
 														onClick={() => {
 															setIsOpen(false);
 														}}
 													>
 														<span>
-															<IconX />
+															<IconSuccess />
 														</span>
-														Удалить
+														Принять
+													</li>
+													<li
+														onClick={() => {
+															setIsOpen(false);
+														}}
+													>
+														<span>
+															<IconPencil />
+														</span>
+														Отклонить
 													</li>
 												</ul>
 											</div>

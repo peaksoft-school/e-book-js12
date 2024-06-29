@@ -121,6 +121,7 @@ const Header = () => {
 	const handleBookClick = (id: number) => {
 		navigate(`home/${id}`);
 		setShowResults(false);
+		setSearchTerm('');
 	};
 
 	const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {

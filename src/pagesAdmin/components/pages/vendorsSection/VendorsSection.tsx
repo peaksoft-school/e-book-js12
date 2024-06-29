@@ -13,6 +13,8 @@ const VendorsSection = () => {
 	const [isModalOpen, setIsModalOpen] = useState(false);
 	const [selectedVendor, setSelectedVendor] = useState<Vendor | null>(null);
 	const { data, isLoading } = useGetAllVendorsQuery();
+	console.log(data);
+
 	const [handleDeleteVendor] = useDeleteVendorMutation();
 
 	interface Vendor {
@@ -96,7 +98,7 @@ const VendorsSection = () => {
 					>
 						<div className={scss.delete_modal}>
 							<p>
-								Вы уверены, что хотите удалить
+								Вы уверены, что хотите удалить <br />
 								<span>{selectedVendor?.fullName}</span>?
 							</p>
 							<div className={scss.btns_modal}>

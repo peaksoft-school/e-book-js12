@@ -240,6 +240,7 @@
 				max-width: 266px;
 				width: 100%;
 				position: relative;
+				top: 20px;
 				transition: 0.3s;
 				@media (max-width: 768px) {
 					max-width: 306px;
@@ -445,6 +446,7 @@
 				flex-wrap: wrap;
 				gap: 0px 20px;
 				width: 100%;
+				overflow: auto;
 				@media (max-width: 850px) {
 					max-width: 726px;
 					width: 100%;
@@ -510,6 +512,7 @@
 						width: 100%;
 						user-select: none;
 						margin-bottom: 12px;
+						height: 340px;
 					}
 					.card_description {
 						display: flex;

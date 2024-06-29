@@ -182,6 +182,9 @@ const SearchSection = () => {
 	]);
 
 	const hanleAddBookFavorite = async (id: number) => {
+		if (!isUserAuthhenticated()) {
+			navigate('/auth/registration');
+		}
 		await addBookFavorite(id);
 		handleChangeFillter();
 	};
@@ -335,6 +338,10 @@ const SearchSection = () => {
 		debouncedValue,
 		page
 	]);
+
+	const isUserAuthhenticated = () => {
+		return !!localStorage.getItem('token');
+	};
 
 	return (
 		<section ref={searchSectionRef} className={scss.SearchSection}>
