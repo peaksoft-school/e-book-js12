@@ -62,6 +62,7 @@ const EditBook = () => {
 	const [pdfFileName, setPdfFileName] = useState<File>();
 	const [selectLanguage, setSelectLanguage] = useState(false);
 	const [bookType, setBookType] = useState(data?.bookType);
+	const [bookNmae, setBookName] = useState('');
 	const [clickBestseller, setClickBestseller] = useState<boolean | undefined>(
 		false
 	);
@@ -256,7 +257,7 @@ const EditBook = () => {
 
 	const onSubmit: SubmitHandler<FieldValues> = async () => {
 		const book = getValues();
-
+		setBookName(book.bookName);
 		const newUpDateBook = {
 			title: book.title,
 			authorsFullName: book.authorsFullName,
@@ -1289,7 +1290,7 @@ const EditBook = () => {
 									<IconSuccess />
 									<div className={scss.info_text}>
 										<p>
-											<span>“Гарри Поттер и Тайная комната”</span> <br />
+											<span>“{bookNmae}”</span> <br />
 											успешно Редактировано!
 										</p>
 									</div>

@@ -1,6 +1,6 @@
 import CustomGenreInput from '@/src/ui/customInpute/CustomGenreInput';
 import scss from './Header.module.scss';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { IconUserCircle } from '@tabler/icons-react';
 import { Modal } from 'antd';
 import { useNavigate } from 'react-router-dom';
@@ -17,6 +17,7 @@ const Header = () => {
 		{ skip: !searchTerm }
 	);
 	const navigate = useNavigate();
+	const searchResultsRef = useRef<HTMLDivElement>(null);
 
 	useEffect(() => {
 		const changeHeader = () => {
@@ -34,6 +35,22 @@ const Header = () => {
 		};
 	}, []);
 
+	useEffect(() => {
+		const handleClickOutside = (event: MouseEvent) => {
+			if (
+				searchResultsRef.current &&
+				!searchResultsRef.current.contains(event.target as Node)
+			) {
+				setShowResults(false);
+			}
+		};
+
+		document.addEventListener('mousedown', handleClickOutside);
+		return () => {
+			document.removeEventListener('mousedown', handleClickOutside);
+		};
+	}, []);
+
 	const handleExitAdmin = () => {
 		localStorage.removeItem('token');
 		localStorage.setItem('client', 'false');
@@ -45,6 +62,7 @@ const Header = () => {
 	const handleBookClick = (id: number) => {
 		navigate(`/admin/books/${id}`);
 		setShowResults(false);
+		setSearchTerm('');
 	};
 
 	const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -64,10 +82,10 @@ const Header = () => {
 								<CustomGenreInput
 									onChange={handleSearchChange}
 									value={searchTerm}
-									placeholder={'Искать жанр, книги, авторов, издательства... '}
+									placeholder="Искать жанр, книги, авторов, издательства..."
 								/>
 							</div>
-							<div>
+							<div className={scss.lii}>
 								{showResults && searchResults && (
 									<div className={scss.searchResultsLi}>
 										<ul>

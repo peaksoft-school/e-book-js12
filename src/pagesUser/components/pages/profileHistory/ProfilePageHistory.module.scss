@@ -55,41 +55,11 @@
 				display: flex;
 				justify-content: space-between;
 
-				.item_two {
-					font-family: Open Sans;
-					font-size: 14px;
-					font-weight: 400;
-					line-height: 18.2px;
-					text-align: left;
-				}
-				.item_tree {
-					font-family: Open Sans;
-					font-size: 14px;
-					font-weight: 400;
-					line-height: 18.2px;
-					text-align: left;
-				}
-				.item_four {
-					font-family: Open Sans;
-					font-size: 14px;
-					font-weight: 400;
-					line-height: 18.2px;
-					text-align: left;
-				}
-				.item_five {
-					font-family: Open Sans;
-					font-size: 14px;
-					font-weight: 400;
-					line-height: 18.2px;
-					text-align: left;
-				}
-				.item_sics {
-					font-family: Open Sans;
-					font-size: 14px;
-					font-weight: 400;
-					line-height: 18.2px;
-					text-align: left;
-				}
+				.item_two,
+				.item_three,
+				.item_four,
+				.item_five,
+				.item_six,
 				.item_seven {
 					font-family: Open Sans;
 					font-size: 14px;
@@ -161,6 +131,9 @@
 					}
 
 					.book_name_end {
+						display: flex;
+						flex-direction: column;
+
 						@media (max-width: 900px) {
 							margin-top: 20px;
 						}
@@ -188,7 +161,7 @@
 					}
 					.book_price {
 						display: flex;
-						gap: 13px;
+						flex-direction: column;
 						align-items: center;
 						font-family: Open Sans;
 						font-size: 20px;
@@ -203,7 +176,7 @@
 							color: rgb(150, 150, 150);
 							font-family: Open Sans;
 							font-size: 16px;
-							font-weight: 400;
+							font-weight: 300;
 							line-height: 130%;
 							letter-spacing: 0px;
 							text-align: left;
@@ -222,15 +195,19 @@
 						}
 					}
 					.book_state {
-						color: rgb(34, 34, 34);
-						font-family: Open Sans;
-						font-size: 16px;
-						font-weight: 400;
-						line-height: 130%;
-						letter-spacing: 0px;
+						// color: rgb(34, 34, 34);
+						// font-family: Open Sans;
+						// font-size: 10px;
+						// font-weight: 400;
+						// line-height: 130%;
+						// letter-spacing: 0px;
 
-						@media (max-width: 900px) {
-							margin-top: 10px;
+						// @media (max-width: 900px) {
+						// 	margin-top: 10px;
+						// }
+						svg {
+							max-width: 20px;
+							width: 100%;
 						}
 					}
 				}

@@ -41,7 +41,7 @@ const api = index.injectEndpoints({
 			invalidatesTags: ['basket']
 		}),
 
-		DeleteBookId: build.mutation<
+		DeleteBasketBookId: build.mutation<
 			BASKET.DeleteBookIdResponse,
 			BASKET.DeleteBookIdRequst
 		>({
@@ -78,8 +78,8 @@ export const {
 	useAddBookToBasketMutation,
 	useGetCountInBasketQuery,
 	useDeleteClearBasketMutation,
-	useDeleteBookIdMutation,
 	useCountBookBasketMutation,
+	useDeleteBasketBookIdMutation,
 	useTotalCostQuery,
 	useActivedBookPromocodeMutation
 } = api;

@@ -211,6 +211,15 @@ namespace BOOK {
 	type ApproveBookResponse = {
 		httpStatus: string;
 		message: string;
+		status: number;
+
+		error: {
+			data: {
+				httpStatus: string;
+				message: string;
+			};
+			status: number;
+		};
 	};
 
 	type RejectBookRequest = {

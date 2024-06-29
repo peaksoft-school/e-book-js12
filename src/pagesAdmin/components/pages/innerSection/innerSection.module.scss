@@ -68,10 +68,11 @@
 
 	.content {
 		display: flex;
-		justify-content: start;
 		flex-wrap: wrap;
-		gap: 20px 30px;
+		justify-content: start;
+		gap: 20px;
 		width: 100%;
+		max-width: 1132px;
 		margin-bottom: 50px;
 		@media (max-width: 480px) {
 			flex-direction: column;
@@ -260,7 +261,6 @@
 				flex-direction: column;
 				max-width: 180px;
 				width: 100%;
-				// gap: 7px;
 				position: absolute;
 				top: 30px;
 				right: 30px;
@@ -298,14 +298,15 @@
 					display: flex;
 					flex-direction: column;
 					align-items: start;
-					gap: 10px;
+					text-align: start;
+					justify-content: start;
 					width: 100%;
 					li {
 						// max-width: 300px;
 						width: 100%;
 						display: flex;
 						align-items: center;
-						justify-content: center;
+						justify-content: start;
 						gap: 10px;
 						color: rgb(35, 35, 35);
 						font-family: Open Sans;
@@ -313,6 +314,7 @@
 						font-weight: 400;
 						line-height: 130%;
 						letter-spacing: 0px;
+						padding: 10px 5px;
 						border-bottom: 0.5px solid rgb(196, 196, 196);
 						&:last-child {
 							border: none;
@@ -326,6 +328,9 @@
 						span {
 							display: flex;
 							align-items: center;
+							&:first-child {
+								height: 25px;
+							}
 							svg {
 								max-width: 25px;
 								width: 100%;
@@ -355,7 +360,7 @@
 				}
 			}
 			.on_close {
-				padding: 20px;
+				padding: 10px;
 				display: flex;
 				flex-direction: column;
 				gap: 7px;
@@ -369,31 +374,67 @@
 				opacity: 0;
 				cursor: default;
 				user-select: none;
-
 				ul {
 					display: flex;
 					flex-direction: column;
 					align-items: start;
-					gap: 10px;
+					text-align: start;
+					justify-content: start;
 					width: 100%;
 					li {
+						max-width: 300px;
+						width: 100%;
 						display: flex;
 						align-items: center;
-						justify-content: center;
+						justify-content: start;
 						gap: 10px;
 						color: rgb(35, 35, 35);
 						font-family: Open Sans;
-						font-size: 14px;
+						font-size: 16px;
 						font-weight: 400;
 						line-height: 130%;
 						letter-spacing: 0px;
-						text-align: left;
+						padding: 10px 5px;
 						border-bottom: 0.5px solid rgb(196, 196, 196);
 						&:last-child {
 							border: none;
 						}
-						&:first-child {
-							padding-bottom: 10px;
+
+						@media (max-width: 830px) {
+							font-size: 8px;
+							gap: 5px;
+						}
+
+						span {
+							display: flex;
+							align-items: center;
+							&:first-child {
+								height: 25px;
+							}
+							svg {
+								max-width: 25px;
+								width: 100%;
+
+								@media (max-width: 768px) {
+									max-width: 20px;
+									width: 100%;
+								}
+								@media (max-width: 450px) {
+									max-width: 20px;
+									width: 100%;
+								}
+								@media (max-width: 350px) {
+									max-width: 15px;
+									width: 100%;
+								}
+							}
+						}
+
+						@media (max-width: 830px) {
+							font-size: 8px;
+						}
+						@media (max-width: 360px) {
+							font-size: 8px;
 						}
 					}
 				}

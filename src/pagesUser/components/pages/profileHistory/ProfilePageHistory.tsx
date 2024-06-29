@@ -1,7 +1,7 @@
 import { useClientProfileHistoryQuery } from '@/src/redux/api/userHistory';
-
 import scss from './ProfilePageHistory.module.scss';
 import { useNavigate } from 'react-router-dom';
+import { IconSuccess } from '@/src/assets/icons';
 
 interface GetResponse {
 	data: UserHistory[];
@@ -81,7 +81,11 @@ const ProfilePageHistory = () => {
 											<p className={scss.book_data}>{historyItem.createdAt}</p>
 											<p className={scss.book_state}>
 												{historyItem.historyStatus === 'COMPLETED' ? (
-													<>Завершен</>
+													<>
+														{/* Заве - <br />
+														ршен */}
+														<IconSuccess />
+													</>
 												) : (
 													<>В Прогрессe</>
 												)}

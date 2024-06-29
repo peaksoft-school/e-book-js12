@@ -7,6 +7,7 @@ import { Modal, Tooltip } from 'antd';
 import { IconSuccess } from '@/src/assets/icons';
 import {
 	useApproveBookMutation,
+	useDeleteBookMutation,
 	useGetBookByIdQuery,
 	useRejectBookMutation
 } from '@/src/redux/api/book';
@@ -48,21 +49,42 @@ const BookInfo: FC = () => {
 	const { id } = useParams();
 	const bookId = Number(id);
 	const { data: book, isLoading } = useGetBookByIdQuery<GetResponse>(bookId);
+
+	const [deleteBook] = useDeleteBookMutation();
 	const [approveBook] = useApproveBookMutation();
 	const [rejectBook] = useRejectBookMutation();
+	const [messageRejected, setRejectedMessage] = useState('');
+	const [messageApproeved, setApprovedMessage] = useState('');
 	const navigate = useNavigate();
 	const location = useLocation();
 	const dispatch = useDispatch();
 
+	const deleteBookId = async (bookId: number) => {
+		await deleteBook(bookId);
+	};
 	const handleApproveBook = async (id: number) => {
-		await approveBook(id);
-		setModalSuccess(true);
+		const result = await approveBook(id);
+
+		if ('data' in result) {
+			console.log(result);
+			if (result.data?.httpStatus === 'OK') {
+				setApprovedMessage(result.data.message);
+				setModalSuccess(true);
+				setTimeout(() => {
+					navigate('/admin');
+				}, 2000);
+			}
+		}
+		setTimeout(() => {
+			setModalSuccess(false);
+		}, 2000);
 		dispatch({
 			type: 'ADD_NOTIFICATION',
 			payload: {
 				message: `Book "${book?.title}" approved successfully!`,
 				createdAt: Date.now(),
-				notificationType: 'success'
+				notificationType: 'success',
+				bookId: id
 			}
 		});
 	};
@@ -71,7 +93,17 @@ const BookInfo: FC = () => {
 		const newData = {
 			rejectReason: value
 		};
-		await rejectBook({ newData, id });
+		const result = await rejectBook({ newData, id });
+		console.log(result);
+		if ('data' in result) {
+			if (result.data.httpStatus === 'OK') {
+				setModalSuccess(true);
+				setRejectedMessage(result.data.message);
+				setTimeout(() => {
+					navigate('/admin');
+				}, 2000);
+			}
+		}
 		setDeviationModal(false);
 		dispatch({
 			type: 'ADD_NOTIFICATION',
@@ -82,6 +114,8 @@ const BookInfo: FC = () => {
 			}
 		});
 	};
+	console.log(messageRejected);
+	console.log(messageApproeved);
 
 	if (isLoading) return <p>Загрузка...</p>;
 	if (!book) return <p>Ошибка загрузки данных книги</p>;
@@ -216,14 +250,26 @@ const BookInfo: FC = () => {
 							</div>
 
 							<div className={scss.section_book}>
-								<CustomPersonalAreaButton
-									nameClass={`${scss.favorite_btn}`}
-									onClick={() => {
-										setDeviationModal(true);
-									}}
-								>
-									<p className={scss.boot1}>Отклонить</p>
-								</CustomPersonalAreaButton>
+								{location.pathname === `/admin/books/${id}` ? (
+									<CustomPersonalAreaButton
+										nameClass={`${scss.favorite_btn}`}
+										onClick={() => {
+											deleteBookId(bookId);
+										}}
+									>
+										<p className={scss.boot1}>Удалить</p>
+									</CustomPersonalAreaButton>
+								) : (
+									<CustomPersonalAreaButton
+										nameClass={`${scss.favorite_btn}`}
+										onClick={() => {
+											setDeviationModal(true);
+										}}
+									>
+										<p className={scss.boot1}>Отклонить</p>
+									</CustomPersonalAreaButton>
+								)}
+
 								<Modal
 									open={deviationModal}
 									footer={false}
@@ -235,14 +281,15 @@ const BookInfo: FC = () => {
 										<p className={scss.text_deviation}>
 											Причина вашего отклонения
 										</p>
-										<input
+										<textarea
 											className={scss.input_deviation}
-											type="text"
-											placeholder="Причина вашего отклонения"
+											placeholder="Причина вашего отклонения..."
 											value={value}
 											onChange={(e) => {
 												setValue(e.target.value);
 											}}
+											rows={483}
+											cols={108}
 										/>
 										<button
 											onClick={() => handleRejectBook(bookId)}
@@ -252,14 +299,24 @@ const BookInfo: FC = () => {
 										</button>
 									</div>
 								</Modal>
+								{location.pathname === `/admin/books/${id}` ? (
+									<CustomBasketButton
+										nameClass={scss.basket_btn}
+										onClick={() => {}}
+										type="button"
+									>
+										<p className={scss.boot1}>Редактировать</p>
+									</CustomBasketButton>
+								) : (
+									<CustomBasketButton
+										nameClass={scss.basket_btn}
+										onClick={() => handleApproveBook(bookId)}
+										type="button"
+									>
+										<p className={scss.boot1}>Принять</p>
+									</CustomBasketButton>
+								)}
 
-								<CustomBasketButton
-									nameClass={scss.basket_btn}
-									onClick={() => handleApproveBook(bookId)}
-									type="button"
-								>
-									<p className={scss.boot1}>Принять</p>
-								</CustomBasketButton>
 								<Modal
 									open={modalSuccess}
 									footer={false}
@@ -270,10 +327,13 @@ const BookInfo: FC = () => {
 									<div className={scss.modal_container}>
 										<IconSuccess />
 										<div className={scss.info_text}>
-											<p>
-												<span>“{book.title}”</span> <br />
-												успешно добавлен!
-											</p>
+											{messageRejected && (
+												<span>
+													<p>”{book.title}” </p>
+													{messageRejected}
+												</span>
+											)}
+											{messageApproeved && <span>“{messageApproeved}”</span>}
 										</div>
 									</div>
 								</Modal>

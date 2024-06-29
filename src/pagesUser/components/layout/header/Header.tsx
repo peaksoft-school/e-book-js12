@@ -1,6 +1,6 @@
 import CustomGenreInput from '@/src/ui/customInpute/CustomGenreInput';
 import scss from './Header.module.scss';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import WhiteLikeIcon from '@/src/assets/icons/icon-whiteLike';
 import { IconBurgerMenu, IconRedDot } from '@/src/assets/icons';
 import LogoeBook from '@/src/ui/logoeBook/LogoeBook';
@@ -24,6 +24,7 @@ const Header = () => {
 	const { data: countBasket } = useGetCountInBasketQuery();
 	const [searchTerm, setSearchTerm] = useState<string>('');
 	const [showResults, setShowResults] = useState<boolean>(false);
+	const searchResultsRef = useRef<HTMLDivElement>(null);
 
 	const { data: searchResults, refetch } = useSearchBooksQuery(
 		{ searchTerm },
@@ -71,6 +72,7 @@ const Header = () => {
 	const handleBookClick = (id: number) => {
 		navigate(`/search_book/${id}`);
 		setShowResults(false);
+		setSearchTerm('');
 	};
 
 	const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -87,6 +89,22 @@ const Header = () => {
 			localStorage.setItem('stateIsUser', 'false');
 		}
 	}, [isUser]);
+
+	useEffect(() => {
+		const handleClickOutside = (event: MouseEvent) => {
+			if (
+				searchResultsRef.current &&
+				!searchResultsRef.current.contains(event.target as Node)
+			) {
+				setShowResults(false);
+			}
+		};
+
+		document.addEventListener('mousedown', handleClickOutside);
+		return () => {
+			document.removeEventListener('mousedown', handleClickOutside);
+		};
+	}, []);
 
 	return (
 		<>
@@ -111,17 +129,15 @@ const Header = () => {
 										}}
 									/>
 								</div>
-								<div className={scss.input_content}>
+								<div className={scss.searchResults}>
 									<div className={scss.search}>
 										<CustomGenreInput
 											onChange={handleSearchChange}
 											value={searchTerm}
-											placeholder={
-												'Искать жанр, книги, авторов, издательства... '
-											}
+											placeholder="Искать жанр, книги, авторов, издательства..."
 										/>
 									</div>
-									<div>
+									<div className={scss.lii}>
 										{showResults && searchResults && (
 											<div className={scss.searchResultsLi}>
 												<ul>
