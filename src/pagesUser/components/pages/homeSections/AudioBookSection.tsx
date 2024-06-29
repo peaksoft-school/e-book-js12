@@ -1,6 +1,7 @@
 import { useGetAudioBookQuery } from '@/src/redux/api/book';
 import scss from './AudioBooks.module.scss';
 import IconGirl from '@/src/assets/icons/icon-girl';
+import { Link } from 'react-router-dom';
 
 const AudioBookSection = () => {
 	const { data, error, isLoading } = useGetAudioBookQuery({
@@ -19,7 +20,9 @@ const AudioBookSection = () => {
 					<div>
 						<div className={scss.title_audio_books}>
 							<h5>Аудиокниги</h5>
-							<p>Смотреть все</p>
+							
+								<Link to={'/search_book'} className={scss.pi}> Смотреть все</Link>
+							
 						</div>
 						<div className={scss.books_container}>
 							{data && data.length > 0 ? (
