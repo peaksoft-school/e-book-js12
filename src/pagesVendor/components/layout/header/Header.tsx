@@ -116,6 +116,7 @@ const Header = () => {
 		localStorage.setItem('admin', 'false');
 		localStorage.setItem('client', 'false');
 		localStorage.removeItem('token');
+		localStorage.removeItem('EBOOK');
 	};
 
 	const handleBookClick = (id: number) => {

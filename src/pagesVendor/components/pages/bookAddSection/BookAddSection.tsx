@@ -672,7 +672,7 @@ const BookAddSection = () => {
 													<span>стр.</span>
 													<input
 														required={true}
-														minLength={4}
+														minLength={2}
 														type="text"
 														{...register('volume', {
 															required: true,
@@ -1278,7 +1278,7 @@ const BookAddSection = () => {
 														<input
 															type="text"
 															required={true}
-															minLength={4}
+															minLength={2}
 															{...register('volume', {
 																required: true,
 																minLength: 4,
