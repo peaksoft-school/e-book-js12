@@ -21,7 +21,7 @@
 			border-bottom: 2px solid lightgray;
 			padding-bottom: 15px;
 			justify-content: space-between;
-
+			gap: 0px 10px;
 			@media (max-width: 1100px) {
 				display: none;
 			}
@@ -33,17 +33,70 @@
 				line-height: 18.2px;
 				text-align: left;
 				color: #545454;
+				max-width: 130px;
+				width: 100%;
 			}
+			.info_tes_two_history {
+				width: 82%;
+				display: flex;
+				justify-content: space-between;
 
+				.item_flex {
+					width: 64%;
+					display: flex;
+					justify-content: space-between;
+					padding-left: 10px;
+					p {
+						&:nth-child(3n) {
+							padding-right: 10px;
+						}
+					}
+				}
+				.item_flex_none {
+					width: 40%;
+					display: flex;
+					justify-content: space-between;
+				}
+
+				.item_two,
+				.item_tree,
+				.item_four,
+				.item_five,
+				.item_sics,
+				.item_seven {
+					font-family: Open Sans;
+					font-size: 14px;
+					font-weight: 400;
+					line-height: 18.2px;
+					text-align: left;
+				}
+			}
 			.info_tes_two {
 				width: 82%;
 				display: flex;
 				justify-content: space-between;
 
 				.item_flex {
-					width: 75%;
+					width: 70%;
 					display: flex;
-					justify-content: space-evenly;
+					justify-content: space-between;
+				}
+				.item_flex_none {
+					width: 40%;
+					display: flex;
+					justify-content: space-between;
+					padding-right: 30px;
+				}
+				.item_flex_cart {
+					width: 48%;
+					display: flex;
+					justify-content: space-between;
+					padding-right: 50px;
+				}
+				.styling {
+					display: flex;
+					justify-content: space-between;
+					width: 28%;
 				}
 
 				.item_two,
@@ -68,7 +121,7 @@
 			.prof_line_prof {
 				border-right: 1px solid lightgray;
 				padding: 0 1rem;
-				margin-right: 30px;
+				margin-right: 15px;
 
 				@media (max-width: 1100px) {
 					border-right: none;
@@ -132,19 +185,42 @@
 					.book_flex_x {
 						display: flex;
 						justify-content: space-between;
-						width: 80%;
+						width: 100%;
 
 						.flex_book_x {
 							display: flex;
-							justify-content: space-around;
-							width: 70%;
+							justify-content: space-between;
+							width: 46%;
+						}
+						.flex_book_x_history {
+							display: flex;
+							justify-content: space-between;
+							width: 68%;
+						}
+						.flex_book_x_cart {
+							display: flex;
+							justify-content: space-between;
+							width: 50%;
+						}
+						.flex_book_cart {
+							display: flex;
+							justify-content: start;
+							width: 30%;
+							margin-left: 30px;
+							padding-left: 50px;
 						}
 					}
-
-					.flex_book {
-						width: 90%;
+					.flex_book_history {
+						width: 27%;
 						display: flex;
 						justify-content: space-around;
+					}
+					.flex_book {
+						width: 36%;
+						display: flex;
+						justify-content: space-between;
+						margin-left: 50px;
+						padding-left: 45px;
 
 						.pprom {
 							font-size: 12px;
@@ -190,7 +266,9 @@
 							color: #969696;
 						}
 					}
-
+					.book_quantity_history {
+						width: 10%;
+					}
 					.book_quantity,
 					.book_price,
 					.book_data,

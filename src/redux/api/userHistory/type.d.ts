@@ -31,6 +31,7 @@ namespace USERALLHISTORY {
 		price: number;
 		priceWithDiscount: number;
 		createdAt: string;
+		historyStatus: string;
 	}[];
 
 	export type UserHistoryActionRequest = number;

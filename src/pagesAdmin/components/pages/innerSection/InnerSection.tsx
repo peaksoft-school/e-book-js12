@@ -2,14 +2,13 @@ import {
 	useApproveBookMutation,
 	useRejectBookMutation
 } from '@/src/redux/api/book';
-import { useGetReceiptRequestedBooksQuery } from '@/src/redux/api/innerPage';
-import { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useGetReceiptRequestedBooksQuery } from '@/src/redux/api/book';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import scss from './innerSection.module.scss';
 import { IconX } from '@tabler/icons-react';
 import { IconSuccess } from '@/src/assets/icons';
-import { Modal, Tooltip } from 'antd';
+import { Modal, Tooltip, message } from 'antd';
 import ThreeDotIcon from '@/src/assets/icons/icon-threeDot';
 import IconGirl from '@/src/assets/icons/icon-girl';
 
@@ -18,6 +17,8 @@ const InnerSection = () => {
 	const [isOpen, setIsOpen] = useState(false);
 	const [idBook, setIdBook] = useState<null | number>(null);
 	const [modalSuccess, setModalSuccess] = useState(false);
+	const [messageApi, handleMessage] = message.useMessage();
+	const [value, setValue] = useState('');
 	const {
 		data: books,
 		refetch,
@@ -31,52 +32,28 @@ const InnerSection = () => {
 		refetch();
 	};
 
-	const handleRejectBook = async (id: number, rejectReason: string) => {
-		const newData = { rejectReason };
+	const handleRejectBook = async (id: number) => {
+		const newData = {
+			rejectReason: value
+		};
 		const result = await rejectBookById({ newData, id });
-
-		setTimeout(() => {
-			setModalSuccess(true);
-			refetch();
-		}, 2000);
-
 		if ('data' in result) {
 			if (result.data?.httpStatus === 'OK') {
-				setTimeout(() => {
-					navigate('/admin');
-				}, 2000);
+				messageApi.open({
+					type: 'success',
+					content: 'Книга Успешно отклонено'
+				});
+				refetch();
 			}
 		}
-
-		const titleBook = books?.books.find((item) =>
-			item.id === id ? item.title : item
-		);
-
-		dispatch({
-			type: 'ADD_NOTIFICATION',
-			payload: {
-				message: `Book "${titleBook?.title}" rejected successfully! Reason: ${rejectReason}`,
-				createdAt: Date.now(),
-				notificationType: 'error',
-				bookId: id
-			}
-		});
 	};
 
 	const [selectedBook, setSelectedBook] = useState<number | null>(null);
 	const [isModalOpen, setIsModalOpen] = useState(false);
-	const [rejectReason, setRejectReason] = useState('');
-	const dispatch = useDispatch();
-
-	const showModal = (bookId: number) => {
-		setSelectedBook(bookId);
-		setIsModalOpen(true);
-	};
 
 	const handleCancel = () => {
 		setIsModalOpen(false);
 		setSelectedBook(null);
-		setRejectReason('');
 	};
 
 	const handleApproveBook = async (id: number) => {
@@ -84,38 +61,28 @@ const InnerSection = () => {
 		if ('data' in result) {
 			if (result.data?.httpStatus === 'OK') {
 				setModalSuccess(true);
-				setTimeout(() => {
-					navigate('/admin');
-				}, 2000);
 			}
 		}
-
-		const titleBook = books?.books.find((item) =>
-			item.id === id ? item.title : item
-		);
-
-		dispatch({
-			type: 'ADD_NOTIFICATION',
-			payload: {
-				message: `Book "${titleBook?.title}" approved successfully!`,
-				createdAt: Date.now(),
-				notificationType: 'success',
-				bookId: id
-			}
-		});
 
 		setTimeout(() => {
 			refetch();
 		}, 2000);
 	};
 
+	useEffect(() => {
+		if (modalSuccess) {
+			setTimeout(() => {
+				setModalSuccess(false);
+			}, 2000);
+		}
+	}, [modalSuccess]);
+
 	const handleOk = async () => {
 		if (selectedBook !== null) {
-			handleRejectBook(selectedBook, rejectReason);
+			handleRejectBook(selectedBook);
 		}
 		setIsModalOpen(false);
 		setSelectedBook(null);
-		setRejectReason('');
 	};
 
 	// const [style, setStyle] = useState({ width: 268, height: 409 });
@@ -148,6 +115,7 @@ const InnerSection = () => {
 				<>loading</>
 			) : (
 				<section className={scss.InnerSection}>
+					{handleMessage}
 					<div className={scss.container}>
 						<div className={scss.total_quantity}>
 							<p className={scss.books_quantity}>
@@ -203,7 +171,7 @@ const InnerSection = () => {
 															<IconSuccess />
 															<div className={scss.info_text}>
 																<p>
-																	<span>“{book.title}”</span> <br />
+																	<strong>“{book.title}”</strong>
 																	успешно добавлен!
 																</p>
 															</div>
@@ -212,7 +180,8 @@ const InnerSection = () => {
 													<li
 														onClick={() => {
 															setIsOpen(false);
-															showModal(book.id);
+															setIsModalOpen(true);
+															setSelectedBook(book.id);
 														}}
 													>
 														<span>
@@ -223,7 +192,6 @@ const InnerSection = () => {
 												</ul>
 											</div>
 										</>
-
 										<div
 											onClick={() => handleBookClick(book.id)}
 											className={scss.book_content}
@@ -255,20 +223,28 @@ const InnerSection = () => {
 							)}
 						</div>
 					</div>
-
 					<Modal
-						visible={isModalOpen}
-						onOk={handleOk}
-						onCancel={handleCancel}
-						footer={null}
-						className={scss.delete_modal}
+						open={isModalOpen}
+						footer={false}
+						onCancel={() => {
+							handleCancel();
+						}}
 					>
-						<div className={scss.delete_modal}>
-							<p>Вы уверены, что хотите отклонить?</p>
-							<div className={scss.bt_modal}>
-								<button onClick={handleCancel}>Отменить</button>
-								<button onClick={handleOk}>Отклонить</button>
-							</div>
+						<div className={scss.modal_deviation}>
+							<p className={scss.text_deviation}>Причина вашего отклонения</p>
+							<textarea
+								className={scss.input_deviation}
+								placeholder="Причина вашего отклонения..."
+								value={value}
+								onChange={(e) => {
+									setValue(e.target.value);
+								}}
+								rows={483}
+								cols={108}
+							/>
+							<button onClick={() => handleOk()} className={scss.btn_deviation}>
+								Отправить
+							</button>
 						</div>
 					</Modal>
 				</section>

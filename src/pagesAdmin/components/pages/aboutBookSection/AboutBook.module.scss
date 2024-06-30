@@ -373,6 +373,7 @@
 					width: 100%;
 					display: flex;
 					justify-content: space-between;
+					cursor: pointer;
 
 					p {
 						color: rgb(196, 196, 196);
@@ -382,7 +383,6 @@
 						line-height: 130%;
 						letter-spacing: 0px;
 						text-align: left;
-						cursor: pointer;
 						&:focus {
 							color: rgb(243, 73, 1);
 						}
@@ -468,8 +468,6 @@
 		display: flex;
 		justify-content: center;
 		p {
-			display: flex;
-			flex-direction: column;
 			color: rgb(0, 0, 0);
 			font-family: Open Sans;
 			font-size: 18px;
@@ -478,7 +476,7 @@
 			letter-spacing: 0px;
 			text-align: center;
 			width: 100%;
-			text-transform: capitalize;
+			text-transform: uppercase;
 			overflow: hidden;
 			white-space: nowrap;
 			text-overflow: ellipsis;
