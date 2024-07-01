@@ -92,8 +92,6 @@ const EditBook = () => {
 	const [postFile] = usePostFileMutation();
 	const [updatePhoto] = useEditPhotoUrlMutation();
 
-	console.log(durationFragment, 'fragment');
-	console.log(duration, 'original');
 
 	const { register, handleSubmit, reset, getValues } = useForm();
 	useEffect(() => {
@@ -195,6 +193,8 @@ const EditBook = () => {
 		}
 	];
 
+	console.log(description);
+
 	useEffect(() => {
 		const EditPhotoFirst = async () => {
 			if (newPhoto !== '') {
@@ -224,8 +224,6 @@ const EditBook = () => {
 
 	useEffect(() => {
 		const EditPhotoSecond = async () => {
-			console.log(';ao');
-
 			if (secondNewPhoto !== '') {
 				const newData = {
 					oldUrl: initialImgSecond,
@@ -237,7 +235,6 @@ const EditBook = () => {
 				});
 
 				if ('data' in result) {
-					console.log(result.data);
 					if (result.data.httpStatus === 'OK') {
 						messageApi.open({
 							type: 'success',
@@ -298,7 +295,6 @@ const EditBook = () => {
 			}, 3000);
 		}
 	};
-	console.log(pdfFile);
 
 	const handleFileChange = async (file: File) => {
 		setPdfFileName(file);
@@ -315,14 +311,12 @@ const EditBook = () => {
 		const editPdfFile = async () => {
 			if (pdfFile !== '') {
 				const result = await updatePdfFile({ pdfFile, id: bookId });
-				console.log(result);
 			}
 		};
 		editPdfFile();
 	}, [pdfFile]);
 
 	const handlePhotoChange = async (e: ChangeEvent<HTMLInputElement>) => {
-		console.log('first');
 		const file = e.target.files ? e.target.files[0] : null;
 		const result = await postFile(file!);
 		if ('data' in result) {
@@ -334,7 +328,6 @@ const EditBook = () => {
 	};
 
 	const handleSecondPhotoChange = async (e: ChangeEvent<HTMLInputElement>) => {
-		console.log('second');
 		const file = e.target.files ? e.target.files[0] : null;
 		const result = await postFile(file!);
 		if ('data' in result) {
@@ -445,15 +438,7 @@ const EditBook = () => {
 		editFragmentAudioFile();
 
 		convertSecondsToHoursMinutesAndSeconds(durationFragment);
-	}, [
-		data,
-		fragment,
-		description,
-		firstPhoto,
-		secondPhoto,
-		modal,
-		newAudioFile
-	]);
+	}, [data, firstPhoto, secondPhoto, modal, newAudioFile]);
 
 	return (
 		<section className={scss.EditBook}>
