@@ -26,6 +26,7 @@ const Login = () => {
 				localStorage.setItem('client', 'true');
 				localStorage.setItem('vendor', 'false');
 				localStorage.setItem('admin', 'false');
+				localStorage.setItem('EBOOK', JSON.stringify(results.data));
 				reset();
 				navigate('/');
 			} else if (results.data?.role === 'VENDOR') {
@@ -34,16 +35,18 @@ const Login = () => {
 				localStorage.setItem('client', 'false');
 				localStorage.setItem('vendor', 'true');
 				localStorage.setItem('admin', 'false');
+				localStorage.setItem('EBOOK', JSON.stringify(results.data));
 				reset();
-				navigate('/vendor/home');
+				navigate('/');
 			} else if (results.data?.role === 'ADMIN') {
 				const { token } = results.data;
 				localStorage.setItem('token', token);
 				localStorage.setItem('client', 'false');
 				localStorage.setItem('vendor', 'false');
 				localStorage.setItem('admin', 'true');
+				localStorage.setItem('EBOOK', JSON.stringify(results.data));
 				reset();
-				navigate('/admin');
+				navigate('/');
 			}
 		}
 

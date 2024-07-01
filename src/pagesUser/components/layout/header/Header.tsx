@@ -112,6 +112,16 @@ const Header = () => {
 		localStorage.setItem('vendor', 'false');
 		localStorage.setItem('admin', 'false');
 		localStorage.removeItem('NameClient');
+		localStorage.setItem(
+			'EBOOK',
+			JSON.stringify({
+				role: 'GUEST',
+				email: '',
+				firstName: '',
+				id: 0,
+				token: ''
+			})
+		);
 		navigate('/auth/login');
 	};
 
