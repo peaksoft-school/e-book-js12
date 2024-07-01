@@ -73,6 +73,7 @@ namespace BOOK {
 		statusBook: string;
 		bestseller: boolean;
 		amountOfBook: number;
+		inBasket: boolean;
 	};
 	type Duration = {
 		seconds: number;

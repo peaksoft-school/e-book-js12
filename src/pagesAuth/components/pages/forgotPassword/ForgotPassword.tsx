@@ -1,9 +1,9 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-// import { useSendEmailForgotPasswordQuery } from '@/src/redux/api/me';
-import scss from './ForgotPassword.module.scss';
+import { useSendEmailForgotPasswordMutation } from '@/src/redux/api/auth';
+import { message } from 'antd';
 import { useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
-// import { useEffect, useState } from 'react';
+import scss from './ForgotPassword.module.scss';
 
 interface TypeFormData {
 	email: string;
@@ -14,29 +14,44 @@ const ForgotPassword = () => {
 		formState: { errors },
 		handleSubmit
 	} = useForm<TypeFormData>();
-	// const [emailValue, setEmailValue] = useState('');
 
-	// const { data, isSuccess } = useSendEmailForgotPasswordQuery(emailValue);
+	const [sendEmail] = useSendEmailForgotPasswordMutation();
+	const [messageApi, contextMessage] = message.useMessage();
 
 	const onSubmit = async (data: TypeFormData) => {
 		if (data.email !== '') {
-			// setEmailValue(data.email);
+			const result = (await sendEmail(
+				data.email
+			)) as AUTHORIZATION.SendEmailResponse;
+			if ('data' in result) {
+				if (result.data) {
+					messageApi.open({
+						type: 'success',
+						content: result.data.message
+					});
+				}
+			}
+			if (result?.error) {
+				if (result.error.status === 404) {
+					messageApi.open({
+						type: 'warning',
+						content: result.error.data.message
+					});
+				} else {
+					messageApi.open({
+						type: 'warning',
+						content: 'Ошибка сервера'
+					});
+				}
+			}
 		}
 	};
-
-	// useEffect(() => {
-	// 	if (emailValue !== '') {
-	// 		console.log(data);
-	// 		if (isSuccess) {
-	// 			reset();
-	// 		}
-	// 	}
-	// }, [emailValue]);
 
 	return (
 		<div className={scss.ForgotPassword}>
 			<div className="container">
 				<div className={scss.content}>
+					{contextMessage}
 					<div className={scss.headline}>
 						<Link to="/auth/login">Войти</Link>
 						<Link to="/auth/registration">Регистрация</Link>

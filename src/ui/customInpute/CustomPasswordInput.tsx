@@ -37,12 +37,14 @@ const CustomPasswordInput: FC<TypeProps> = ({
 	return (
 		<div className={scss.password_container}>
 			<input
+				required={true}
+				minLength={4}
 				placeholder={placeholder}
 				type={showPassword ? 'text' : type}
 				className={`${scss.password_input} ${isFocused ? scss.FocusedIcon : ''}`}
 				onFocus={handleFocus}
 				onBlur={handleBlur}
-				{...register(`${registerName}`)}
+				{...register(`${registerName}`, {require:true})}
 			/>
 			<div
 				onClick={togglePasswordVisibility}

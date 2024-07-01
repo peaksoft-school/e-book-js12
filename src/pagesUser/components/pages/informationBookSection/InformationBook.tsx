@@ -6,7 +6,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { useGetBookByIdQuery } from '@/src/redux/api/book';
 import { useAddBookToBasketMutation } from '@/src/redux/api/basket';
 import { usePostFavoriteUnFavoriteMutation } from '@/src/redux/api/favorite';
-import { Tooltip } from 'antd';
+import { Tooltip, message } from 'antd';
 
 interface TypeGetById {
 	data: BookData;
@@ -32,6 +32,7 @@ interface BookData {
 	fragmentAudUrl: string;
 	duration: string;
 	statusBook: string;
+	inBasket: boolean;
 }
 
 const genres = [
@@ -99,37 +100,59 @@ const languageData = [
 
 const InformationBook: FC = () => {
 	const [showBookInfo, setShowBookInfo] = useState(false);
-	const [isFavorite, setIsFavorite] = useState(false);
-	const [isInBasket, setIsInBasket] = useState(false);
-	const [favoriteClickCount, setFavoriteClickCount] = useState(0);
-	const [basketClickCount, setBasketClickCount] = useState(0);
-
+	const [messageApi, handleMessage] = message.useMessage();
+	const localAuth = localStorage.getItem('client');
 	const { id } = useParams();
 	const bookId = Number(id);
 
 	const navigate = useNavigate();
-	const { data, isLoading } = useGetBookByIdQuery<TypeGetById>(bookId);
+	const { data, isLoading, refetch } = useGetBookByIdQuery<TypeGetById>(bookId);
 	const [addBookToBasket] = useAddBookToBasketMutation();
 	const [addBookToFavorite] = usePostFavoriteUnFavoriteMutation();
 
-	const handleAddBookToBasket = async (id: number) => {
-		if (basketClickCount === 0) {
-			await addBookToBasket(id);
-			setIsInBasket(true);
+	const handleAddBookToBasket = async (id: number, inBasket: boolean) => {
+		if (localAuth === 'true') {
+			if (inBasket) {
+				navigate('/basket');
+			} else {
+				const result = await addBookToBasket(id);
+				if ('data' in result) {
+					if (result.data.httpStatus === 'OK') {
+						refetch();
+					}
+				}
+			}
 		} else {
-			navigate('/basket');
+			messageApi.open({
+				type: 'warning',
+				content: 'Необходимо  Авторизоватся',
+				style: {
+					marginLeft: '85%'
+				}
+			});
 		}
-		setBasketClickCount((prevCount) => prevCount + 1);
 	};
 
 	const handleAddBookToFavorite = async (id: number) => {
-		if (favoriteClickCount === 0) {
-			await addBookToFavorite(id);
-			setIsFavorite(true);
+		if (localAuth === 'true') {
+			const result = await addBookToFavorite(id);
+			if ('data' in result) {
+				if (result.data.httpStatus) {
+					messageApi.open({
+						type: 'success',
+						content: result.data.message
+					});
+				}
+			}
 		} else {
-			navigate('/favorite');
+			messageApi.open({
+				type: 'warning',
+				content: 'Необходимо  Авторизоватся',
+				style: {
+					marginLeft: '85%'
+				}
+			});
 		}
-		setFavoriteClickCount((prevCount) => prevCount + 1);
 	};
 
 	const hadnleGenre = () => {
@@ -148,6 +171,7 @@ const InformationBook: FC = () => {
 		<section className={scss.InformationBookSection}>
 			<div className="container">
 				<div className={scss.content}>
+					{handleMessage}
 					{isLoading ? (
 						<>
 							<h1>IsLoading...</h1>
@@ -260,16 +284,16 @@ const InformationBook: FC = () => {
 											nameClass={scss.favorite_btn}
 											onClick={() => handleAddBookToFavorite(bookId)}
 										>
-											<p className={scss.boot_one}>
-												{isFavorite ? 'Перейти в избранном' : 'В избранное'}
-											</p>
+											<p className={scss.boot_one}>В избранное</p>
 										</CustomPersonalAreaButton>
 										<CustomBasketButton
 											nameClass={scss.basket_btn}
-											onClick={() => handleAddBookToBasket(bookId)}
+											onClick={() =>
+												handleAddBookToBasket(bookId, data.inBasket)
+											}
 										>
 											<p className={scss.boot_one}>
-												{isInBasket
+												{data.inBasket
 													? ' Перейти в корзине'
 													: 'Добавить в корзину'}
 											</p>

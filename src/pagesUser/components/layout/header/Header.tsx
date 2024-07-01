@@ -184,7 +184,9 @@ const Header = () => {
 												</span>
 
 												<span>
-													{countOfFavorite !== 0 ? <IconRedDot /> : null}
+													{localAuth === 'true' ? (
+														<>{countOfFavorite !== 0 ? <IconRedDot /> : null}</>
+													) : null}
 												</span>
 											</>
 										)}
@@ -193,14 +195,20 @@ const Header = () => {
 										className={scss.basket}
 										onClick={() => navigate('/basket')}
 									>
-										{countBasket?.totalNumberOfBooks !== 0 ? (
+										{localAuth === 'true' ? (
 											<>
-												<p>Корзина ({countBasket?.totalNumberOfBooks})</p>
+												{countBasket?.totalNumberOfBooks !== 0 ? (
+													<>
+														<p>Корзина ({countBasket?.totalNumberOfBooks})</p>
+													</>
+												) : (
+													<>
+														<p>Корзина</p>
+													</>
+												)}
 											</>
 										) : (
-											<>
-												<p>Корзина</p>
-											</>
+											<p>Корзина</p>
 										)}
 									</div>
 								</div>
