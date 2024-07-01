@@ -56,13 +56,16 @@ const Header = () => {
 		localStorage.setItem('client', 'false');
 		localStorage.setItem('vendor', 'false');
 		localStorage.setItem('admin', 'false');
-		JSON.stringify({
-			role: 'GUEST',
-			email: '',
-			firstName: '',
-			id: 0,
-			token: ''
-		});
+		localStorage.setItem(
+			'EBOOK',
+			JSON.stringify({
+				role: 'GUEST',
+				email: '',
+				firstName: '',
+				id: 0,
+				token: ''
+			})
+		);
 		navigate('/');
 	};
 

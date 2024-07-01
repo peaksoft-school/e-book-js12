@@ -37,7 +37,7 @@ const Login = () => {
 				localStorage.setItem('admin', 'false');
 				localStorage.setItem('EBOOK', JSON.stringify(results.data));
 				reset();
-				navigate('/vendor/home');
+				navigate('/');
 			} else if (results.data?.role === 'ADMIN') {
 				const { token } = results.data;
 				localStorage.setItem('token', token);
@@ -46,7 +46,7 @@ const Login = () => {
 				localStorage.setItem('admin', 'true');
 				localStorage.setItem('EBOOK', JSON.stringify(results.data));
 				reset();
-				navigate('/admin');
+				navigate('/');
 			}
 		}
 		if (results.error) {
