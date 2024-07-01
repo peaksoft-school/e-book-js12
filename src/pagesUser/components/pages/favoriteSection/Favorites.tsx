@@ -55,7 +55,7 @@ const FavoritSection: FC = () => {
 					theme: 'light'
 				});
 			} else if (httpStatus === 'ALREADY_REPORTED') {
-				toast.info('Вы уже добавили эту книгу в корзину!', {
+				toast.warning('Вы уже добавили эту книгу в корзину!', {
 					position: 'top-right',
 					autoClose: 5000,
 					hideProgressBar: false,

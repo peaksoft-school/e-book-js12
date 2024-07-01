@@ -53,14 +53,23 @@ namespace BASKET {
 	};
 
 	type ActivedPromoResponse = {
-		numberOfBooks: number;
-		price: number;
-		numberOfBooksDisCount: number;
-		disCount: number;
-		bookDiscount: number;
-		totalAmount: number;
-		bookId: number;
-		getPromoCode: string;
+		data: {
+			numberOfBooks: number;
+			price: number;
+			numberOfBooksDisCount: number;
+			disCount: number;
+			bookDiscount: number;
+			totalAmount: number;
+			bookId: number;
+			getPromoCode: string;
+		};
+		status: number;
+		error: {
+			status: number;
+			data: {
+				message: string;
+			};
+		};
 	};
 
 	type ActivePromoRequest = {

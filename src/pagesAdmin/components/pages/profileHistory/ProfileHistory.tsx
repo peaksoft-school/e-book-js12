@@ -48,7 +48,8 @@ const ProfileHistory = () => {
 								</>
 							)}
 							<div
-								className={`${activeTab !== 'history' ? scss.item_flex_none : scss.item_flex} ${activeTab === 'history' ? scss.item_flex : ''} ${activeTab === 'cart' ? scss.item_flex_cart : ''
+								className={`${activeTab !== 'history' ? scss.item_flex_none : scss.item_flex} ${activeTab === 'history' ? scss.item_flex : ''} ${
+									activeTab === 'cart' ? scss.item_flex_cart : ''
 								}`}
 							>
 								{activeTab === 'favorites' ? null : (

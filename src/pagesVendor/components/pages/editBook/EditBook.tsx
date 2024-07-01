@@ -92,7 +92,6 @@ const EditBook = () => {
 	const [postFile] = usePostFileMutation();
 	const [updatePhoto] = useEditPhotoUrlMutation();
 
-
 	const { register, handleSubmit, reset, getValues } = useForm();
 	useEffect(() => {
 		if (isSuccess && data) {

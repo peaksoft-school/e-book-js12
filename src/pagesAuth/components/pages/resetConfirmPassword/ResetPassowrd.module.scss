@@ -33,7 +33,7 @@
 			flex-direction: column;
 			align-items: center;
 			justify-content: center;
-      gap: 20px 0px;
+			gap: 20px 0px;
 			max-width: 437px;
 			width: 100%;
 			label {
@@ -41,13 +41,12 @@
 				flex-direction: column;
 				gap: 10px 0px;
 				width: 100%;
-        position: relative;
-        .type_password{
-          
-          position: absolute;
-          top: 53%;
-          right: 5%;
-        }
+				position: relative;
+				.type_password {
+					position: absolute;
+					top: 53%;
+					right: 5%;
+				}
 				p {
 					font-family: Open Sans;
 					font-size: 14px;

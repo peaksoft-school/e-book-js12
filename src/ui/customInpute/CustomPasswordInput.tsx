@@ -44,7 +44,7 @@ const CustomPasswordInput: FC<TypeProps> = ({
 				className={`${scss.password_input} ${isFocused ? scss.FocusedIcon : ''}`}
 				onFocus={handleFocus}
 				onBlur={handleBlur}
-				{...register(`${registerName}`, {require:true})}
+				{...register(`${registerName}`, { require: true })}
 			/>
 			<div
 				onClick={togglePasswordVisibility}
