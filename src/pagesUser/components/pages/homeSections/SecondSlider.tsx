@@ -54,7 +54,7 @@ const SecondSlider: FC = () => {
 		speed: 500,
 		slidesToShow: 3,
 		slidesToScroll: 1,
-		dots: true,
+		dots: false,
 		autoplay: true,
 		autoplaySpeed: 3000,
 		nextArrow: (

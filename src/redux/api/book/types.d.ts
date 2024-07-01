@@ -73,6 +73,7 @@ namespace BOOK {
 		statusBook: string;
 		bestseller: boolean;
 		amountOfBook: number;
+		inBasket: boolean;
 	};
 	type Duration = {
 		seconds: number;
@@ -282,4 +283,21 @@ namespace BOOK {
 	};
 
 	type getByIdVendorRequest = number;
+
+	type GetAllBooksResponse = {
+		totalNumberOfBooks: number;
+		numberOfUnViewed: number;
+		books: Book[];
+	};
+
+	type Book = {
+		id: number;
+		title: string;
+		createdAt: string;
+		price: number;
+		imageUrl: string;
+		isViewed: boolean;
+	};
+
+	type GetAllBooksRequest = void;
 }

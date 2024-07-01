@@ -49,11 +49,30 @@ const Login = () => {
 				navigate('/');
 			}
 		}
+
 		if (results.error) {
-			messageApi.open({
-				type: 'warning',
-				content: results.error.data.message
-			});
+			if (results.error.status === 400) {
+				if (results.error.data.password && results.error.data.email) {
+					messageApi.open({
+						type: 'warning',
+						content: results.error.data.password
+					});
+					messageApi.open({
+						type: 'warning',
+						content: results.error.data.email
+					});
+				} else if (results.error.data?.email) {
+					messageApi.open({
+						type: 'warning',
+						content: results.error.data.email
+					});
+				} else if (results.error.data?.password) {
+					messageApi.open({
+						type: 'warning',
+						content: results.error.data.password
+					});
+				}
+			}
 		}
 	};
 
@@ -75,7 +94,7 @@ const Login = () => {
 								Email<span>*</span>
 							</label>
 							<CustomLoginInput
-								type="text"
+								type="email"
 								register={register}
 								registerName={'email'}
 								placeholder="Напишите email"

@@ -141,6 +141,16 @@ const api = index.injectEndpoints({
 				method: 'GET'
 			}),
 			providesTags: ['book']
+		}),
+		GetReceiptRequestedBooks: build.query<
+			BOOK.GetAllBooksResponse,
+			BOOK.GetAllBooksRequest
+		>({
+			query: () => ({
+				url: '/api/book/requests/books/',
+				method: 'GET'
+			}),
+			providesTags: ['book']
 		})
 	})
 });
@@ -156,5 +166,6 @@ export const {
 	useFilterBooksMutation,
 	useGetBookByIdVendorQuery,
 	useGetFindAllBookVedorQuery,
-	useGetByIdVendorQuery
+	useGetByIdVendorQuery,
+	useGetReceiptRequestedBooksQuery
 } = api;

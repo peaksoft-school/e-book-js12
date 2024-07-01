@@ -203,10 +203,10 @@ const BookInfo: FC = () => {
 							</div>
 							<div className={scss.section_mony}>
 								<p>{book.price} с</p>
-								{book.bookType === ' AUDIO_BOOK' ? (
+								{book.bookType === 'AUDIO_BOOK' ? (
 									<div className={scss.audioBook}>
 										<audio id="audioPlayer" controls>
-											<source src="audio.mp3" type="audio/mpeg" />
+											<source src={book.fragmentAudUrl} type="audio/mpeg" />
 										</audio>
 									</div>
 								) : null}
@@ -216,7 +216,11 @@ const BookInfo: FC = () => {
 									<p>Автор</p>
 									<p>Жанр</p>
 									<p>Язык</p>
-									<p>Издательство</p>
+									{book.bookType === 'AUDIO_BOOK' ? null : (
+										<>
+											<p>Издательство</p>
+										</>
+									)}
 									<p>Год выпуска</p>
 									{book.bookType === 'AUDIO_BOOK' ? (
 										<p>Длительность</p>
@@ -328,12 +332,17 @@ const BookInfo: FC = () => {
 										<IconSuccess />
 										<div className={scss.info_text}>
 											{messageRejected && (
-												<span>
-													<p>”{book.title}” </p>
-													{messageRejected}
-												</span>
+												<p>
+													<strong>”{book.title}”</strong>
+													Отклонен
+												</p>
 											)}
-											{messageApproeved && <span>“{messageApproeved}”</span>}
+											{messageApproeved && (
+												<p>
+													<strong>”{book.title}” </strong>
+													Успешно принят
+												</p>
+											)}
 										</div>
 									</div>
 								</Modal>

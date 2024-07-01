@@ -385,7 +385,7 @@
 						img {
 							width: 100%;
 							max-width: 197px;
-							max-height: 297px;
+							min-height: 297px;
 							height: auto;
 
 							@media (max-width: 830px) {
