@@ -32,6 +32,7 @@ namespace USERALLHISTORY {
 		priceWithDiscount: number;
 		createdAt: string;
 		historyStatus: string;
+		urlFile: string;
 	}[];
 
 	export type UserHistoryActionRequest = number;

@@ -1,7 +1,9 @@
 import { useClientProfileHistoryQuery } from '@/src/redux/api/userHistory';
 import scss from './ProfilePageHistory.module.scss';
-import { useNavigate } from 'react-router-dom';
-import { IconSuccess } from '@/src/assets/icons';
+// import { useNavigate } from 'react-router-dom';
+import { IconSuccess, IconX } from '@/src/assets/icons';
+import { useState } from 'react';
+import ModalBook from '@/src/ui/customModals/Modal';
 
 interface GetResponse {
 	data: UserHistory[];
@@ -23,8 +25,10 @@ interface UserHistory {
 const ProfilePageHistory = () => {
 	const clientId = 3;
 	const { data } = useClientProfileHistoryQuery<GetResponse>(clientId);
+	const [isModalOpen, setIsModalOpen] = useState(false);
 
-	const navigate = useNavigate();
+	// const navigate = useNavigate();
+
 	return (
 		<section className={scss.ProfileHistorySection}>
 			<div className="container">
@@ -56,7 +60,7 @@ const ProfilePageHistory = () => {
 								data.map((historyItem) => (
 									<div className={scss.line} key={historyItem.id}>
 										<div
-											onClick={() => navigate(`/search_book/${historyItem.id}`)}
+											onClick={() => setIsModalOpen(true)}
 											className={scss.book_map_info}
 										>
 											<img
@@ -82,8 +86,6 @@ const ProfilePageHistory = () => {
 											<p className={scss.book_state}>
 												{historyItem.historyStatus === 'COMPLETED' ? (
 													<>
-														{/* Заве - <br />
-														ршен */}
 														<IconSuccess />
 													</>
 												) : (
@@ -91,6 +93,30 @@ const ProfilePageHistory = () => {
 												)}
 											</p>
 										</div>
+										<ModalBook
+											isOpen={isModalOpen}
+											onClose={() => setIsModalOpen(false)}
+										>
+											<div className={scss.modal_content}>
+												<div
+													className={scss.closeIcon}
+													onClick={() => setIsModalOpen(false)}
+												>
+													<IconX />
+												</div>
+												<div>
+													<h1>Modal Content</h1>
+													<div className={scss.audio}>
+														<audio id="audioPlayer" controls>
+															<source
+																// src={historyItem.quantity}
+																type="audio/mpeg"
+															/>
+														</audio>
+													</div>
+												</div>
+											</div>
+										</ModalBook>
 									</div>
 								))
 							) : (

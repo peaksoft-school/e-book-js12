@@ -227,3 +227,34 @@
 		}
 	}
 }
+.modal_content {
+	padding: 20px;
+	width: 100% !important;
+	height: 500px;
+	background-color: white;
+	border-radius: 20px;
+
+	.closeIcon {
+		width: 20px;
+		height: 20px;
+		margin-left: 730px;
+	}
+
+	h1 {
+		font-family: Open Sans;
+		font-size: 18px;
+		font-weight: 700;
+		line-height: 20.8px;
+		text-align: center;
+		color: #f34901;
+	}
+
+	.audio {
+		width: 100%;
+		height: 300px;
+		margin-top: 20px;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
+}
