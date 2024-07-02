@@ -32,7 +32,6 @@ namespace USERALLHISTORY {
 		priceWithDiscount: number;
 		createdAt: string;
 		historyStatus: string;
-		urlFile: string;
 	}[];
 
 	export type UserHistoryActionRequest = number;
@@ -44,11 +43,15 @@ namespace USEFAVORITE {
 		title: string;
 		authorsFullName: string;
 		imageUrl: string;
+		quantity: number;
 		discount: number;
+		discountFromPromoCode: number;
+		historyStatus: string;
 		price: number;
 		priceWithDiscount: number;
 		createdAt: string;
-		quantity: number;
+		urlFile: string;
+		bookType: string;
 	}[];
 
 	export type UserAllFavoriteRequest = number;
