@@ -1,0 +1,134 @@
+main {
+	padding-top: 20px !important;
+}
+
+.confirm_payment {
+	display: flex;
+	gap: 20px;
+	@media (max-width: 826px) {
+		flex-direction: column;
+	}
+	.title_content {
+		display: flex;
+		flex-direction: column;
+		gap: 10px;
+		@media (max-width: 826px) {
+			> div {
+				& > :nth-child(2) {
+					font-size: 14px;
+				}
+			}
+		}
+		> div {
+			& > :first-child {
+				font-size: 13px;
+				font-weight: 600;
+				margin-bottom: 5px;
+			}
+		}
+	}
+	.details_product {
+		> p {
+			margin-bottom: 10px;
+			font-size: 14px;
+			font-weight: 600;
+		}
+	}
+	.historyActions__ul {
+		display: flex;
+		flex-direction: column;
+		gap: 10px;
+	}
+	.historyActions__li {
+		display: grid;
+		grid-template-columns: 1fr 1.5fr 1fr 1.4fr 1fr;
+		align-items: center;
+		justify-items: center;
+		max-width: 700px;
+		gap: 20px;
+
+		@media (max-width: 925px) {
+			font-size: 14px;
+			gap: 10px;
+		}
+		@media (max-width: 540px) {
+			font-size: 12px;
+			grid-template-columns: 0.5fr 1.5fr 0.4fr 1.2fr 1fr;
+			max-width: 500px;
+			gap: 6px;
+		}
+		@media (max-width: 394px) {
+			font-size: 10px;
+		}
+		&_img {
+			max-width: 82px;
+			@media (max-width: 925px) {
+				max-width: 65px;
+			}
+			@media (max-width: 540px) {
+				max-width: 45px;
+			}
+			@media (max-width: 394px) {
+				max-width: 34px;
+			}
+		}
+		&_price__container {
+			display: flex;
+			gap: 8px;
+			margin-top: 3px;
+			span {
+				color: rgb(150, 150, 150);
+				text-decoration: line-through;
+			}
+		}
+		&_discount__container {
+			color: #f10000;
+		}
+		&_title__container {
+			&_authorsFullName {
+				margin-top: 3px;
+				font-family: Open Sans;
+				font-size: 14px;
+				font-weight: 400;
+				line-height: 18.2px;
+				text-align: left;
+				color: #969696;
+			}
+			@media (max-width: 925px) {
+				&_title {
+					font-size: 15px;
+				}
+				&_authorsFullName {
+					font-size: 13px;
+				}
+			}
+			@media (max-width: 540px) {
+				&_title {
+					font-size: 13px;
+				}
+				&_authorsFullName {
+					font-size: 11px;
+				}
+			}
+			@media (max-width: 394px) {
+				&_title {
+					font-size: 11px;
+				}
+				&_authorsFullName {
+					font-size: 9px;
+				}
+			}
+		}
+	}
+}
+
+.confirm_button {
+	background-color: #f34901;
+	color: white !important;
+	padding: 10px 20px;
+	text-decoration: none;
+	display: inline-block;
+	border: none;
+	margin: 30px 0;
+	cursor: pointer;
+}

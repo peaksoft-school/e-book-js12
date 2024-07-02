@@ -31,18 +31,20 @@ interface TypeProps {
 	setOpenModal: (value: boolean | ((prev: boolean) => boolean)) => void;
 	totalAmount: number | undefined;
 	newTestObj: Record<string, string>;
+	refetch: () => void;
 }
 
 const PaymentForm: FC<TypeProps> = ({
 	openModal,
 	setOpenModal,
 	totalAmount,
-	newTestObj
+	newTestObj,
+	refetch
 }) => {
 	const stripe = useStripe();
 	const elements = useElements();
 	const [createPayment] = useCreatePaymentMutation();
-	const [sucsessModal, setSucsessModal] = useState(false);
+	const [successModal, setSuccsessModal] = useState(false);
 
 	const hadnleCreatePayment = async (token: string) => {
 		const newData = {
@@ -54,7 +56,8 @@ const PaymentForm: FC<TypeProps> = ({
 		if ('data' in result) {
 			if (result.data?.httpStatus === 'OK') {
 				setOpenModal(false);
-				setSucsessModal(true);
+				refetch();
+				setSuccsessModal(true);
 			}
 		}
 	};
@@ -116,26 +119,21 @@ const PaymentForm: FC<TypeProps> = ({
 				</div>
 			</Modal>
 			<Modal
-				open={sucsessModal}
+				open={successModal}
 				footer={false}
 				onCancel={() => {
-					setSucsessModal(false);
+					setSuccsessModal(false);
 				}}
 			>
 				<div className={scss.confirm_payment}>
-					<div className={scss.title_content}>
-						<p>confirm to by payment</p>
-						<p>description</p>
-					</div>
-					<div className={scss.detals_product}>
-						<p>Detals</p>
-						<div className={scss.info_content}>
-							<div className={scss.date}>
-								<p>data</p>
-								<p>{Date()}</p>
-							</div>
-						</div>
-					</div>
+					<p className={scss.confirm_payment_bold__title}>Cпасибо!</p>
+					<p className={scss.confirm_payment_bold__title}>
+						Платеж успешно создан.
+					</p>
+					<p className={scss.confirm_payment_actual_info}>
+						Вся актуальная информация о статусе <br />
+						вашего заказа придет на ваш email🤗!
+					</p>
 				</div>
 			</Modal>
 		</>

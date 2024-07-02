@@ -11,9 +11,39 @@ namespace PAYMENT {
 		newData: Record<string, string>;
 	};
 
-	type ComformPaymentResponse = {
-		httpStatus: string;
-		message: string;
+	type ConfirmPaymentResponse = {
+		data?: {
+			httpStatus: string;
+			message: string;
+		};
+		status: number;
+		error?: {
+			status: number;
+			data: {
+				httpStatus: string;
+				message: string;
+			};
+		};
 	};
 	type ConfirmPaymentRequest = string | null;
+
+	type GetPaymentHistoryAction = {
+		id: number;
+		title: string;
+		authorsFullName: string;
+		imageUrl: string;
+		quantity: number;
+		discount: number;
+		discountFromPromoCode: number;
+		price: number;
+		priceWithDiscount: number;
+		createdAt: string;
+	};
+	type GetPaymentDetailsResponse = {
+		totalAmount: number;
+		name: string;
+		email: string;
+		historyActions: GetPaymentHistoryAction[];
+	};
+	type GetPaymentDetailsRequest = string | null;
 }
