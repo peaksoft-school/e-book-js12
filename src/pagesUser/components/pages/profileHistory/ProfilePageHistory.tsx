@@ -1,7 +1,8 @@
+import { useEffect, useState } from 'react';
 import { useClientProfileHistoryQuery } from '@/src/redux/api/userHistory';
 import scss from './ProfilePageHistory.module.scss';
-import { useNavigate } from 'react-router-dom';
-import { IconSuccess } from '@/src/assets/icons';
+import { IconSuccess, IconX } from '@/src/assets/icons';
+import ModalBook from '@/src/ui/customModals/Modal';
 
 interface GetResponse {
 	data: UserHistory[];
@@ -14,17 +15,47 @@ interface UserHistory {
 	imageUrl: string;
 	quantity: number;
 	discount: number;
+	discountFromPromoCode: number;
+	historyStatus: string;
 	price: number;
 	priceWithDiscount: number;
 	createdAt: string;
-	historyStatus: string;
+	urlFile: string | null;
+	bookType: string;
 }
 
 const ProfilePageHistory = () => {
 	const clientId = 3;
 	const { data } = useClientProfileHistoryQuery<GetResponse>(clientId);
+	const [isModalOpen, setIsModalOpen] = useState(false);
+	const [selectedHistoryItem, setSelectedHistoryItem] =
+		useState<UserHistory | null>(null);
 
-	const navigate = useNavigate();
+	const openModal = (historyItem: UserHistory) => {
+		setSelectedHistoryItem(historyItem);
+		setIsModalOpen(true);
+	};
+
+	const closeModal = () => {
+		setSelectedHistoryItem(null);
+		setIsModalOpen(false);
+	};
+
+	useEffect(() => {
+		const pdfContainer = document.getElementById('pdfContainer');
+		const objectElement = document.createElement('object');
+		objectElement.setAttribute(
+			'data',
+			'https://ebook-b12.s3.eu-central-1.amazonaws.com/1718441363736_92533655.a4.pdf'
+		);
+		pdfContainer?.appendChild(objectElement);
+
+		return () => {
+			// Очищаем контейнер при размонтировании компонента
+			pdfContainer?.removeChild(objectElement);
+		};
+	}, []);
+
 	return (
 		<section className={scss.ProfileHistorySection}>
 			<div className="container">
@@ -56,7 +87,7 @@ const ProfilePageHistory = () => {
 								data.map((historyItem) => (
 									<div className={scss.line} key={historyItem.id}>
 										<div
-											onClick={() => navigate(`/search_book/${historyItem.id}`)}
+											onClick={() => openModal(historyItem)}
 											className={scss.book_map_info}
 										>
 											<img
@@ -82,8 +113,6 @@ const ProfilePageHistory = () => {
 											<p className={scss.book_state}>
 												{historyItem.historyStatus === 'COMPLETED' ? (
 													<>
-														{/* Заве - <br />
-														ршен */}
 														<IconSuccess />
 													</>
 												) : (
@@ -91,6 +120,40 @@ const ProfilePageHistory = () => {
 												)}
 											</p>
 										</div>
+										<ModalBook
+											isOpen={
+												isModalOpen &&
+												selectedHistoryItem?.id === historyItem.id
+											}
+											onClose={closeModal}
+										>
+											<div className={scss.modal_content}>
+												<div className={scss.closeIcon} onClick={closeModal}>
+													<IconX />
+												</div>
+												<div>
+													{selectedHistoryItem?.bookType === 'AUDIO_BOOK' ? (
+														<div className={scss.audio}>
+															<audio id="audioPlayer" controls>
+																{selectedHistoryItem.urlFile && (
+																	<source
+																		src={selectedHistoryItem.urlFile}
+																		type="audio/mpeg"
+																	/>
+																)}
+															</audio>
+														</div>
+													) : selectedHistoryItem?.bookType ===
+													  'ONLINE_BOOK' ? (
+														<div></div>
+													) : selectedHistoryItem?.bookType === 'PAPER_BOOK' ? (
+														<div className={scss.test}>
+															<object data="https://ebook-b12.s3.eu-central-1.amazonaws.com/1718441363736_92533655.a4.pdf"></object>
+														</div>
+													) : null}
+												</div>
+											</div>
+										</ModalBook>
 									</div>
 								))
 							) : (
