@@ -1,14 +1,22 @@
 import scss from './LayoutAuth.module.scss';
-import { Routes, Route } from 'react-router-dom';
-// import test from '../../../assets/authBacground/141525-777930401_large.mp4';
+import { Routes, Route, useLocation } from 'react-router-dom';
+import test from '../../../assets/authBacground/141525-777930401_large.mp4';
 import HomePage from '../pages/HomePage';
 import Login from '../pages/login/Login';
 import Registration from '../pages/registration/Registration';
 import VendorRegistration from '../pages/vendorRegistration/VendorRegistration';
 import ForgotPassword from '../pages/forgotPassword/ForgotPassword';
 import ResetPassword from '../pages/resetConfirmPassword/ResetPassword';
+import { useEffect } from 'react';
 
 const LayoutAuth = () => {
+	const localtion = useLocation();
+	useEffect(() => {
+		if (localtion.pathname === '/auth/*') {
+			localStorage.removeItem('token');
+			localStorage.removeItem('EBOOK');
+		}
+	}, [localtion]);
 	return (
 		<>
 			<div className={scss.layout}>
@@ -19,7 +27,7 @@ const LayoutAuth = () => {
 					id="background-video"
 					className={scss['background-video']}
 				>
-					{/* <source src={test} type="video/mp4" /> */}
+					<source src={test} type="video/mp4" />
 				</video>
 				<main>
 					<Routes>

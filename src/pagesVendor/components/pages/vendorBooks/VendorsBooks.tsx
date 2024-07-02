@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { FC, useEffect, useState } from 'react';
 import scss from './VendorsBooks.module.scss';
 import { IconPencil } from '@tabler/icons-react';
@@ -61,7 +62,6 @@ const VendorsBooks: FC = () => {
 		}
 	}, [location]);
 
-	console.log(sizePage, booksData?.totalBooks, booksData?.bookResponses.length);
 
 	return (
 		<>
@@ -225,7 +225,7 @@ const VendorsBooks: FC = () => {
 													setSizePage(12);
 												}}
 											>
-												Вернутся начать
+												Вернутся назад
 											</CustomSeeMoreButton>
 										</>
 									) : (

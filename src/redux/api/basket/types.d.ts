@@ -46,6 +46,13 @@ namespace BASKET {
 	type CountBookBasketResponse = {
 		httpStatus: string;
 		message: string;
+		error: {
+			status: number;
+			data: {
+				httpStatus: string;
+				message: string;
+			};
+		};
 	};
 	type CountBookBasketRequest = {
 		bookId: number;

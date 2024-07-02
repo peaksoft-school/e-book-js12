@@ -18,8 +18,10 @@ const Header = () => {
 	const [isNavBar, setIsNavBar] = useState<boolean>(false);
 	const [isUser, setIsUser] = useState<boolean>(false);
 	const [userExit, setUserExit] = useState<boolean>(false);
-	const localName = localStorage.getItem('NameClient');
 	const localAuth = localStorage.getItem('client');
+	const localName = localStorage.getItem('NameClient');
+	
+
 	const location = useLocation();
 	const { data: countBasket } = useGetCountInBasketQuery();
 	const [searchTerm, setSearchTerm] = useState<string>('');

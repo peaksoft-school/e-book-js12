@@ -34,12 +34,14 @@
 .slick-list {
 	width: 54rem;
 	padding-left: -3rem;
+	user-select: none;
 }
 
 .slider img {
 	width: 300px;
 	height: 468px;
 	opacity: 0px;
+	user-select: none;
 }
 .description-box_box .description {
 	width: 100%;
@@ -269,13 +271,16 @@
 @media screen and (max-width: 600px) {
 	.jo {
 		margin-top: 40px;
+		user-select: none;
 	}
 	.keen-slider__slide img {
 		width: 70%;
 		height: 80%;
+		user-select: none;
 	}
 	.keen-slider__slide {
 		transform: scale(2);
+		user-select: none;
 	}
 	.slider {
 		transform: scale(0.67);
@@ -283,6 +288,7 @@
 		width: 300px;
 		position: relative;
 		opacity: 0;
+		user-select: none;
 	}
 	.activeSlider {
 		transform: scale(1);

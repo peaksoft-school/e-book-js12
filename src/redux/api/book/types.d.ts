@@ -53,8 +53,17 @@ namespace BOOK {
 	};
 
 	type DeleteProductResponse = {
-		httpStatus: string;
-		message: string;
+		data:{
+			httpStatus: string;
+			message: string;
+		}
+		status: number;
+		error: {
+			status: number;
+			data: {
+				message: string;
+			};
+		};
 	};
 	type DeleteProductRequest = number;
 

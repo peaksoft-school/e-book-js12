@@ -253,7 +253,6 @@ const EditBook = () => {
 
 	const onSubmit: SubmitHandler<FieldValues> = async () => {
 		const book = getValues();
-		setBookName(book.bookName);
 		const newUpDateBook = {
 			title: book.title,
 			authorsFullName: book.authorsFullName,
@@ -280,6 +279,7 @@ const EditBook = () => {
 		}).unwrap();
 
 		if (result.httpStatus === 'OK') {
+			setBookName(newUpDateBook.title);
 			setModal(true);
 			reset();
 			setClickBestseller(false);

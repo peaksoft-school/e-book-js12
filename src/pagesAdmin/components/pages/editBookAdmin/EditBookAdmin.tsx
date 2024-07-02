@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import CustomUserNameInput from '@/src/ui/customInpute/CustomUserNameInput';
 import scss from './EditBookAdmin.module.scss';
-import { Modal } from 'antd';
+import { Modal, message } from 'antd';
 import {
 	IconBlackCircle,
 	IconBlackSquare,
@@ -18,12 +18,15 @@ import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
 import {
 	useEditBookMutation,
 	useEditPhotoUrlMutation,
-	usePostFileMutation
+	usePostFileMutation,
+	useUpDateAudioFileMutation,
+	useUpDateFragmentAudioFileMutation,
+	useUpDatePdfMutation
 } from '@/src/redux/api/addBook';
 import CustomAudioDownloadInput from '@/src/ui/customAudioInput/CustomAudioDownloadInput';
 import CustomBasketButton from '@/src/ui/customButton/CustomBasketButton';
 import CustomPDFDownloadInput from '@/src/ui/customPDFInput/CustomPDFDownloadInput';
-import { useGetBookByIdQuery } from '@/src/redux/api/book';
+import { useGetBookByIdVendorQuery } from '@/src/redux/api/book';
 
 interface TypeJenre {
 	jenreId: number;
@@ -38,10 +41,11 @@ interface TypeLanguage {
 	languageName: string;
 }
 
-const EditBookAdmin = () => {
+const EditBook = () => {
 	const paramsId = useParams();
 	const bookId = Number(paramsId.id);
-	const { data } = useGetBookByIdQuery(bookId);
+	const { data, isSuccess } = useGetBookByIdVendorQuery(bookId);
+
 	const [peperBook, setPeperBook] = useState(true);
 	const [audioBook, setAudioBook] = useState(false);
 	const [ebook, setEBook] = useState(false);
@@ -50,15 +54,15 @@ const EditBookAdmin = () => {
 	const [iconjenre, setIconJenre] = useState(false);
 	const [firstPhoto, setFirstPhoto] = useState<string>('');
 	const [secondPhoto, setSecondPhoto] = useState<string>('');
-	const [audioFileFragment, setAudioFileFragment] = useState('');
-	const [audioFile, setAudioFile] = useState('');
 	const [duration, setDuration] = useState(0);
+	const [durationFragment, setDuratoinFragment] = useState(0);
 	const [hourValue, setHourValue] = useState('');
 	const [minutsValue, setMinutsValue] = useState('');
 	const [secondValue, setSecondValue] = useState('');
 	const [pdfFileName, setPdfFileName] = useState<File>();
 	const [selectLanguage, setSelectLanguage] = useState(false);
 	const [bookType, setBookType] = useState(data?.bookType);
+	const [bookNmae, setBookName] = useState('');
 	const [clickBestseller, setClickBestseller] = useState<boolean | undefined>(
 		false
 	);
@@ -70,8 +74,12 @@ const EditBookAdmin = () => {
 	const [initialImgSecond, setInitialImgSecond] = useState<string | undefined>(
 		''
 	);
-	const [test, setTest] = useState('');
+	const [isUploadedPdfFile, setIsUploadedPdfFile] = useState(false);
 	const navigate = useNavigate();
+
+	const [updateAudioFile] = useUpDateAudioFileMutation();
+	const [updateFragmentAudioFile] = useUpDateFragmentAudioFileMutation();
+	const [updatePdfFile] = useUpDatePdfMutation();
 
 	const [languageSeleced, setLanguageSelected] = useState<
 		TypeLanguage | undefined
@@ -83,19 +91,32 @@ const EditBookAdmin = () => {
 
 	const [postFile] = usePostFileMutation();
 	const [updatePhoto] = useEditPhotoUrlMutation();
-	const { register, handleSubmit, reset } = useForm({
-		defaultValues: {
-			title: data?.title,
-			authorsFullName: data?.authorsFullName,
-			publishingHouse: data?.publishingHouse,
-			publishedYear: data?.publishedYear,
-			volume: data?.volume,
-			discount: data?.discount,
-			price: data?.price,
-			amountOfBook: data?.amountOfBook
+
+	const { register, handleSubmit, reset, getValues } = useForm();
+	useEffect(() => {
+		if (isSuccess && data) {
+			reset({
+				title: data.title || '',
+				authorsFullName: data.authorsFullName || '',
+				publishingHouse: data.publishingHouse || '',
+				publishedYear: data.publishedYear || '',
+				volume: data.volume || '',
+				discount: data.discount || '',
+				price: data.price || '',
+				amountOfBook: data.amountOfBook || ''
+			});
 		}
-	});
+	}, [isSuccess, data, reset]);
+
 	const [addBookVendor] = useEditBookMutation();
+	const [newPhoto, setNewPhoto] = useState('');
+	const [secondNewPhoto, setSecondNewPhoto] = useState('');
+	const [newAudioFile, setNewAudioFile] = useState('');
+	const [fragmentNewAudioFile, setFragmentNewAudioFile] = useState('');
+	const [messageApi, handleMessage] = message.useMessage();
+
+	const [isFileUploadedFragment, setIsFileUploadedFragment] = useState(false);
+	const [isFileUploaded, setIsFileUploaded] = useState(false);
 
 	const jenreData = [
 		{
@@ -171,37 +192,79 @@ const EditBookAdmin = () => {
 		}
 	];
 
-	const EditPhotoFirst = async () => {
-		if (test !== '') {
-			const newData = {
-				oldUrl: inintialImg,
-				newUrl: 'asdasdsd'
-			};
-			await updatePhoto({ newData, bookId });
-		}
-	};
-	// const EditPhotoSecond = async () => {
-	// 	const newData = {
-	// 		oldUrl: initialImgSecond,
-	// 		newUrl: secondPhoto
-	// 	};
-	// 	await updatePhoto({ newData, bookId });
-	// };
+	console.log(description);
 
-	const onSubmit: SubmitHandler<FieldValues> = async (book) => {
+	useEffect(() => {
+		const EditPhotoFirst = async () => {
+			if (newPhoto !== '') {
+				const newData = {
+					oldUrl: inintialImg,
+					newUrl: newPhoto
+				};
+				const result = await updatePhoto({ newData, bookId });
+
+				if ('data' in result) {
+					if (result.data?.httpStatus === 'OK') {
+						messageApi.open({
+							type: 'success',
+							content: result.data.message
+						});
+					} else {
+						messageApi.open({
+							type: 'warning',
+							content: result.data?.error.data.message
+						});
+					}
+				}
+			}
+		};
+		EditPhotoFirst();
+	}, [firstPhoto]);
+
+	useEffect(() => {
+		const EditPhotoSecond = async () => {
+			if (secondNewPhoto !== '') {
+				const newData = {
+					oldUrl: initialImgSecond,
+					newUrl: secondNewPhoto
+				};
+				const result = await updatePhoto({
+					newData,
+					bookId
+				});
+
+				if ('data' in result) {
+					if (result.data?.httpStatus === 'OK') {
+						messageApi.open({
+							type: 'success',
+							content: result.data.message
+						});
+					} else {
+						messageApi.open({
+							type: 'warning',
+							content: result.data?.error.data.message
+						});
+					}
+				}
+			}
+		};
+		EditPhotoSecond();
+	}, [secondNewPhoto]);
+
+	const onSubmit: SubmitHandler<FieldValues> = async () => {
+		const book = getValues();
 		const newUpDateBook = {
-			fragmentAudUrl: audioFileFragment,
-			fullAudUrl: audioFile,
-			pdfUrl: pdfFile,
-			duration: duration,
 			title: book.title,
 			authorsFullName: book.authorsFullName,
-			publishingHouse: book.publishingHouse !== '' ? book.publishingHouse : ' ',
+			publishingHouse:
+				book.publishingHouse !== '' || book.publishingHouse !== undefined
+					? book.publishingHouse
+					: ' ',
 			description: description,
 			fragment: fragment,
 			publishedYear: book.publishedYear,
 			volume: book.volume !== '' ? book.volume : 0,
-			amountOfBook: book.amountOfBook,
+			amountOfBook: book.amountOfBook === '' ? 0 : book.amountOfBook,
 			discount: book.discount,
 			price: book.price,
 			bestseller: clickBestseller
@@ -216,20 +279,19 @@ const EditBookAdmin = () => {
 		}).unwrap();
 
 		if (result.httpStatus === 'OK') {
+			setBookName(newUpDateBook.title);
 			setModal(true);
 			reset();
 			setClickBestseller(false);
 			setFragment('');
 			setDescription('');
 			setPdfFile('');
-			setAudioFile('');
-			setAudioFileFragment('');
 			setFirstPhoto('');
 			setSecondPhoto('');
 			setDelPhoto(false);
 			setTimeout(() => {
-				navigate('/admin');
-			}, 2000);
+				navigate('/vendor/home');
+			}, 3000);
 		}
 	};
 
@@ -240,27 +302,38 @@ const EditBookAdmin = () => {
 			const status = result.data!.httpStatus;
 			if (status === 'OK') {
 				setPdfFile(result.data!.message);
+				setIsUploadedPdfFile(true);
 			}
 		}
 	};
+	useEffect(() => {
+		const editPdfFile = async () => {
+			if (pdfFile !== '') {
+				const result = await updatePdfFile({ pdfFile, id: bookId });
+				console.log(result);
+			}
+		};
+		editPdfFile();
+	}, [pdfFile]);
 
 	const handlePhotoChange = async (e: ChangeEvent<HTMLInputElement>) => {
 		const file = e.target.files ? e.target.files[0] : null;
 		const result = await postFile(file!);
 		if ('data' in result) {
 			if (result.data!.httpStatus === 'OK') {
-				setFirstPhoto(result.data!.message);
-				setTest(result.data!.message);
-				EditPhotoFirst();
+				setFirstPhoto(result.data.message);
+				setNewPhoto(result.data.message);
 			}
 		}
 	};
+
 	const handleSecondPhotoChange = async (e: ChangeEvent<HTMLInputElement>) => {
 		const file = e.target.files ? e.target.files[0] : null;
 		const result = await postFile(file!);
 		if ('data' in result) {
 			if (result.data!.httpStatus === 'OK') {
 				setSecondPhoto(result.data!.message);
+				setSecondNewPhoto(result.data?.message);
 			}
 		}
 	};
@@ -283,7 +356,8 @@ const EditBookAdmin = () => {
 		const result = await postFile(e);
 		if ('data' in result) {
 			if (result.data!.httpStatus === 'OK') {
-				setAudioFileFragment(result.data!.message);
+				setFragmentNewAudioFile(result.data.message);
+				setIsFileUploadedFragment(true);
 			}
 		}
 	};
@@ -292,17 +366,31 @@ const EditBookAdmin = () => {
 		const result = await postFile(e);
 		if ('data' in result) {
 			if (result.data!.httpStatus === 'OK') {
-				setAudioFile(result.data!.message);
+				setNewAudioFile(result.data.message);
+				setIsFileUploaded(true);
 			}
 		}
 	};
+	const editAudioFile = async () => {
+		if (newAudioFile !== '') {
+			const newData = {
+				audFullUrl: newAudioFile,
+				duration: duration
+			};
+			await updateAudioFile({ newData, bookId });
+		}
+	};
 
-	// const defaultGenre = () => {
-	// 	const ganre = jenreData.find((item) =>
-	// 		item.englishName === data?.genre ? item.jenreName : null
-	// 	);
-	// 	return setSelectDataJenre(ganre);
-	// };
+	const editFragmentAudioFile = async () => {
+		if (fragmentNewAudioFile !== '') {
+			const newData = {
+				audFullUrl: fragmentNewAudioFile,
+				duration: durationFragment
+			};
+			await updateFragmentAudioFile({ newData, bookId });
+		}
+	};
+
 	const convertSecondsToHoursMinutesAndSeconds = (totalSeconds: number) => {
 		const hours = Math.floor(totalSeconds / 3600);
 		totalSeconds %= 3600;
@@ -312,26 +400,21 @@ const EditBookAdmin = () => {
 		setMinutsValue(minutes.toFixed());
 		setSecondValue(seconds.toFixed());
 	};
-	if (modal === true) {
-		setTimeout(() => {
-			setModal(false);
-		}, 3000);
-	}
+
 	useEffect(() => {
 		if (data?.bookType === 'PAPER_BOOK') {
 			setPeperBook(true);
 			setAudioBook(false);
 			setEBook(false);
 		} else if (data?.bookType === 'AUDIO_BOOK') {
-			setAudioBook(!audioBook);
+			setAudioBook(true);
 			setPeperBook(false);
 			setEBook(false);
 		} else if (data?.bookType === 'ONLINE_BOOK') {
-			setEBook(!ebook);
+			setEBook(true);
 			setAudioBook(false);
 			setPeperBook(false);
 		}
-
 		const defaultLanguage = options.find((item) =>
 			item.language === data?.language ? item.languageName : null
 		);
@@ -346,19 +429,26 @@ const EditBookAdmin = () => {
 		setClickBestseller(data?.bestseller);
 		setDescription(data?.description);
 		setFragment(data?.fragment);
-	}, [data, fragment, description, firstPhoto, secondPhoto]);
+		if (modal === true) {
+			setTimeout(() => {
+				setModal(false);
+			}, 3000);
+		}
+		editAudioFile();
+		editFragmentAudioFile();
 
-	useEffect(() => {
-		convertSecondsToHoursMinutesAndSeconds(duration);
-	}, [duration]);
+		convertSecondsToHoursMinutesAndSeconds(durationFragment);
+	}, [data, firstPhoto, secondPhoto, modal, newAudioFile]);
+
 	return (
-		<section className={scss.EditBookAdmin}>
+		<section className={scss.EditBook}>
 			<div className={scss.container}>
-				<form onSubmit={handleSubmit(onSubmit)} className={scss.content}>
+				<div className={scss.content}>
+					{handleMessage}
 					<div className={scss.links}>
 						<Link
-							to={'/admin'}
-							className={`${scss.link_to_home} ${location.pathname === '/admin' ? scss.link_to_home_active : ''}`}
+							to={'/vendor/home'}
+							className={`${scss.link_to_home} ${location.pathname === '/vendor' ? scss.link_to_home_active : ''}`}
 						>
 							Главная
 						</Link>
@@ -380,7 +470,11 @@ const EditBookAdmin = () => {
 							<div className={scss.container_add_photo}>
 								<div className={scss.card_first}>
 									<CustomAddPhoto
-										onChange={(e) => handlePhotoChange(e)}
+										onChange={(e) => {
+											e.preventDefault();
+											e.stopPropagation();
+											handlePhotoChange(e);
+										}}
 										label="Главное фото"
 										initialState={inintialImg!}
 										setDelPhoto={setDelPhoto}
@@ -427,7 +521,14 @@ const EditBookAdmin = () => {
 							</div>
 						</div>
 					</div>
-					<div className={scss.inputs_container}>
+					<form
+						onSubmit={(e) => {
+							e.preventDefault();
+							e.stopPropagation();
+							handleSubmit(onSubmit);
+						}}
+						className={scss.inputs_container}
+					>
 						<div className={scss.type_book}>
 							<p>Тип</p>
 							<div className={scss.types}>
@@ -905,11 +1006,11 @@ const EditBookAdmin = () => {
 									</div>
 									<div className={scss.box_last}>
 										<label>
-											Загрузите фрагмент аудиозаписи
+											Загрузите фрагмент аудиозаписи для редактировании
 											<div className={scss.audio_input}>
 												<CustomAudioDownloadInput
-													isFileUploaded
-													setDuration={() => {}}
+													isFileUploaded={isFileUploadedFragment}
+													setDuration={setDuratoinFragment}
 													accept="audio/*"
 													onChange={(e) => {
 														handleAudioFragmetChange(e);
@@ -919,10 +1020,10 @@ const EditBookAdmin = () => {
 											</div>
 										</label>
 										<label>
-											Загрузите аудиозапись
+											Загрузите аудиозапись для редактировании
 											<div className={scss.audio_input}>
 												<CustomAudioDownloadInput
-													isFileUploaded
+													isFileUploaded={isFileUploaded}
 													setDuration={setDuration}
 													accept="audio/*"
 													onChange={(e) => {
@@ -1143,7 +1244,7 @@ const EditBookAdmin = () => {
 											<div className={scss.box_last}>
 												<CustomPDFDownloadInput
 													onChange={handleFileChange}
-													isFileUploaded
+													isFileUploaded={isUploadedPdfFile}
 													accept="application/pdf"
 												/>
 												{pdfFileName && (
@@ -1159,7 +1260,7 @@ const EditBookAdmin = () => {
 						<div className={scss.btn_content}>
 							<CustomBasketButton
 								children={'Редактировать'}
-								onClick={() => {}}
+								onClick={onSubmit}
 								nameClass={scss.button}
 								type="submit"
 							/>
@@ -1174,18 +1275,18 @@ const EditBookAdmin = () => {
 									<IconSuccess />
 									<div className={scss.info_text}>
 										<p>
-											<span>“Гарри Поттер и Тайная комната”</span> <br />
+											<span>“{bookNmae}”</span> <br />
 											успешно Редактировано!
 										</p>
 									</div>
 								</div>
 							</Modal>
 						</div>
-					</div>
-				</form>
+					</form>
+				</div>
 			</div>
 		</section>
 	);
 };
 
-export default EditBookAdmin;
+export default EditBook;
