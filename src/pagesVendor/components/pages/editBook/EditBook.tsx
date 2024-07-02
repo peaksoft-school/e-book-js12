@@ -204,7 +204,7 @@ const EditBook = () => {
 				const result = await updatePhoto({ newData, bookId });
 
 				if ('data' in result) {
-					if (result.data.httpStatus === 'OK') {
+					if (result.data?.httpStatus === 'OK') {
 						messageApi.open({
 							type: 'success',
 							content: result.data.message
@@ -212,7 +212,7 @@ const EditBook = () => {
 					} else {
 						messageApi.open({
 							type: 'warning',
-							content: result.data.error.data.message
+							content: result.data?.error.data.message
 						});
 					}
 				}
@@ -234,7 +234,7 @@ const EditBook = () => {
 				});
 
 				if ('data' in result) {
-					if (result.data.httpStatus === 'OK') {
+					if (result.data?.httpStatus === 'OK') {
 						messageApi.open({
 							type: 'success',
 							content: result.data.message
@@ -242,7 +242,7 @@ const EditBook = () => {
 					} else {
 						messageApi.open({
 							type: 'warning',
-							content: result.data.error.data.message
+							content: result.data?.error.data.message
 						});
 					}
 				}
@@ -332,7 +332,7 @@ const EditBook = () => {
 		if ('data' in result) {
 			if (result.data!.httpStatus === 'OK') {
 				setSecondPhoto(result.data!.message);
-				setSecondNewPhoto(result.data.message);
+				setSecondNewPhoto(result.data?.message);
 			}
 		}
 	};

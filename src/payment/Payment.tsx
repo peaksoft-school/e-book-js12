@@ -9,7 +9,7 @@ interface TypeProps {
 	setOpenModal: (value: boolean | ((prev: boolean) => boolean)) => void;
 	totalAmount: number | undefined;
 	test: Record<string, string>;
-	refetch: () => void
+	refetch: () => void;
 }
 
 const Payment: FC<TypeProps> = ({

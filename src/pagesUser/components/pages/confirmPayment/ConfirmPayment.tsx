@@ -49,9 +49,7 @@ const ConfirmPayment = () => {
 				/>
 				<div className={scss.historyActions__li_title__container}>
 					<p className={scss.historyActions__li_title__container_title}>
-						{el.title.length > 26
-							? el.title.slice(0, 13) + '...'
-							: el.title}
+						{el.title.length > 26 ? el.title.slice(0, 13) + '...' : el.title}
 					</p>
 					<p
 						className={scss.historyActions__li_title__container_authorsFullName}
