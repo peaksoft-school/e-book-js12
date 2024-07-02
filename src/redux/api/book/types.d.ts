@@ -53,10 +53,10 @@ namespace BOOK {
 	};
 
 	type DeleteProductResponse = {
-		data:{
+		data: {
 			httpStatus: string;
 			message: string;
-		}
+		};
 		status: number;
 		error: {
 			status: number;

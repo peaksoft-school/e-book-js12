@@ -6,13 +6,11 @@ const api = index.injectEndpoints({
 			PAYMENT.CreatePaymentResponse,
 			PAYMENT.CreatePaymentRequest
 		>({
-			query: ({ newData, token, test }) => (
-				{
-					url: `/api/stripe/create/payment?token=${token}&totalAmount=${test}`,
-					method: 'POST',
-					body: newData
-				}
-			),
+			query: ({ newData, token, test }) => ({
+				url: `/api/stripe/create/payment?token=${token}&totalAmount=${test}`,
+				method: 'POST',
+				body: newData
+			}),
 			invalidatesTags: ['payment']
 		}),
 		GetPaymentDetails: build.query<

@@ -10,7 +10,7 @@ import {
 	useClientProfileMutation,
 	useDeletUserProfileMutation
 } from '@/src/redux/api/userProfile';
-import {  useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { Modal } from 'antd';
 
 const ProfileClient: React.FC = () => {

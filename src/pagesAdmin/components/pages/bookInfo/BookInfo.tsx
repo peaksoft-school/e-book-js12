@@ -306,10 +306,7 @@ const BookInfo: FC = () => {
 								{location.pathname === `/admin/books/${id}` ? (
 									<CustomBasketButton
 										nameClass={scss.basket_btn}
-										onClick={() => {
-										
-											
-										}}
+										onClick={() => {}}
 										type="button"
 									>
 										<p className={scss.boot1}>Редактировать</p>

@@ -62,7 +62,6 @@ const VendorsBooks: FC = () => {
 		}
 	}, [location]);
 
-
 	return (
 		<>
 			{isLoading ? (

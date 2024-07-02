@@ -262,7 +262,7 @@ const Header = () => {
 												<button
 													onClick={() => {
 														setUserExit(false);
-													HandleExitVendor();
+														HandleExitVendor();
 													}}
 												>
 													Выйти

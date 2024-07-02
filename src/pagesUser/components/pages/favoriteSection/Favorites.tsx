@@ -49,7 +49,7 @@ const FavoritSection: FC = () => {
 	};
 
 	const handleAddToBasket = async (id: number) => {
-		const result = await addBookToBasket(id);	
+		const result = await addBookToBasket(id);
 		if ('data' in result) {
 			const { httpStatus } = result.data!;
 			if (httpStatus === 'OK') {
