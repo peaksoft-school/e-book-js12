@@ -3,12 +3,14 @@ import { Elements } from '@stripe/react-stripe-js';
 import PaymentForm from './PaymentForm';
 import { Stripe, loadStripe } from '@stripe/stripe-js';
 import { FC } from 'react';
+import { MessageInstance } from 'antd/es/message/interface';
 
 interface TypeProps {
 	openModal: boolean;
 	setOpenModal: (value: boolean | ((prev: boolean) => boolean)) => void;
 	totalAmount: number | undefined;
 	test: Record<string, string>;
+	messageApi: MessageInstance;
 	refetch: () => void;
 }
 
@@ -17,6 +19,7 @@ const Payment: FC<TypeProps> = ({
 	setOpenModal,
 	totalAmount,
 	test,
+	messageApi,
 	refetch
 }) => {
 	const stripeTestPromise = loadStripe(
@@ -27,6 +30,7 @@ const Payment: FC<TypeProps> = ({
 		<>
 			<Elements stripe={stripeTestPromise}>
 				<PaymentForm
+					message={messageApi}
 					totalAmount={totalAmount}
 					openModal={openModal}
 					setOpenModal={setOpenModal}

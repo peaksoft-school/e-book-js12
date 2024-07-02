@@ -1,9 +1,9 @@
-import { FC, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 import scss from './VendorsBooks.module.scss';
 import { IconPencil } from '@tabler/icons-react';
 import girl_img from '../../../../assets/img/Knowledgecuate.png';
 
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { IconArrowBottom, IconDelete, IconWhiteLike } from '@/src/assets/icons';
 import ThreeDotIcon from '@/src/assets/icons/icon-threeDot';
 import {
@@ -15,12 +15,13 @@ import { Modal, Tooltip } from 'antd';
 
 const VendorsBooks: FC = () => {
 	const [isOpen, setIsOpen] = useState<boolean>(false);
-	const [bookId, setBookId] = useState<number | null>(null);
+	const [bookId, setBookId] = useState<number>(0);
 	const navigate = useNavigate();
 	const [sortSelected, setSortSelected] = useState('ALL');
 	const [isOpenBooksType, setIsOpenBooksType] = useState(false);
 	const [isModalOpen, setIsModalOpen] = useState(false);
 	const [sizePage, setSizePage] = useState(12);
+	const location = useLocation();
 
 	const [sortBookData] = useState([
 		{ id: 1, sort: 'ALL', sortName: 'Все' },
@@ -30,7 +31,11 @@ const VendorsBooks: FC = () => {
 		{ id: 5, sort: 'WITH_DISCOUNT', sortName: 'Со скидками' }
 	]);
 
-	const { data: booksData, isLoading } = useGetFindAllBookVedorQuery({
+	const {
+		data: booksData,
+		isLoading,
+		refetch
+	} = useGetFindAllBookVedorQuery({
 		bookOperationType: sortSelected,
 		page: 1,
 		pageSize: sizePage
@@ -50,6 +55,13 @@ const VendorsBooks: FC = () => {
 	const handlePageSizeBook = () => {
 		setSizePage(sizePage + 12);
 	};
+	useEffect(() => {
+		if (location.pathname === '/vendor/home') {
+			refetch();
+		}
+	}, [location]);
+
+	console.log(sizePage, booksData?.totalBooks, booksData?.bookResponses.length);
 
 	return (
 		<>
@@ -60,7 +72,7 @@ const VendorsBooks: FC = () => {
 					<div className="container">
 						<div className={scss.content}>
 							<div className={scss.books_quantity}>
-								<p>Всего {booksData?.length} книг</p>
+								<p>Всего {booksData?.totalBooks} книг</p>
 								<div className={scss.all_books}>
 									<div className={scss.click}>
 										<p
@@ -108,9 +120,9 @@ const VendorsBooks: FC = () => {
 							</div>
 							<hr className={scss.title_hr} />
 							<div className={scss.test}>
-								{booksData?.length && booksData.length > 0 ? (
+								{booksData?.totalBooks && booksData.totalBooks > 0 ? (
 									<div className={scss.books_content}>
-										{booksData?.map((book) => (
+										{booksData?.bookResponses.map((book) => (
 											<div key={book.id} className={scss.book}>
 												<div className={scss.book_header}>
 													<div className={scss.hearts}>
@@ -192,26 +204,6 @@ const VendorsBooks: FC = () => {
 														</div>
 													</div>
 												</div>
-												<Modal
-													open={isModalOpen}
-													onCancel={handleCancel}
-													footer={null}
-													className={scss.delete_modal}
-												>
-													<div className={scss.delete_modal}>
-														<p>Вы уверены, что хотите удалить?</p>
-														<div className={scss.bt_modal}>
-															<button onClick={handleCancel}>Отменить</button>
-															<button
-																onClick={() => {
-																	deleteBookChange(book.id);
-																}}
-															>
-																Удалить
-															</button>
-														</div>
-													</div>
-												</Modal>
 											</div>
 										))}
 									</div>
@@ -224,15 +216,48 @@ const VendorsBooks: FC = () => {
 									</div>
 								)}
 							</div>
-
-							{booksData?.length === 12 && (
+							{
 								<div className={scss.see_more_button}>
-									<CustomSeeMoreButton onClick={handlePageSizeBook}>
-										Смотреть больше
-									</CustomSeeMoreButton>
+									{sizePage >= booksData!.totalBooks ? (
+										<>
+											<CustomSeeMoreButton
+												onClick={() => {
+													setSizePage(12);
+												}}
+											>
+												Вернутся начать
+											</CustomSeeMoreButton>
+										</>
+									) : (
+										<>
+											<CustomSeeMoreButton onClick={handlePageSizeBook}>
+												Смотреть больше
+											</CustomSeeMoreButton>
+										</>
+									)}
 								</div>
-							)}
+							}
 						</div>
+						<Modal
+							open={isModalOpen}
+							onCancel={handleCancel}
+							footer={null}
+							className={scss.delete_modal}
+						>
+							<div className={scss.delete_modal}>
+								<p>Вы уверены, что хотите удалить?</p>
+								<div className={scss.bt_modal}>
+									<button onClick={handleCancel}>Отменить</button>
+									<button
+										onClick={() => {
+											deleteBookChange(bookId);
+										}}
+									>
+										Удалить
+									</button>
+								</div>
+							</div>
+						</Modal>
 					</div>
 				</section>
 			)}

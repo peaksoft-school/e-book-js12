@@ -36,7 +36,13 @@ const Footer: FC = () => {
 								>
 									eBook
 								</div>
-								<a href="#">Политика конфиденциальности</a>
+								<a
+									onClick={() => {
+										navigate('/vendor');
+									}}
+								>
+									Политика конфиденциальности
+								</a>
 							</div>
 						</div>
 						<div className={scss.footerBox}>

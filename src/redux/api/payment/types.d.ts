@@ -1,8 +1,17 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 namespace PAYMENT {
 	type CreatePaymentResponse = {
-		httpStatus: string;
-		message: string;
+		data: {
+			httpStatus: string;
+			message: string;
+		};
+		status: number;
+		error: {
+			status: number;
+			data: {
+				message: string;
+			};
+		};
 	};
 
 	type CreatePaymentRequest = {

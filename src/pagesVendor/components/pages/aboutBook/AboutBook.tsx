@@ -198,7 +198,15 @@ const AboutBook = () => {
 										</>
 									)}
 									<p>Год выпуска</p>
-									<p>Объем</p>
+									{book.bookType === 'AUDIO_BOOK' ? (
+										<>
+											<p>Длительность</p>
+										</>
+									) : (
+										<>
+											<p>Объем</p>
+										</>
+									)}
 								</div>
 								<div className={scss.section_info_two}>
 									<Tooltip
@@ -228,7 +236,15 @@ const AboutBook = () => {
 										</>
 									)}
 									<p>{book.publishedYear}</p>
-									<p>{book.volume}</p>
+									{book.bookType === 'AUDIO_BOOK' ? (
+										<>
+											<p>{book.duration}</p>
+										</>
+									) : (
+										<>
+											<p>{book.volume}</p>
+										</>
+									)}
 								</div>
 							</div>
 							<div className={scss.section_book}>

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { ConfigProvider, Modal, Tooltip } from 'antd';
+import { ConfigProvider, Modal, Tooltip, message } from 'antd';
 import { IconInfoCircle, IconUserCircle } from '@tabler/icons-react';
 import { IconRedDot, IconSuccess, IconTest } from '@/src/assets/icons';
 import LogoeBook from '@/src/ui/logoeBook/LogoeBook';
@@ -10,8 +10,6 @@ import scss from './Header.module.scss';
 import { usePostPromoCodeMutation } from '@/src/redux/api/promo';
 import { useSearchBooksQuery } from '@/src/redux/api/search';
 import { useGetNotificationQuery } from '@/src/redux/api/notification';
-import { Bounce, ToastContainer, toast } from 'react-toastify';
-// import { Bounce, ToastContainer, toast } from 'react-toastify';
 
 const Header = () => {
 	const [headerScroll, setHeaderScroll] = useState<boolean>(false);
@@ -27,6 +25,7 @@ const Header = () => {
 	const [createNewPromo] = usePostPromoCodeMutation();
 	const [searchTerm, setSearchTerm] = useState<string>('');
 	const [showResults, setShowResults] = useState<boolean>(false);
+	const [messageAPi, contextMessage] = message.useMessage();
 	const { data: searchResults, refetch } = useSearchBooksQuery(
 		{ searchTerm },
 		{ skip: !searchTerm }
@@ -82,31 +81,20 @@ const Header = () => {
 					setModalSuccess(true);
 				}, 600);
 			}
-		} else {
-			console.log(result);
-			toast(result.error.data?.promoCode, {
-				position: 'top-right',
-				autoClose: 5000,
-				hideProgressBar: false,
-				closeOnClick: true,
-				pauseOnHover: false,
-				draggable: true,
-				progress: undefined,
-				theme: 'light',
-				transition: Bounce
+		}
+		if (result.error?.data?.promoCode) {
+			console.log(result.error.data?.promoCode);
+			messageAPi.open({
+				type: 'warning',
+				content: result.error.data?.promoCode,
+				duration: 5
 			});
 		}
-		if (result.error?.status === 400) {
-			toast(result.error?.data?.message, {
-				position: 'top-right',
-				autoClose: 5000,
-				hideProgressBar: false,
-				closeOnClick: true,
-				pauseOnHover: false,
-				draggable: true,
-				progress: undefined,
-				theme: 'light',
-				transition: Bounce
+		if (result.error?.data?.message) {
+			console.log(result.error.data.message);
+			messageAPi.open({
+				type: 'warning',
+				content: result.error.data?.message
 			});
 		}
 	};
@@ -301,7 +289,11 @@ const Header = () => {
 										</button>
 										<Tooltip
 											className={scss.info_hover}
-											title="Промокод применится ко всем вашим книгам"
+											title={
+												<p className={scss.tooltip_text}>
+													Промокод применится ко всем вашим книгам
+												</p>
+											}
 											color="orangered"
 											placement="bottomLeft"
 										>
@@ -339,9 +331,8 @@ const Header = () => {
 											</button>
 										]}
 									>
-										<div className={scss.container_toast}></div>
-										<ToastContainer />
 										<div className={scss.promocode}>
+											{contextMessage}
 											<label>Промокод</label>
 											<input
 												className={scss.promocode_input}

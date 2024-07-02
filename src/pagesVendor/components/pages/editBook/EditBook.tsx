@@ -310,6 +310,7 @@ const EditBook = () => {
 		const editPdfFile = async () => {
 			if (pdfFile !== '') {
 				const result = await updatePdfFile({ pdfFile, id: bookId });
+				console.log(result);
 			}
 		};
 		editPdfFile();

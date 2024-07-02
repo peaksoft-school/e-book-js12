@@ -4,13 +4,14 @@ import { FC, FormEvent, useState } from 'react';
 import { useCreatePaymentMutation } from '../redux/api/payment';
 import scss from './PaymentForm.module.scss';
 import { Modal } from 'antd';
+import { MessageInstance } from 'antd/es/message/interface';
 
 const CARD_OPTIONS = {
 	iconStyle: 'solid' as 'default' | 'solid',
 	style: {
 		base: {
 			iconColor: '#ff6200',
-			color: 'black',
+			color: '#f47105',
 			fontWeight: 500,
 			fontSize: '16px',
 			fontSmoothing: 'antialiased',
@@ -31,6 +32,7 @@ interface TypeProps {
 	setOpenModal: (value: boolean | ((prev: boolean) => boolean)) => void;
 	totalAmount: number | undefined;
 	newTestObj: Record<string, string>;
+	message: MessageInstance;
 	refetch: () => void;
 }
 
@@ -39,6 +41,7 @@ const PaymentForm: FC<TypeProps> = ({
 	setOpenModal,
 	totalAmount,
 	newTestObj,
+	message,
 	refetch
 }) => {
 	const stripe = useStripe();
@@ -52,13 +55,30 @@ const PaymentForm: FC<TypeProps> = ({
 		};
 		const totalTest = totalAmount?.toFixed();
 		const test = Number(totalTest);
-		const result = await createPayment({ newData, token, test });
+		const result = (await createPayment({
+			newData,
+			token,
+			test
+		})) as PAYMENT.CreatePaymentResponse;
 		if ('data' in result) {
 			if (result.data?.httpStatus === 'OK') {
 				setOpenModal(false);
+				message.open({
+					type: 'success',
+					content: result.data.message,
+					duration: 5
+				});
 				refetch();
 				setSuccsessModal(true);
 			}
+		}
+		if (result.error.data) {
+			console.log(result.error.data);
+			message.open({
+				type: 'warning',
+				content: result.error.data.message,
+				duration: 5
+			});
 		}
 	};
 

@@ -248,7 +248,7 @@
 			font-size: 16px;
 			cursor: pointer;
 			background-color: orangered;
-			padding: 10px 10px;
+			padding: 10px 24px;
 			&:focus {
 				outline: none;
 			}
@@ -260,10 +260,6 @@
 			.custom_black_button {
 				width: 136px;
 				height: 42px;
-				left: 1225px;
-				right: 79px;
-				top: 721px;
-				bottom: 363px;
 				font-weight: 600;
 				border: none;
 				color: rgb(255, 255, 255);
@@ -271,8 +267,9 @@
 				font-size: 16px;
 				font-weight: 600;
 				line-height: 22px;
+				padding: 10px 24px;
 				cursor: pointer;
-				background: rgb(28, 28, 28);
+				background-color: orangered;
 			}
 		}
 

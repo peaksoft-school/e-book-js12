@@ -30,7 +30,7 @@ const api = index.injectEndpoints({
 					bookType
 				}
 			}),
-			invalidatesTags: ['add_book']
+			invalidatesTags: ['book']
 		}),
 		PostFile: build.mutation<
 			ADDBOOKVENDOR.PostFileResponse,
