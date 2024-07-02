@@ -16,8 +16,22 @@ const api = index.injectEndpoints({
 			),
 			invalidatesTags: ['payment']
 		}),
+		GetPaymentDetails: build.query<
+			PAYMENT.GetPaymentDetailsResponse,
+			PAYMENT.GetPaymentDetailsRequest
+		>({
+			query: (paymentId) => ({
+				url: '/api/stripe/get/payment',
+				method: 'GET',
+				params: {
+					paymentId
+				}
+			}),
+			providesTags: ['payment']
+		}),
+
 		ConfirmPayment: build.mutation<
-			PAYMENT.ComformPaymentResponse,
+			PAYMENT.ConfirmPaymentResponse,
 			PAYMENT.ConfirmPaymentRequest
 		>({
 			query: (paymentId) => ({
@@ -32,4 +46,8 @@ const api = index.injectEndpoints({
 	})
 });
 
-export const { useCreatePaymentMutation, useConfirmPaymentMutation } = api;
+export const {
+	useCreatePaymentMutation,
+	useConfirmPaymentMutation,
+	useGetPaymentDetailsQuery
+} = api;

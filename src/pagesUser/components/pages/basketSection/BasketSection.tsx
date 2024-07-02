@@ -27,7 +27,7 @@ import Payment from '@/src/payment/Payment';
 
 const BasketPage = () => {
 	const [isPromo, setIsPromo] = useState(false);
-	const { data } = useGetCountInBasketQuery();
+	const { data, refetch } = useGetCountInBasketQuery();
 	const [clearBookPage] = useDeleteClearBasketMutation();
 	const [deleteBook] = useDeleteBasketBookIdMutation();
 	const [addToFavorite] = usePostFavoriteUnFavoriteMutation();
@@ -430,7 +430,8 @@ const BasketPage = () => {
 						setOpenModal={setIsPayment}
 						totalAmount={amount}
 						test={test}
-						messageAPi={messageApi}
+						messageApi={messageApi}
+						refetch={refetch}
 					/>
 				</div>
 			</div>

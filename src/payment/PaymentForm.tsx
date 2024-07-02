@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { CardElement, useElements, useStripe } from '@stripe/react-stripe-js';
-import { FC, FormEvent } from 'react';
+import { FC, FormEvent, useState } from 'react';
 import { useCreatePaymentMutation } from '../redux/api/payment';
 import scss from './PaymentForm.module.scss';
 import { Modal } from 'antd';
@@ -33,6 +33,7 @@ interface TypeProps {
 	totalAmount: number | undefined;
 	newTestObj: Record<string, string>;
 	message: MessageInstance;
+	refetch: () => void;
 }
 
 const PaymentForm: FC<TypeProps> = ({
@@ -40,11 +41,13 @@ const PaymentForm: FC<TypeProps> = ({
 	setOpenModal,
 	totalAmount,
 	newTestObj,
-	message
+	message,
+	refetch
 }) => {
 	const stripe = useStripe();
 	const elements = useElements();
 	const [createPayment] = useCreatePaymentMutation();
+	const [successModal, setSuccsessModal] = useState(false);
 
 	const hadnleCreatePayment = async (token: string) => {
 		const newData = {
@@ -65,6 +68,8 @@ const PaymentForm: FC<TypeProps> = ({
 					content: result.data.message,
 					duration: 5
 				});
+				refetch();
+				setSuccsessModal(true);
 			}
 		}
 		if (result.error.data) {
@@ -131,6 +136,24 @@ const PaymentForm: FC<TypeProps> = ({
 							</form>
 						</div>
 					</div>
+				</div>
+			</Modal>
+			<Modal
+				open={successModal}
+				footer={false}
+				onCancel={() => {
+					setSuccsessModal(false);
+				}}
+			>
+				<div className={scss.confirm_payment}>
+					<p className={scss.confirm_payment_bold__title}>Cпасибо!</p>
+					<p className={scss.confirm_payment_bold__title}>
+						Платеж успешно создан.
+					</p>
+					<p className={scss.confirm_payment_actual_info}>
+						Вся актуальная информация о статусе <br />
+						вашего заказа придет на ваш email🤗!
+					</p>
 				</div>
 			</Modal>
 		</>

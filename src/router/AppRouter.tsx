@@ -23,7 +23,6 @@ const AppRouter = () => {
 			});
 		}
 	}, [pathname]);
-	
 
 	if (!userInfo) return;
 	return (

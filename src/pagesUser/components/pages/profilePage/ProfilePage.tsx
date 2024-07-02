@@ -13,9 +13,8 @@ import { useNavigate } from 'react-router-dom';
 import { Modal } from 'antd';
 
 const ProfileClient: React.FC = () => {
-	
 	const { data: profileData, refetch } = useClientGetProfileQuery();
-	
+
 	const defaultValues = {
 		firstName: profileData?.name,
 		email: profileData?.email,
@@ -23,7 +22,9 @@ const ProfileClient: React.FC = () => {
 		newPassword: '',
 		confirmPassword: ''
 	};
-	const { register, handleSubmit, reset, setValue } = useForm({defaultValues});
+	const { register, handleSubmit, reset, setValue } = useForm({
+		defaultValues
+	});
 	const [isEditMode, setIsEditMode] = useState(false);
 	const [isPasswordMode, setIsPasswordMode] = useState(false);
 	const [updateProfile] = useClientProfileMutation();

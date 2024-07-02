@@ -117,7 +117,7 @@ const InformationBook: FC = () => {
 			} else {
 				const result = await addBookToBasket(id);
 				if ('data' in result) {
-					if (result.data.httpStatus === 'OK') {
+					if (result.data!.httpStatus === 'OK') {
 						refetch();
 					}
 				}
@@ -137,10 +137,10 @@ const InformationBook: FC = () => {
 		if (localAuth === 'true') {
 			const result = await addBookToFavorite(id);
 			if ('data' in result) {
-				if (result.data.httpStatus) {
+				if (result.data!.httpStatus) {
 					messageApi.open({
 						type: 'success',
-						content: result.data.message
+						content: result.data!.message
 					});
 				}
 			}
