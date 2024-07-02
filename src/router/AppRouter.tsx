@@ -8,12 +8,9 @@ import LayoutVendor from '../pagesVendor/components/layout/LayoutVendor';
 
 const AppRouter = () => {
 	const [userInfo, setUserInfo] = useState<UserInfo>();
-
 	const { pathname } = useLocation();
-
 	useEffect(() => {
 		const storageData = localStorage.getItem('EBOOK');
-
 		if (storageData) {
 			setUserInfo(JSON.parse(storageData));
 		} else {
@@ -26,9 +23,9 @@ const AppRouter = () => {
 			});
 		}
 	}, [pathname]);
+	
 
 	if (!userInfo) return;
-
 	return (
 		<Routes>
 			<Route

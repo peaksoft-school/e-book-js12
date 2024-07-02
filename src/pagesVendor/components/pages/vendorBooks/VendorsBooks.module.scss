@@ -392,7 +392,7 @@
 					.book_img img {
 						width: 100%;
 						max-width: 197px;
-						max-height: 297px;
+						min-height: 297px;
 						height: auto;
 					}
 					.info_book {
@@ -640,10 +640,7 @@
 			}
 		}
 		.see_more_button {
-			margin-top: 50px;
-		}
-		.btn_morebook {
-			margin-bottom: 25px;
+			margin: 50px 0px;
 			width: 100%;
 			@media (max-width: 850px) {
 				display: grid;

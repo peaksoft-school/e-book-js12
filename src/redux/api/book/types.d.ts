@@ -2,6 +2,11 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 namespace BOOK {
 	type GetProductsResponse = {
+		bookResponses: BooksResponses[];
+		totalBooks: number;
+	};
+
+	type BooksResponses = {
 		id: number;
 		imageLink: string;
 		bookName: string;
@@ -11,7 +16,7 @@ namespace BOOK {
 		quantityOfBasket: number;
 		discount: number;
 		priceWithDiscount: number;
-	}[];
+	};
 	type GetProductsRequest = {
 		bookOperationType: string;
 		page: number;

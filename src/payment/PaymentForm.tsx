@@ -1,16 +1,17 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { CardElement, useElements, useStripe } from '@stripe/react-stripe-js';
-import { FC, FormEvent, useState } from 'react';
+import { FC, FormEvent } from 'react';
 import { useCreatePaymentMutation } from '../redux/api/payment';
 import scss from './PaymentForm.module.scss';
 import { Modal } from 'antd';
+import { MessageInstance } from 'antd/es/message/interface';
 
 const CARD_OPTIONS = {
 	iconStyle: 'solid' as 'default' | 'solid',
 	style: {
 		base: {
 			iconColor: '#ff6200',
-			color: 'black',
+			color: '#f47105',
 			fontWeight: 500,
 			fontSize: '16px',
 			fontSmoothing: 'antialiased',
@@ -31,18 +32,19 @@ interface TypeProps {
 	setOpenModal: (value: boolean | ((prev: boolean) => boolean)) => void;
 	totalAmount: number | undefined;
 	newTestObj: Record<string, string>;
+	message: MessageInstance;
 }
 
 const PaymentForm: FC<TypeProps> = ({
 	openModal,
 	setOpenModal,
 	totalAmount,
-	newTestObj
+	newTestObj,
+	message
 }) => {
 	const stripe = useStripe();
 	const elements = useElements();
 	const [createPayment] = useCreatePaymentMutation();
-	const [sucsessModal, setSucsessModal] = useState(false);
 
 	const hadnleCreatePayment = async (token: string) => {
 		const newData = {
@@ -50,12 +52,28 @@ const PaymentForm: FC<TypeProps> = ({
 		};
 		const totalTest = totalAmount?.toFixed();
 		const test = Number(totalTest);
-		const result = await createPayment({ newData, token, test });
+		const result = (await createPayment({
+			newData,
+			token,
+			test
+		})) as PAYMENT.CreatePaymentResponse;
 		if ('data' in result) {
 			if (result.data?.httpStatus === 'OK') {
 				setOpenModal(false);
-				setSucsessModal(true);
+				message.open({
+					type: 'success',
+					content: result.data.message,
+					duration: 5
+				});
 			}
+		}
+		if (result.error.data) {
+			console.log(result.error.data);
+			message.open({
+				type: 'warning',
+				content: result.error.data.message,
+				duration: 5
+			});
 		}
 	};
 
@@ -111,29 +129,6 @@ const PaymentForm: FC<TypeProps> = ({
 									Продолжить
 								</button>
 							</form>
-						</div>
-					</div>
-				</div>
-			</Modal>
-			<Modal
-				open={sucsessModal}
-				footer={false}
-				onCancel={() => {
-					setSucsessModal(false);
-				}}
-			>
-				<div className={scss.confirm_payment}>
-					<div className={scss.title_content}>
-						<p>confirm to by payment</p>
-						<p>description</p>
-					</div>
-					<div className={scss.detals_product}>
-						<p>Detals</p>
-						<div className={scss.info_content}>
-							<div className={scss.date}>
-								<p>data</p>
-								<p>{Date()}</p>
-							</div>
 						</div>
 					</div>
 				</div>

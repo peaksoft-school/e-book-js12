@@ -430,6 +430,7 @@ const BasketPage = () => {
 						setOpenModal={setIsPayment}
 						totalAmount={amount}
 						test={test}
+						messageAPi={messageApi}
 					/>
 				</div>
 			</div>

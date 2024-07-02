@@ -13,11 +13,20 @@ import { useNavigate } from 'react-router-dom';
 import { Modal } from 'antd';
 
 const ProfileClient: React.FC = () => {
-	const { register, handleSubmit, reset, setValue } = useForm();
+	
+	const { data: profileData, refetch } = useClientGetProfileQuery();
+	
+	const defaultValues = {
+		firstName: profileData?.name,
+		email: profileData?.email,
+		oldPassword: '',
+		newPassword: '',
+		confirmPassword: ''
+	};
+	const { register, handleSubmit, reset, setValue } = useForm({defaultValues});
 	const [isEditMode, setIsEditMode] = useState(false);
 	const [isPasswordMode, setIsPasswordMode] = useState(false);
 	const [updateProfile] = useClientProfileMutation();
-	const { data: profileData, refetch } = useClientGetProfileQuery();
 	const [updatePassword] = useUpdatePasswordUserMutation();
 	const [handleDeleteProfile] = useDeletUserProfileMutation();
 	const [isModalOpen, setIsModalOpen] = useState(false);

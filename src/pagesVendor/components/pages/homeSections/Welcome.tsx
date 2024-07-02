@@ -123,10 +123,10 @@ const Welcome: FC = () => {
 									<p>Начните продавать свои книги на eBook</p>
 									<button
 										onClick={() => {
-											navigate('/auth/vendor/registration');
+											navigate('/vendor/home');
 										}}
 									>
-										Стать продавцом
+										Начать продовать
 									</button>
 								</div>
 							</div>
@@ -167,10 +167,10 @@ const Welcome: FC = () => {
 						<div className={scss.text}>
 							<button
 								onClick={() => {
-									navigate('/auth/vendor/registration');
+									navigate('/vendor/hoem');
 								}}
 							>
-								Стать продавцом
+								Начать продовать
 							</button>
 						</div>
 					</div>

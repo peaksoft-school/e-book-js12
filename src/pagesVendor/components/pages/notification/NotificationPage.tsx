@@ -5,9 +5,15 @@ import {
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { CircleXIcon, IconBuyed, IconSuccess } from '@/src/assets/icons';
 import scss from './NotificationPage.module.scss';
+import { useEffect } from 'react';
 
 const NotificationPage = () => {
-	const { data: notifications, isLoading, error } = useGetNotificationQuery();
+	const {
+		data: notifications,
+		isLoading,
+		error,
+		refetch
+	} = useGetNotificationQuery();
 	const [deleteNotification] = useDeleteNotificationMutation();
 	const location = useLocation();
 	const navigate = useNavigate();
@@ -21,6 +27,10 @@ const NotificationPage = () => {
 			handleDeleteNotification(notification.id);
 		});
 	};
+
+	useEffect(() => {
+		refetch();
+	}, [location, notifications?.length]);
 
 	if (isLoading) return <p>Loading...</p>;
 	if (error) return <p>Error loading notifications</p>;
