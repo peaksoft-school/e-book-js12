@@ -17,15 +17,13 @@ import { ChangeEvent, useEffect, useState } from 'react';
 import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
 import {
 	useEditBookMutation,
+	useEditPhotoUrlMutation,
 	usePostFileMutation
-} from '@/src/redux/api/addBookVendor';
+} from '@/src/redux/api/addBook';
 import CustomAudioDownloadInput from '@/src/ui/customAudioInput/CustomAudioDownloadInput';
 import CustomBasketButton from '@/src/ui/customButton/CustomBasketButton';
 import CustomPDFDownloadInput from '@/src/ui/customPDFInput/CustomPDFDownloadInput';
-import {
-	useEditPhotoUrlMutation,
-	useGetBookByIdQuery
-} from '@/src/redux/api/book';
+import { useGetBookByIdQuery } from '@/src/redux/api/book';
 
 interface TypeJenre {
 	jenreId: number;

@@ -15,7 +15,7 @@ import {
 	IconWhiteLike
 } from '@/src/assets/icons';
 import CustomBasketButton from '@/src/ui/customButton/CustomBasketButton';
-import { Slider, ConfigProvider, Tooltip } from 'antd';
+import { Slider, ConfigProvider, Tooltip, message } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import { usePostSortBookMutation } from '@/src/redux/api/sort';
 import { usePostFavoriteUnFavoriteMutation } from '@/src/redux/api/favorite';
@@ -27,6 +27,7 @@ import useDebounce from '@/src/hooks/useDebounce';
 const SearchSection = () => {
 	const [value, setValue] = useState<number[]>([100, 9990]);
 	const debouncedValue = useDebounce(value, 1000);
+	const localAuth = localStorage.getItem('client');
 
 	const [isGenre, setIsGenre] = useState(false);
 	const [isSort, setIsSort] = useState(false);
@@ -151,6 +152,7 @@ const SearchSection = () => {
 
 	const [dataBooks, setDataBooks] = useState<SORT.TypeDataBook[]>([]);
 	const searchSectionRef = useRef(null);
+	const [messageApi, contextMessage] = message.useMessage();
 
 	const smoothScroll = (ref: React.RefObject<HTMLElement>) => {
 		if (ref.current) {
@@ -182,41 +184,58 @@ const SearchSection = () => {
 	]);
 
 	const hanleAddBookFavorite = async (id: number) => {
-		if (!isUserAuthhenticated()) {
-			navigate('/auth/registration');
+		if (localAuth === 'true') {
+			await addBookFavorite(id);
+			handleChangeFillter();
+		} else {
+			messageApi.open({
+				type: 'warning',
+				content: 'Необходимо авторизоватся',
+				style: {
+					marginLeft: '85%'
+				}
+			});
 		}
-		await addBookFavorite(id);
-		handleChangeFillter();
 	};
 
 	const handleAddBookToBasket = async (id: number) => {
-		const result = await addBookToBasket(id);
-		if ('data' in result) {
-			const { httpStatus } = result.data!;
-			if (httpStatus === 'OK') {
-				toast.success('Успешно добавлено в корзину!', {
-					position: 'top-right',
-					autoClose: 5000,
-					hideProgressBar: false,
-					closeOnClick: true,
-					pauseOnHover: true,
-					draggable: true,
-					progress: undefined,
-					theme: 'light'
-				});
-				handleChangeFillter();
-			} else if (httpStatus === 'ALREADY_REPORTED') {
-				toast('Вы уже добавили эту книгу в корзину!', {
-					position: 'top-right',
-					autoClose: 5000,
-					hideProgressBar: false,
-					closeOnClick: true,
-					pauseOnHover: true,
-					draggable: true,
-					progress: undefined,
-					theme: 'light'
-				});
+		if (localAuth === 'true') {
+			const result = await addBookToBasket(id);
+			if ('data' in result) {
+				const { httpStatus } = result.data!;
+				if (httpStatus === 'OK') {
+					toast.success('Успешно добавлено в корзину!', {
+						position: 'top-right',
+						autoClose: 5000,
+						hideProgressBar: false,
+						closeOnClick: true,
+						pauseOnHover: false,
+						draggable: true,
+						progress: undefined,
+						theme: 'light'
+					});
+					handleChangeFillter();
+				} else if (httpStatus === 'ALREADY_REPORTED') {
+					toast('Вы уже добавили эту книгу в корзину!', {
+						position: 'top-right',
+						autoClose: 5000,
+						hideProgressBar: false,
+						closeOnClick: true,
+						pauseOnHover: false,
+						draggable: true,
+						progress: undefined,
+						theme: 'light'
+					});
+				}
 			}
+		} else {
+			messageApi.open({
+				type: 'warning',
+				content: 'Необходимо авторизоватся',
+				style: {
+					marginLeft: '85%'
+				}
+			});
 		}
 	};
 
@@ -339,14 +358,11 @@ const SearchSection = () => {
 		page
 	]);
 
-	const isUserAuthhenticated = () => {
-		return !!localStorage.getItem('token');
-	};
-
 	return (
 		<section ref={searchSectionRef} className={scss.SearchSection}>
 			<div className="container">
 				<div className={scss.content}>
+					{contextMessage}
 					<ToastContainer />
 					<div className={scss.title_navigate}></div>
 					<div className={scss.info_filtred}>

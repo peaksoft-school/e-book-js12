@@ -34,3 +34,11 @@ type Rating = {
 	createdAt: string;
 	updatedAt: string;
 };
+
+type UserInfo = {
+	role: string;
+	email: string;
+	firstName: string;
+	id: number;
+	token: string;
+};

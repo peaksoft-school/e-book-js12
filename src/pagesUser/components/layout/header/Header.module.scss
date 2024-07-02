@@ -65,7 +65,7 @@
 
 				.searchResultsLi {
 					ul {
-						max-width: 895px;
+						max-width: 859px;
 						width: 100%;
 						display: flex;
 						flex-direction: column;
@@ -455,6 +455,8 @@
 					}
 				}
 				.sign_btn {
+					display: flex;
+					flex-direction: column;
 					color: rgb(255, 255, 255);
 					font-family: Open Sans;
 					font-size: 16px;
@@ -464,6 +466,9 @@
 					text-align: left;
 					background-color: rgb(28, 28, 28);
 					padding: 10px 24px;
+					max-width: 100%;
+					width: 100%;
+					min-width: 0px;
 				}
 			}
 			.user_down {
@@ -599,4 +604,47 @@
 	display: flex;
 	flex-direction: column;
 	align-items: center;
+}
+
+.modal_vendor {
+	display: flex;
+	align-items: center;
+	flex-direction: column;
+	gap: 30px 0px;
+	.info_modal {
+		display: flex;
+		justify-content: center;
+		margin-top: 10px;
+		p {
+			font-size: 18px;
+			font-weight: 600;
+			text-align: center;
+			max-width: 360px;
+		}
+	}
+	.buttons {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		max-width: 280px;
+		width: 100%;
+		button {
+			padding: 10px 24px;
+			font-size: 16px;
+			font-weight: 500;
+			color: rgb(59, 59, 59);
+			border: 1px solid transparent;
+			outline: none;
+			background-color: transparent;
+			cursor: pointer;
+			&:hover {
+				border: 1px solid;
+			}
+			&:last-child {
+				background-color: black;
+				border: 1px solid transparent;
+				color: white;
+			}
+		}
+	}
 }

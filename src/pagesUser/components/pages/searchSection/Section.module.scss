@@ -225,7 +225,7 @@
 			display: flex;
 			gap: 58px;
 			margin-bottom: 25px;
-			position: relative;
+
 			.burgermenu_filters {
 				display: none;
 				@media (max-width: 768px) {
@@ -446,7 +446,9 @@
 				flex-wrap: wrap;
 				gap: 0px 20px;
 				width: 100%;
+				max-height: 1600px;
 				overflow: auto;
+
 				@media (max-width: 850px) {
 					max-width: 726px;
 					width: 100%;
@@ -635,4 +637,7 @@
 
 .Toastify__progress-bar--anim {
 	background-color: #f34901;
+}
+::-webkit-scrollbar-track {
+	background: white !important;
 }

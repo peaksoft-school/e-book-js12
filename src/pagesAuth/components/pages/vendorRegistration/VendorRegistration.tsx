@@ -9,7 +9,7 @@ import 'react-international-phone/style.css';
 import {
 	useConfirmEmailMutation,
 	usePostVendorRegistrationMutation
-} from '@/src/redux/api/me';
+} from '@/src/redux/api/auth';
 import { Modal, message } from 'antd';
 
 interface TypeData {

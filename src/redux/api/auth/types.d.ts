@@ -38,7 +38,10 @@ namespace AUTHORIZATION {
 			data: {
 				httpStatus: string;
 				message: string;
+				password: string;
+				email: string;
 			};
+			status: number;
 		};
 	};
 
@@ -86,4 +89,20 @@ namespace AUTHORIZATION {
 		email: string;
 		password: string;
 	};
+
+	type SendEmailResponse = {
+		data: {
+			httpStatus: string;
+			message: string;
+		};
+		status: number;
+		error?: {
+			data: {
+				message: string;
+			};
+			status: number;
+		};
+	};
+
+	type SendEmailRequest = string;
 }

@@ -132,24 +132,22 @@ const api = index.injectEndpoints({
 			}),
 			invalidatesTags: ['book']
 		}),
-		EditPhotoUrl: build.mutation({
-			query: ({ newData, bookId }) => {
-				const formData = new FormData();
-				formData.append('file', newData);
-				return {
-					url: `/api/book/updatePhoto?bookId=${bookId}`,
-					method: 'PATCH',
-					body: newData
-				};
-			},
-			invalidatesTags: ['book']
-		}),
 		getByIdVendor: build.query<
 			BOOK.getByIdVendorResponse,
 			BOOK.getByIdVendorRequest
 		>({
 			query: (id) => ({
 				url: `/api/book/getByBookId/${id}`,
+				method: 'GET'
+			}),
+			providesTags: ['book']
+		}),
+		GetReceiptRequestedBooks: build.query<
+			BOOK.GetAllBooksResponse,
+			BOOK.GetAllBooksRequest
+		>({
+			query: () => ({
+				url: '/api/book/requests/books/',
 				method: 'GET'
 			}),
 			providesTags: ['book']
@@ -167,7 +165,7 @@ export const {
 	useRejectBookMutation,
 	useFilterBooksMutation,
 	useGetBookByIdVendorQuery,
-	useEditPhotoUrlMutation,
 	useGetFindAllBookVedorQuery,
-	useGetByIdVendorQuery
+	useGetByIdVendorQuery,
+	useGetReceiptRequestedBooksQuery
 } = api;

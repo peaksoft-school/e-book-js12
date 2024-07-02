@@ -11,7 +11,7 @@ import {
 	IconX
 } from '@/src/assets/icons';
 import CustomAuthButton from '@/src/ui/customButton/CustomAuthButton';
-import { Modal, Skeleton, Tooltip } from 'antd';
+import { Modal, Skeleton, Tooltip, message } from 'antd';
 import {
 	useActivedBookPromocodeMutation,
 	useCountBookBasketMutation,
@@ -40,6 +40,7 @@ const BasketPage = () => {
 	const [isPayment, setIsPayment] = useState(false);
 	const [amount, setAmount] = useState<number | undefined>(0);
 	const [test, setTest] = useState<Record<string, string>>({});
+	const [messageApi, contextMessage] = message.useMessage();
 
 	const hadnleOpenModalPromo = () => {
 		setIsPromo(!isPromo);
@@ -70,8 +71,10 @@ const BasketPage = () => {
 	};
 
 	const handlePromoCode = async () => {
-		const response = await activePromo({ promoCode, id: bookId! });
-		console.log(response);
+		const response = (await activePromo({
+			promoCode,
+			id: bookId!
+		})) as BASKET.ActivedPromoResponse;
 		if ('data' in response) {
 			if (response.data) {
 				setIsPromo(false);
@@ -84,6 +87,12 @@ const BasketPage = () => {
 					return { ...prevState, ...result };
 				});
 			}
+		}
+		if (response.error) {
+			messageApi.open({
+				type: 'warning',
+				content: response.error.data.message
+			});
 		}
 	};
 
@@ -139,6 +148,7 @@ const BasketPage = () => {
 		<section className={scss.BasketSection}>
 			<div className="container">
 				<div className={scss.content}>
+					{contextMessage}
 					<ToastContainer />
 					<div className={scss.links}>
 						<Link
@@ -305,14 +315,18 @@ const BasketPage = () => {
 														{book.discountFromPromoCode !== null ||
 														book.discountFromPromoCode !== undefined ? (
 															<>
-																<p
-																	onClick={() => {
-																		hadnleOpenModalPromo();
-																		setBookId(book.id);
-																	}}
-																>
-																	Промокод
-																</p>
+																{book.amount >= 2 ? null : (
+																	<>
+																		<p
+																			onClick={() => {
+																				hadnleOpenModalPromo();
+																				setBookId(book.id);
+																			}}
+																		>
+																			Промокод
+																		</p>
+																	</>
+																)}
 															</>
 														) : null}
 														<Modal

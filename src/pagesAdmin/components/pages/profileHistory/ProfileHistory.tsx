@@ -27,16 +27,47 @@ const ProfileHistory = () => {
 							<p>Очистить историю</p>
 						</div>
 
-						<div className={scss.info_tes_two}>
-							<p className={scss.item_two}>Фото</p>
-							<th></th>
-							<th></th>
-							<p className={scss.item_tree}>Название/Автор</p>
-							<div className={scss.item_flex}>
-								<p className={scss.item_four}>Кол-во</p>
+						<div
+							className={
+								activeTab === 'history'
+									? scss.info_tes_two_history
+									: scss.info_tes_two
+							}
+						>
+							{activeTab !== 'history' ? (
+								<>
+									<div className={scss.styling}>
+										<p className={scss.item_two}>Фото</p>
+										<p className={scss.item_tree}>Название/Автор</p>
+									</div>
+								</>
+							) : (
+								<>
+									<p className={scss.item_two}>Фото</p>
+									<p className={scss.item_tree}>Название/Автор</p>
+								</>
+							)}
+							<div
+								className={`${activeTab !== 'history' ? scss.item_flex_none : scss.item_flex} ${activeTab === 'history' ? scss.item_flex : ''} ${
+									activeTab === 'cart' ? scss.item_flex_cart : ''
+								}`}
+							>
+								{activeTab === 'favorites' ? null : (
+									<>
+										<p className={scss.item_four}>Кол-во</p>
+									</>
+								)}
 								<p className={scss.item_five}>Цена</p>
-								<p className={scss.item_sics}>Дата</p>
-								<p className={scss.item_seven}>Состояние</p>
+								{activeTab === 'cart' ? null : (
+									<>
+										<p className={scss.item_sics}>Дата</p>
+									</>
+								)}
+								{activeTab !== 'history' ? null : (
+									<>
+										<p className={scss.item_seven}>Состояние</p>
+									</>
+								)}
 							</div>
 						</div>
 					</div>
@@ -77,7 +108,7 @@ const ProfileHistory = () => {
 														alt="book"
 													/>
 													<div className={scss.book_flex_x}>
-														<div className={scss.flex_book}>
+														<div className={scss.flex_book_history}>
 															<div className={scss.book_name_end}>
 																<Tooltip
 																	className={scss.info_hover}
@@ -105,8 +136,8 @@ const ProfileHistory = () => {
 																</Tooltip>
 															</div>
 														</div>
-														<div className={scss.flex_book_x}>
-															<p className={scss.book_quantity}>
+														<div className={scss.flex_book_x_history}>
+															<p className={scss.book_quantity_history}>
 																{item.quantity}
 															</p>
 															<div className={scss.scitd_one}>
@@ -121,7 +152,9 @@ const ProfileHistory = () => {
 																</div>
 															</div>
 															<p className={scss.book_data}>{item.createdAt}</p>
-															<p className={scss.book_state}></p>
+															<p className={scss.book_state}>
+																{item.historyStatus}
+															</p>
 														</div>
 													</div>
 												</div>
@@ -177,9 +210,6 @@ const ProfileHistory = () => {
 															</div>
 														</div>
 														<div className={scss.flex_book_x}>
-															<p className={scss.book_quantity}>
-																{item.quantity}
-															</p>
 															<div className={scss.scitd_one}>
 																<p className={scss.pprom}>
 																	Промокод {item.discount}%
@@ -192,7 +222,6 @@ const ProfileHistory = () => {
 																</div>
 															</div>
 															<p className={scss.book_data}>{item.createdAt}</p>
-															<p className={scss.book_state}></p>
 														</div>
 													</div>
 												</div>
@@ -219,7 +248,7 @@ const ProfileHistory = () => {
 														alt="book"
 													/>
 													<div className={scss.book_flex_x}>
-														<div className={scss.flex_book}>
+														<div className={scss.flex_book_cart}>
 															<div className={scss.book_name_end}>
 																<Tooltip
 																	className={scss.info_hover}
@@ -247,8 +276,8 @@ const ProfileHistory = () => {
 																</Tooltip>
 															</div>
 														</div>
-														<div className={scss.flex_book_x}>
-															<p className={scss.book_quantity}>
+														<div className={scss.flex_book_x_cart}>
+															<p className={scss.book_quantity_history}>
 																{item.quantity}
 															</p>
 															<div className={scss.scitd_one}>
@@ -262,8 +291,6 @@ const ProfileHistory = () => {
 																	</p>
 																</div>
 															</div>
-															<p className={scss.book_data}>{item.createdAt}</p>
-															<p className={scss.book_state}></p>
 														</div>
 													</div>
 												</div>

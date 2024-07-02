@@ -67,4 +67,24 @@ namespace ADDBOOKVENDOR {
 	};
 
 	type PostFileRequest = File;
+
+	type UpdatePhotoResponse = {
+		httpStatus: string;
+		message: string;
+		status: number;
+		error: {
+			data: {
+				httpStatus: string;
+				message: string;
+			};
+			status: number;
+		};
+	};
+	type UpdatePhotoRequest = {
+		newData: {
+			oldUrl?: string;
+			newUrl?: string;
+		};
+		bookId: number;
+	};
 }

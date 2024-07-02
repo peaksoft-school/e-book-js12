@@ -11,6 +11,7 @@ import BookInfoPage from '../pages/BookInfoPage';
 import AboutVendorPage from '../pages/AboutVendorPage';
 import UserAboutPage from '../pages/UserAboutPage';
 import EditBookAdminPage from '../pages/EditBookAdminPage';
+import AboutBookPage from '../pages/AboutBookPage';
 
 const LayoutAdmin = () => {
 	return (
@@ -25,14 +26,14 @@ const LayoutAdmin = () => {
 						<Route path="/vendors" element={<VendorsPage />} />
 						<Route path="/users" element={<UserPage />} />
 						<Route path="/books" element={<BooksPage />} />
-						<Route path="/books/:id" element={<BookInfoPage />} />
+						<Route path="/books/:id" element={<AboutBookPage />} />
 						<Route path="/books/edit/:id" element={<EditBookAdminPage />} />
-						<Route path="/users/books/:id" element={<BookInfoPage />} />
+						<Route path="/users/books/:id" element={<AboutBookPage />} />
 						<Route path="/books/add_book" element={<AddBookPage />} />
-						<Route path="/vendors/books/:id" element={<BookInfoPage />} />
+						<Route path="/vendors/books/:id" element={<AboutBookPage />} />
 						<Route path="/inner/:id" element={<BookInfoPage />} />
 						<Route path="/users/:fullName" element={<UserAboutPage />} />
-						<Route path="/users/:id/:fullName" element={<BookInfoPage />} />
+						<Route path="/users/:id/:fullName" element={<AboutBookPage />} />
 						<Route path="/vendors/:name" element={<AboutVendorPage />} />
 					</Routes>
 				</main>

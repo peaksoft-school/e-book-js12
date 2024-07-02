@@ -25,6 +25,7 @@ const Header = () => {
 	const [searchTerm, setSearchTerm] = useState<string>('');
 	const [showResults, setShowResults] = useState<boolean>(false);
 	const searchResultsRef = useRef<HTMLDivElement>(null);
+	const [vendorModal, setVendorModal] = useState(false);
 
 	const { data: searchResults, refetch } = useSearchBooksQuery(
 		{ searchTerm },
@@ -106,6 +107,30 @@ const Header = () => {
 		};
 	}, []);
 
+	const handleExitClient = () => {
+		localStorage.removeItem('token');
+		localStorage.setItem('client', 'false');
+		localStorage.setItem('vendor', 'false');
+		localStorage.setItem('admin', 'false');
+		localStorage.removeItem('NameClient');
+		localStorage.removeItem('EBOOK');
+		navigate('/auth/login');
+	};
+
+	const hadnleBecomeVendor = () => {
+		if (localAuth === 'true') {
+			localStorage.removeItem('token');
+			localStorage.setItem('client', 'false');
+			localStorage.setItem('vendor', 'false');
+			localStorage.setItem('admin', 'false');
+			localStorage.removeItem('NameClient');
+			localStorage.removeItem('EBOOK');
+			navigate('/auth/vendor/registration');
+		} else {
+			navigate('/auth/vendor/registration');
+		}
+	};
+
 	return (
 		<>
 			<header id="headerClient" className={scss.Header}>
@@ -175,7 +200,9 @@ const Header = () => {
 												</span>
 
 												<span>
-													{countOfFavorite !== 0 ? <IconRedDot /> : null}
+													{localAuth === 'true' ? (
+														<>{countOfFavorite !== 0 ? <IconRedDot /> : null}</>
+													) : null}
 												</span>
 											</>
 										)}
@@ -184,14 +211,20 @@ const Header = () => {
 										className={scss.basket}
 										onClick={() => navigate('/basket')}
 									>
-										{countBasket?.totalNumberOfBooks !== 0 ? (
+										{localAuth === 'true' ? (
 											<>
-												<p>Корзина ({countBasket?.totalNumberOfBooks})</p>
+												{countBasket?.totalNumberOfBooks !== 0 ? (
+													<>
+														<p>Корзина ({countBasket?.totalNumberOfBooks})</p>
+													</>
+												) : (
+													<>
+														<p>Корзина</p>
+													</>
+												)}
 											</>
 										) : (
-											<>
-												<p>Корзина</p>
-											</>
+											<p>Корзина</p>
 										)}
 									</div>
 								</div>
@@ -228,6 +261,7 @@ const Header = () => {
 																scrollToESection();
 															}, 300);
 														}
+														scrollToESection();
 													}}
 												>
 													Электронные книги
@@ -240,6 +274,7 @@ const Header = () => {
 																scrollToAudioSection();
 															}, 300);
 														}
+														scrollToAudioSection();
 													}}
 												>
 													Audio books
@@ -253,7 +288,7 @@ const Header = () => {
 												</li>
 												<li
 													onClick={() => {
-														navigate('/vendor');
+														setVendorModal(true);
 													}}
 												>
 													Начать продавать на eBook
@@ -280,6 +315,7 @@ const Header = () => {
 															scrollToESection();
 														}, 300);
 													}
+													scrollToESection();
 												}}
 											>
 												Электронные книги
@@ -292,6 +328,7 @@ const Header = () => {
 															scrollToAudioSection();
 														}, 300);
 													}
+													scrollToESection();
 												}}
 											>
 												Audio books
@@ -305,7 +342,7 @@ const Header = () => {
 											</li>
 											<li
 												onClick={() => {
-													navigate('/vendor/');
+													setVendorModal(true);
 												}}
 											>
 												Начать продавать на eBook
@@ -314,7 +351,7 @@ const Header = () => {
 									</div>
 								</div>
 								<div className={scss.right_nav_content}>
-									{localAuth ? (
+									{localAuth === 'true' ? (
 										<>
 											<button onClick={() => setIsUser(!isUser)}>
 												<p>
@@ -355,10 +392,6 @@ const Header = () => {
 													onClick={() => {
 														setUserExit(!userExit);
 														setIsUser(false);
-														localStorage.removeItem('token');
-														localStorage.setItem('isAuth', 'false');
-														localStorage.setItem('isVendor', 'false');
-														localStorage.setItem('admin', 'false');
 													}}
 												>
 													Выйти
@@ -379,7 +412,7 @@ const Header = () => {
 											<button
 												onClick={() => {
 													setUserExit(false);
-													navigate('/auth/login');
+													handleExitClient();
 												}}
 											>
 												Выйти
@@ -396,6 +429,31 @@ const Header = () => {
 								/>
 							</div>
 						</div>
+						<Modal
+							footer={false}
+							open={vendorModal}
+							onCancel={() => {
+								setVendorModal(false);
+							}}
+						>
+							<div className={scss.modal_vendor}>
+								<div className={scss.info_modal}>
+									<p>Что бы стать продавцом придется выйти c аккаунта</p>
+								</div>
+								<div className={scss.buttons}>
+									<button onClick={() => setVendorModal(false)}>
+										отменить
+									</button>
+									<button
+										onClick={() => {
+											hadnleBecomeVendor();
+										}}
+									>
+										Выйти
+									</button>
+								</div>
+							</div>
+						</Modal>
 					</div>
 				</div>
 			</header>

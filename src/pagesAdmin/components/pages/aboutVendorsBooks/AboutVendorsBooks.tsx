@@ -2,14 +2,8 @@
 import { useState } from 'react';
 import { Modal, Tooltip } from 'antd';
 import scss from './AboutVendorsBooks.module.scss';
-import ThreeDotIcon from '@/src/assets/icons/icon-threeDot';
 import UpIcon from '@/src/assets/icons/icon-upIcon';
-import {
-	IconArrowBottom,
-	IconSuccess,
-	IconWhiteLike
-} from '@/src/assets/icons';
-import { IconPencil } from '@tabler/icons-react';
+import { IconArrowBottom, IconWhiteLike } from '@/src/assets/icons';
 import { useGetAllVendorBooksQuery } from '@/src/redux/api/book';
 import { useDeleteVendorProfileMutation } from '@/src/redux/api/vendors';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -17,12 +11,10 @@ import { useNavigate, useParams } from 'react-router-dom';
 import IconGirl from '@/src/assets/icons/icon-girl';
 
 const AboutVendorsBooks = () => {
-	const [isOpen, setIsOpen] = useState<boolean>(false);
 	const [operationType, setOperationType] = useState<string>('ALL');
 	const [isOpenBooksType, setIsOpenBooksType] = useState<boolean>(false);
 	const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 	const [selectedVendor, setSelectedVendor] = useState<number | null>(null);
-	const [idBook, setIdBook] = useState<null | number>(null);
 	const navigate = useNavigate();
 	const { name } = useParams<{ name: string }>();
 	const vendorId = Number(name);
@@ -84,11 +76,6 @@ const AboutVendorsBooks = () => {
 		navigate(`/admin/vendors/books/${id}`);
 	};
 
-	const handleThreeDotClick = (id: number) => {
-		setIsOpen((prev) => (prev && idBook === id ? false : true));
-		setIdBook(id);
-	};
-
 	return (
 		<>
 			{isLoading ? (
@@ -136,41 +123,7 @@ const AboutVendorsBooks = () => {
 												<p>В корзине ({book.quantityOfBasket})</p>
 											</div>
 										</div>
-										<div
-											className={scss.extra}
-											onClick={(e) => {
-												e.stopPropagation();
-												handleThreeDotClick(book.id);
-											}}
-										>
-											<ThreeDotIcon />
-										</div>
-										{book.id === idBook && isOpen ? (
-											<div className={scss.is_open}>
-												<ul>
-													<li
-														onClick={() => {
-															setIsOpen(false);
-														}}
-													>
-														<span>
-															<IconSuccess />
-														</span>
-														Принять
-													</li>
-													<li
-														onClick={() => {
-															setIsOpen(false);
-														}}
-													>
-														<span>
-															<IconPencil />
-														</span>
-														Отклонить
-													</li>
-												</ul>
-											</div>
-										) : null}
+
 										<div
 											className={scss.book_content}
 											onClick={() => handleBookClick(book.id)}

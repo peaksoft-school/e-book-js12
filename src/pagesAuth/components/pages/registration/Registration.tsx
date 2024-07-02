@@ -8,7 +8,7 @@ import {
 	useConfirmEmailMutation,
 	usePostRegistrationMutation,
 	usePostWithGoogleMutation
-} from '@/src/redux/api/me';
+} from '@/src/redux/api/auth';
 import { signInWithPopup } from 'firebase/auth';
 import { auth, provider } from '@/src/configs/firebase';
 import { IconGoogleLogo } from '@/src/assets/icons';

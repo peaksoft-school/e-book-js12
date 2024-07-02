@@ -3,7 +3,7 @@ import scss from './Login.module.scss';
 import CustomPasswordInput from '@/src/ui/customInpute/CustomPasswordInput';
 import { Link, useNavigate } from 'react-router-dom';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { usePostLoginMutation } from '@/src/redux/api/me';
+import { usePostLoginMutation } from '@/src/redux/api/auth';
 import { message } from 'antd';
 interface IFormInput {
 	email: string;
@@ -26,6 +26,7 @@ const Login = () => {
 				localStorage.setItem('client', 'true');
 				localStorage.setItem('vendor', 'false');
 				localStorage.setItem('admin', 'false');
+				localStorage.setItem('EBOOK', JSON.stringify(results.data));
 				reset();
 				navigate('/');
 			} else if (results.data?.role === 'VENDOR') {
@@ -34,23 +35,44 @@ const Login = () => {
 				localStorage.setItem('client', 'false');
 				localStorage.setItem('vendor', 'true');
 				localStorage.setItem('admin', 'false');
+				localStorage.setItem('EBOOK', JSON.stringify(results.data));
 				reset();
-				navigate('/vendor/home');
+				navigate('/');
 			} else if (results.data?.role === 'ADMIN') {
 				const { token } = results.data;
 				localStorage.setItem('token', token);
 				localStorage.setItem('client', 'false');
 				localStorage.setItem('vendor', 'false');
 				localStorage.setItem('admin', 'true');
+				localStorage.setItem('EBOOK', JSON.stringify(results.data));
 				reset();
-				navigate('/admin');
+				navigate('/');
 			}
 		}
+
 		if (results.error) {
-			messageApi.open({
-				type: 'warning',
-				content: results.error.data.message
-			});
+			if (results.error.status === 400) {
+				if (results.error.data.password && results.error.data.email) {
+					messageApi.open({
+						type: 'warning',
+						content: results.error.data.password
+					});
+					messageApi.open({
+						type: 'warning',
+						content: results.error.data.email
+					});
+				} else if (results.error.data?.email) {
+					messageApi.open({
+						type: 'warning',
+						content: results.error.data.email
+					});
+				} else if (results.error.data?.password) {
+					messageApi.open({
+						type: 'warning',
+						content: results.error.data.password
+					});
+				}
+			}
 		}
 	};
 
@@ -72,7 +94,7 @@ const Login = () => {
 								Email<span>*</span>
 							</label>
 							<CustomLoginInput
-								type="text"
+								type="email"
 								register={register}
 								registerName={'email'}
 								placeholder="Напишите email"

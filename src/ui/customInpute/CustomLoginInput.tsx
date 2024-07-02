@@ -21,6 +21,7 @@ const CustomLoginInput = <T extends FieldValues>({
 	return (
 		<input
 			placeholder={placeholder}
+			required={true}
 			{...register(registerName, { required: true })}
 			type={type}
 			className={scss.login_input}

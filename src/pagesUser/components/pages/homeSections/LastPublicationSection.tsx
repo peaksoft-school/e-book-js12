@@ -8,9 +8,7 @@ import { Tooltip } from 'antd';
 
 const LastPublicationSection: FC = () => {
 	const [state, setState] = useState('BUSINESS_LITERATURE');
-	const [expandedCards, setExpandedCards] = useState<{
-		[key: number]: boolean;
-	}>({});
+
 	const { data, error, isLoading } = useGetLastPublicationQuery({
 		page: 1,
 		size: 1,
@@ -32,13 +30,6 @@ const LastPublicationSection: FC = () => {
 	const handleClick = (newState: string) => {
 		setNavClicked(newState);
 		setState(newState);
-	};
-
-	const handleShowFullText = (id: number) => {
-		setExpandedCards((prevExpanded) => ({
-			...prevExpanded,
-			[id]: !prevExpanded[id]
-		}));
 	};
 
 	if (isLoading) return <p>Загрузка...</p>;
@@ -136,28 +127,21 @@ const LastPublicationSection: FC = () => {
 							<div key={el.id} className={scss.main_about}>
 								<Tooltip
 									className={scss.info_hover}
-									title={el.title.length > 20 ? el.title : ''}
+									title={el.title.length > 30 ? el.title : ''}
 									color="black"
 									placement="bottomLeft"
 								>
 									<h2 className={scss.title_book}>{el.title}</h2>
 								</Tooltip>
-								<div
-									className={scss.about_book}
-									onClick={() => handleShowFullText(el.id)}
-								>
-									{expandedCards[el.id] ? (
-										<Tooltip
-											className={scss.info_hover}
-											title={el.description.length > 20 ? el.description : ''}
-											color="black"
-											placement="bottomLeft"
-										>
-											<p className={scss.description_text}>{el.description}</p>
-										</Tooltip>
-									) : (
-										<p>{el.description.substring(0, 285)}...</p>
-									)}
+								<div className={scss.about_book}>
+									<Tooltip
+										className={scss.info_hover}
+										title={el.description.length > 35 ? el.description : ''}
+										color="black"
+										placement="bottomLeft"
+									>
+										<p className={scss.description_text}>{el.description}</p>
+									</Tooltip>
 								</div>
 								<div className={scss.about_book_footer}>
 									<a
