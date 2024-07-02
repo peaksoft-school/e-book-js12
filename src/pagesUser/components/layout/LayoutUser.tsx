@@ -1,5 +1,5 @@
 import scss from './LayoutUser.module.scss';
-import { Routes, Route, useLocation } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import Header from './header/Header';
 import Footer from './footer/Footer';
 import HomePage from '../pages/HomePage';
@@ -10,16 +10,12 @@ import BookInfoPage from '../pages/BookInfoPage';
 import ProfilePageContainer from '../pages/profilePageContainer/ProfilePageContainer';
 import PromoPage from '../pages/PromoPage';
 import ConfirmPaymentPage from '../pages/ConfirmPaymentPage';
+
 const LayoutUser = () => {
-	const { pathname } = useLocation();
 	return (
 		<>
 			<div className={scss.layout}>
-				{pathname === '/payment' || pathname === '/confirmPayment' ? null : (
-					<>
-						<Header />
-					</>
-				)}
+				<Header />
 				<main>
 					<Routes>
 						<Route path="/" element={<HomePage />} />
@@ -33,11 +29,7 @@ const LayoutUser = () => {
 						<Route path="/confirmPayment" element={<ConfirmPaymentPage />} />
 					</Routes>
 				</main>
-				{pathname === '/payment' || pathname === '/confirmPayment' ? null : (
-					<>
-						<Footer />
-					</>
-				)}
+				<Footer />
 			</div>
 		</>
 	);

@@ -9,13 +9,15 @@ interface TypeProps {
 	setOpenModal: (value: boolean | ((prev: boolean) => boolean)) => void;
 	totalAmount: number | undefined;
 	test: Record<string, string>;
+	refetch: () => void
 }
 
 const Payment: FC<TypeProps> = ({
 	openModal,
 	setOpenModal,
 	totalAmount,
-	test
+	test,
+	refetch
 }) => {
 	const stripeTestPromise = loadStripe(
 		'pk_test_51PSxn0P9AwzSXbtUejAOIXjKhTxpQmLwHNFjc6yjFOYsXNIK0l8yP1Apg3eF0x2gKy094TEupBQtGfEZogSDWrK600uGVUQfKk'
@@ -29,6 +31,7 @@ const Payment: FC<TypeProps> = ({
 					openModal={openModal}
 					setOpenModal={setOpenModal}
 					newTestObj={test}
+					refetch={refetch}
 				/>
 			</Elements>
 		</>

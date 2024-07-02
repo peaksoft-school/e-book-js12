@@ -88,3 +88,15 @@
 		}
 	}
 }
+.confirm_payment {
+	text-align: center;
+	&_bold__title {
+		font-size: 18px;
+		font-weight: 500;
+		line-height: normal;
+	}
+	&_actual_info {
+		margin-top: 10px;
+		
+	}
+}
