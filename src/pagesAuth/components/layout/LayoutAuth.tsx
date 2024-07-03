@@ -16,7 +16,7 @@ const LayoutAuth = () => {
 			localStorage.removeItem('token');
 			localStorage.removeItem('EBOOK');
 		}
-	}, [localtion]);
+	}, [localtion.pathname]);
 	return (
 		<>
 			<div className={scss.layout}>

@@ -114,6 +114,18 @@ const VendorRegistration = () => {
 				localStorage.setItem('vendor', 'true');
 				localStorage.setItem('admin', 'false');
 				navigate('/vendor/home');
+				console.log(response.data.data);
+
+				localStorage.setItem(
+					'EBOOK',
+					JSON.stringify({
+						email: email,
+						firstName: response.data.data?.firstName,
+						id: 4,
+						role: 'VENDOR',
+						token: response.data.data?.token
+					})
+				);
 				setValueCode('');
 			}
 			if (error) {

@@ -8,7 +8,8 @@ import ThreeDotIcon from '@/src/assets/icons/icon-threeDot';
 import { IconArrowBottom } from '@/src/assets/icons';
 import {
 	useDeleteBookMutation,
-	useFilterBooksMutation
+	useFilterBooksMutation,
+	useGetCountBookIsGenreQuery
 } from '@/src/redux/api/book';
 import { Modal, Skeleton, Tooltip, message } from 'antd';
 
@@ -31,6 +32,7 @@ const BooksSection: React.FC = () => {
 	const [booksData, setBooks] = useState<Book[]>([]);
 	const navigate = useNavigate();
 	const [filterBooks, { isLoading }] = useFilterBooksMutation();
+	const { data: countIsGenreBook } = useGetCountBookIsGenreQuery();
 	const [deleteBookById] = useDeleteBookMutation();
 	const [deleteModal, setDeleteModal] = useState(false);
 	const [messageApi, context] = message.useMessage();
@@ -182,6 +184,7 @@ const BooksSection: React.FC = () => {
 	};
 
 	const [style, setStyle] = useState({ width: 268, height: 409 });
+	console.log(countIsGenreBook);
 
 	const updateStyle = () => {
 		const width = window.innerWidth;
@@ -254,7 +257,16 @@ const BooksSection: React.FC = () => {
 													onClick={() => handleGenreClick(data.englishName)}
 												>
 													<p>{data.genreName}</p>
-													<p>{booksData.length}</p>
+													<p>
+														{countIsGenreBook &&
+														(countIsGenreBook as { [key: string]: number })[
+															data.englishName
+														]
+															? (countIsGenreBook as { [key: string]: number })[
+																	data.englishName
+																]
+															: 0}
+													</p>
 												</div>
 											))}
 										</div>

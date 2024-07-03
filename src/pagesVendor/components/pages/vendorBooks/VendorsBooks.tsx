@@ -176,7 +176,6 @@ const VendorsBooks: FC = () => {
 														</li>
 													</ul>
 												</div>
-
 												<div
 													onClick={() => navigate(`${book.id}`)}
 													className={scss.book_content}
@@ -217,15 +216,19 @@ const VendorsBooks: FC = () => {
 							</div>
 							{
 								<div className={scss.see_more_button}>
-									{sizePage >= booksData!.totalBooks ? (
+									{sizePage >= (booksData?.totalBooks ?? 0) ? (
 										<>
-											<CustomSeeMoreButton
-												onClick={() => {
-													setSizePage(12);
-												}}
-											>
-												Вернутся назад
-											</CustomSeeMoreButton>
+											{booksData && booksData?.bookResponses?.length > 12 ? (
+												<>
+													<CustomSeeMoreButton
+														onClick={() => {
+															setSizePage(12);
+														}}
+													>
+														Вернуться назад
+													</CustomSeeMoreButton>
+												</>
+											) : null}
 										</>
 									) : (
 										<>

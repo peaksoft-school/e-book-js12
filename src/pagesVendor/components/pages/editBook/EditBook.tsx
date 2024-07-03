@@ -755,7 +755,11 @@ const EditBook = () => {
 												Объем
 												<div className={scss.input}>
 													<span>стр.</span>
-													<input type="text" {...register('volume')} />
+													<input
+														type="text"
+														maxLength={32640}
+														{...register('volume')}
+													/>
 												</div>
 											</label>
 											<label>

@@ -1,5 +1,5 @@
 import scss from './LayoutUser.module.scss';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, useLocation } from 'react-router-dom';
 import Header from './header/Header';
 import Footer from './footer/Footer';
 import HomePage from '../pages/HomePage';
@@ -10,12 +10,14 @@ import BookInfoPage from '../pages/BookInfoPage';
 import ProfilePageContainer from '../pages/profilePageContainer/ProfilePageContainer';
 import PromoPage from '../pages/PromoPage';
 import ConfirmPaymentPage from '../pages/ConfirmPaymentPage';
+import TestPage from '../pages/TestPage';
 
 const LayoutUser = () => {
+	const location = useLocation();
 	return (
 		<>
 			<div className={scss.layout}>
-				<Header />
+				{location.pathname === '/ebook' ? null : <Header />}
 				<main>
 					<Routes>
 						<Route path="/" element={<HomePage />} />
@@ -27,9 +29,11 @@ const LayoutUser = () => {
 						<Route path="/basket" element={<Basket />} />
 						<Route path="/promo_page" element={<PromoPage />} />
 						<Route path="/confirmPayment" element={<ConfirmPaymentPage />} />
+
+						<Route path="/ebook" element={<TestPage />} />
 					</Routes>
 				</main>
-				<Footer />
+				{location.pathname === '/ebook' ? null : <Footer />}
 			</div>
 		</>
 	);

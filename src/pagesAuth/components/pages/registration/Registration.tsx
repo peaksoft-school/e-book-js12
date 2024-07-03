@@ -1,6 +1,6 @@
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import scss from './Registration.module.scss';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import EyeSeeIcon from '@/src/assets/icons/icon-eyeSee';
 import EyeClose from '@/src/assets/icons/icon-eyeClose';
 import { SubmitHandler, useForm } from 'react-hook-form';
@@ -45,6 +45,13 @@ const Registration = () => {
 	const [confirmModal, setConfirmModa] = useState(false);
 	const [messageApi, contextHolder] = message.useMessage();
 	const navigate = useNavigate();
+	const localtion = useLocation();
+	useEffect(() => {
+		if (localtion.pathname === '/auth/*') {
+			localStorage.removeItem('token');
+			localStorage.removeItem('EBOOK');
+		}
+	}, [localtion.pathname]);
 
 	const {
 		formState: { errors },
@@ -67,7 +74,6 @@ const Registration = () => {
 				const results = (await postUser(newData)) as RegistrationResponse;
 				if ('data' in results) {
 					console.log(results.data);
-
 					if (results.data?.httpStatus === 'OK') {
 						setEmail(data.email);
 						setConfirmModa(true);
@@ -134,6 +140,16 @@ const Registration = () => {
 				localStorage.setItem('client', 'true');
 				localStorage.setItem('vendor', 'false');
 				localStorage.setItem('admin', 'false');
+				localStorage.setItem(
+					'EBOOK',
+					JSON.stringify({
+						email: email,
+						firstName: result.data?.firstName,
+						id: 3,
+						role: 'CLIENT',
+						token: result.data?.token
+					})
+				);
 				navigate('/');
 				setCode('');
 				setConfirmModa(false);
@@ -167,19 +183,34 @@ const Registration = () => {
 	const signInWithGoogleHandler = async () => {
 		const result = await signInWithPopup(auth, provider);
 		const user = result.user;
-		const idToken = await user.getIdToken();
+		const idToken = await user.getIdTokenResult();
+		console.log(user);
+		console.log(idToken);
+
 		const data = {
-			idToken: idToken
+			idToken: idToken.token
 		};
 		const results = await postGoogleToken(data);
 		if ('data' in results) {
-			const { token } = results.data;
+			const token = results.data.token;
 			const { displayName } = result.user;
 			localStorage.setItem('NameClient', displayName!);
 			localStorage.setItem('token', token);
-			localStorage.setItem('isAuth', 'true');
+			localStorage.setItem('client', 'true');
 			localStorage.setItem('vendor', 'false');
 			localStorage.setItem('admin', 'false');
+			console.log(results.data);
+
+			localStorage.setItem(
+				'EBOOK',
+				JSON.stringify({
+					email: email,
+					firstName: result.user.displayName,
+					id: 3,
+					role: 'CLIENT',
+					token: results.data.token
+				})
+			);
 			navigate('/');
 		}
 	};

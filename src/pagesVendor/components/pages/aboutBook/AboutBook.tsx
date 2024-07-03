@@ -117,17 +117,7 @@ const AboutBook = () => {
 		}
 	];
 
-	// const locationFunction = () => {
-	// 	if (/^\/vendor\/notification\/\d+$/.test(location.pathname)) {
-	// 		return (
-	// 			<p onClick={() => navigate('/vendor/notification')}>Уведомление</p>
-	// 		);
-	// 	} else if (/^\/vendor\/notification\/books\/\d+$/.test(location.pathname)) {
-	// 		// исправлено
-	// 		return <p onClick={() => navigate('/notification/')}>test</p>;
-	// 	}
-	// 	return null;
-	// };
+
 
 	return (
 		<section className={scss.AboutBook}>
