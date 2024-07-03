@@ -1,5 +1,18 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
+import { ChangeEvent, useEffect, useRef, useState } from 'react';
 import scss from './AddBookStyle.module.scss';
+import {
+	useAddBookVendorMutation,
+	usePostFileMutation
+} from '@/src/redux/api/addBook';
+import { Modal, message } from 'antd';
+import {
+	FieldErrors,
+	FieldValues,
+	SubmitHandler,
+	useForm
+} from 'react-hook-form';
+import { Link, useNavigate } from 'react-router-dom';
+import CustomAddPhoto from '@/src/ui/customAddPhoto/CustomAddPhoto';
 import {
 	IconArrowBottom,
 	IconBlackCircle,
@@ -10,26 +23,11 @@ import {
 	IconWhiteCircle,
 	IconWhiteSquare
 } from '@/src/assets/icons';
-import { ChangeEvent, useEffect, useRef, useState } from 'react';
 import CustomUserNameInput from '@/src/ui/customInpute/CustomUserNameInput';
-import { Modal } from 'antd';
-import CustomBasketButton from '@/src/ui/customButton/CustomBasketButton';
+import CustomAudioFragmentInput from '@/src/ui/customAudioInput/CustomAudioFragmenInput';
 import CustomAudioDownloadInput from '@/src/ui/customAudioInput/CustomAudioDownloadInput';
 import CustomPDFDownloadInput from '@/src/ui/customPDFInput/CustomPDFDownloadInput';
-import { Link } from 'react-router-dom';
-import {
-	FieldErrors,
-	FieldValues,
-	SubmitHandler,
-	useForm
-} from 'react-hook-form';
-import {
-	useAddBookVendorMutation,
-	usePostFileMutation
-} from '@/src/redux/api/addBook';
-import CustomAddPhoto from '@/src/ui/customAddPhoto/CustomAddPhoto';
-import CustomAudioFragmentInput from '@/src/ui/customAudioInput/CustomAudioFragmenInput';
-
+import CustomBasketButton from '@/src/ui/customButton/CustomBasketButton';
 interface TypeJenre {
 	jenreId: number;
 	jenreName: string;
@@ -42,12 +40,15 @@ interface TypeLanguage {
 	language: string;
 	languageName: string;
 }
+
 type FormValues = {
 	title: string;
 	authorsFullName: string;
 	publishingHouse: string;
 };
-const AddBookSection = () => {
+
+const BookAddSection = () => {
+	const navigate = useNavigate();
 	const [nameBook, setNameBook] = useState('');
 	const [clickRadio, setClickRadio] = useState(true);
 	const [audioBook, setAudioBook] = useState(false);
@@ -66,9 +67,7 @@ const AddBookSection = () => {
 	const [durationFragment, setDurationFragment] = useState<number>(0);
 	const [pdfFileName, setPdfFileName] = useState<File | null>();
 	const [postFile] = usePostFileMutation();
-
 	const [selectLanguage, setSelectLanguage] = useState(false);
-
 	const [languageSeleced, setLanguageSelected] = useState<
 		TypeLanguage | undefined
 	>({
@@ -84,6 +83,10 @@ const AddBookSection = () => {
 	const [selectDataJenre, setSelectDataJenre] = useState<TypeJenre>();
 
 	const [description, setDescription] = useState('');
+	const [isFileUploadedFragment, setIsFileUploadedFragment] = useState(false);
+	const [isFileUploaded, setIsFileUploaded] = useState(false);
+	const [isPdfFileUploaded, setIsPdfFileUploaded] = useState(false);
+	const [messageApi, contextHolder] = message.useMessage();
 
 	const [pdfFile, setPdfFile] = useState(' ');
 	const {
@@ -93,11 +96,9 @@ const AddBookSection = () => {
 		formState: { errors }
 	} = useForm();
 	const errorRef = useRef<FieldErrors<FormValues>>(errors);
-
 	const [fragment, setFragment] = useState(' ');
 
 	const [addBookVendor] = useAddBookVendorMutation();
-
 	const jenreData = [
 		{
 			jenreId: 1,
@@ -185,34 +186,56 @@ const AddBookSection = () => {
 			authorsFullName: book.authorsFullName,
 			publishingHouse: book.publishingHouse !== '' ? book.publishingHouse : ' ',
 			description: description,
-			fragment: fragment,
+			fragment: book.fragment,
 			publishedYear: book.publishedYear,
-			volume: book.volume !== '' ? book.volume : 0,
+			volume: book.volume !== ' ' ? book.volume : 0,
 			amountOfBook: book.amountOfBook,
-			discount: book.discount === '' ? 0 : book.discount,
+			discount: book.discount !== '' ? book.discount : 0,
 			price: book.price,
 			bestseller: clickBestseller,
 			durationFragment: durationFragment
 		};
-		const result = await addBookVendor({
+		const result = (await addBookVendor({
 			newUpDateBook,
 			genre: selectDataJenre!.englishName,
 			language: languageSeleced!.language,
 			bookType: bookType
-		}).unwrap();
-		if (result.data?.httpStatus === 'OK') {
-			setModal(true);
-			reset();
-			setClickBestseller(false);
-			setFragment('');
-			setDescription('');
-			setPdfFile('');
-			setAudioFile('');
-			setAudioFileFragment('');
-			setFirstPhoto('');
-			setSecondPhoto('');
-			setDelPhoto(false);
-			setPdfFileName(null);
+		})) as ADDBOOKVENDOR.AddBookVendorResponse;
+
+		if (result.error) {
+			if (result.error.status === 400) {
+				if (result.error.data.authorsFullName) {
+					messageApi.open({
+						type: 'warning',
+						content: result.error.data.authorsFullName
+					});
+				} else if (result.error.data.publishedYear) {
+					messageApi.open({
+						type: 'warning',
+						content: result.error.data.publishedYear
+					});
+				} else if (result.error.data.price) {
+					messageApi.open({
+						type: 'warning',
+						content: result.error.data.price
+					});
+				}
+			}
+		} else {
+			if (result.data?.httpStatus === 'OK') {
+				setModal(true);
+				reset();
+				setClickBestseller(false);
+				setFragment('');
+				setDescription('');
+				setPdfFile('');
+				setAudioFile('');
+				setAudioFileFragment('');
+				setFirstPhoto('');
+				setSecondPhoto('');
+				setDelPhoto(false);
+				setPdfFileName(null);
+			}
 		}
 	};
 
@@ -223,6 +246,7 @@ const AddBookSection = () => {
 			const status = result.data!.httpStatus;
 			if (status === 'OK') {
 				setPdfFile(result.data!.message);
+				setIsPdfFileUploaded(true);
 			}
 		}
 	};
@@ -238,6 +262,7 @@ const AddBookSection = () => {
 	const handleSecondPhotoChange = async (e: ChangeEvent<HTMLInputElement>) => {
 		const file = e.target.files ? e.target.files[0] : null;
 		const result = await postFile(file!);
+		console.log(result);
 		if ('data' in result) {
 			if (result.data!.httpStatus === 'OK') {
 				setSecondPhoto(result.data!.message);
@@ -250,7 +275,6 @@ const AddBookSection = () => {
 		);
 		setSelectDataJenre(findData);
 	};
-
 	const selectedOptionLanguage = (id: number) => {
 		const findData = options.find((item) =>
 			item.id === id ? item : item.id === 3 ? item.languageName : null
@@ -263,6 +287,7 @@ const AddBookSection = () => {
 		if ('data' in result) {
 			if (result.data!.httpStatus === 'OK') {
 				setAudioFileFragment(result.data!.message);
+				setIsFileUploadedFragment(true);
 			}
 		}
 	};
@@ -272,6 +297,7 @@ const AddBookSection = () => {
 		if ('data' in result) {
 			if (result.data!.httpStatus === 'OK') {
 				setAudioFile(result.data!.message);
+				setIsFileUploaded(true);
 			}
 		}
 	};
@@ -293,27 +319,30 @@ const AddBookSection = () => {
 	if (modal === true) {
 		setTimeout(() => {
 			setModal(false);
+			navigate('/admin/books');
 		}, 3000);
 	}
 
 	useEffect(() => {
-		convertSecondsToHoursMinutesAndSeconds(duration);
-	}, [duration]);
+		convertSecondsToHoursMinutesAndSeconds(durationFragment);
+	}, [durationFragment]);
+
 	return (
 		<section className={scss.AddBookSection}>
 			<div className={scss.container}>
+				{contextHolder}
 				<form onSubmit={handleSubmit(onSubmit)} className={scss.content}>
 					<div className={scss.links}>
 						<Link
-							to={'/admin'}
+							to={'/admin/books'}
 							className={`${scss.link_to_home} ${location.pathname === '/admin' ? scss.link_to_home_active : ''}`}
 						>
 							Главная
 						</Link>
 						/
 						<Link
-							to={'/vendor/addBook'}
-							className={`${scss.link_to_addBook} ${location.pathname === '/addBook' ? scss.link_to_addBook_active : ''}`}
+							to={'/admin/add_book'}
+							className={`${scss.link_to_addBook} ${location.pathname === '/add_book' ? scss.link_to_addBook_active : ''}`}
 						>
 							Добавить книгу
 						</Link>
@@ -450,7 +479,7 @@ const AddBookSection = () => {
 										<label>
 											Название книги
 											<CustomUserNameInput
-												refError={errorRef.current.title}
+												refError={errorRef}
 												validateError={errors.title}
 												placeholder="Напишите полное название книги"
 												registerName="title"
@@ -460,11 +489,11 @@ const AddBookSection = () => {
 										<label>
 											ФИО автора
 											<CustomUserNameInput
-												refError={errorRef.current.authorsFullName}
-												validateError={errors.authorsFullName}
+												refError={errorRef}
 												placeholder="Напишите ФИО автора"
 												registerName="authorsFullName"
 												register={register}
+												validateError={errors.authorsFullName}
 											/>
 										</label>
 										<label>
@@ -518,35 +547,73 @@ const AddBookSection = () => {
 										<label>
 											Издательство
 											<CustomUserNameInput
+												refError={errorRef}
+												validateError={errors.publishingHouse}
 												placeholder="Напишите название издательства"
 												registerName="publishingHouse"
-												refError={errorRef.current.publishingHouse}
-												validateError={errors.publishingHouse}
 												register={register}
 											/>
 										</label>
-										{}
 										<label>
 											О книге
 											<textarea
+												className={
+													errors.description ? scss.textarea_error : ''
+												}
 												rows={636}
 												cols={264}
+												required={true}
 												maxLength={1234}
 												placeholder="Напишите о книге"
-												onChange={(e) => setDescription(e.target.value)}
+												{...register('description', {
+													required: true,
+													minLength: {
+														value: 20,
+														message: 'Минимальная длина описании 20 слов'
+													},
+													onChange(e) {
+														setDescription(e.target.value);
+													}
+												})}
 											/>
-											<p>{description.length} / 1234</p>
+											<div className={scss.deg_info}>
+												<p>
+													{errors.description &&
+														errors.description.message === 'string' &&
+														errors.description.message}
+												</p>
+												<p>{description.length} / 1234</p>
+											</div>
 										</label>
 										<label>
-											Фрагмент книги
+											Фрагмент книги{' '}
 											<textarea
+												className={errors.fragment ? scss.textarea_error : ''}
 												rows={636}
+												required={true}
 												cols={264}
 												maxLength={1234}
 												placeholder="Напишите фрагмент книги"
-												onChange={(e) => setFragment(e.target.value)}
+												{...register('fragment', {
+													required: true,
+													minLength: {
+														value: 20,
+														message: 'Минимальная длина фрагмента 20 слов'
+													},
+													onChange(event) {
+														setFragment(event.target.value);
+													}
+												})}
 											/>
-											<p>{fragment.length} / 1234</p>
+											<div className={scss.deg_info}>
+												<p>
+													{' '}
+													{errors.fragment &&
+														errors.fragment.message === 'string' &&
+														errors.fragment.message}
+												</p>
+												<p>{fragment.length} / 1234</p>
+											</div>
 										</label>
 									</div>
 									<div className={scss.right_inputs}>
@@ -597,16 +664,44 @@ const AddBookSection = () => {
 											</label>
 											<label>
 												Объем
-												<div className={scss.input}>
+												<div
+													className={
+														errors.volume ? scss.input_error : scss.input
+													}
+												>
 													<span>стр.</span>
-													<input type="text" {...register('volume')} />
+													<input
+														required={true}
+														minLength={2}
+														type="text"
+														{...register('volume', {
+															required: true,
+															minLength: 4,
+															validate: (value) =>
+																!isNaN(value) || 'Введите только числа'
+														})}
+													/>
 												</div>
 											</label>
 											<label>
 												Стоимость
-												<div className={scss.input}>
+												<div
+													className={
+														errors.price ? scss.input_error : scss.input
+													}
+												>
 													<span>сом</span>
-													<input type="text" {...register('price')} />
+													<input
+														required={true}
+														minLength={3}
+														type="text"
+														{...register('price', {
+															required: true,
+															minLength: 3,
+															validate: (value) =>
+																!isNaN(value) || 'Введите только числа'
+														})}
+													/>
 												</div>
 											</label>
 											<label>
@@ -632,24 +727,62 @@ const AddBookSection = () => {
 										<div className={scss.right_i}>
 											<label>
 												Год выпуска
-												<div className={scss.input}>
+												<div
+													className={
+														errors.publishedYear ? scss.input_error : scss.input
+													}
+												>
 													<span>гг</span>
-													<input type="text" {...register('publishedYear')} />
+													<input
+														required={true}
+														minLength={4}
+														maxLength={4}
+														type="text"
+														{...register('publishedYear', {
+															required: true,
+															minLength: 4,
+															validate: (value) =>
+																!isNaN(value) || 'Введите только числа'
+														})}
+													/>
 												</div>
 											</label>
 											<label>
 												Кол-во книг
-												<div className={scss.input}>
+												<div
+													className={
+														errors.amountOfBook ? scss.input_error : scss.input
+													}
+												>
 													<span>шт.</span>
-
-													<input type="text" {...register('amountOfBook')} />
+													<input
+														type="text"
+														required={true}
+														minLength={1}
+														{...register('amountOfBook', {
+															required: true,
+															minLength: 1,
+															validate: (value) =>
+																!isNaN(value) || 'Введите только числа'
+														})}
+													/>
 												</div>
 											</label>
 											<label>
 												Скидка
-												<div className={scss.input}>
+												<div
+													className={
+														errors.discount ? scss.input_error : scss.input
+													}
+												>
 													<span>%</span>
-													<input type="text" {...register('discount')} />
+													<input
+														type="text"
+														{...register('discount', {
+															validate: (value) =>
+																!isNaN(value) || 'Введите только числа'
+														})}
+													/>
 												</div>
 											</label>
 										</div>
@@ -665,7 +798,7 @@ const AddBookSection = () => {
 									<label>
 										Название книги
 										<CustomUserNameInput
-											refError={errorRef.current.title}
+											refError={errorRef}
 											validateError={errors.title}
 											placeholder="Напишите полное название книги"
 											registerName="title"
@@ -675,7 +808,7 @@ const AddBookSection = () => {
 									<label>
 										ФИО автора
 										<CustomUserNameInput
-											refError={errorRef.current.authorsFullName}
+											refError={errorRef}
 											validateError={errors.authorsFullName}
 											placeholder="Напишите ФИО автора"
 											registerName="authorsFullName"
@@ -738,7 +871,14 @@ const AddBookSection = () => {
 											placeholder="Напишите о книге"
 											onChange={(e) => setDescription(e.target.value)}
 										/>
-										<p>{description.length} / 1234</p>
+										<div className={scss.deg_info}>
+											<p>
+												{errors.description &&
+													errors.description.message === 'string' &&
+													errors.description.message}
+											</p>
+											<p>{description.length} / 1234</p>
+										</div>
 									</label>
 								</div>
 								<div className={`${scss.right_inputs} ${scss.audio_inputs}`}>
@@ -789,9 +929,24 @@ const AddBookSection = () => {
 										</label>
 										<label>
 											Год выпуска
-											<div className={scss.input}>
+											<div
+												className={
+													errors.publishedYear ? scss.input_error : scss.input
+												}
+											>
 												<span>гг</span>
-												<input type="text" {...register('publishedYear')} />
+												<input
+													type="text"
+													required={true}
+													minLength={4}
+													maxLength={4}
+													{...register('publishedYear', {
+														required: true,
+														minLength: 4,
+														validate: (value) =>
+															!isNaN(value) || 'Введите только числа'
+													})}
+												/>
 											</div>
 										</label>
 									</div>
@@ -833,16 +988,38 @@ const AddBookSection = () => {
 									<div className={scss.box_three}>
 										<label>
 											Стоимость
-											<div className={scss.input}>
+											<div
+												className={errors.price ? scss.input_error : scss.input}
+											>
 												<span>сом</span>
-												<input type="text" {...register('price')} />
+												<input
+													required={true}
+													minLength={3}
+													type="text"
+													{...register('price', {
+														required: true,
+														minLength: 3,
+														validate: (value) =>
+															!isNaN(value) || 'Введите только числа'
+													})}
+												/>
 											</div>
 										</label>
 										<label>
 											Скидка
-											<div className={scss.input}>
+											<div
+												className={
+													errors.discount ? scss.input_error : scss.input
+												}
+											>
 												<span>%</span>
-												<input type="text" {...register('discount')} />
+												<input
+													type="text"
+													{...register('discount', {
+														validate: (value) =>
+															!isNaN(value) || 'Введите только числа'
+													})}
+												/>
 											</div>
 										</label>
 									</div>
@@ -851,8 +1028,8 @@ const AddBookSection = () => {
 											Загрузите фрагмент аудиозаписи
 											<div className={scss.audio_input}>
 												<CustomAudioFragmentInput
-													isFileUploaded
 													setDuration={setDurationFragment}
+													isFileUploaded={isFileUploadedFragment}
 													accept="audio/*"
 													onChange={(e) => {
 														handleAudioFragmetChange(e);
@@ -865,8 +1042,8 @@ const AddBookSection = () => {
 											Загрузите аудиозапись
 											<div className={scss.audio_input}>
 												<CustomAudioDownloadInput
-													isFileUploaded
 													setDuration={setDuration}
+													isFileUploaded={isFileUploaded}
 													accept="audio/*"
 													onChange={(e) => {
 														handleAudioChange(e);
@@ -887,7 +1064,7 @@ const AddBookSection = () => {
 										<label>
 											Название книги
 											<CustomUserNameInput
-												refError={errorRef.current.title}
+												refError={errorRef}
 												validateError={errors.title}
 												placeholder="Напишите полное название книги"
 												registerName="title"
@@ -897,7 +1074,7 @@ const AddBookSection = () => {
 										<label>
 											ФИО автора
 											<CustomUserNameInput
-												refError={errorRef.current.authorsFullName}
+												refError={errorRef}
 												validateError={errors.authorsFullName}
 												placeholder="Напишите ФИО автора"
 												registerName="authorsFullName"
@@ -955,7 +1132,7 @@ const AddBookSection = () => {
 										<label>
 											Издательство
 											<CustomUserNameInput
-												refError={errorRef.current.publishingHouse}
+												refError={errorRef}
 												validateError={errors.publishingHouse}
 												placeholder="Напишите название издательства"
 												registerName="publishingHouse"
@@ -969,9 +1146,25 @@ const AddBookSection = () => {
 												cols={40}
 												maxLength={1234}
 												placeholder="Напишите о книге"
-												onChange={(e) => setDescription(e.target.value)}
+												{...register('description', {
+													required: true,
+													minLength: {
+														value: 20,
+														message: 'Минимальная длина описании 20 слов'
+													},
+													onChange(e) {
+														setDescription(e.target.value);
+													}
+												})}
 											/>
-											<p>{description.length} / 1234</p>
+											<div className={scss.deg_info}>
+												<p>
+													{errors.description &&
+														errors.description.message === 'string' &&
+														errors.description.message}
+												</p>
+												<p>{description.length} / 1234</p>
+											</div>
 										</label>
 										<label>
 											Фрагмент книги
@@ -980,9 +1173,25 @@ const AddBookSection = () => {
 												cols={40}
 												maxLength={1234}
 												placeholder="Напишите фрагмент книги"
-												onChange={(e) => setFragment(e.target.value)}
+												{...register('fragment', {
+													required: true,
+													minLength: {
+														value: 20,
+														message: 'Минимальная длина фрагмента 20 слов'
+													},
+													onChange(event) {
+														setFragment(event.target.value);
+													}
+												})}
 											/>
-											<p>{fragment.length} / 1234</p>
+											<div className={scss.deg_info}>
+												<p>
+													{errors.fragment &&
+														errors.fragment.message === 'string' &&
+														errors.fragment.message}
+												</p>
+												<p>{fragment.length} / 1234</p>
+											</div>
 										</label>
 									</div>
 									<div className={scss.right_inputs}>
@@ -1034,18 +1243,49 @@ const AddBookSection = () => {
 												</label>
 												<label>
 													Год выпуска
-													<div className={scss.input}>
+													<div
+														className={
+															errors.publishedYear
+																? scss.input_error
+																: scss.input
+														}
+													>
 														<span>гг</span>
-														<input type="text" {...register('publishedYear')} />
+														<input
+															type="text"
+															required={true}
+															maxLength={4}
+															minLength={4}
+															{...register('publishedYear', {
+																required: true,
+																minLength: 4,
+																validate: (value) =>
+																	!isNaN(value) || 'Введите только числа'
+															})}
+														/>
 													</div>
 												</label>
 											</div>
 											<div className={scss.box_second}>
 												<label>
 													Объем
-													<div className={scss.input}>
+													<div
+														className={
+															errors.volume ? scss.input_error : scss.input
+														}
+													>
 														<span>стр.</span>
-														<input type="text" {...register('volume')} />
+														<input
+															type="text"
+															required={true}
+															minLength={2}
+															{...register('volume', {
+																required: true,
+																minLength: 4,
+																validate: (value) =>
+																	!isNaN(value) || 'Введите только числа'
+															})}
+														/>
 													</div>
 												</label>
 												<label
@@ -1066,24 +1306,48 @@ const AddBookSection = () => {
 											<div className={scss.box_three}>
 												<label>
 													Стоимость
-													<div className={scss.input}>
+													<div
+														className={
+															errors.price ? scss.input_error : scss.input
+														}
+													>
 														<span>сом</span>
-														<input type="text" {...register('price')} />
+														<input
+															type="text"
+															required={true}
+															minLength={3}
+															{...register('price', {
+																required: true,
+																minLength: 3,
+																validate: (value) =>
+																	!isNaN(value) || 'Введите только числа'
+															})}
+														/>
 													</div>
 												</label>
 												<label>
 													Скидка
-													<div className={scss.input}>
+													<div
+														className={
+															errors.discount ? scss.input_error : scss.input
+														}
+													>
 														<span>%</span>
-														<input type="text" {...register('discount')} />
+														<input
+															type="text"
+															{...register('discount', {
+																validate: (value) =>
+																	!isNaN(value) || 'Введите только числа'
+															})}
+														/>
 													</div>
 												</label>
 											</div>
 											<div className={scss.box_last}>
 												<CustomPDFDownloadInput
-													isFileUploaded
 													onChange={handleFileChange}
 													accept="application/pdf"
+													isFileUploaded={isPdfFileUploaded}
 												/>
 												{pdfFileName && (
 													<p>Выбранный файл: {pdfFileName.name}</p>
@@ -1104,8 +1368,8 @@ const AddBookSection = () => {
 							/>
 							{<></>}
 							<Modal
-								className={scss.modal_succes}
 								open={modal}
+								className={scss.modal_succes}
 								footer={false}
 								onCancel={() => setModal(false)}
 							>
@@ -1113,7 +1377,7 @@ const AddBookSection = () => {
 									<IconSuccess />
 									<div className={scss.info_text}>
 										<p>
-											<span>“{nameBook}”</span> <br />
+											<span>“{nameBook}</span> <br />
 											успешно добавлен!
 										</p>
 									</div>
@@ -1127,4 +1391,4 @@ const AddBookSection = () => {
 	);
 };
 
-export default AddBookSection;
+export default BookAddSection;

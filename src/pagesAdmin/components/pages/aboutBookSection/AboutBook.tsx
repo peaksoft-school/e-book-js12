@@ -3,7 +3,7 @@ import { useState } from 'react';
 import scss from './AboutBook.module.scss';
 import CustomBasketButton from '@/src/ui/customButton/CustomBasketButton';
 import CustomPersonalAreaButton from '@/src/ui/customButton/CustomPersonalArea';
-import { Modal, Tooltip } from 'antd';
+import { Modal, Tooltip, message } from 'antd';
 import {
 	useDeleteBookMutation,
 	useGetBookByIdQuery,
@@ -43,6 +43,7 @@ const AboutBook = () => {
 	const [showBookInfo, setShowBookInfo] = useState(false);
 	const [deviationModal, setDeviationModal] = useState(false);
 	const [value, setValue] = useState('');
+	const [deleteModal, setDeleteModal] = useState(false);
 	const { id } = useParams();
 	const bookId = Number(id);
 	const { data: book, isLoading } = useGetBookByIdQuery<GetResponse>(bookId);
@@ -53,9 +54,26 @@ const AboutBook = () => {
 	const navigate = useNavigate();
 	const location = useLocation();
 	const dispatch = useDispatch();
+	const [messageApi, context] = message.useMessage();
 
 	const deleteBookId = async (bookId: number) => {
-		await deleteBook(bookId);
+		const result = (await deleteBook(bookId)) as BOOK.DeleteProductResponse;
+		if ('data' in result) {
+			if (result.data?.httpStatus === 'OK') {
+				if (deleteModal) {
+					setTimeout(() => {
+						setDeleteModal(false);
+						navigate('/admin/books');
+					}, 2000);
+				}
+			}
+		}
+		if (result.error.data) {
+			messageApi.open({
+				type: 'warning',
+				content: result.error.data.message
+			});
+		}
 	};
 
 	const handleRejectBook = async (id: number) => {
@@ -68,7 +86,7 @@ const AboutBook = () => {
 			if (result.data.httpStatus === 'OK') {
 				setRejectedMessage(result.data.message);
 				setTimeout(() => {
-					navigate('/admin');
+					navigate('/admin/books');
 				}, 2000);
 			}
 		}
@@ -141,6 +159,7 @@ const AboutBook = () => {
 			<section className={scss.Book_info}>
 				<div className="container">
 					<div className={scss.content}>
+						{context}
 						<div className={scss.content_text}>
 							{locationFunction()}
 							<Tooltip
@@ -221,7 +240,7 @@ const AboutBook = () => {
 										<CustomPersonalAreaButton
 											nameClass={`${scss.favorite_btn}`}
 											onClick={() => {
-												deleteBookId(bookId);
+												setDeleteModal(true);
 											}}
 										>
 											<p className={scss.boot1}>Удалить</p>
@@ -260,7 +279,9 @@ const AboutBook = () => {
 									{location.pathname === `/admin/books/${id}` ? (
 										<CustomBasketButton
 											nameClass={scss.basket_btn}
-											onClick={() => {}}
+											onClick={() => {
+												navigate(`/admin/books/edit/${id}`);
+											}}
 											type="button"
 										>
 											<p className={scss.boot1}>Редактировать</p>
@@ -300,6 +321,33 @@ const AboutBook = () => {
 						</div>
 					</div>
 				</div>
+				<Modal
+					open={deleteModal}
+					onCancel={() => {
+						setDeleteModal(false);
+					}}
+					footer={false}
+				>
+					<div className={scss.delete_modal}>
+						<p>Вы уверены, что хотите удалить?</p>
+						<div className={scss.bt_modal}>
+							<button
+								onClick={() => {
+									setDeleteModal(false);
+								}}
+							>
+								Отменить
+							</button>
+							<button
+								onClick={() => {
+									deleteBookId(bookId);
+								}}
+							>
+								Удалить
+							</button>
+						</div>
+					</div>
+				</Modal>
 			</section>
 		</>
 	);

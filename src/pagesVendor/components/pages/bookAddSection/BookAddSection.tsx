@@ -1377,7 +1377,7 @@ const BookAddSection = () => {
 									<IconSuccess />
 									<div className={scss.info_text}>
 										<p>
-											<span>“{nameBook}</span> <br />
+											<span>“{nameBook}”</span> <br />
 											успешно добавлен!
 										</p>
 									</div>

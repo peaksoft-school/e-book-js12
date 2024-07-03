@@ -8,9 +8,10 @@ import ThreeDotIcon from '@/src/assets/icons/icon-threeDot';
 import { IconArrowBottom } from '@/src/assets/icons';
 import {
 	useDeleteBookMutation,
-	useFilterBooksMutation
+	useFilterBooksMutation,
+	useGetCountBookIsGenreQuery
 } from '@/src/redux/api/book';
-import { Modal, Skeleton, Tooltip } from 'antd';
+import { Modal, Skeleton, Tooltip, message } from 'antd';
 
 type Book = {
 	bookId: number;
@@ -28,11 +29,13 @@ const BooksSection: React.FC = () => {
 	const [selectedType, setSelectedType] = useState<string | null>(null);
 	const [isOpenBooksGenre, setIsOpenBooksGenre] = useState<boolean>(false);
 	const [selectedGenre, setSelectedGenre] = useState<string[]>([]);
-	const [books, setBooks] = useState<Book[]>([]);
+	const [booksData, setBooks] = useState<Book[]>([]);
 	const navigate = useNavigate();
 	const [filterBooks, { isLoading }] = useFilterBooksMutation();
-	const [idBook, setIdBook] = useState<null | number>(null);
+	const { data: countIsGenreBook } = useGetCountBookIsGenreQuery();
 	const [deleteBookById] = useDeleteBookMutation();
+	const [deleteModal, setDeleteModal] = useState(false);
+	const [messageApi, context] = message.useMessage();
 
 	const bookType = [
 		{
@@ -109,11 +112,6 @@ const BooksSection: React.FC = () => {
 		}
 	];
 
-	const handleDeleteBook = (id: number) => {
-		deleteBookById(id);
-		setOpenState(false);
-	};
-
 	const handleBookClick = (id: number) => {
 		navigate(`/admin/books/${id}`);
 	};
@@ -132,9 +130,24 @@ const BooksSection: React.FC = () => {
 		}
 	};
 
+	const handleDeleteBook = async (id: number) => {
+		const result = (await deleteBookById(id)) as BOOK.DeleteProductResponse;
+		if ('data' in result) {
+			if (result.data) {
+				handlePostRequest();
+			}
+		}
+		if (result.error.data) {
+			messageApi.open({
+				type: 'warning',
+				content: result.error.data.message
+			});
+		}
+	};
+
 	useEffect(() => {
 		handlePostRequest();
-	}, [selectedGenre, selectedType, openState]);
+	}, [selectedGenre, selectedType]);
 
 	const toggleTypeList = (): void => {
 		setIsOpenBooksType(!isOpenBooksType);
@@ -162,33 +175,16 @@ const BooksSection: React.FC = () => {
 		? bookType.find((bt) => bt.typeNameEnglish === selectedType)?.typeName
 		: 'Все';
 
-	const genreText =
-		selectedGenre.length > 0
-			? genreBook.find((g) => g.englishName === selectedGenre[0])?.genreName
-			: 'Жанры';
-
-	const [selectedBook, setSelectedBook] = useState<number | null>(null);
-	const [isModalOpen, setIsModalOpen] = useState(false);
-
-	const showModal = (bookId: number) => {
-		setSelectedBook(bookId);
-		setIsModalOpen(true);
-	};
-
-	const handleOk = async () => {
-		if (selectedBook !== null) {
-			await handleDeleteBook(selectedBook);
-		}
-		setIsModalOpen(false);
-		setSelectedBook(null);
-	};
-
-	const handleCancel = () => {
-		setIsModalOpen(false);
-		setSelectedBook(null);
+	const handlefindGenre = () => {
+		const genreText =
+			selectedGenre.length > 0
+				? genreBook.find((g) => g.englishName === selectedGenre[0])?.genreName
+				: 'Жанры';
+		return genreText;
 	};
 
 	const [style, setStyle] = useState({ width: 268, height: 409 });
+	console.log(countIsGenreBook);
 
 	const updateStyle = () => {
 		const width = window.innerWidth;
@@ -217,7 +213,7 @@ const BooksSection: React.FC = () => {
 			{isLoading ? (
 				<>
 					<div className={scss.skeleton}>
-						{books.map((item) => (
+						{booksData.map((item) => (
 							<>
 								<Skeleton.Button key={item.bookId} active block style={style} />
 							</>
@@ -227,6 +223,7 @@ const BooksSection: React.FC = () => {
 			) : (
 				<section className={scss.BooksSection}>
 					<div className={scss.container}>
+						{context}
 						<div className={scss.books_page_content}>
 							<div className={scss.books_filter}>
 								<div className={scss.books_genre}>
@@ -260,7 +257,16 @@ const BooksSection: React.FC = () => {
 													onClick={() => handleGenreClick(data.englishName)}
 												>
 													<p>{data.genreName}</p>
-													<p>{books.length}</p>
+													<p>
+														{countIsGenreBook &&
+														(countIsGenreBook as { [key: string]: number })[
+															data.englishName
+														]
+															? (countIsGenreBook as { [key: string]: number })[
+																	data.englishName
+																]
+															: 0}
+													</p>
 												</div>
 											))}
 										</div>
@@ -321,9 +327,9 @@ const BooksSection: React.FC = () => {
 							</div>
 						</div>
 						<div className={scss.total_quantity}>
-							<p>Всего: {books.length}</p>
+							<p>Всего: {booksData.length}</p>
 							<div className={scss.janry}>
-								<span>{genreText}</span>
+								<span>{handlefindGenre()}</span>
 								<span
 									onClick={() => {
 										setSelectedGenre([]);
@@ -346,41 +352,42 @@ const BooksSection: React.FC = () => {
 							</div>
 						</div>
 						<div className={scss.content}>
-							{books.map((book) => (
+							{booksData.map((book) => (
 								<div key={book.bookId} className={scss.book}>
 									<div
 										className={scss.extra}
 										onClick={() => {
 											setOpenState(!openState);
-											setIdBook(book.bookId);
-											console.log(book.bookId);
 										}}
 									>
 										<ThreeDotIcon />
 									</div>
-									{idBook === book.bookId ? (
-										<div className={openState ? scss.is_open : scss.on_close}>
-											<ul>
-												<li onClick={() => setOpenState(!openState)}>
-													<span>
-														<IconPencil />
-													</span>
-													Редактировать
-												</li>
-												<li
-													onClick={() => {
-														showModal(book.bookId);
-														setOpenState(!openState);
-													}}
-												>
-													<span>
-														<IconX />
-													</span>
-													Удалить
-												</li>
-											</ul>
-										</div>
-									) : null}
+									<div className={openState ? scss.is_open : scss.on_close}>
+										<ul>
+											<li
+												onClick={() => {
+													setOpenState(false);
+													navigate(`/admin/edit/${book.bookId}`);
+												}}
+											>
+												<span>
+													<IconPencil />
+												</span>
+												Редактировать
+											</li>
+											<li
+												onClick={() => {
+													setOpenState(false);
+													setDeleteModal(true);
+												}}
+											>
+												<span>
+													<IconX />
+												</span>
+												Удалить
+											</li>
+										</ul>
+									</div>
 									<div
 										className={scss.book_content}
 										onClick={() => handleBookClick(book.bookId)}
@@ -403,25 +410,38 @@ const BooksSection: React.FC = () => {
 											</div>
 										</div>
 									</div>
+									<Modal
+										open={deleteModal}
+										onCancel={() => {
+											setDeleteModal(false);
+										}}
+										footer={false}
+										className={scss.delete_modal}
+									>
+										<div className={scss.delete_modal}>
+											<p>Вы уверены, что хотите удалить?</p>
+											<div className={scss.bt_modal}>
+												<button
+													onClick={() => {
+														setDeleteModal(false);
+													}}
+												>
+													Отменить
+												</button>
+												<button
+													onClick={() => {
+														handleDeleteBook(book.bookId);
+													}}
+												>
+													Удалить
+												</button>
+											</div>
+										</div>
+									</Modal>
 								</div>
 							))}
 						</div>
 					</div>
-					<Modal
-						visible={isModalOpen}
-						onOk={handleOk}
-						onCancel={handleCancel}
-						footer={null}
-						className={scss.delete_modal}
-					>
-						<div className={scss.delete_modal}>
-							<p>Вы уверены, что хотите удалить?</p>
-							<div className={scss.bt_modal}>
-								<button onClick={handleCancel}>Отменить</button>
-								<button onClick={handleOk}>Удалить</button>
-							</div>
-						</div>
-					</Modal>
 				</section>
 			)}
 		</>

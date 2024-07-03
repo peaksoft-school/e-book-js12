@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from 'react';
 import CustomUserNameInput from '@/src/ui/customInpute/CustomUserNameInput';
 import CustomPasswordInput from '@/src/ui/customInpute/CustomPasswordInput';
@@ -32,6 +33,11 @@ const ProfileClient: React.FC = () => {
 	const [handleDeleteProfile] = useDeletUserProfileMutation();
 	const [isModalOpen, setIsModalOpen] = useState(false);
 	const navigate = useNavigate();
+	const tokenAuth = localStorage.getItem('token');
+
+	useEffect(() => {
+		refetch();
+	}, [tokenAuth]);
 
 	const handleDeleteAndNavigate = async () => {
 		try {
@@ -65,10 +71,15 @@ const ProfileClient: React.FC = () => {
 	const onSubmit: SubmitHandler<FieldValues> = async (data) => {
 		try {
 			if (isEditMode) {
-				await updateProfile({
+				const result = await updateProfile({
 					firstName: data.firstName,
 					email: data.email
 				});
+				if ('data' in result) {
+					if (result.data) {
+						localStorage.setItem('NameClient', data.firstName);
+					}
+				}
 			} else if (isPasswordMode) {
 				await updatePassword({
 					currentVendorPassword: data.currentVendorPassword,

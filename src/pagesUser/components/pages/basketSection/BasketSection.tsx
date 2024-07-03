@@ -51,16 +51,42 @@ const BasketPage = () => {
 	};
 
 	const handleClearPage = async () => {
-		await clearBookPage();
+		if (data?.books.length === 0) {
+			message.open({
+				type: 'warning',
+				content: 'Корзина пуста'
+			});
+		} else {
+			await clearBookPage();
+		}
 	};
 
 	const handleCountBookDec = async (bookId: number) => {
 		const addOrMinus = true;
-		await countBookBasket({ bookId, addOrMinus });
+		const result = (await countBookBasket({
+			bookId,
+			addOrMinus
+		})) as BASKET.CountBookBasketResponse;
+		if (result.error) {
+			messageApi.open({
+				type: 'warning',
+				content: result.error.data.message
+			});
+		}
 	};
+
 	const handleCountBookInc = async (bookId: number) => {
 		const addOrMinus = false;
-		await countBookBasket({ bookId, addOrMinus });
+		const result = (await countBookBasket({
+			bookId,
+			addOrMinus
+		})) as BASKET.CountBookBasketResponse;
+		if (result.error) {
+			messageApi.open({
+				type: 'warning',
+				content: result.error.data.message
+			});
+		}
 	};
 
 	const func = (price: number, discount: number, amount: number) => {
@@ -292,6 +318,7 @@ const BasketPage = () => {
 																	</div>
 																</div>
 																<div className={scss.book_quantity}>
+																	{}
 																	<button
 																		onClick={() => {
 																			handleCountBookInc(book.id);
@@ -418,7 +445,14 @@ const BasketPage = () => {
 							</div>
 							<CustomAuthButton
 								onClick={() => {
-									setIsPayment(true);
+									if (data?.books.length === 0) {
+										message.open({
+											type: 'warning',
+											content: 'Корзина пуста'
+										});
+									} else {
+										setIsPayment(true);
+									}
 								}}
 							>
 								Оформить заказ

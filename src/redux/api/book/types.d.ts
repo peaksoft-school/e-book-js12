@@ -3,7 +3,7 @@
 namespace BOOK {
 	type GetProductsResponse = {
 		bookResponses: BooksResponses[];
-		totalBooks: number;
+		totalBooks?: number;
 	};
 
 	type BooksResponses = {
@@ -53,8 +53,17 @@ namespace BOOK {
 	};
 
 	type DeleteProductResponse = {
-		httpStatus: string;
-		message: string;
+		data: {
+			httpStatus: string;
+			message: string;
+		};
+		status: number;
+		error: {
+			status: number;
+			data: {
+				message: string;
+			};
+		};
 	};
 	type DeleteProductRequest = number;
 
@@ -305,4 +314,17 @@ namespace BOOK {
 	};
 
 	type GetAllBooksRequest = void;
+
+	type GetCountBookIsGenreResponse = {
+		HOBBIES: number;
+		COMMUNITY: number;
+		BEAUTY_HEALTH_SPORT: number;
+		BOOKS_FOR_CHILDREN: number;
+		BUSINESS_LITERATURE: number;
+		SCIENCE_AND_TECHNOLOGY: number;
+		EDUCATION: number;
+		PSYCHOLOGY: number;
+		ARTISTIC_LITERATURE: number;
+	};
+	type GetCountBookIsgenreRequest = void;
 }

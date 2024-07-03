@@ -1,10 +1,11 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import {
 	useApproveBookMutation,
 	useRejectBookMutation
 } from '@/src/redux/api/book';
 import { useGetReceiptRequestedBooksQuery } from '@/src/redux/api/book';
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import scss from './innerSection.module.scss';
 import { IconX } from '@tabler/icons-react';
 import { IconSuccess } from '@/src/assets/icons';
@@ -26,11 +27,18 @@ const InnerSection = () => {
 	} = useGetReceiptRequestedBooksQuery();
 	const [rejectBookById] = useRejectBookMutation();
 	const [approveBook] = useApproveBookMutation();
+	const location = useLocation();
 
 	const handleBookClick = (id: number) => {
 		navigate(`/admin/inner/${id}`);
 		refetch();
 	};
+
+	useEffect(() => {
+		if (location.pathname === '/admin') {
+			refetch();
+		}
+	}, [location]);
 
 	const handleRejectBook = async (id: number) => {
 		const newData = {

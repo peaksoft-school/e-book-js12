@@ -17,7 +17,7 @@ namespace USERHISTORY {
 		historyStatus: string;
 	};
 
-	export type UserHistoryRequest = number;
+	export type UserHistoryRequest = void;
 }
 
 namespace USERALLHISTORY {

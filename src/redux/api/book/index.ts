@@ -151,6 +151,16 @@ const api = index.injectEndpoints({
 				method: 'GET'
 			}),
 			providesTags: ['book']
+		}),
+		GetCountBookIsGenre: build.query<
+			BOOK.GetCountBookIsGenreResponse,
+			BOOK.GetCountBookIsgenreRequest
+		>({
+			query: () => ({
+				url: '/api/book/getCountBooksInGenresForAdmin',
+				method: 'GET'
+			}),
+			providesTags: ['book']
 		})
 	})
 });
@@ -167,5 +177,6 @@ export const {
 	useGetBookByIdVendorQuery,
 	useGetFindAllBookVedorQuery,
 	useGetByIdVendorQuery,
-	useGetReceiptRequestedBooksQuery
+	useGetReceiptRequestedBooksQuery,
+	useGetCountBookIsGenreQuery
 } = api;

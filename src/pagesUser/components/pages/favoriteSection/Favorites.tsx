@@ -12,6 +12,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useAddBookToBasketMutation } from '@/src/redux/api/basket';
 import IconGirl from '@/src/assets/icons/icon-girl';
+import { message } from 'antd';
 
 const FavoritSection: FC = () => {
 	const [expandedCards, setExpandedCards] = useState<{
@@ -22,6 +23,7 @@ const FavoritSection: FC = () => {
 	const [clearFavorite] = useClearFavoriteMutation();
 	const [deleteFavoriteBook] = usePostFavoriteUnFavoriteMutation();
 	const [addBookToBasket] = useAddBookToBasketMutation();
+	const [messageApi, contextMessage] = message.useMessage();
 	const navigate = useNavigate();
 
 	const handleClick = (id: number) => {
@@ -32,7 +34,14 @@ const FavoritSection: FC = () => {
 	};
 
 	const handleClearFavorite = async () => {
-		await clearFavorite();
+		if (data?.length === 0) {
+			messageApi.open({
+				type: 'warning',
+				content: 'Страница пуста'
+			});
+		} else {
+			await clearFavorite();
+		}
 	};
 
 	const handleRemoveFavoriteBook = async (id: number) => {
@@ -74,6 +83,7 @@ const FavoritSection: FC = () => {
 			<section className={scss.FavoritesSection}>
 				<div className="container">
 					<div className={scss.content}>
+						{contextMessage}
 						<div className={scss.favorite_nav_link}>
 							<NavLink to="/">Главная</NavLink>
 							<span>/</span>

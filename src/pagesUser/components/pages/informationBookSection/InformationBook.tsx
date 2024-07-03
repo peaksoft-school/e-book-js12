@@ -181,7 +181,7 @@ const InformationBook: FC = () => {
 							<div className={scss.content_text}>
 								<p>
 									<span onClick={() => navigate('/')}>Главная</span>/{' '}
-									<span>
+									<span onClick={() => navigate('/search_book')}>
 										{hadnleGenre() ? hadnleGenre() : 'Жанр не найден'}
 									</span>
 								</p>

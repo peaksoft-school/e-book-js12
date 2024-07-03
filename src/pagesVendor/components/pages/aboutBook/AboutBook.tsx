@@ -29,10 +29,12 @@ const AboutBook = () => {
 	};
 
 	const [deleteBook] = useDeleteBookMutation();
+
 	const handleDeleteBook = async (id: number) => {
-		const result = await deleteBook(id);
+		const result = (await deleteBook(id)) as BOOK.DeleteProductResponse;
 		if ('data' in result) {
 			if (result.data?.httpStatus === 'OK') {
+				setIsModalOpen(false);
 				navigate('/vendor/home');
 			}
 		}
@@ -115,17 +117,7 @@ const AboutBook = () => {
 		}
 	];
 
-	// const locationFunction = () => {
-	// 	if (/^\/vendor\/notification\/\d+$/.test(location.pathname)) {
-	// 		return (
-	// 			<p onClick={() => navigate('/vendor/notification')}>Уведомление</p>
-	// 		);
-	// 	} else if (/^\/vendor\/notification\/books\/\d+$/.test(location.pathname)) {
-	// 		// исправлено
-	// 		return <p onClick={() => navigate('/notification/')}>test</p>;
-	// 	}
-	// 	return null;
-	// };
+
 
 	return (
 		<section className={scss.AboutBook}>
@@ -283,7 +275,6 @@ const AboutBook = () => {
 											<button
 												onClick={() => {
 													handleDeleteBook(bookId);
-													setIsModalOpen(false);
 												}}
 											>
 												Удалить

@@ -9,7 +9,7 @@ const api = index.injectEndpoints({
 			query: ({ newData, token, test }) => (
 				console.log(token),
 				{
-					url: `/api/stripe/create/payment?token=${'tok_createDispute'}&totalAmount=${test}`,
+					url: `/api/stripe/create/payment?token=${'tok_visa'}&totalAmount=${test}`,
 					method: 'POST',
 					body: newData
 				}
@@ -29,7 +29,6 @@ const api = index.injectEndpoints({
 			}),
 			providesTags: ['payment']
 		}),
-
 		ConfirmPayment: build.mutation<
 			PAYMENT.ConfirmPaymentResponse,
 			PAYMENT.ConfirmPaymentRequest

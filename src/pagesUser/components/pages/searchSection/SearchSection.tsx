@@ -46,8 +46,10 @@ const SearchSection = () => {
 	const [page, setPage] = useState<number>(12);
 
 	const [postFillter] = usePostSortBookMutation();
-	const [addBookFavorite] = usePostFavoriteUnFavoriteMutation();
-	const [addBookToBasket] = useAddBookToBasketMutation();
+	const [addBookFavorite, { isLoading: isSuccessFavorte }] =
+		usePostFavoriteUnFavoriteMutation();
+	const [addBookToBasket, { isLoading: isSuccessBasket }] =
+		useAddBookToBasketMutation();
 	const [jenreData, setJenreData] = useState([
 		{
 			jenreId: 1,
@@ -145,11 +147,6 @@ const SearchSection = () => {
 		}
 	]);
 
-	// const filterBooks =
-	// 	selected === 'Сортировать'
-	// 		? sortData
-	// 		: sortData.filter((book) => book.id === selected);
-
 	const [dataBooks, setDataBooks] = useState<SORT.TypeDataBook[]>([]);
 	const searchSectionRef = useRef(null);
 	const [messageApi, contextMessage] = message.useMessage();
@@ -182,62 +179,6 @@ const SearchSection = () => {
 			isCheked: false
 		}
 	]);
-
-	const hanleAddBookFavorite = async (id: number) => {
-		if (localAuth === 'true') {
-			await addBookFavorite(id);
-			handleChangeFillter();
-		} else {
-			messageApi.open({
-				type: 'warning',
-				content: 'Необходимо авторизоватся',
-				style: {
-					marginLeft: '85%'
-				}
-			});
-		}
-	};
-
-	const handleAddBookToBasket = async (id: number) => {
-		if (localAuth === 'true') {
-			const result = await addBookToBasket(id);
-			if ('data' in result) {
-				const { httpStatus } = result.data!;
-				if (httpStatus === 'OK') {
-					toast.success('Успешно добавлено в корзину!', {
-						position: 'top-right',
-						autoClose: 5000,
-						hideProgressBar: false,
-						closeOnClick: true,
-						pauseOnHover: false,
-						draggable: true,
-						progress: undefined,
-						theme: 'light'
-					});
-					handleChangeFillter();
-				} else if (httpStatus === 'ALREADY_REPORTED') {
-					toast('Вы уже добавили эту книгу в корзину!', {
-						position: 'top-right',
-						autoClose: 5000,
-						hideProgressBar: false,
-						closeOnClick: true,
-						pauseOnHover: false,
-						draggable: true,
-						progress: undefined,
-						theme: 'light'
-					});
-				}
-			}
-		} else {
-			messageApi.open({
-				type: 'warning',
-				content: 'Необходимо авторизоватся',
-				style: {
-					marginLeft: '85%'
-				}
-			});
-		}
-	};
 
 	const deleteIsFalseJenre = (id: number) => {
 		setJenreData((prev) =>
@@ -341,9 +282,65 @@ const SearchSection = () => {
 
 		const result = await postFillter({ newData, pagination });
 		if ('data' in result) {
-			const booksData = result.data!.books;
-			setTotalBooks(result.data!.totalNumberOfBooks);
-			setDataBooks(booksData);
+			if (result.data) {
+				const booksData = result.data!.books;
+				setTotalBooks(result.data!.totalNumberOfBooks);
+				setDataBooks(booksData);
+			}
+		}
+	};
+	const hanleAddBookFavorite = async (id: number) => {
+		if (localAuth === 'true') {
+			await addBookFavorite(id);
+		} else {
+			messageApi.open({
+				type: 'warning',
+				content: 'Необходимо авторизоватся',
+				style: {
+					marginLeft: '85%'
+				}
+			});
+		}
+	};
+
+	const handleAddBookToBasket = async (id: number) => {
+		if (localAuth === 'true') {
+			const result = await addBookToBasket(id);
+			if ('data' in result) {
+				const { httpStatus } = result.data!;
+				if (httpStatus === 'OK') {
+					toast.success('Успешно добавлено в корзину!', {
+						position: 'top-right',
+						autoClose: 5000,
+						hideProgressBar: false,
+						closeOnClick: true,
+						pauseOnHover: false,
+						draggable: true,
+						progress: undefined,
+						theme: 'light'
+					});
+					handleChangeFillter();
+				} else if (httpStatus === 'ALREADY_REPORTED') {
+					toast('Вы уже добавили эту книгу в корзину!', {
+						position: 'top-right',
+						autoClose: 5000,
+						hideProgressBar: false,
+						closeOnClick: true,
+						pauseOnHover: false,
+						draggable: true,
+						progress: undefined,
+						theme: 'light'
+					});
+				}
+			}
+		} else {
+			messageApi.open({
+				type: 'warning',
+				content: 'Необходимо авторизоватся',
+				style: {
+					marginLeft: '85%'
+				}
+			});
 		}
 	};
 
@@ -357,6 +354,12 @@ const SearchSection = () => {
 		debouncedValue,
 		page
 	]);
+
+	useEffect(() => {
+		if (!isSuccessBasket || !isSuccessFavorte) {
+			handleChangeFillter();
+		}
+	}, [isSuccessBasket, isSuccessFavorte]);
 
 	return (
 		<section ref={searchSectionRef} className={scss.SearchSection}>
@@ -430,7 +433,6 @@ const SearchSection = () => {
 									<div className={isSort ? scss.arrow_bottom : scss.arrow_top}>
 										<IconArrowBottom />
 									</div>
-									<></>
 								</div>
 							</div>
 						</div>
@@ -476,7 +478,6 @@ const SearchSection = () => {
 								<div className={isGenre ? scss.arrow_bottom : scss.arrow_top}>
 									<IconArrowBottom />
 								</div>
-								<></>
 							</div>
 							<>
 								<div className={`${isGenre ? scss.fillters : scss.none}`}>
@@ -712,32 +713,35 @@ const SearchSection = () => {
 									</div>
 								</div>
 							))}
-							{totalBooks && totalBooks > 12 && (
-								<div className={scss.btn_morebook}>
-									{totalBooks === dataBooks.length ? (
-										<>
-											<button
-												onClick={() => {
-													setPage(12);
-													smoothScroll(searchSectionRef);
-												}}
-											>
-												Вернутся назад
-											</button>
-										</>
-									) : (
-										<>
-											<button
-												onClick={() => {
-													setPage(page + 12);
-												}}
-											>
-												Смотреть больше
-											</button>
-										</>
-									)}
-								</div>
-							)}
+
+							<div className={scss.btn_morebook}>
+								{dataBooks.length >= totalBooks! ? (
+									<>
+										{totalBooks! < 12 ? null : (
+											<>
+												<button
+													onClick={() => {
+														setPage(12);
+														smoothScroll(searchSectionRef);
+													}}
+												>
+													Вернутся назад
+												</button>
+											</>
+										)}
+									</>
+								) : (
+									<>
+										<button
+											onClick={() => {
+												setPage(page + 12);
+											}}
+										>
+											Смотреть больше
+										</button>
+									</>
+								)}
+							</div>
 						</div>
 					</div>
 				</div>

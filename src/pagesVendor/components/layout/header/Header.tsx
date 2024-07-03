@@ -237,8 +237,8 @@ const Header = () => {
 											<hr />
 											<li
 												onClick={() => {
-													HandleExitVendor();
 													setIsUser(false);
+													setUserExit(true);
 												}}
 											>
 												Выйти
@@ -262,7 +262,7 @@ const Header = () => {
 												<button
 													onClick={() => {
 														setUserExit(false);
-														navigate('/auth/login');
+														HandleExitVendor();
 													}}
 												>
 													Выйти

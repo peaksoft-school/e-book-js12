@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { CardElement, useElements, useStripe } from '@stripe/react-stripe-js';
-import { FC, FormEvent, useState } from 'react';
+import { FC, FormEvent, useEffect, useState } from 'react';
 import { useCreatePaymentMutation } from '../redux/api/payment';
 import scss from './PaymentForm.module.scss';
 import { Modal } from 'antd';
@@ -81,6 +81,12 @@ const PaymentForm: FC<TypeProps> = ({
 			});
 		}
 	};
+
+	useEffect(() => {
+		if (!successModal) {
+			setSuccsessModal(false);
+		}
+	}, [successModal]);
 
 	const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
